@@ -50,11 +50,11 @@ Every param in configuration is optional
 | basePath | string | override base path |
 | fetchApi | FetchAPI | override for fetch implementation |
 | middleware | Middleware[] | middleware to apply before/after fetch requests |
-| query | (params: HTTPQuery) => string | stringify function for query strings |
+| queryParamsStringify | (params: HTTPQuery) => string | stringify function for query strings |
 | username | string | parameter for basic security |
 | password | string | parameter for basic security |
-| api | string | ((name: string) => string) | parameter for apiKey security |
-| access | string | Promise<string> | ((name?: string, scopes?: string[]) => string | Promise<string>) | parameter for oauth2 security |
+| apiKey | string \| ((name: string) => string) | parameter for apiKey security |
+| accessToken | string \| Promise\<string\> \| ((name?: string, scopes?: string[]) => string \| Promise\<string\>) | parameter for oauth2 security |
 | headers | HTTPHeaders | header params we want to use on every request |
 | credentials | RequestCredentials | value for the credentials param we want to use on each request |
 
@@ -70,7 +70,7 @@ const api = new AnnotationApi(new Configration({
 }))
 ```
 
-### Request limitation
+## Request limitation
 By default you can use https://tonapi.io without token, but you will have limitations.
 If you want unlimited requests to our backend, please use Bearer token.
 
