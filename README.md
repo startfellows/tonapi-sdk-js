@@ -21,11 +21,18 @@ import {
     NFTApi,
     RawBlockchainApi,
     TraceApi,
-    WalletApi
+    WalletApi,
+    Configuration,
 } from 'tonapi-sdk-js'
 
 // Get list of transactions
-const blockchainApi = new RawBlockchainApi()
+const blockchainApi = new RawBlockchainApi(new Configuration({
+    headers: {
+        // To get unlimited requests
+        Authorization: 'Bearer YOUR_TOKEN_FROM_TELEGRAM_BOT',
+    },
+}))
+
 // Receive typed array of transactions
 const { transactions } = await blockchainApi.getTransactions({
     account: address,
@@ -83,7 +90,7 @@ Steps
 
 ```js
 import { Configuration, RawBlockchainApi } from 'tonapi-sdk-js'
-const blockchainApi = new RawBlockchainApi(new Configuration ({
+const blockchainApi = new RawBlockchainApi(new Configuration({
   headers: {
     Authorization: 'Bearer YOUR_TOKEN_FROM_TELEGRAM_BOT',
   },
