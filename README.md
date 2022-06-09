@@ -20,6 +20,7 @@ import {
     JettonApi,
     NFTApi,
     RawBlockchainApi,
+    SubscriptionApi,
     TraceApi,
     WalletApi,
     Configuration,
