@@ -20,5 +20,6 @@ __exportStar(require("./AnnotationApi"), exports);
 __exportStar(require("./JettonApi"), exports);
 __exportStar(require("./NFTApi"), exports);
 __exportStar(require("./RawBlockchainApi"), exports);
+__exportStar(require("./SubscriptionApi"), exports);
 __exportStar(require("./TraceApi"), exports);
 __exportStar(require("./WalletApi"), exports);

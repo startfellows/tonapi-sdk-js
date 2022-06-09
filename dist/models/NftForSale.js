@@ -15,6 +15,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NftForSaleToJSON = exports.NftForSaleFromJSONTyped = exports.NftForSaleFromJSON = void 0;
 const NftItem_1 = require("./NftItem");
+const Sale_1 = require("./Sale");
 function NftForSaleFromJSON(json) {
     return NftForSaleFromJSONTyped(json, false);
 }
@@ -25,6 +26,7 @@ function NftForSaleFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'nft': (0, NftItem_1.NftItemFromJSON)(json['nft']),
+        'sale': (0, Sale_1.SaleFromJSON)(json['sale']),
         'saleContract': json['sale_contract'],
     };
 }
@@ -38,6 +40,7 @@ function NftForSaleToJSON(value) {
     }
     return {
         'nft': (0, NftItem_1.NftItemToJSON)(value.nft),
+        'sale': (0, Sale_1.SaleToJSON)(value.sale),
         'sale_contract': value.saleContract,
     };
 }

@@ -9,25 +9,26 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { AccountAddress } from './AccountAddress';
 /**
  *
  * @export
- * @interface Wallet
+ * @interface Sale
  */
-export interface Wallet {
+export interface Sale {
     /**
      *
      * @type {string}
-     * @memberof Wallet
+     * @memberof Sale
      */
     address: string;
     /**
      *
-     * @type {Array<string>}
-     * @memberof Wallet
+     * @type {AccountAddress}
+     * @memberof Sale
      */
-    interfaces: Array<string>;
+    market: AccountAddress;
 }
-export declare function WalletFromJSON(json: any): Wallet;
-export declare function WalletFromJSONTyped(json: any, ignoreDiscriminator: boolean): Wallet;
-export declare function WalletToJSON(value?: Wallet | null): any;
+export declare function SaleFromJSON(json: any): Sale;
+export declare function SaleFromJSONTyped(json: any, ignoreDiscriminator: boolean): Sale;
+export declare function SaleToJSON(value?: Sale | null): any;

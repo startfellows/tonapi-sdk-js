@@ -12,10 +12,11 @@
 import * as runtime from '../runtime';
 import { TraceMsg, Traces } from '../models';
 export interface GetTraceRequest {
-    traceId: string;
+    hash: string;
 }
 export interface GetTracesByAccountRequest {
     account: string;
+    limit?: number;
 }
 /**
  * TraceApi - interface
@@ -26,28 +27,29 @@ export interface GetTracesByAccountRequest {
 export interface TraceApiInterface {
     /**
      * Get trace message for trace ID
-     * @param {string} traceId trace unique ID
+     * @param {string} hash transaction hash in hex (without 0x) or base64url format
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TraceApiInterface
      */
-    getTraceRaw(requestParameters: GetTraceRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<TraceMsg>>;
+    getTraceRaw(requestParameters: GetTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TraceMsg>>;
     /**
      * Get trace message for trace ID
      */
-    getTrace(requestParameters: GetTraceRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<TraceMsg>;
+    getTrace(requestParameters: GetTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TraceMsg>;
     /**
      * Get traces for account
      * @param {string} account address in raw (hex without 0x) or base64url format
+     * @param {number} [limit]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TraceApiInterface
      */
-    getTracesByAccountRaw(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Traces>>;
+    getTracesByAccountRaw(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Traces>>;
     /**
      * Get traces for account
      */
-    getTracesByAccount(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Traces>;
+    getTracesByAccount(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Traces>;
 }
 /**
  *
@@ -56,17 +58,17 @@ export declare class TraceApi extends runtime.BaseAPI implements TraceApiInterfa
     /**
      * Get trace message for trace ID
      */
-    getTraceRaw(requestParameters: GetTraceRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<TraceMsg>>;
+    getTraceRaw(requestParameters: GetTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TraceMsg>>;
     /**
      * Get trace message for trace ID
      */
-    getTrace(requestParameters: GetTraceRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<TraceMsg>;
+    getTrace(requestParameters: GetTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TraceMsg>;
     /**
      * Get traces for account
      */
-    getTracesByAccountRaw(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Traces>>;
+    getTracesByAccountRaw(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Traces>>;
     /**
      * Get traces for account
      */
-    getTracesByAccount(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Traces>;
+    getTracesByAccount(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Traces>;
 }

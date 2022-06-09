@@ -13,22 +13,23 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TraceToJSON = exports.TraceFromJSONTyped = exports.TraceFromJSON = void 0;
-function TraceFromJSON(json) {
-    return TraceFromJSONTyped(json, false);
+exports.SaleToJSON = exports.SaleFromJSONTyped = exports.SaleFromJSON = void 0;
+const AccountAddress_1 = require("./AccountAddress");
+function SaleFromJSON(json) {
+    return SaleFromJSONTyped(json, false);
 }
-exports.TraceFromJSON = TraceFromJSON;
-function TraceFromJSONTyped(json, ignoreDiscriminator) {
+exports.SaleFromJSON = SaleFromJSON;
+function SaleFromJSONTyped(json, ignoreDiscriminator) {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
-        'id': json['id'],
-        'utime': json['utime'],
+        'address': json['address'],
+        'market': (0, AccountAddress_1.AccountAddressFromJSON)(json['market']),
     };
 }
-exports.TraceFromJSONTyped = TraceFromJSONTyped;
-function TraceToJSON(value) {
+exports.SaleFromJSONTyped = SaleFromJSONTyped;
+function SaleToJSON(value) {
     if (value === undefined) {
         return undefined;
     }
@@ -36,8 +37,8 @@ function TraceToJSON(value) {
         return null;
     }
     return {
-        'id': value.id,
-        'utime': value.utime,
+        'address': value.address,
+        'market': (0, AccountAddress_1.AccountAddressToJSON)(value.market),
     };
 }
-exports.TraceToJSON = TraceToJSON;
+exports.SaleToJSON = SaleToJSON;

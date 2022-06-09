@@ -14,8 +14,8 @@ import { Account, Block, Transaction, Transactions } from '../models';
 export interface GetAccountRequest {
     account: string;
 }
-export interface GetBlockByHashRequest {
-    blockHash: string;
+export interface GetBlockByIdRequest {
+    blockId: string;
 }
 export interface GetTransactionRequest {
     hash: string;
@@ -40,23 +40,23 @@ export interface RawBlockchainApiInterface {
      * @throws {RequiredError}
      * @memberof RawBlockchainApiInterface
      */
-    getAccountRaw(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Account>>;
+    getAccountRaw(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Account>>;
     /**
      * Get all info about account address
      */
-    getAccount(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Account>;
+    getAccount(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account>;
     /**
-     * Get block by root hash
-     * @param {string} blockHash block root hash in hex (without 0x) or base64url format
+     * Get block by id
+     * @param {string} blockId block id
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RawBlockchainApiInterface
      */
-    getBlockByHashRaw(requestParameters: GetBlockByHashRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Block>>;
+    getBlockByIdRaw(requestParameters: GetBlockByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Block>>;
     /**
-     * Get block by root hash
+     * Get block by id
      */
-    getBlockByHash(requestParameters: GetBlockByHashRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Block>;
+    getBlockById(requestParameters: GetBlockByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Block>;
     /**
      * Get transaction by hash
      * @param {string} hash transaction hash in hex (without 0x) or base64url format
@@ -64,11 +64,11 @@ export interface RawBlockchainApiInterface {
      * @throws {RequiredError}
      * @memberof RawBlockchainApiInterface
      */
-    getTransactionRaw(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Transaction>>;
+    getTransactionRaw(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transaction>>;
     /**
      * Get transaction by hash
      */
-    getTransaction(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Transaction>;
+    getTransaction(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transaction>;
     /**
      * Get transactions by account address
      * @param {string} [account] address in raw (hex without 0x) or base64url format
@@ -79,11 +79,11 @@ export interface RawBlockchainApiInterface {
      * @throws {RequiredError}
      * @memberof RawBlockchainApiInterface
      */
-    getTransactionsRaw(requestParameters: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Transactions>>;
+    getTransactionsRaw(requestParameters: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transactions>>;
     /**
      * Get transactions by account address
      */
-    getTransactions(requestParameters: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Transactions>;
+    getTransactions(requestParameters: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transactions>;
 }
 /**
  *
@@ -92,33 +92,33 @@ export declare class RawBlockchainApi extends runtime.BaseAPI implements RawBloc
     /**
      * Get all info about account address
      */
-    getAccountRaw(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Account>>;
+    getAccountRaw(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Account>>;
     /**
      * Get all info about account address
      */
-    getAccount(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Account>;
+    getAccount(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account>;
     /**
-     * Get block by root hash
+     * Get block by id
      */
-    getBlockByHashRaw(requestParameters: GetBlockByHashRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Block>>;
+    getBlockByIdRaw(requestParameters: GetBlockByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Block>>;
     /**
-     * Get block by root hash
+     * Get block by id
      */
-    getBlockByHash(requestParameters: GetBlockByHashRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Block>;
-    /**
-     * Get transaction by hash
-     */
-    getTransactionRaw(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Transaction>>;
+    getBlockById(requestParameters: GetBlockByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Block>;
     /**
      * Get transaction by hash
      */
-    getTransaction(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Transaction>;
+    getTransactionRaw(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transaction>>;
+    /**
+     * Get transaction by hash
+     */
+    getTransaction(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transaction>;
     /**
      * Get transactions by account address
      */
-    getTransactionsRaw(requestParameters: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Transactions>>;
+    getTransactionsRaw(requestParameters: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transactions>>;
     /**
      * Get transactions by account address
      */
-    getTransactions(requestParameters?: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Transactions>;
+    getTransactions(requestParameters?: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transactions>;
 }

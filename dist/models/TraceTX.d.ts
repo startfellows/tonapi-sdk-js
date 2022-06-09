@@ -28,7 +28,7 @@ export interface TraceTX {
      * @type {string}
      * @memberof TraceTX
      */
-    blockHash: string;
+    blockId: string;
     /**
      *
      * @type {number}

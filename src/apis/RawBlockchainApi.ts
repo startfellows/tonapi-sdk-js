@@ -33,8 +33,8 @@ export interface GetAccountRequest {
     account: string;
 }
 
-export interface GetBlockByHashRequest {
-    blockHash: string;
+export interface GetBlockByIdRequest {
+    blockId: string;
 }
 
 export interface GetTransactionRequest {
@@ -62,26 +62,26 @@ export interface RawBlockchainApiInterface {
      * @throws {RequiredError}
      * @memberof RawBlockchainApiInterface
      */
-    getAccountRaw(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Account>>;
+    getAccountRaw(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Account>>;
 
     /**
      * Get all info about account address
      */
-    getAccount(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Account>;
+    getAccount(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account>;
 
     /**
-     * Get block by root hash
-     * @param {string} blockHash block root hash in hex (without 0x) or base64url format
+     * Get block by id
+     * @param {string} blockId block id
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RawBlockchainApiInterface
      */
-    getBlockByHashRaw(requestParameters: GetBlockByHashRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Block>>;
+    getBlockByIdRaw(requestParameters: GetBlockByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Block>>;
 
     /**
-     * Get block by root hash
+     * Get block by id
      */
-    getBlockByHash(requestParameters: GetBlockByHashRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Block>;
+    getBlockById(requestParameters: GetBlockByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Block>;
 
     /**
      * Get transaction by hash
@@ -90,12 +90,12 @@ export interface RawBlockchainApiInterface {
      * @throws {RequiredError}
      * @memberof RawBlockchainApiInterface
      */
-    getTransactionRaw(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Transaction>>;
+    getTransactionRaw(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transaction>>;
 
     /**
      * Get transaction by hash
      */
-    getTransaction(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Transaction>;
+    getTransaction(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transaction>;
 
     /**
      * Get transactions by account address
@@ -107,12 +107,12 @@ export interface RawBlockchainApiInterface {
      * @throws {RequiredError}
      * @memberof RawBlockchainApiInterface
      */
-    getTransactionsRaw(requestParameters: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Transactions>>;
+    getTransactionsRaw(requestParameters: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transactions>>;
 
     /**
      * Get transactions by account address
      */
-    getTransactions(requestParameters: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Transactions>;
+    getTransactions(requestParameters: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transactions>;
 
 }
 
@@ -124,7 +124,7 @@ export class RawBlockchainApi extends runtime.BaseAPI implements RawBlockchainAp
     /**
      * Get all info about account address
      */
-    async getAccountRaw(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Account>> {
+    async getAccountRaw(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Account>> {
         if (requestParameters.account === null || requestParameters.account === undefined) {
             throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getAccount.');
         }
@@ -158,23 +158,23 @@ export class RawBlockchainApi extends runtime.BaseAPI implements RawBlockchainAp
     /**
      * Get all info about account address
      */
-    async getAccount(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Account> {
+    async getAccount(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account> {
         const response = await this.getAccountRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Get block by root hash
+     * Get block by id
      */
-    async getBlockByHashRaw(requestParameters: GetBlockByHashRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Block>> {
-        if (requestParameters.blockHash === null || requestParameters.blockHash === undefined) {
-            throw new runtime.RequiredError('blockHash','Required parameter requestParameters.blockHash was null or undefined when calling getBlockByHash.');
+    async getBlockByIdRaw(requestParameters: GetBlockByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Block>> {
+        if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
+            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getBlockById.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.blockHash !== undefined) {
-            queryParameters['blockHash'] = requestParameters.blockHash;
+        if (requestParameters.blockId !== undefined) {
+            queryParameters['blockId'] = requestParameters.blockId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -198,17 +198,17 @@ export class RawBlockchainApi extends runtime.BaseAPI implements RawBlockchainAp
     }
 
     /**
-     * Get block by root hash
+     * Get block by id
      */
-    async getBlockByHash(requestParameters: GetBlockByHashRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Block> {
-        const response = await this.getBlockByHashRaw(requestParameters, initOverrides);
+    async getBlockById(requestParameters: GetBlockByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Block> {
+        const response = await this.getBlockByIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      * Get transaction by hash
      */
-    async getTransactionRaw(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Transaction>> {
+    async getTransactionRaw(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transaction>> {
         if (requestParameters.hash === null || requestParameters.hash === undefined) {
             throw new runtime.RequiredError('hash','Required parameter requestParameters.hash was null or undefined when calling getTransaction.');
         }
@@ -242,7 +242,7 @@ export class RawBlockchainApi extends runtime.BaseAPI implements RawBlockchainAp
     /**
      * Get transaction by hash
      */
-    async getTransaction(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Transaction> {
+    async getTransaction(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transaction> {
         const response = await this.getTransactionRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -250,7 +250,7 @@ export class RawBlockchainApi extends runtime.BaseAPI implements RawBlockchainAp
     /**
      * Get transactions by account address
      */
-    async getTransactionsRaw(requestParameters: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Transactions>> {
+    async getTransactionsRaw(requestParameters: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transactions>> {
         const queryParameters: any = {};
 
         if (requestParameters.account !== undefined) {
@@ -292,7 +292,7 @@ export class RawBlockchainApi extends runtime.BaseAPI implements RawBlockchainAp
     /**
      * Get transactions by account address
      */
-    async getTransactions(requestParameters: GetTransactionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Transactions> {
+    async getTransactions(requestParameters: GetTransactionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transactions> {
         const response = await this.getTransactionsRaw(requestParameters, initOverrides);
         return await response.value();
     }

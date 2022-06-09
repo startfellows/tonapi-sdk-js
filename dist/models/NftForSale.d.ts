@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import { NftItem } from './NftItem';
+import { Sale } from './Sale';
 /**
  *
  * @export
@@ -24,6 +25,12 @@ export interface NftForSale {
     nft: NftItem;
     /**
      *
+     * @type {Sale}
+     * @memberof NftForSale
+     */
+    sale: Sale;
+    /**
+     * deprecated
      * @type {string}
      * @memberof NftForSale
      */

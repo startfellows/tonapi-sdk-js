@@ -27,10 +27,10 @@ export interface Wallet {
     address: string;
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof Wallet
      */
-    tag: string;
+    interfaces: Array<string>;
 }
 
 export function WalletFromJSON(json: any): Wallet {
@@ -44,7 +44,7 @@ export function WalletFromJSONTyped(json: any, ignoreDiscriminator: boolean): Wa
     return {
         
         'address': json['address'],
-        'tag': json['tag'],
+        'interfaces': json['interfaces'],
     };
 }
 
@@ -58,7 +58,7 @@ export function WalletToJSON(value?: Wallet | null): any {
     return {
         
         'address': value.address,
-        'tag': value.tag,
+        'interfaces': value.interfaces,
     };
 }
 

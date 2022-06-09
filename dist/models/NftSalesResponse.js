@@ -27,6 +27,7 @@ function NftSalesResponseFromJSONTyped(json, ignoreDiscriminator) {
     return {
         'disintar': !(0, runtime_1.exists)(json, 'disintar') ? undefined : (json['disintar'].map(NftForSale_1.NftForSaleFromJSON)),
         'getgems': !(0, runtime_1.exists)(json, 'getgems') ? undefined : (json['getgems'].map(NftForSale_1.NftForSaleFromJSON)),
+        'other': !(0, runtime_1.exists)(json, 'other') ? undefined : (json['other'].map(NftForSale_1.NftForSaleFromJSON)),
     };
 }
 exports.NftSalesResponseFromJSONTyped = NftSalesResponseFromJSONTyped;
@@ -40,6 +41,7 @@ function NftSalesResponseToJSON(value) {
     return {
         'disintar': value.disintar === undefined ? undefined : (value.disintar.map(NftForSale_1.NftForSaleToJSON)),
         'getgems': value.getgems === undefined ? undefined : (value.getgems.map(NftForSale_1.NftForSaleToJSON)),
+        'other': value.other === undefined ? undefined : (value.other.map(NftForSale_1.NftForSaleToJSON)),
     };
 }
 exports.NftSalesResponseToJSON = NftSalesResponseToJSON;

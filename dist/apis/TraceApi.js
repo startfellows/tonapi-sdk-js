@@ -34,12 +34,12 @@ class TraceApi extends runtime.BaseAPI {
      */
     getTraceRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (requestParameters.traceId === null || requestParameters.traceId === undefined) {
-                throw new runtime.RequiredError('traceId', 'Required parameter requestParameters.traceId was null or undefined when calling getTrace.');
+            if (requestParameters.hash === null || requestParameters.hash === undefined) {
+                throw new runtime.RequiredError('hash', 'Required parameter requestParameters.hash was null or undefined when calling getTrace.');
             }
             const queryParameters = {};
-            if (requestParameters.traceId !== undefined) {
-                queryParameters['traceId'] = requestParameters.traceId;
+            if (requestParameters.hash !== undefined) {
+                queryParameters['hash'] = requestParameters.hash;
             }
             const headerParameters = {};
             if (this.configuration && this.configuration.accessToken) {
@@ -78,6 +78,9 @@ class TraceApi extends runtime.BaseAPI {
             const queryParameters = {};
             if (requestParameters.account !== undefined) {
                 queryParameters['account'] = requestParameters.account;
+            }
+            if (requestParameters.limit !== undefined) {
+                queryParameters['limit'] = requestParameters.limit;
             }
             const headerParameters = {};
             if (this.configuration && this.configuration.accessToken) {

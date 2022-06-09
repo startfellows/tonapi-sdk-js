@@ -26,7 +26,7 @@ function TraceTXFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'annotations': (json['annotations'].map(TxAnnotation_1.TxAnnotationFromJSON)),
-        'blockHash': json['block_hash'],
+        'blockId': json['block_id'],
         'fee': json['fee'],
         'hash': json['hash'],
         'lt': json['lt'],
@@ -46,7 +46,7 @@ function TraceTXToJSON(value) {
     }
     return {
         'annotations': (value.annotations.map(TxAnnotation_1.TxAnnotationToJSON)),
-        'block_hash': value.blockHash,
+        'block_id': value.blockId,
         'fee': value.fee,
         'hash': value.hash,
         'lt': value.lt,

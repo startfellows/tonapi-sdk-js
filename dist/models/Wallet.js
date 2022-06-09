@@ -24,7 +24,7 @@ function WalletFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'address': json['address'],
-        'tag': json['tag'],
+        'interfaces': json['interfaces'],
     };
 }
 exports.WalletFromJSONTyped = WalletFromJSONTyped;
@@ -37,7 +37,7 @@ function WalletToJSON(value) {
     }
     return {
         'address': value.address,
-        'tag': value.tag,
+        'interfaces': value.interfaces,
     };
 }
 exports.WalletToJSON = WalletToJSON;

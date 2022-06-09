@@ -30,11 +30,11 @@ export interface AnnotationApiInterface {
      * @throws {RequiredError}
      * @memberof AnnotationApiInterface
      */
-    getAnnotationsByAccountRaw(requestParameters: GetAnnotationsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Annotations>>;
+    getAnnotationsByAccountRaw(requestParameters: GetAnnotationsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Annotations>>;
     /**
      * Get annotations for account
      */
-    getAnnotationsByAccount(requestParameters: GetAnnotationsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Annotations>;
+    getAnnotationsByAccount(requestParameters: GetAnnotationsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Annotations>;
 }
 /**
  *
@@ -43,9 +43,9 @@ export declare class AnnotationApi extends runtime.BaseAPI implements Annotation
     /**
      * Get annotations for account
      */
-    getAnnotationsByAccountRaw(requestParameters: GetAnnotationsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Annotations>>;
+    getAnnotationsByAccountRaw(requestParameters: GetAnnotationsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Annotations>>;
     /**
      * Get annotations for account
      */
-    getAnnotationsByAccount(requestParameters: GetAnnotationsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Annotations>;
+    getAnnotationsByAccount(requestParameters: GetAnnotationsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Annotations>;
 }

@@ -28,6 +28,12 @@ export interface NftSalesResponse {
      * @memberof NftSalesResponse
      */
     getgems?: Array<NftForSale>;
+    /**
+     *
+     * @type {Array<NftForSale>}
+     * @memberof NftSalesResponse
+     */
+    other?: Array<NftForSale>;
 }
 export declare function NftSalesResponseFromJSON(json: any): NftSalesResponse;
 export declare function NftSalesResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftSalesResponse;

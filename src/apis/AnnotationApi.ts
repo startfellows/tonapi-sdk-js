@@ -40,12 +40,12 @@ export interface AnnotationApiInterface {
      * @throws {RequiredError}
      * @memberof AnnotationApiInterface
      */
-    getAnnotationsByAccountRaw(requestParameters: GetAnnotationsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Annotations>>;
+    getAnnotationsByAccountRaw(requestParameters: GetAnnotationsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Annotations>>;
 
     /**
      * Get annotations for account
      */
-    getAnnotationsByAccount(requestParameters: GetAnnotationsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Annotations>;
+    getAnnotationsByAccount(requestParameters: GetAnnotationsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Annotations>;
 
 }
 
@@ -57,7 +57,7 @@ export class AnnotationApi extends runtime.BaseAPI implements AnnotationApiInter
     /**
      * Get annotations for account
      */
-    async getAnnotationsByAccountRaw(requestParameters: GetAnnotationsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Annotations>> {
+    async getAnnotationsByAccountRaw(requestParameters: GetAnnotationsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Annotations>> {
         if (requestParameters.account === null || requestParameters.account === undefined) {
             throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getAnnotationsByAccount.');
         }
@@ -95,7 +95,7 @@ export class AnnotationApi extends runtime.BaseAPI implements AnnotationApiInter
     /**
      * Get annotations for account
      */
-    async getAnnotationsByAccount(requestParameters: GetAnnotationsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Annotations> {
+    async getAnnotationsByAccount(requestParameters: GetAnnotationsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Annotations> {
         const response = await this.getAnnotationsByAccountRaw(requestParameters, initOverrides);
         return await response.value();
     }

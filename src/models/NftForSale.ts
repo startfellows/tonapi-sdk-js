@@ -19,6 +19,12 @@ import {
     NftItemFromJSONTyped,
     NftItemToJSON,
 } from './NftItem';
+import {
+    Sale,
+    SaleFromJSON,
+    SaleFromJSONTyped,
+    SaleToJSON,
+} from './Sale';
 
 /**
  * 
@@ -34,6 +40,12 @@ export interface NftForSale {
     nft: NftItem;
     /**
      * 
+     * @type {Sale}
+     * @memberof NftForSale
+     */
+    sale: Sale;
+    /**
+     * deprecated
      * @type {string}
      * @memberof NftForSale
      */
@@ -51,6 +63,7 @@ export function NftForSaleFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     return {
         
         'nft': NftItemFromJSON(json['nft']),
+        'sale': SaleFromJSON(json['sale']),
         'saleContract': json['sale_contract'],
     };
 }
@@ -65,6 +78,7 @@ export function NftForSaleToJSON(value?: NftForSale | null): any {
     return {
         
         'nft': NftItemToJSON(value.nft),
+        'sale': SaleToJSON(value.sale),
         'sale_contract': value.saleContract,
     };
 }

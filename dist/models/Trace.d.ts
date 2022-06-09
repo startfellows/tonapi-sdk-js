@@ -21,6 +21,12 @@ export interface Trace {
      * @memberof Trace
      */
     id: string;
+    /**
+     *
+     * @type {number}
+     * @memberof Trace
+     */
+    utime: number;
 }
 export declare function TraceFromJSON(json: any): Trace;
 export declare function TraceFromJSONTyped(json: any, ignoreDiscriminator: boolean): Trace;

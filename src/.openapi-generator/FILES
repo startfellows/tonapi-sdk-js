@@ -1,8 +1,8 @@
-.openapi-generator-ignore
 apis/AnnotationApi.ts
 apis/JettonApi.ts
 apis/NFTApi.ts
 apis/RawBlockchainApi.ts
+apis/SubscriptionApi.ts
 apis/TraceApi.ts
 apis/WalletApi.ts
 apis/index.ts
@@ -23,6 +23,9 @@ models/NftForSale.ts
 models/NftItem.ts
 models/NftItems.ts
 models/NftSalesResponse.ts
+models/Sale.ts
+models/Subscription.ts
+models/Subscriptions.ts
 models/Trace.ts
 models/TraceMsg.ts
 models/TraceTX.ts

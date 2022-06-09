@@ -13,42 +13,49 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import {
+    AccountAddress,
+    AccountAddressFromJSON,
+    AccountAddressFromJSONTyped,
+    AccountAddressToJSON,
+} from './AccountAddress';
+
 /**
  * 
  * @export
- * @interface Trace
+ * @interface Sale
  */
-export interface Trace {
+export interface Sale {
     /**
      * 
      * @type {string}
-     * @memberof Trace
+     * @memberof Sale
      */
-    id: string;
+    address: string;
     /**
      * 
-     * @type {number}
-     * @memberof Trace
+     * @type {AccountAddress}
+     * @memberof Sale
      */
-    utime: number;
+    market: AccountAddress;
 }
 
-export function TraceFromJSON(json: any): Trace {
-    return TraceFromJSONTyped(json, false);
+export function SaleFromJSON(json: any): Sale {
+    return SaleFromJSONTyped(json, false);
 }
 
-export function TraceFromJSONTyped(json: any, ignoreDiscriminator: boolean): Trace {
+export function SaleFromJSONTyped(json: any, ignoreDiscriminator: boolean): Sale {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'id': json['id'],
-        'utime': json['utime'],
+        'address': json['address'],
+        'market': AccountAddressFromJSON(json['market']),
     };
 }
 
-export function TraceToJSON(value?: Trace | null): any {
+export function SaleToJSON(value?: Sale | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -57,8 +64,8 @@ export function TraceToJSON(value?: Trace | null): any {
     }
     return {
         
-        'id': value.id,
-        'utime': value.utime,
+        'address': value.address,
+        'market': AccountAddressToJSON(value.market),
     };
 }
 

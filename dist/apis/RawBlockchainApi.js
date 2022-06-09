@@ -68,16 +68,16 @@ class RawBlockchainApi extends runtime.BaseAPI {
         });
     }
     /**
-     * Get block by root hash
+     * Get block by id
      */
-    getBlockByHashRaw(requestParameters, initOverrides) {
+    getBlockByIdRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (requestParameters.blockHash === null || requestParameters.blockHash === undefined) {
-                throw new runtime.RequiredError('blockHash', 'Required parameter requestParameters.blockHash was null or undefined when calling getBlockByHash.');
+            if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
+                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getBlockById.');
             }
             const queryParameters = {};
-            if (requestParameters.blockHash !== undefined) {
-                queryParameters['blockHash'] = requestParameters.blockHash;
+            if (requestParameters.blockId !== undefined) {
+                queryParameters['blockId'] = requestParameters.blockId;
             }
             const headerParameters = {};
             if (this.configuration && this.configuration.accessToken) {
@@ -97,11 +97,11 @@ class RawBlockchainApi extends runtime.BaseAPI {
         });
     }
     /**
-     * Get block by root hash
+     * Get block by id
      */
-    getBlockByHash(requestParameters, initOverrides) {
+    getBlockById(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getBlockByHashRaw(requestParameters, initOverrides);
+            const response = yield this.getBlockByIdRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }

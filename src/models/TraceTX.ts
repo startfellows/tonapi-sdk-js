@@ -43,7 +43,7 @@ export interface TraceTX {
      * @type {string}
      * @memberof TraceTX
      */
-    blockHash: string;
+    blockId: string;
     /**
      * 
      * @type {number}
@@ -99,7 +99,7 @@ export function TraceTXFromJSONTyped(json: any, ignoreDiscriminator: boolean): T
     return {
         
         'annotations': ((json['annotations'] as Array<any>).map(TxAnnotationFromJSON)),
-        'blockHash': json['block_hash'],
+        'blockId': json['block_id'],
         'fee': json['fee'],
         'hash': json['hash'],
         'lt': json['lt'],
@@ -120,7 +120,7 @@ export function TraceTXToJSON(value?: TraceTX | null): any {
     return {
         
         'annotations': ((value.annotations as Array<any>).map(TxAnnotationToJSON)),
-        'block_hash': value.blockHash,
+        'block_id': value.blockId,
         'fee': value.fee,
         'hash': value.hash,
         'lt': value.lt,
