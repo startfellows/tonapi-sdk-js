@@ -13,8 +13,17 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TracesToJSON = exports.TracesFromJSONTyped = exports.TracesFromJSON = void 0;
+exports.TracesToJSON = exports.TracesFromJSONTyped = exports.TracesFromJSON = exports.instanceOfTraces = void 0;
 const Trace_1 = require("./Trace");
+/**
+ * Check if a given object implements the Traces interface.
+ */
+function instanceOfTraces(value) {
+    let isInstance = true;
+    isInstance = isInstance && "traces" in value;
+    return isInstance;
+}
+exports.instanceOfTraces = instanceOfTraces;
 function TracesFromJSON(json) {
     return TracesFromJSONTyped(json, false);
 }

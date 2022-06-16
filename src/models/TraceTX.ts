@@ -88,6 +88,24 @@ export interface TraceTX {
     utime: number;
 }
 
+/**
+ * Check if a given object implements the TraceTX interface.
+ */
+export function instanceOfTraceTX(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "annotations" in value;
+    isInstance = isInstance && "blockId" in value;
+    isInstance = isInstance && "fee" in value;
+    isInstance = isInstance && "hash" in value;
+    isInstance = isInstance && "lt" in value;
+    isInstance = isInstance && "otherFee" in value;
+    isInstance = isInstance && "outMsgs" in value;
+    isInstance = isInstance && "storageFee" in value;
+    isInstance = isInstance && "utime" in value;
+
+    return isInstance;
+}
+
 export function TraceTXFromJSON(json: any): TraceTX {
     return TraceTXFromJSONTyped(json, false);
 }

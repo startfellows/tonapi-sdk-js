@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { NftCollection, NftCollections, NftItem, NftItems, NftSalesResponse } from '../models';
+import { NftCollection, NftCollections, NftItem, NftItems, NftItemsRepr, NftSalesResponse } from '../models';
 export interface GetNftCollectionRequest {
     account: string;
 }
@@ -25,6 +25,13 @@ export interface GetNftItemsByCollectionAddressRequest {
 }
 export interface GetNftItemsByOwnerAddressRequest {
     account: string;
+}
+export interface SearchNFTItemsRequest {
+    limit: number;
+    offset: number;
+    owner?: string;
+    collection?: string;
+    includeOnSale?: boolean;
 }
 /**
  * NFTApi - interface
@@ -104,6 +111,22 @@ export interface NFTApiInterface {
      * Get all NFT items by owner address
      */
     getNftItemsByOwnerAddress(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems>;
+    /**
+     * Get all NFT items from collection by collection address
+     * @param {number} limit address in raw (hex without 0x) or base64url format
+     * @param {number} offset address in raw (hex without 0x) or base64url format
+     * @param {string} [owner] address in raw (hex without 0x) or base64url format or word \&#39;no\&#39; for items without owner
+     * @param {string} [collection] address in raw (hex without 0x) or base64url format or word \&#39;no\&#39; for items without collection
+     * @param {boolean} [includeOnSale] include nft items which are currently are on market
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NFTApiInterface
+     */
+    searchNFTItemsRaw(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItemsRepr>>;
+    /**
+     * Get all NFT items from collection by collection address
+     */
+    searchNFTItems(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItemsRepr>;
 }
 /**
  *
@@ -157,4 +180,12 @@ export declare class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
      * Get all NFT items by owner address
      */
     getNftItemsByOwnerAddress(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems>;
+    /**
+     * Get all NFT items from collection by collection address
+     */
+    searchNFTItemsRaw(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItemsRepr>>;
+    /**
+     * Get all NFT items from collection by collection address
+     */
+    searchNFTItems(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItemsRepr>;
 }

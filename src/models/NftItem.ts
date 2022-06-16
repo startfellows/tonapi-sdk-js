@@ -76,6 +76,20 @@ export interface NftItem {
     verified: boolean;
 }
 
+/**
+ * Check if a given object implements the NftItem interface.
+ */
+export function instanceOfNftItem(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "index" in value;
+    isInstance = isInstance && "init" in value;
+    isInstance = isInstance && "rawIndividualContent" in value;
+    isInstance = isInstance && "verified" in value;
+
+    return isInstance;
+}
+
 export function NftItemFromJSON(json: any): NftItem {
     return NftItemFromJSONTyped(json, false);
 }

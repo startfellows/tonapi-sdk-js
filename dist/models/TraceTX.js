@@ -13,9 +13,26 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TraceTXToJSON = exports.TraceTXFromJSONTyped = exports.TraceTXFromJSON = void 0;
+exports.TraceTXToJSON = exports.TraceTXFromJSONTyped = exports.TraceTXFromJSON = exports.instanceOfTraceTX = void 0;
 const TraceMsg_1 = require("./TraceMsg");
 const TxAnnotation_1 = require("./TxAnnotation");
+/**
+ * Check if a given object implements the TraceTX interface.
+ */
+function instanceOfTraceTX(value) {
+    let isInstance = true;
+    isInstance = isInstance && "annotations" in value;
+    isInstance = isInstance && "blockId" in value;
+    isInstance = isInstance && "fee" in value;
+    isInstance = isInstance && "hash" in value;
+    isInstance = isInstance && "lt" in value;
+    isInstance = isInstance && "otherFee" in value;
+    isInstance = isInstance && "outMsgs" in value;
+    isInstance = isInstance && "storageFee" in value;
+    isInstance = isInstance && "utime" in value;
+    return isInstance;
+}
+exports.instanceOfTraceTX = instanceOfTraceTX;
 function TraceTXFromJSON(json) {
     return TraceTXFromJSONTyped(json, false);
 }

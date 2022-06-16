@@ -35,6 +35,10 @@ export interface TxAnnotation {
      */
     name: string;
 }
+/**
+ * Check if a given object implements the TxAnnotation interface.
+ */
+export declare function instanceOfTxAnnotation(value: object): boolean;
 export declare function TxAnnotationFromJSON(json: any): TxAnnotation;
 export declare function TxAnnotationFromJSONTyped(json: any, ignoreDiscriminator: boolean): TxAnnotation;
 export declare function TxAnnotationToJSON(value?: TxAnnotation | null): any;

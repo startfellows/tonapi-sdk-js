@@ -13,8 +13,19 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JettonBalanceToJSON = exports.JettonBalanceFromJSONTyped = exports.JettonBalanceFromJSON = void 0;
+exports.JettonBalanceToJSON = exports.JettonBalanceFromJSONTyped = exports.JettonBalanceFromJSON = exports.instanceOfJettonBalance = void 0;
 const AccountAddress_1 = require("./AccountAddress");
+/**
+ * Check if a given object implements the JettonBalance interface.
+ */
+function instanceOfJettonBalance(value) {
+    let isInstance = true;
+    isInstance = isInstance && "balance" in value;
+    isInstance = isInstance && "jettonAddress" in value;
+    isInstance = isInstance && "walletAddress" in value;
+    return isInstance;
+}
+exports.instanceOfJettonBalance = instanceOfJettonBalance;
 function JettonBalanceFromJSON(json) {
     return JettonBalanceFromJSONTyped(json, false);
 }

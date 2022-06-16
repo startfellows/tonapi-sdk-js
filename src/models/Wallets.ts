@@ -34,6 +34,16 @@ export interface Wallets {
     wallets: Array<Wallet>;
 }
 
+/**
+ * Check if a given object implements the Wallets interface.
+ */
+export function instanceOfWallets(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "wallets" in value;
+
+    return isInstance;
+}
+
 export function WalletsFromJSON(json: any): Wallets {
     return WalletsFromJSONTyped(json, false);
 }

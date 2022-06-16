@@ -46,6 +46,18 @@ export interface TxAnnotation {
     name: string;
 }
 
+/**
+ * Check if a given object implements the TxAnnotation interface.
+ */
+export function instanceOfTxAnnotation(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "data" in value;
+    isInstance = isInstance && "name" in value;
+
+    return isInstance;
+}
+
 export function TxAnnotationFromJSON(json: any): TxAnnotation {
     return TxAnnotationFromJSONTyped(json, false);
 }

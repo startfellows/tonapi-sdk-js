@@ -13,8 +13,19 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TxAnnotationToJSON = exports.TxAnnotationFromJSONTyped = exports.TxAnnotationFromJSON = void 0;
+exports.TxAnnotationToJSON = exports.TxAnnotationFromJSONTyped = exports.TxAnnotationFromJSON = exports.instanceOfTxAnnotation = void 0;
 const AccountAddress_1 = require("./AccountAddress");
+/**
+ * Check if a given object implements the TxAnnotation interface.
+ */
+function instanceOfTxAnnotation(value) {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "data" in value;
+    isInstance = isInstance && "name" in value;
+    return isInstance;
+}
+exports.instanceOfTxAnnotation = instanceOfTxAnnotation;
 function TxAnnotationFromJSON(json) {
     return TxAnnotationFromJSONTyped(json, false);
 }

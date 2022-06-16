@@ -34,6 +34,16 @@ export interface JettonsBalances {
     balances: Array<JettonBalance>;
 }
 
+/**
+ * Check if a given object implements the JettonsBalances interface.
+ */
+export function instanceOfJettonsBalances(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "balances" in value;
+
+    return isInstance;
+}
+
 export function JettonsBalancesFromJSON(json: any): JettonsBalances {
     return JettonsBalancesFromJSONTyped(json, false);
 }

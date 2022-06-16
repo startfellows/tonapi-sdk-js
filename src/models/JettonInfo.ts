@@ -39,6 +39,18 @@ export interface JettonInfo {
     totalSupply: string;
 }
 
+/**
+ * Check if a given object implements the JettonInfo interface.
+ */
+export function instanceOfJettonInfo(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "metadata" in value;
+    isInstance = isInstance && "mintable" in value;
+    isInstance = isInstance && "totalSupply" in value;
+
+    return isInstance;
+}
+
 export function JettonInfoFromJSON(json: any): JettonInfo {
     return JettonInfoFromJSONTyped(json, false);
 }

@@ -35,6 +35,10 @@ export interface JettonBalance {
      */
     walletAddress: AccountAddress;
 }
+/**
+ * Check if a given object implements the JettonBalance interface.
+ */
+export declare function instanceOfJettonBalance(value: object): boolean;
 export declare function JettonBalanceFromJSON(json: any): JettonBalance;
 export declare function JettonBalanceFromJSONTyped(json: any, ignoreDiscriminator: boolean): JettonBalance;
 export declare function JettonBalanceToJSON(value?: JettonBalance | null): any;

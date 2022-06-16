@@ -251,5 +251,58 @@ class NFTApi extends runtime.BaseAPI {
             return yield response.value();
         });
     }
+    /**
+     * Get all NFT items from collection by collection address
+     */
+    searchNFTItemsRaw(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (requestParameters.limit === null || requestParameters.limit === undefined) {
+                throw new runtime.RequiredError('limit', 'Required parameter requestParameters.limit was null or undefined when calling searchNFTItems.');
+            }
+            if (requestParameters.offset === null || requestParameters.offset === undefined) {
+                throw new runtime.RequiredError('offset', 'Required parameter requestParameters.offset was null or undefined when calling searchNFTItems.');
+            }
+            const queryParameters = {};
+            if (requestParameters.owner !== undefined) {
+                queryParameters['owner'] = requestParameters.owner;
+            }
+            if (requestParameters.collection !== undefined) {
+                queryParameters['collection'] = requestParameters.collection;
+            }
+            if (requestParameters.includeOnSale !== undefined) {
+                queryParameters['include_on_sale'] = requestParameters.includeOnSale;
+            }
+            if (requestParameters.limit !== undefined) {
+                queryParameters['limit'] = requestParameters.limit;
+            }
+            if (requestParameters.offset !== undefined) {
+                queryParameters['offset'] = requestParameters.offset;
+            }
+            const headerParameters = {};
+            if (this.configuration && this.configuration.accessToken) {
+                const token = this.configuration.accessToken;
+                const tokenString = yield token("JWTAuth", []);
+                if (tokenString) {
+                    headerParameters["Authorization"] = `Bearer ${tokenString}`;
+                }
+            }
+            const response = yield this.request({
+                path: `/v1/nft/searchItems`,
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, models_1.NftItemsReprFromJSON)(jsonValue));
+        });
+    }
+    /**
+     * Get all NFT items from collection by collection address
+     */
+    searchNFTItems(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.searchNFTItemsRaw(requestParameters, initOverrides);
+            return yield response.value();
+        });
+    }
 }
 exports.NFTApi = NFTApi;

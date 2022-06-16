@@ -63,6 +63,22 @@ export interface Block {
     workchainId: number;
 }
 
+/**
+ * Check if a given object implements the Block interface.
+ */
+export function instanceOfBlock(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "endLt" in value;
+    isInstance = isInstance && "fileHash" in value;
+    isInstance = isInstance && "rootHash" in value;
+    isInstance = isInstance && "seqno" in value;
+    isInstance = isInstance && "shard" in value;
+    isInstance = isInstance && "startLt" in value;
+    isInstance = isInstance && "workchainId" in value;
+
+    return isInstance;
+}
+
 export function BlockFromJSON(json: any): Block {
     return BlockFromJSONTyped(json, false);
 }

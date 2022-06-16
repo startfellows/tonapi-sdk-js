@@ -82,6 +82,10 @@ export interface Subscription {
      */
     walletAddress: string;
 }
+/**
+ * Check if a given object implements the Subscription interface.
+ */
+export declare function instanceOfSubscription(value: object): boolean;
 export declare function SubscriptionFromJSON(json: any): Subscription;
 export declare function SubscriptionFromJSONTyped(json: any, ignoreDiscriminator: boolean): Subscription;
 export declare function SubscriptionToJSON(value?: Subscription | null): any;

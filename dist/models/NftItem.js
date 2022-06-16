@@ -13,9 +13,22 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NftItemToJSON = exports.NftItemFromJSONTyped = exports.NftItemFromJSON = void 0;
+exports.NftItemToJSON = exports.NftItemFromJSONTyped = exports.NftItemFromJSON = exports.instanceOfNftItem = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
+/**
+ * Check if a given object implements the NftItem interface.
+ */
+function instanceOfNftItem(value) {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "index" in value;
+    isInstance = isInstance && "init" in value;
+    isInstance = isInstance && "rawIndividualContent" in value;
+    isInstance = isInstance && "verified" in value;
+    return isInstance;
+}
+exports.instanceOfNftItem = instanceOfNftItem;
 function NftItemFromJSON(json) {
     return NftItemFromJSONTyped(json, false);
 }

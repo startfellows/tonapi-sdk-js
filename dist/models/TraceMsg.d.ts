@@ -66,6 +66,10 @@ export interface TraceMsg {
      */
     value: number;
 }
+/**
+ * Check if a given object implements the TraceMsg interface.
+ */
+export declare function instanceOfTraceMsg(value: object): boolean;
 export declare function TraceMsgFromJSON(json: any): TraceMsg;
 export declare function TraceMsgFromJSONTyped(json: any, ignoreDiscriminator: boolean): TraceMsg;
 export declare function TraceMsgToJSON(value?: TraceMsg | null): any;

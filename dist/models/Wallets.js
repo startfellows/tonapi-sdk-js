@@ -13,8 +13,17 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WalletsToJSON = exports.WalletsFromJSONTyped = exports.WalletsFromJSON = void 0;
+exports.WalletsToJSON = exports.WalletsFromJSONTyped = exports.WalletsFromJSON = exports.instanceOfWallets = void 0;
 const Wallet_1 = require("./Wallet");
+/**
+ * Check if a given object implements the Wallets interface.
+ */
+function instanceOfWallets(value) {
+    let isInstance = true;
+    isInstance = isInstance && "wallets" in value;
+    return isInstance;
+}
+exports.instanceOfWallets = instanceOfWallets;
 function WalletsFromJSON(json) {
     return WalletsFromJSONTyped(json, false);
 }

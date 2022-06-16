@@ -82,6 +82,21 @@ export interface TraceMsg {
     value: number;
 }
 
+/**
+ * Check if a given object implements the TraceMsg interface.
+ */
+export function instanceOfTraceMsg(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "createdLt" in value;
+    isInstance = isInstance && "destination" in value;
+    isInstance = isInstance && "fwdFee" in value;
+    isInstance = isInstance && "ihrFee" in value;
+    isInstance = isInstance && "source" in value;
+    isInstance = isInstance && "value" in value;
+
+    return isInstance;
+}
+
 export function TraceMsgFromJSON(json: any): TraceMsg {
     return TraceMsgFromJSONTyped(json, false);
 }

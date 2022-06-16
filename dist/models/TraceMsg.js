@@ -13,10 +13,24 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TraceMsgToJSON = exports.TraceMsgFromJSONTyped = exports.TraceMsgFromJSON = void 0;
+exports.TraceMsgToJSON = exports.TraceMsgFromJSONTyped = exports.TraceMsgFromJSON = exports.instanceOfTraceMsg = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
 const TraceTX_1 = require("./TraceTX");
+/**
+ * Check if a given object implements the TraceMsg interface.
+ */
+function instanceOfTraceMsg(value) {
+    let isInstance = true;
+    isInstance = isInstance && "createdLt" in value;
+    isInstance = isInstance && "destination" in value;
+    isInstance = isInstance && "fwdFee" in value;
+    isInstance = isInstance && "ihrFee" in value;
+    isInstance = isInstance && "source" in value;
+    isInstance = isInstance && "value" in value;
+    return isInstance;
+}
+exports.instanceOfTraceMsg = instanceOfTraceMsg;
 function TraceMsgFromJSON(json) {
     return TraceMsgFromJSONTyped(json, false);
 }

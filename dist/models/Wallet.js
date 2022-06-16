@@ -13,7 +13,19 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WalletToJSON = exports.WalletFromJSONTyped = exports.WalletFromJSON = void 0;
+exports.WalletToJSON = exports.WalletFromJSONTyped = exports.WalletFromJSON = exports.instanceOfWallet = void 0;
+/**
+ * Check if a given object implements the Wallet interface.
+ */
+function instanceOfWallet(value) {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "balance" in value;
+    isInstance = isInstance && "interfaces" in value;
+    isInstance = isInstance && "status" in value;
+    return isInstance;
+}
+exports.instanceOfWallet = instanceOfWallet;
 function WalletFromJSON(json) {
     return WalletFromJSONTyped(json, false);
 }
@@ -24,7 +36,9 @@ function WalletFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'address': json['address'],
+        'balance': json['balance'],
         'interfaces': json['interfaces'],
+        'status': json['status'],
     };
 }
 exports.WalletFromJSONTyped = WalletFromJSONTyped;
@@ -37,7 +51,9 @@ function WalletToJSON(value) {
     }
     return {
         'address': value.address,
+        'balance': value.balance,
         'interfaces': value.interfaces,
+        'status': value.status,
     };
 }
 exports.WalletToJSON = WalletToJSON;

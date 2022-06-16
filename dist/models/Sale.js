@@ -13,8 +13,21 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SaleToJSON = exports.SaleFromJSONTyped = exports.SaleFromJSON = void 0;
+exports.SaleToJSON = exports.SaleFromJSONTyped = exports.SaleFromJSON = exports.instanceOfSale = void 0;
+const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
+const Price_1 = require("./Price");
+/**
+ * Check if a given object implements the Sale interface.
+ */
+function instanceOfSale(value) {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "market" in value;
+    isInstance = isInstance && "price" in value;
+    return isInstance;
+}
+exports.instanceOfSale = instanceOfSale;
 function SaleFromJSON(json) {
     return SaleFromJSONTyped(json, false);
 }
@@ -26,6 +39,8 @@ function SaleFromJSONTyped(json, ignoreDiscriminator) {
     return {
         'address': json['address'],
         'market': (0, AccountAddress_1.AccountAddressFromJSON)(json['market']),
+        'owner': !(0, runtime_1.exists)(json, 'owner') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['owner']),
+        'price': (0, Price_1.PriceFromJSON)(json['price']),
     };
 }
 exports.SaleFromJSONTyped = SaleFromJSONTyped;
@@ -39,6 +54,8 @@ function SaleToJSON(value) {
     return {
         'address': value.address,
         'market': (0, AccountAddress_1.AccountAddressToJSON)(value.market),
+        'owner': (0, AccountAddress_1.AccountAddressToJSON)(value.owner),
+        'price': (0, Price_1.PriceToJSON)(value.price),
     };
 }
 exports.SaleToJSON = SaleToJSON;

@@ -13,9 +13,22 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MessageToJSON = exports.MessageFromJSONTyped = exports.MessageFromJSON = void 0;
+exports.MessageToJSON = exports.MessageFromJSONTyped = exports.MessageFromJSON = exports.instanceOfMessage = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
+/**
+ * Check if a given object implements the Message interface.
+ */
+function instanceOfMessage(value) {
+    let isInstance = true;
+    isInstance = isInstance && "createdLt" in value;
+    isInstance = isInstance && "fwdFee" in value;
+    isInstance = isInstance && "ihrFee" in value;
+    isInstance = isInstance && "msgData" in value;
+    isInstance = isInstance && "value" in value;
+    return isInstance;
+}
+exports.instanceOfMessage = instanceOfMessage;
 function MessageFromJSON(json) {
     return MessageFromJSONTyped(json, false);
 }

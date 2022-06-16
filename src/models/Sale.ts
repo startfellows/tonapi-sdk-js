@@ -19,6 +19,12 @@ import {
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
+import {
+    Price,
+    PriceFromJSON,
+    PriceFromJSONTyped,
+    PriceToJSON,
+} from './Price';
 
 /**
  * 
@@ -38,6 +44,30 @@ export interface Sale {
      * @memberof Sale
      */
     market: AccountAddress;
+    /**
+     * 
+     * @type {AccountAddress}
+     * @memberof Sale
+     */
+    owner?: AccountAddress;
+    /**
+     * 
+     * @type {Price}
+     * @memberof Sale
+     */
+    price: Price;
+}
+
+/**
+ * Check if a given object implements the Sale interface.
+ */
+export function instanceOfSale(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "market" in value;
+    isInstance = isInstance && "price" in value;
+
+    return isInstance;
 }
 
 export function SaleFromJSON(json: any): Sale {
@@ -52,6 +82,8 @@ export function SaleFromJSONTyped(json: any, ignoreDiscriminator: boolean): Sale
         
         'address': json['address'],
         'market': AccountAddressFromJSON(json['market']),
+        'owner': !exists(json, 'owner') ? undefined : AccountAddressFromJSON(json['owner']),
+        'price': PriceFromJSON(json['price']),
     };
 }
 
@@ -66,6 +98,8 @@ export function SaleToJSON(value?: Sale | null): any {
         
         'address': value.address,
         'market': AccountAddressToJSON(value.market),
+        'owner': AccountAddressToJSON(value.owner),
+        'price': PriceToJSON(value.price),
     };
 }
 

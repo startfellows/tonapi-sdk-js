@@ -13,8 +13,17 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AccountAddressToJSON = exports.AccountAddressFromJSONTyped = exports.AccountAddressFromJSON = void 0;
+exports.AccountAddressToJSON = exports.AccountAddressFromJSONTyped = exports.AccountAddressFromJSON = exports.instanceOfAccountAddress = void 0;
 const runtime_1 = require("../runtime");
+/**
+ * Check if a given object implements the AccountAddress interface.
+ */
+function instanceOfAccountAddress(value) {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    return isInstance;
+}
+exports.instanceOfAccountAddress = instanceOfAccountAddress;
 function AccountAddressFromJSON(json) {
     return AccountAddressFromJSONTyped(json, false);
 }

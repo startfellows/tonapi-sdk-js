@@ -13,7 +13,26 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SubscriptionToJSON = exports.SubscriptionFromJSONTyped = exports.SubscriptionFromJSON = void 0;
+exports.SubscriptionToJSON = exports.SubscriptionFromJSONTyped = exports.SubscriptionFromJSON = exports.instanceOfSubscription = void 0;
+/**
+ * Check if a given object implements the Subscription interface.
+ */
+function instanceOfSubscription(value) {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "amount" in value;
+    isInstance = isInstance && "beneficiaryAddress" in value;
+    isInstance = isInstance && "failedAttempts" in value;
+    isInstance = isInstance && "lastPaymentTime" in value;
+    isInstance = isInstance && "lastRequestTime" in value;
+    isInstance = isInstance && "period" in value;
+    isInstance = isInstance && "startTime" in value;
+    isInstance = isInstance && "subscriptionId" in value;
+    isInstance = isInstance && "timeout" in value;
+    isInstance = isInstance && "walletAddress" in value;
+    return isInstance;
+}
+exports.instanceOfSubscription = instanceOfSubscription;
 function SubscriptionFromJSON(json) {
     return SubscriptionFromJSONTyped(json, false);
 }

@@ -35,6 +35,10 @@ export interface NftSalesResponse {
      */
     other?: Array<NftForSale>;
 }
+/**
+ * Check if a given object implements the NftSalesResponse interface.
+ */
+export declare function instanceOfNftSalesResponse(value: object): boolean;
 export declare function NftSalesResponseFromJSON(json: any): NftSalesResponse;
 export declare function NftSalesResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftSalesResponse;
 export declare function NftSalesResponseToJSON(value?: NftSalesResponse | null): any;

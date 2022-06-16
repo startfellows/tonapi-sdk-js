@@ -45,6 +45,16 @@ export interface AccountAddress {
     name?: string;
 }
 
+/**
+ * Check if a given object implements the AccountAddress interface.
+ */
+export function instanceOfAccountAddress(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+
+    return isInstance;
+}
+
 export function AccountAddressFromJSON(json: any): AccountAddress {
     return AccountAddressFromJSONTyped(json, false);
 }

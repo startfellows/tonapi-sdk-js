@@ -64,6 +64,20 @@ export interface Annotation {
     utime: number;
 }
 
+/**
+ * Check if a given object implements the Annotation interface.
+ */
+export function instanceOfAnnotation(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "data" in value;
+    isInstance = isInstance && "hash" in value;
+    isInstance = isInstance && "name" in value;
+    isInstance = isInstance && "utime" in value;
+
+    return isInstance;
+}
+
 export function AnnotationFromJSON(json: any): Annotation {
     return AnnotationFromJSONTyped(json, false);
 }

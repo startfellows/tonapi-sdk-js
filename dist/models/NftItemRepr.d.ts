@@ -10,65 +10,60 @@
  * Do not edit the class manually.
  */
 import { AccountAddress } from './AccountAddress';
+import { Sale } from './Sale';
 /**
  *
  * @export
- * @interface NftItem
+ * @interface NftItemRepr
  */
-export interface NftItem {
+export interface NftItemRepr {
     /**
      *
      * @type {string}
-     * @memberof NftItem
+     * @memberof NftItemRepr
      */
     address: string;
     /**
      *
      * @type {string}
-     * @memberof NftItem
+     * @memberof NftItemRepr
      */
     collectionAddress?: string;
     /**
      *
      * @type {number}
-     * @memberof NftItem
+     * @memberof NftItemRepr
      */
     index: number;
     /**
      *
-     * @type {boolean}
-     * @memberof NftItem
-     */
-    init: boolean;
-    /**
-     *
      * @type {any}
-     * @memberof NftItem
+     * @memberof NftItemRepr
      */
     metadata?: any | null;
     /**
      *
      * @type {AccountAddress}
-     * @memberof NftItem
+     * @memberof NftItemRepr
      */
     owner?: AccountAddress;
     /**
      *
-     * @type {string}
-     * @memberof NftItem
+     * @type {Sale}
+     * @memberof NftItemRepr
      */
-    rawIndividualContent: string;
+    sale?: Sale;
     /**
      *
      * @type {boolean}
-     * @memberof NftItem
+     * @memberof NftItemRepr
      */
     verified: boolean;
 }
 /**
- * Check if a given object implements the NftItem interface.
+ * Check if a given object implements the NftItemRepr interface.
  */
-export declare function instanceOfNftItem(value: object): boolean;
-export declare function NftItemFromJSON(json: any): NftItem;
-export declare function NftItemFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftItem;
-export declare function NftItemToJSON(value?: NftItem | null): any;
+export declare function instanceOfNftItemRepr(value: object): boolean;
+export declare function NftItemReprFromJSON(json: any): NftItemRepr;
+export declare function NftItemReprFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftItemRepr;
+export declare function NftItemReprToJSON(value?: NftItemRepr | null): any;

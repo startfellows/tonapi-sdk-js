@@ -23,6 +23,10 @@ export interface Subscriptions {
      */
     subscriptions: Array<Subscription>;
 }
+/**
+ * Check if a given object implements the Subscriptions interface.
+ */
+export declare function instanceOfSubscriptions(value: object): boolean;
 export declare function SubscriptionsFromJSON(json: any): Subscriptions;
 export declare function SubscriptionsFromJSONTyped(json: any, ignoreDiscriminator: boolean): Subscriptions;
 export declare function SubscriptionsToJSON(value?: Subscriptions | null): any;

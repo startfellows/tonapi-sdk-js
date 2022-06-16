@@ -78,6 +78,10 @@ export interface Transaction {
      */
     utime: number;
 }
+/**
+ * Check if a given object implements the Transaction interface.
+ */
+export declare function instanceOfTransaction(value: object): boolean;
 export declare function TransactionFromJSON(json: any): Transaction;
 export declare function TransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean): Transaction;
 export declare function TransactionToJSON(value?: Transaction | null): any;

@@ -34,6 +34,16 @@ export interface Subscriptions {
     subscriptions: Array<Subscription>;
 }
 
+/**
+ * Check if a given object implements the Subscriptions interface.
+ */
+export function instanceOfSubscriptions(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "subscriptions" in value;
+
+    return isInstance;
+}
+
 export function SubscriptionsFromJSON(json: any): Subscriptions {
     return SubscriptionsFromJSONTyped(json, false);
 }

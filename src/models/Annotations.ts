@@ -34,6 +34,16 @@ export interface Annotations {
     annotations: Array<Annotation>;
 }
 
+/**
+ * Check if a given object implements the Annotations interface.
+ */
+export function instanceOfAnnotations(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "annotations" in value;
+
+    return isInstance;
+}
+
 export function AnnotationsFromJSON(json: any): Annotations {
     return AnnotationsFromJSONTyped(json, false);
 }

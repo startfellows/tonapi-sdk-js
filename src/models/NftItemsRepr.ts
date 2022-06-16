@@ -14,51 +14,51 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    NftItem,
-    NftItemFromJSON,
-    NftItemFromJSONTyped,
-    NftItemToJSON,
-} from './NftItem';
+    NftItemRepr,
+    NftItemReprFromJSON,
+    NftItemReprFromJSONTyped,
+    NftItemReprToJSON,
+} from './NftItemRepr';
 
 /**
  * 
  * @export
- * @interface NftItems
+ * @interface NftItemsRepr
  */
-export interface NftItems {
+export interface NftItemsRepr {
     /**
      * 
-     * @type {Array<NftItem>}
-     * @memberof NftItems
+     * @type {Array<NftItemRepr>}
+     * @memberof NftItemsRepr
      */
-    nftItems: Array<NftItem>;
+    nftItems: Array<NftItemRepr>;
 }
 
 /**
- * Check if a given object implements the NftItems interface.
+ * Check if a given object implements the NftItemsRepr interface.
  */
-export function instanceOfNftItems(value: object): boolean {
+export function instanceOfNftItemsRepr(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "nftItems" in value;
 
     return isInstance;
 }
 
-export function NftItemsFromJSON(json: any): NftItems {
-    return NftItemsFromJSONTyped(json, false);
+export function NftItemsReprFromJSON(json: any): NftItemsRepr {
+    return NftItemsReprFromJSONTyped(json, false);
 }
 
-export function NftItemsFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftItems {
+export function NftItemsReprFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftItemsRepr {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'nftItems': ((json['nft_items'] as Array<any>).map(NftItemFromJSON)),
+        'nftItems': ((json['nft_items'] as Array<any>).map(NftItemReprFromJSON)),
     };
 }
 
-export function NftItemsToJSON(value?: NftItems | null): any {
+export function NftItemsReprToJSON(value?: NftItemsRepr | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -67,7 +67,7 @@ export function NftItemsToJSON(value?: NftItems | null): any {
     }
     return {
         
-        'nft_items': ((value.nftItems as Array<any>).map(NftItemToJSON)),
+        'nft_items': ((value.nftItems as Array<any>).map(NftItemReprToJSON)),
     };
 }
 

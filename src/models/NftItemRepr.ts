@@ -19,76 +19,96 @@ import {
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
+import {
+    Sale,
+    SaleFromJSON,
+    SaleFromJSONTyped,
+    SaleToJSON,
+} from './Sale';
 
 /**
  * 
  * @export
- * @interface NftCollection
+ * @interface NftItemRepr
  */
-export interface NftCollection {
+export interface NftItemRepr {
     /**
      * 
      * @type {string}
-     * @memberof NftCollection
+     * @memberof NftItemRepr
      */
     address: string;
     /**
      * 
+     * @type {string}
+     * @memberof NftItemRepr
+     */
+    collectionAddress?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof NftItemRepr
+     */
+    index: number;
+    /**
+     * 
      * @type {any}
-     * @memberof NftCollection
+     * @memberof NftItemRepr
      */
     metadata?: any | null;
     /**
      * 
-     * @type {number}
-     * @memberof NftCollection
-     */
-    nextItemIndex: number;
-    /**
-     * 
      * @type {AccountAddress}
-     * @memberof NftCollection
+     * @memberof NftItemRepr
      */
     owner?: AccountAddress;
     /**
      * 
-     * @type {string}
-     * @memberof NftCollection
+     * @type {Sale}
+     * @memberof NftItemRepr
      */
-    rawCollectionContent: string;
+    sale?: Sale;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof NftItemRepr
+     */
+    verified: boolean;
 }
 
 /**
- * Check if a given object implements the NftCollection interface.
+ * Check if a given object implements the NftItemRepr interface.
  */
-export function instanceOfNftCollection(value: object): boolean {
+export function instanceOfNftItemRepr(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "nextItemIndex" in value;
-    isInstance = isInstance && "rawCollectionContent" in value;
+    isInstance = isInstance && "index" in value;
+    isInstance = isInstance && "verified" in value;
 
     return isInstance;
 }
 
-export function NftCollectionFromJSON(json: any): NftCollection {
-    return NftCollectionFromJSONTyped(json, false);
+export function NftItemReprFromJSON(json: any): NftItemRepr {
+    return NftItemReprFromJSONTyped(json, false);
 }
 
-export function NftCollectionFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftCollection {
+export function NftItemReprFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftItemRepr {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
         'address': json['address'],
+        'collectionAddress': !exists(json, 'collection_address') ? undefined : json['collection_address'],
+        'index': json['index'],
         'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
-        'nextItemIndex': json['next_item_index'],
         'owner': !exists(json, 'owner') ? undefined : AccountAddressFromJSON(json['owner']),
-        'rawCollectionContent': json['raw_collection_content'],
+        'sale': !exists(json, 'sale') ? undefined : SaleFromJSON(json['sale']),
+        'verified': json['verified'],
     };
 }
 
-export function NftCollectionToJSON(value?: NftCollection | null): any {
+export function NftItemReprToJSON(value?: NftItemRepr | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -98,10 +118,12 @@ export function NftCollectionToJSON(value?: NftCollection | null): any {
     return {
         
         'address': value.address,
+        'collection_address': value.collectionAddress,
+        'index': value.index,
         'metadata': value.metadata,
-        'next_item_index': value.nextItemIndex,
         'owner': AccountAddressToJSON(value.owner),
-        'raw_collection_content': value.rawCollectionContent,
+        'sale': SaleToJSON(value.sale),
+        'verified': value.verified,
     };
 }
 

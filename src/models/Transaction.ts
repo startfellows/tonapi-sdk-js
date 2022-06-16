@@ -94,6 +94,24 @@ export interface Transaction {
     utime: number;
 }
 
+/**
+ * Check if a given object implements the Transaction interface.
+ */
+export function instanceOfTransaction(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "account" in value;
+    isInstance = isInstance && "data" in value;
+    isInstance = isInstance && "fee" in value;
+    isInstance = isInstance && "hash" in value;
+    isInstance = isInstance && "lt" in value;
+    isInstance = isInstance && "otherFee" in value;
+    isInstance = isInstance && "outMsgs" in value;
+    isInstance = isInstance && "storageFee" in value;
+    isInstance = isInstance && "utime" in value;
+
+    return isInstance;
+}
+
 export function TransactionFromJSON(json: any): Transaction {
     return TransactionFromJSONTyped(json, false);
 }

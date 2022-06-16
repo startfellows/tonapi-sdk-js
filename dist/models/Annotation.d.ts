@@ -53,6 +53,10 @@ export interface Annotation {
      */
     utime: number;
 }
+/**
+ * Check if a given object implements the Annotation interface.
+ */
+export declare function instanceOfAnnotation(value: object): boolean;
 export declare function AnnotationFromJSON(json: any): Annotation;
 export declare function AnnotationFromJSONTyped(json: any, ignoreDiscriminator: boolean): Annotation;
 export declare function AnnotationToJSON(value?: Annotation | null): any;

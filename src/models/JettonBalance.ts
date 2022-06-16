@@ -46,6 +46,18 @@ export interface JettonBalance {
     walletAddress: AccountAddress;
 }
 
+/**
+ * Check if a given object implements the JettonBalance interface.
+ */
+export function instanceOfJettonBalance(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "balance" in value;
+    isInstance = isInstance && "jettonAddress" in value;
+    isInstance = isInstance && "walletAddress" in value;
+
+    return isInstance;
+}
+
 export function JettonBalanceFromJSON(json: any): JettonBalance {
     return JettonBalanceFromJSONTyped(json, false);
 }

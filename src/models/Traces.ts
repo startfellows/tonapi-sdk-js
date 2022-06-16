@@ -34,6 +34,16 @@ export interface Traces {
     traces: Array<Trace>;
 }
 
+/**
+ * Check if a given object implements the Traces interface.
+ */
+export function instanceOfTraces(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "traces" in value;
+
+    return isInstance;
+}
+
 export function TracesFromJSON(json: any): Traces {
     return TracesFromJSONTyped(json, false);
 }

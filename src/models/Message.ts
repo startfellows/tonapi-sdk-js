@@ -70,6 +70,20 @@ export interface Message {
     value: number;
 }
 
+/**
+ * Check if a given object implements the Message interface.
+ */
+export function instanceOfMessage(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "createdLt" in value;
+    isInstance = isInstance && "fwdFee" in value;
+    isInstance = isInstance && "ihrFee" in value;
+    isInstance = isInstance && "msgData" in value;
+    isInstance = isInstance && "value" in value;
+
+    return isInstance;
+}
+
 export function MessageFromJSON(json: any): Message {
     return MessageFromJSONTyped(json, false);
 }

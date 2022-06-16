@@ -72,6 +72,10 @@ export interface TraceTX {
      */
     utime: number;
 }
+/**
+ * Check if a given object implements the TraceTX interface.
+ */
+export declare function instanceOfTraceTX(value: object): boolean;
 export declare function TraceTXFromJSON(json: any): TraceTX;
 export declare function TraceTXFromJSONTyped(json: any, ignoreDiscriminator: boolean): TraceTX;
 export declare function TraceTXToJSON(value?: TraceTX | null): any;

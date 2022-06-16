@@ -13,7 +13,18 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JettonInfoToJSON = exports.JettonInfoFromJSONTyped = exports.JettonInfoFromJSON = void 0;
+exports.JettonInfoToJSON = exports.JettonInfoFromJSONTyped = exports.JettonInfoFromJSON = exports.instanceOfJettonInfo = void 0;
+/**
+ * Check if a given object implements the JettonInfo interface.
+ */
+function instanceOfJettonInfo(value) {
+    let isInstance = true;
+    isInstance = isInstance && "metadata" in value;
+    isInstance = isInstance && "mintable" in value;
+    isInstance = isInstance && "totalSupply" in value;
+    return isInstance;
+}
+exports.instanceOfJettonInfo = instanceOfJettonInfo;
 function JettonInfoFromJSON(json) {
     return JettonInfoFromJSONTyped(json, false);
 }

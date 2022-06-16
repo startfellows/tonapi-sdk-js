@@ -36,6 +36,10 @@ export interface NftForSale {
      */
     saleContract: string;
 }
+/**
+ * Check if a given object implements the NftForSale interface.
+ */
+export declare function instanceOfNftForSale(value: object): boolean;
 export declare function NftForSaleFromJSON(json: any): NftForSale;
 export declare function NftForSaleFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftForSale;
 export declare function NftForSaleToJSON(value?: NftForSale | null): any;

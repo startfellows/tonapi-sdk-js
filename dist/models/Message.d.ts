@@ -59,6 +59,10 @@ export interface Message {
      */
     value: number;
 }
+/**
+ * Check if a given object implements the Message interface.
+ */
+export declare function instanceOfMessage(value: object): boolean;
 export declare function MessageFromJSON(json: any): Message;
 export declare function MessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): Message;
 export declare function MessageToJSON(value?: Message | null): any;

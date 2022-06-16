@@ -47,6 +47,10 @@ export interface NftCollection {
      */
     rawCollectionContent: string;
 }
+/**
+ * Check if a given object implements the NftCollection interface.
+ */
+export declare function instanceOfNftCollection(value: object): boolean;
 export declare function NftCollectionFromJSON(json: any): NftCollection;
 export declare function NftCollectionFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftCollection;
 export declare function NftCollectionToJSON(value?: NftCollection | null): any;

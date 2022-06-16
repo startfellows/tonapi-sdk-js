@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import { AccountAddress } from './AccountAddress';
+import { Price } from './Price';
 /**
  *
  * @export
@@ -28,7 +29,23 @@ export interface Sale {
      * @memberof Sale
      */
     market: AccountAddress;
+    /**
+     *
+     * @type {AccountAddress}
+     * @memberof Sale
+     */
+    owner?: AccountAddress;
+    /**
+     *
+     * @type {Price}
+     * @memberof Sale
+     */
+    price: Price;
 }
+/**
+ * Check if a given object implements the Sale interface.
+ */
+export declare function instanceOfSale(value: object): boolean;
 export declare function SaleFromJSON(json: any): Sale;
 export declare function SaleFromJSONTyped(json: any, ignoreDiscriminator: boolean): Sale;
 export declare function SaleToJSON(value?: Sale | null): any;

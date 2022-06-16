@@ -34,6 +34,10 @@ export interface JettonInfo {
      */
     totalSupply: string;
 }
+/**
+ * Check if a given object implements the JettonInfo interface.
+ */
+export declare function instanceOfJettonInfo(value: object): boolean;
 export declare function JettonInfoFromJSON(json: any): JettonInfo;
 export declare function JettonInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): JettonInfo;
 export declare function JettonInfoToJSON(value?: JettonInfo | null): any;

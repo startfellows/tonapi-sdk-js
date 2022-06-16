@@ -13,8 +13,17 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AnnotationsToJSON = exports.AnnotationsFromJSONTyped = exports.AnnotationsFromJSON = void 0;
+exports.AnnotationsToJSON = exports.AnnotationsFromJSONTyped = exports.AnnotationsFromJSON = exports.instanceOfAnnotations = void 0;
 const Annotation_1 = require("./Annotation");
+/**
+ * Check if a given object implements the Annotations interface.
+ */
+function instanceOfAnnotations(value) {
+    let isInstance = true;
+    isInstance = isInstance && "annotations" in value;
+    return isInstance;
+}
+exports.instanceOfAnnotations = instanceOfAnnotations;
 function AnnotationsFromJSON(json) {
     return AnnotationsFromJSONTyped(json, false);
 }

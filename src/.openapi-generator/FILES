@@ -21,8 +21,11 @@ models/NftCollection.ts
 models/NftCollections.ts
 models/NftForSale.ts
 models/NftItem.ts
+models/NftItemRepr.ts
 models/NftItems.ts
+models/NftItemsRepr.ts
 models/NftSalesResponse.ts
+models/Price.ts
 models/Sale.ts
 models/Subscription.ts
 models/Subscriptions.ts

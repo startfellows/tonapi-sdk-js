@@ -13,7 +13,22 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BlockToJSON = exports.BlockFromJSONTyped = exports.BlockFromJSON = void 0;
+exports.BlockToJSON = exports.BlockFromJSONTyped = exports.BlockFromJSON = exports.instanceOfBlock = void 0;
+/**
+ * Check if a given object implements the Block interface.
+ */
+function instanceOfBlock(value) {
+    let isInstance = true;
+    isInstance = isInstance && "endLt" in value;
+    isInstance = isInstance && "fileHash" in value;
+    isInstance = isInstance && "rootHash" in value;
+    isInstance = isInstance && "seqno" in value;
+    isInstance = isInstance && "shard" in value;
+    isInstance = isInstance && "startLt" in value;
+    isInstance = isInstance && "workchainId" in value;
+    return isInstance;
+}
+exports.instanceOfBlock = instanceOfBlock;
 function BlockFromJSON(json) {
     return BlockFromJSONTyped(json, false);
 }

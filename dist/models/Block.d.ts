@@ -58,6 +58,10 @@ export interface Block {
      */
     workchainId: number;
 }
+/**
+ * Check if a given object implements the Block interface.
+ */
+export declare function instanceOfBlock(value: object): boolean;
 export declare function BlockFromJSON(json: any): Block;
 export declare function BlockFromJSONTyped(json: any, ignoreDiscriminator: boolean): Block;
 export declare function BlockToJSON(value?: Block | null): any;

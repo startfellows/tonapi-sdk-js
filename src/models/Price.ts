@@ -16,42 +16,50 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface ModelError
+ * @interface Price
  */
-export interface ModelError {
+export interface Price {
     /**
      * 
      * @type {string}
-     * @memberof ModelError
+     * @memberof Price
      */
-    error: string;
+    tokenName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Price
+     */
+    value: string;
 }
 
 /**
- * Check if a given object implements the ModelError interface.
+ * Check if a given object implements the Price interface.
  */
-export function instanceOfModelError(value: object): boolean {
+export function instanceOfPrice(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "error" in value;
+    isInstance = isInstance && "tokenName" in value;
+    isInstance = isInstance && "value" in value;
 
     return isInstance;
 }
 
-export function ModelErrorFromJSON(json: any): ModelError {
-    return ModelErrorFromJSONTyped(json, false);
+export function PriceFromJSON(json: any): Price {
+    return PriceFromJSONTyped(json, false);
 }
 
-export function ModelErrorFromJSONTyped(json: any, ignoreDiscriminator: boolean): ModelError {
+export function PriceFromJSONTyped(json: any, ignoreDiscriminator: boolean): Price {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'error': json['error'],
+        'tokenName': json['token_name'],
+        'value': json['value'],
     };
 }
 
-export function ModelErrorToJSON(value?: ModelError | null): any {
+export function PriceToJSON(value?: Price | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -60,7 +68,8 @@ export function ModelErrorToJSON(value?: ModelError | null): any {
     }
     return {
         
-        'error': value.error,
+        'token_name': value.tokenName,
+        'value': value.value,
     };
 }
 
