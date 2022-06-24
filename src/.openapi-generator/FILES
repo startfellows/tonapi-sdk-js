@@ -1,4 +1,5 @@
 apis/AnnotationApi.ts
+apis/EventApi.ts
 apis/JettonApi.ts
 apis/NFTApi.ts
 apis/RawBlockchainApi.ts
@@ -9,11 +10,16 @@ apis/index.ts
 index.ts
 models/Account.ts
 models/AccountAddress.ts
+models/AccountEvent.ts
+models/AccountEvents200Response.ts
+models/Action.ts
 models/Annotation.ts
 models/Annotations.ts
 models/Block.ts
+models/Fee.ts
 models/JettonBalance.ts
 models/JettonInfo.ts
+models/JettonTransferAction.ts
 models/JettonsBalances.ts
 models/Message.ts
 models/ModelError.ts
@@ -29,6 +35,7 @@ models/Price.ts
 models/Sale.ts
 models/Subscription.ts
 models/Subscriptions.ts
+models/TonTransferAction.ts
 models/Trace.ts
 models/TraceMsg.ts
 models/TraceTX.ts

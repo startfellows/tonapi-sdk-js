@@ -2,11 +2,16 @@
 /* eslint-disable */
 export * from './Account';
 export * from './AccountAddress';
+export * from './AccountEvent';
+export * from './AccountEvents200Response';
+export * from './Action';
 export * from './Annotation';
 export * from './Annotations';
 export * from './Block';
+export * from './Fee';
 export * from './JettonBalance';
 export * from './JettonInfo';
+export * from './JettonTransferAction';
 export * from './JettonsBalances';
 export * from './Message';
 export * from './ModelError';
@@ -22,6 +27,7 @@ export * from './Price';
 export * from './Sale';
 export * from './Subscription';
 export * from './Subscriptions';
+export * from './TonTransferAction';
 export * from './Trace';
 export * from './TraceMsg';
 export * from './TraceTX';
