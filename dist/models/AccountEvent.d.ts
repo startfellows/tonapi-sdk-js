@@ -43,11 +43,23 @@ export interface AccountEvent {
      */
     fee: Fee;
     /**
+     * Event is not finished yet. Transactions still happening
+     * @type {boolean}
+     * @memberof AccountEvent
+     */
+    inProgress: boolean;
+    /**
      * scam
      * @type {boolean}
      * @memberof AccountEvent
      */
     isScam: boolean;
+    /**
+     *
+     * @type {number}
+     * @memberof AccountEvent
+     */
+    lt: number;
     /**
      *
      * @type {number}

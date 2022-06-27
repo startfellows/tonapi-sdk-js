@@ -26,7 +26,9 @@ function instanceOfAccountEvent(value) {
     isInstance = isInstance && "actions" in value;
     isInstance = isInstance && "eventId" in value;
     isInstance = isInstance && "fee" in value;
+    isInstance = isInstance && "inProgress" in value;
     isInstance = isInstance && "isScam" in value;
+    isInstance = isInstance && "lt" in value;
     isInstance = isInstance && "timestamp" in value;
     return isInstance;
 }
@@ -44,7 +46,9 @@ function AccountEventFromJSONTyped(json, ignoreDiscriminator) {
         'actions': (json['actions'].map(Action_1.ActionFromJSON)),
         'eventId': json['event_id'],
         'fee': (0, Fee_1.FeeFromJSON)(json['fee']),
+        'inProgress': json['in_progress'],
         'isScam': json['is_scam'],
+        'lt': json['lt'],
         'timestamp': json['timestamp'],
     };
 }
@@ -61,7 +65,9 @@ function AccountEventToJSON(value) {
         'actions': (value.actions.map(Action_1.ActionToJSON)),
         'event_id': value.eventId,
         'fee': (0, Fee_1.FeeToJSON)(value.fee),
+        'in_progress': value.inProgress,
         'is_scam': value.isScam,
+        'lt': value.lt,
         'timestamp': value.timestamp,
     };
 }

@@ -63,11 +63,23 @@ export interface AccountEvent {
      */
     fee: Fee;
     /**
+     * Event is not finished yet. Transactions still happening
+     * @type {boolean}
+     * @memberof AccountEvent
+     */
+    inProgress: boolean;
+    /**
      * scam
      * @type {boolean}
      * @memberof AccountEvent
      */
     isScam: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof AccountEvent
+     */
+    lt: number;
     /**
      * 
      * @type {number}
@@ -85,7 +97,9 @@ export function instanceOfAccountEvent(value: object): boolean {
     isInstance = isInstance && "actions" in value;
     isInstance = isInstance && "eventId" in value;
     isInstance = isInstance && "fee" in value;
+    isInstance = isInstance && "inProgress" in value;
     isInstance = isInstance && "isScam" in value;
+    isInstance = isInstance && "lt" in value;
     isInstance = isInstance && "timestamp" in value;
 
     return isInstance;
@@ -105,7 +119,9 @@ export function AccountEventFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'actions': ((json['actions'] as Array<any>).map(ActionFromJSON)),
         'eventId': json['event_id'],
         'fee': FeeFromJSON(json['fee']),
+        'inProgress': json['in_progress'],
         'isScam': json['is_scam'],
+        'lt': json['lt'],
         'timestamp': json['timestamp'],
     };
 }
@@ -123,7 +139,9 @@ export function AccountEventToJSON(value?: AccountEvent | null): any {
         'actions': ((value.actions as Array<any>).map(ActionToJSON)),
         'event_id': value.eventId,
         'fee': FeeToJSON(value.fee),
+        'in_progress': value.inProgress,
         'is_scam': value.isScam,
+        'lt': value.lt,
         'timestamp': value.timestamp,
     };
 }
