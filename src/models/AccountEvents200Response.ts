@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AccountEvent } from './AccountEvent';
 import {
-    AccountEvent,
     AccountEventFromJSON,
     AccountEventFromJSONTyped,
     AccountEventToJSON,

@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { AccountEvents200Response } from '../models';
+import type { AccountEvents200Response } from '../models';
 export interface AccountEventsRequest {
     account: string;
     limit: number;

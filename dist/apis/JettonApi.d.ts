@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { JettonInfo, JettonsBalances } from '../models';
+import type { JettonInfo, JettonsBalances } from '../models';
 export interface GetJettonInfoRequest {
     account: string;
 }

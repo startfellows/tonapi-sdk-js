@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AccountEvent } from './AccountEvent';
+import type { AccountEvent } from './AccountEvent';
 /**
  *
  * @export

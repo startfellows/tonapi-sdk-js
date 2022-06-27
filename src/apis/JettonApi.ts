@@ -14,11 +14,13 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  JettonInfo,
+  JettonsBalances,
+} from '../models';
 import {
-    JettonInfo,
     JettonInfoFromJSON,
     JettonInfoToJSON,
-    JettonsBalances,
     JettonsBalancesFromJSON,
     JettonsBalancesToJSON,
 } from '../models';

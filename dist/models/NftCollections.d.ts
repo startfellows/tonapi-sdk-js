@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { NftCollection } from './NftCollection';
+import type { NftCollection } from './NftCollection';
 /**
  *
  * @export

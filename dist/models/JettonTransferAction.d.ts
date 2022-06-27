@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AccountAddress } from './AccountAddress';
+import type { AccountAddress } from './AccountAddress';
 /**
  *
  * @export

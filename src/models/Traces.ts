@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { Trace } from './Trace';
 import {
-    Trace,
     TraceFromJSON,
     TraceFromJSONTyped,
     TraceToJSON,

@@ -9,8 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { TraceMsg } from './TraceMsg';
-import { TxAnnotation } from './TxAnnotation';
+import type { TraceMsg } from './TraceMsg';
+import type { TxAnnotation } from './TxAnnotation';
 /**
  *
  * @export

@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { NftCollection } from './NftCollection';
 import {
-    NftCollection,
     NftCollectionFromJSON,
     NftCollectionFromJSONTyped,
     NftCollectionToJSON,

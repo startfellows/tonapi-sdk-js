@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { Transaction } from './Transaction';
 import {
-    Transaction,
     TransactionFromJSON,
     TransactionFromJSONTyped,
     TransactionToJSON,

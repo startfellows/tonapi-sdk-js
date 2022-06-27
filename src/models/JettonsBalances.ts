@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { JettonBalance } from './JettonBalance';
 import {
-    JettonBalance,
     JettonBalanceFromJSON,
     JettonBalanceFromJSONTyped,
     JettonBalanceToJSON,

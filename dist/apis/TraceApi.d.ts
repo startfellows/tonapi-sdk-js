@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { TraceMsg, Traces } from '../models';
+import type { TraceMsg, Traces } from '../models';
 export interface GetTraceRequest {
     hash: string;
 }

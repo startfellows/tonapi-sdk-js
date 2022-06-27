@@ -31,7 +31,8 @@ exports.ActionStatusEnum = {
 exports.ActionTypeEnum = {
     TonTransfer: 'TonTransfer',
     JettonTransfer: 'JettonTransfer',
-    NftTransfer: 'NftTransfer'
+    NftTransfer: 'NftTransfer',
+    Unknown: 'Unknown'
 };
 /**
  * Check if a given object implements the Action interface.

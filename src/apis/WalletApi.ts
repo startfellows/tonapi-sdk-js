@@ -14,8 +14,10 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  Wallets,
+} from '../models';
 import {
-    Wallets,
     WalletsFromJSON,
     WalletsToJSON,
 } from '../models';

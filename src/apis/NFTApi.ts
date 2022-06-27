@@ -14,23 +14,25 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  NftCollection,
+  NftCollections,
+  NftItem,
+  NftItems,
+  NftItemsRepr,
+  NftSalesResponse,
+} from '../models';
 import {
-    NftCollection,
     NftCollectionFromJSON,
     NftCollectionToJSON,
-    NftCollections,
     NftCollectionsFromJSON,
     NftCollectionsToJSON,
-    NftItem,
     NftItemFromJSON,
     NftItemToJSON,
-    NftItems,
     NftItemsFromJSON,
     NftItemsToJSON,
-    NftItemsRepr,
     NftItemsReprFromJSON,
     NftItemsReprToJSON,
-    NftSalesResponse,
     NftSalesResponseFromJSON,
     NftSalesResponseToJSON,
 } from '../models';

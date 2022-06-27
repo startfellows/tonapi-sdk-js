@@ -14,8 +14,10 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  AccountEvents200Response,
+} from '../models';
 import {
-    AccountEvents200Response,
     AccountEvents200ResponseFromJSON,
     AccountEvents200ResponseToJSON,
 } from '../models';

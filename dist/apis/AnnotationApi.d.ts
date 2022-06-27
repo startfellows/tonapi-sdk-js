@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { Annotations } from '../models';
+import type { Annotations } from '../models';
 export interface GetAnnotationsByAccountRequest {
     account: string;
     limit?: number;

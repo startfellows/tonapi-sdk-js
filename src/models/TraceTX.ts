@@ -13,14 +13,14 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { TraceMsg } from './TraceMsg';
 import {
-    TraceMsg,
     TraceMsgFromJSON,
     TraceMsgFromJSONTyped,
     TraceMsgToJSON,
 } from './TraceMsg';
+import type { TxAnnotation } from './TxAnnotation';
 import {
-    TxAnnotation,
     TxAnnotationFromJSON,
     TxAnnotationFromJSONTyped,
     TxAnnotationToJSON,

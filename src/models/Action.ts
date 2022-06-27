@@ -13,14 +13,14 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { JettonTransferAction } from './JettonTransferAction';
 import {
-    JettonTransferAction,
     JettonTransferActionFromJSON,
     JettonTransferActionFromJSONTyped,
     JettonTransferActionToJSON,
 } from './JettonTransferAction';
+import type { TonTransferAction } from './TonTransferAction';
 import {
-    TonTransferAction,
     TonTransferActionFromJSON,
     TonTransferActionFromJSONTyped,
     TonTransferActionToJSON,
@@ -75,7 +75,8 @@ export type ActionStatusEnum = typeof ActionStatusEnum[keyof typeof ActionStatus
 export const ActionTypeEnum = {
     TonTransfer: 'TonTransfer',
     JettonTransfer: 'JettonTransfer',
-    NftTransfer: 'NftTransfer'
+    NftTransfer: 'NftTransfer',
+    Unknown: 'Unknown'
 } as const;
 export type ActionTypeEnum = typeof ActionTypeEnum[keyof typeof ActionTypeEnum];
 

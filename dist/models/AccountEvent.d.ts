@@ -9,9 +9,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AccountAddress } from './AccountAddress';
-import { Action } from './Action';
-import { Fee } from './Fee';
+import type { AccountAddress } from './AccountAddress';
+import type { Action } from './Action';
+import type { Fee } from './Fee';
 /**
  *
  * @export

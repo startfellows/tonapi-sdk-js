@@ -14,8 +14,10 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  Annotations,
+} from '../models';
 import {
-    Annotations,
     AnnotationsFromJSON,
     AnnotationsToJSON,
 } from '../models';

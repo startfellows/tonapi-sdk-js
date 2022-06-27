@@ -14,17 +14,19 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  Account,
+  Block,
+  Transaction,
+  Transactions,
+} from '../models';
 import {
-    Account,
     AccountFromJSON,
     AccountToJSON,
-    Block,
     BlockFromJSON,
     BlockToJSON,
-    Transaction,
     TransactionFromJSON,
     TransactionToJSON,
-    Transactions,
     TransactionsFromJSON,
     TransactionsToJSON,
 } from '../models';

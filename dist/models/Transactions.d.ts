@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Transaction } from './Transaction';
+import type { Transaction } from './Transaction';
 /**
  *
  * @export

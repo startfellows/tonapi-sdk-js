@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { Account, Block, Transaction, Transactions } from '../models';
+import type { Account, Block, Transaction, Transactions } from '../models';
 export interface GetAccountRequest {
     account: string;
 }

@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { Subscriptions } from '../models';
+import type { Subscriptions } from '../models';
 export interface GetSubscriptionsByWalletRequest {
     account: string;
 }

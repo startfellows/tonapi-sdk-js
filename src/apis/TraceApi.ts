@@ -14,11 +14,13 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  TraceMsg,
+  Traces,
+} from '../models';
 import {
-    TraceMsg,
     TraceMsgFromJSON,
     TraceMsgToJSON,
-    Traces,
     TracesFromJSON,
     TracesToJSON,
 } from '../models';

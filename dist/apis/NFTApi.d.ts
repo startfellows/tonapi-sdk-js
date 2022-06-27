@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { NftCollection, NftCollections, NftItem, NftItems, NftItemsRepr, NftSalesResponse } from '../models';
+import type { NftCollection, NftCollections, NftItem, NftItems, NftItemsRepr, NftSalesResponse } from '../models';
 export interface GetNftCollectionRequest {
     account: string;
 }

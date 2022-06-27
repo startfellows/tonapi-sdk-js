@@ -9,8 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { JettonTransferAction } from './JettonTransferAction';
-import { TonTransferAction } from './TonTransferAction';
+import type { JettonTransferAction } from './JettonTransferAction';
+import type { TonTransferAction } from './TonTransferAction';
 /**
  *
  * @export
@@ -58,6 +58,7 @@ export declare const ActionTypeEnum: {
     readonly TonTransfer: "TonTransfer";
     readonly JettonTransfer: "JettonTransfer";
     readonly NftTransfer: "NftTransfer";
+    readonly Unknown: "Unknown";
 };
 export declare type ActionTypeEnum = typeof ActionTypeEnum[keyof typeof ActionTypeEnum];
 /**

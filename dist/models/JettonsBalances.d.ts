@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { JettonBalance } from './JettonBalance';
+import type { JettonBalance } from './JettonBalance';
 /**
  *
  * @export

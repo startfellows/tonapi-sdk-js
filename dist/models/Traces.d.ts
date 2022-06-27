@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Trace } from './Trace';
+import type { Trace } from './Trace';
 /**
  *
  * @export

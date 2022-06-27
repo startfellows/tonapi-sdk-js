@@ -13,20 +13,20 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AccountAddress } from './AccountAddress';
 import {
-    AccountAddress,
     AccountAddressFromJSON,
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
+import type { Action } from './Action';
 import {
-    Action,
     ActionFromJSON,
     ActionFromJSONTyped,
     ActionToJSON,
 } from './Action';
+import type { Fee } from './Fee';
 import {
-    Fee,
     FeeFromJSON,
     FeeFromJSONTyped,
     FeeToJSON,

@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Wallet } from './Wallet';
+import type { Wallet } from './Wallet';
 /**
  *
  * @export

@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { Annotation } from './Annotation';
 import {
-    Annotation,
     AnnotationFromJSON,
     AnnotationFromJSONTyped,
     AnnotationToJSON,

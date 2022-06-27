@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { NftItemRepr } from './NftItemRepr';
+import type { NftItemRepr } from './NftItemRepr';
 /**
  *
  * @export

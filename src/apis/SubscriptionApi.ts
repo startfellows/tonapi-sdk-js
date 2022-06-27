@@ -14,8 +14,10 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  Subscriptions,
+} from '../models';
 import {
-    Subscriptions,
     SubscriptionsFromJSON,
     SubscriptionsToJSON,
 } from '../models';

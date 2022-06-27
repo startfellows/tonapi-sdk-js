@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { NftForSale } from './NftForSale';
+import type { NftForSale } from './NftForSale';
 /**
  *
  * @export

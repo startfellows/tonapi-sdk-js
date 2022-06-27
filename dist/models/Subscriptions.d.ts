@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Subscription } from './Subscription';
+import type { Subscription } from './Subscription';
 /**
  *
  * @export

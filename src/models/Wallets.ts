@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { Wallet } from './Wallet';
 import {
-    Wallet,
     WalletFromJSON,
     WalletFromJSONTyped,
     WalletToJSON,

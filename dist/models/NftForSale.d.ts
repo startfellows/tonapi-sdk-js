@@ -9,8 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { NftItem } from './NftItem';
-import { Sale } from './Sale';
+import type { NftItem } from './NftItem';
+import type { Sale } from './Sale';
 /**
  *
  * @export

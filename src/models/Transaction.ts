@@ -13,14 +13,14 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AccountAddress } from './AccountAddress';
 import {
-    AccountAddress,
     AccountAddressFromJSON,
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
+import type { Message } from './Message';
 import {
-    Message,
     MessageFromJSON,
     MessageFromJSONTyped,
     MessageToJSON,
