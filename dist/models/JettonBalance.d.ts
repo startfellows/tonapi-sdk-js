@@ -30,6 +30,12 @@ export interface JettonBalance {
     jettonAddress: string;
     /**
      *
+     * @type {object}
+     * @memberof JettonBalance
+     */
+    metadata?: object;
+    /**
+     *
      * @type {AccountAddress}
      * @memberof JettonBalance
      */

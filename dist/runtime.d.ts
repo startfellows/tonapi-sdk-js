@@ -62,6 +62,11 @@ export declare class ResponseError extends Error {
     name: "ResponseError";
     constructor(response: Response, msg?: string);
 }
+export declare class FetchError extends Error {
+    cause: unknown;
+    name: "FetchError";
+    constructor(cause: unknown, msg?: string);
+}
 export declare class RequiredError extends Error {
     field: string;
     name: "RequiredError";
@@ -123,9 +128,17 @@ export interface ResponseContext {
     init: RequestInit;
     response: Response;
 }
+export interface ErrorContext {
+    fetch: FetchAPI;
+    url: string;
+    init: RequestInit;
+    error: unknown;
+    response?: Response;
+}
 export interface Middleware {
     pre?(context: RequestContext): Promise<FetchParams | void>;
     post?(context: ResponseContext): Promise<Response | void>;
+    onError?(context: ErrorContext): Promise<Response | void>;
 }
 export interface ApiResponse<T> {
     raw: Response;

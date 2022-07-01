@@ -22,7 +22,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TextApiResponse = exports.BlobApiResponse = exports.VoidApiResponse = exports.JSONApiResponse = exports.canConsumeForm = exports.mapValues = exports.querystring = exports.exists = exports.COLLECTION_FORMATS = exports.RequiredError = exports.ResponseError = exports.BaseAPI = exports.DefaultConfig = exports.Configuration = exports.BASE_PATH = void 0;
+exports.TextApiResponse = exports.BlobApiResponse = exports.VoidApiResponse = exports.JSONApiResponse = exports.canConsumeForm = exports.mapValues = exports.querystring = exports.exists = exports.COLLECTION_FORMATS = exports.RequiredError = exports.FetchError = exports.ResponseError = exports.BaseAPI = exports.DefaultConfig = exports.Configuration = exports.BASE_PATH = void 0;
 exports.BASE_PATH = "https://tonapi.io".replace(/\/+$/, "");
 class Configuration {
     constructor(configuration = {}) {
@@ -85,7 +85,26 @@ class BaseAPI {
                     fetchParams = (yield middleware.pre(Object.assign({ fetch: this.fetchApi }, fetchParams))) || fetchParams;
                 }
             }
-            let response = yield (this.configuration.fetchApi || fetch)(fetchParams.url, fetchParams.init);
+            let response = undefined;
+            try {
+                response = yield (this.configuration.fetchApi || fetch)(fetchParams.url, fetchParams.init);
+            }
+            catch (e) {
+                for (const middleware of this.middleware) {
+                    if (middleware.onError) {
+                        response = (yield middleware.onError({
+                            fetch: this.fetchApi,
+                            url: fetchParams.url,
+                            init: fetchParams.init,
+                            error: e,
+                            response: response ? response.clone() : undefined,
+                        })) || response;
+                    }
+                }
+                if (response !== undefined) {
+                    throw new FetchError(e, 'The request failed and the interceptors did not return an alternative response');
+                }
+            }
             for (const middleware of this.middleware) {
                 if (middleware.post) {
                     response = (yield middleware.post({
@@ -182,6 +201,14 @@ class ResponseError extends Error {
     }
 }
 exports.ResponseError = ResponseError;
+class FetchError extends Error {
+    constructor(cause, msg) {
+        super(msg);
+        this.cause = cause;
+        this.name = "FetchError";
+    }
+}
+exports.FetchError = FetchError;
 class RequiredError extends Error {
     constructor(field, msg) {
         super(msg);
