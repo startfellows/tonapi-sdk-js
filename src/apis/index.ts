@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-export * from './AnnotationApi';
 export * from './EventApi';
 export * from './JettonApi';
 export * from './NFTApi';

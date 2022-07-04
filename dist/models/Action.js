@@ -16,6 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ActionToJSON = exports.ActionFromJSONTyped = exports.ActionFromJSON = exports.instanceOfAction = exports.ActionTypeEnum = exports.ActionStatusEnum = void 0;
 const runtime_1 = require("../runtime");
 const JettonTransferAction_1 = require("./JettonTransferAction");
+const NftItemTransferAction_1 = require("./NftItemTransferAction");
 const TonTransferAction_1 = require("./TonTransferAction");
 /**
  * @export
@@ -31,7 +32,7 @@ exports.ActionStatusEnum = {
 exports.ActionTypeEnum = {
     TonTransfer: 'TonTransfer',
     JettonTransfer: 'JettonTransfer',
-    NftTransfer: 'NftTransfer',
+    NftItemTransfer: 'NftItemTransfer',
     Unknown: 'Unknown'
 };
 /**
@@ -54,6 +55,7 @@ function ActionFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'jettonTransfer': !(0, runtime_1.exists)(json, 'JettonTransfer') ? undefined : (0, JettonTransferAction_1.JettonTransferActionFromJSON)(json['JettonTransfer']),
+        'nftItemTransfer': !(0, runtime_1.exists)(json, 'NftItemTransfer') ? undefined : (0, NftItemTransferAction_1.NftItemTransferActionFromJSON)(json['NftItemTransfer']),
         'tonTransfer': !(0, runtime_1.exists)(json, 'TonTransfer') ? undefined : (0, TonTransferAction_1.TonTransferActionFromJSON)(json['TonTransfer']),
         'status': json['status'],
         'type': json['type'],
@@ -69,6 +71,7 @@ function ActionToJSON(value) {
     }
     return {
         'JettonTransfer': (0, JettonTransferAction_1.JettonTransferActionToJSON)(value.jettonTransfer),
+        'NftItemTransfer': (0, NftItemTransferAction_1.NftItemTransferActionToJSON)(value.nftItemTransfer),
         'TonTransfer': (0, TonTransferAction_1.TonTransferActionToJSON)(value.tonTransfer),
         'status': value.status,
         'type': value.type,

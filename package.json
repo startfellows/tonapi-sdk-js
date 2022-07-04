@@ -8,7 +8,7 @@
     "/dist"
   ],
   "scripts": {
-    "generate-sdk": "docker build . -t tonapisdk && docker run --rm -v $PWD:/local tonapisdk && tsc"
+    "generate:sdk": "docker build . -t tonapisdk && docker run --rm -v $PWD:/local tonapisdk && tsc"
   },
   "license": "GPL-3.0",
   "bugs": {

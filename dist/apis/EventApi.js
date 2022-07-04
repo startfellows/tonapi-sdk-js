@@ -30,7 +30,7 @@ const models_1 = require("../models");
  */
 class EventApi extends runtime.BaseAPI {
     /**
-     * Get jetton metadata by jetton master address
+     * Get events for account
      */
     accountEventsRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -68,11 +68,49 @@ class EventApi extends runtime.BaseAPI {
         });
     }
     /**
-     * Get jetton metadata by jetton master address
+     * Get events for account
      */
     accountEvents(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield this.accountEventsRaw(requestParameters, initOverrides);
+            return yield response.value();
+        });
+    }
+    /**
+     * Get single event by transaction hash
+     */
+    getEventRaw(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (requestParameters.eventId === null || requestParameters.eventId === undefined) {
+                throw new runtime.RequiredError('eventId', 'Required parameter requestParameters.eventId was null or undefined when calling getEvent.');
+            }
+            const queryParameters = {};
+            if (requestParameters.eventId !== undefined) {
+                queryParameters['event_id'] = requestParameters.eventId;
+            }
+            const headerParameters = {};
+            if (this.configuration && this.configuration.accessToken) {
+                const token = this.configuration.accessToken;
+                const tokenString = yield token("JWTAuth", []);
+                if (tokenString) {
+                    headerParameters["Authorization"] = `Bearer ${tokenString}`;
+                }
+            }
+            const response = yield this.request({
+                path: `/v1/event/getEvent`,
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, models_1.EventFromJSON)(jsonValue));
+        });
+    }
+    /**
+     * Get single event by transaction hash
+     */
+    getEvent(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.getEventRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }

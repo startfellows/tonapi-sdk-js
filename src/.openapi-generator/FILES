@@ -1,4 +1,4 @@
-apis/AnnotationApi.ts
+.openapi-generator-ignore
 apis/EventApi.ts
 apis/JettonApi.ts
 apis/NFTApi.ts
@@ -13,9 +13,8 @@ models/AccountAddress.ts
 models/AccountEvent.ts
 models/AccountEvents200Response.ts
 models/Action.ts
-models/Annotation.ts
-models/Annotations.ts
 models/Block.ts
+models/Event.ts
 models/Fee.ts
 models/JettonBalance.ts
 models/JettonInfo.ts
@@ -28,6 +27,7 @@ models/NftCollections.ts
 models/NftForSale.ts
 models/NftItem.ts
 models/NftItemRepr.ts
+models/NftItemTransferAction.ts
 models/NftItems.ts
 models/NftItemsRepr.ts
 models/NftSalesResponse.ts

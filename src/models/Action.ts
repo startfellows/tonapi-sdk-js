@@ -19,6 +19,12 @@ import {
     JettonTransferActionFromJSONTyped,
     JettonTransferActionToJSON,
 } from './JettonTransferAction';
+import type { NftItemTransferAction } from './NftItemTransferAction';
+import {
+    NftItemTransferActionFromJSON,
+    NftItemTransferActionFromJSONTyped,
+    NftItemTransferActionToJSON,
+} from './NftItemTransferAction';
 import type { TonTransferAction } from './TonTransferAction';
 import {
     TonTransferActionFromJSON,
@@ -38,6 +44,12 @@ export interface Action {
      * @memberof Action
      */
     jettonTransfer?: JettonTransferAction;
+    /**
+     * 
+     * @type {NftItemTransferAction}
+     * @memberof Action
+     */
+    nftItemTransfer?: NftItemTransferAction;
     /**
      * 
      * @type {TonTransferAction}
@@ -75,7 +87,7 @@ export type ActionStatusEnum = typeof ActionStatusEnum[keyof typeof ActionStatus
 export const ActionTypeEnum = {
     TonTransfer: 'TonTransfer',
     JettonTransfer: 'JettonTransfer',
-    NftTransfer: 'NftTransfer',
+    NftItemTransfer: 'NftItemTransfer',
     Unknown: 'Unknown'
 } as const;
 export type ActionTypeEnum = typeof ActionTypeEnum[keyof typeof ActionTypeEnum];
@@ -103,6 +115,7 @@ export function ActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): Ac
     return {
         
         'jettonTransfer': !exists(json, 'JettonTransfer') ? undefined : JettonTransferActionFromJSON(json['JettonTransfer']),
+        'nftItemTransfer': !exists(json, 'NftItemTransfer') ? undefined : NftItemTransferActionFromJSON(json['NftItemTransfer']),
         'tonTransfer': !exists(json, 'TonTransfer') ? undefined : TonTransferActionFromJSON(json['TonTransfer']),
         'status': json['status'],
         'type': json['type'],
@@ -119,6 +132,7 @@ export function ActionToJSON(value?: Action | null): any {
     return {
         
         'JettonTransfer': JettonTransferActionToJSON(value.jettonTransfer),
+        'NftItemTransfer': NftItemTransferActionToJSON(value.nftItemTransfer),
         'TonTransfer': TonTransferActionToJSON(value.tonTransfer),
         'status': value.status,
         'type': value.type,

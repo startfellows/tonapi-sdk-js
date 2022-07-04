@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import type { JettonTransferAction } from './JettonTransferAction';
+import type { NftItemTransferAction } from './NftItemTransferAction';
 import type { TonTransferAction } from './TonTransferAction';
 /**
  *
@@ -23,6 +24,12 @@ export interface Action {
      * @memberof Action
      */
     jettonTransfer?: JettonTransferAction;
+    /**
+     *
+     * @type {NftItemTransferAction}
+     * @memberof Action
+     */
+    nftItemTransfer?: NftItemTransferAction;
     /**
      *
      * @type {TonTransferAction}
@@ -57,7 +64,7 @@ export declare type ActionStatusEnum = typeof ActionStatusEnum[keyof typeof Acti
 export declare const ActionTypeEnum: {
     readonly TonTransfer: "TonTransfer";
     readonly JettonTransfer: "JettonTransfer";
-    readonly NftTransfer: "NftTransfer";
+    readonly NftItemTransfer: "NftItemTransfer";
     readonly Unknown: "Unknown";
 };
 export declare type ActionTypeEnum = typeof ActionTypeEnum[keyof typeof ActionTypeEnum];

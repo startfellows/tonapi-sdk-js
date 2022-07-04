@@ -16,7 +16,6 @@ yarn add tonapi-sdk-js
 
 ```js
 import {
-    AnnotationApi,
     JettonApi,
     NFTApi,
     RawBlockchainApi,
@@ -70,9 +69,9 @@ Every param in configuration is optional
 
 ```js
 // syntax the same for other api's
-import { AnnotationApi } from 'tonapi-sdk-js'
+import { JettonApi } from 'tonapi-sdk-js'
 
-const api = new AnnotationApi(new Configration({
+const api = new JettonApi(new Configration({
     basePath: 'https://your-own-backend-with-same-schema.com/api',
     // ... other params
 }))

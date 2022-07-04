@@ -10,11 +10,14 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { AccountEvents200Response } from '../models';
+import type { AccountEvents200Response, Event } from '../models';
 export interface AccountEventsRequest {
     account: string;
     limit: number;
     beforeLt?: number;
+}
+export interface GetEventRequest {
+    eventId: string;
 }
 /**
  * EventApi - interface
@@ -24,7 +27,7 @@ export interface AccountEventsRequest {
  */
 export interface EventApiInterface {
     /**
-     * Get jetton metadata by jetton master address
+     * Get events for account
      * @param {string} account address in raw (hex without 0x) or base64url format
      * @param {number} limit
      * @param {number} [beforeLt] omit this parameter to get last events
@@ -34,20 +37,40 @@ export interface EventApiInterface {
      */
     accountEventsRaw(requestParameters: AccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents200Response>>;
     /**
-     * Get jetton metadata by jetton master address
+     * Get events for account
      */
     accountEvents(requestParameters: AccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents200Response>;
+    /**
+     * Get single event by transaction hash
+     * @param {string} eventId transaction hash in hex (without 0x) or base64url format
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EventApiInterface
+     */
+    getEventRaw(requestParameters: GetEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Event>>;
+    /**
+     * Get single event by transaction hash
+     */
+    getEvent(requestParameters: GetEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Event>;
 }
 /**
  *
  */
 export declare class EventApi extends runtime.BaseAPI implements EventApiInterface {
     /**
-     * Get jetton metadata by jetton master address
+     * Get events for account
      */
     accountEventsRaw(requestParameters: AccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents200Response>>;
     /**
-     * Get jetton metadata by jetton master address
+     * Get events for account
      */
     accountEvents(requestParameters: AccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents200Response>;
+    /**
+     * Get single event by transaction hash
+     */
+    getEventRaw(requestParameters: GetEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Event>>;
+    /**
+     * Get single event by transaction hash
+     */
+    getEvent(requestParameters: GetEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Event>;
 }
