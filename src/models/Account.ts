@@ -39,12 +39,6 @@ export interface Account {
     data?: string;
     /**
      * 
-     * @type {Array<string>}
-     * @memberof Account
-     */
-    interfaces: Array<string>;
-    /**
-     * 
      * @type {string}
      * @memberof Account
      */
@@ -57,7 +51,6 @@ export interface Account {
 export function instanceOfAccount(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "balance" in value;
-    isInstance = isInstance && "interfaces" in value;
     isInstance = isInstance && "status" in value;
 
     return isInstance;
@@ -76,7 +69,6 @@ export function AccountFromJSONTyped(json: any, ignoreDiscriminator: boolean): A
         'balance': json['balance'],
         'code': !exists(json, 'code') ? undefined : json['code'],
         'data': !exists(json, 'data') ? undefined : json['data'],
-        'interfaces': json['interfaces'],
         'status': json['status'],
     };
 }
@@ -93,7 +85,6 @@ export function AccountToJSON(value?: Account | null): any {
         'balance': value.balance,
         'code': value.code,
         'data': value.data,
-        'interfaces': value.interfaces,
         'status': value.status,
     };
 }

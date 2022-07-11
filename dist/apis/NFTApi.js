@@ -30,6 +30,44 @@ const models_1 = require("../models");
  */
 class NFTApi extends runtime.BaseAPI {
     /**
+     * Search NFT items using filters
+     */
+    getNFTItemsRaw(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (requestParameters.addresses === null || requestParameters.addresses === undefined) {
+                throw new runtime.RequiredError('addresses', 'Required parameter requestParameters.addresses was null or undefined when calling getNFTItems.');
+            }
+            const queryParameters = {};
+            if (requestParameters.addresses) {
+                queryParameters['addresses'] = requestParameters.addresses.join(runtime.COLLECTION_FORMATS["csv"]);
+            }
+            const headerParameters = {};
+            if (this.configuration && this.configuration.accessToken) {
+                const token = this.configuration.accessToken;
+                const tokenString = yield token("JWTAuth", []);
+                if (tokenString) {
+                    headerParameters["Authorization"] = `Bearer ${tokenString}`;
+                }
+            }
+            const response = yield this.request({
+                path: `/v1/nft/getItems`,
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, models_1.NftItemsReprFromJSON)(jsonValue));
+        });
+    }
+    /**
+     * Search NFT items using filters
+     */
+    getNFTItems(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.getNFTItemsRaw(requestParameters, initOverrides);
+            return yield response.value();
+        });
+    }
+    /**
      * Get NFT collection by collection address
      */
     getNftCollectionRaw(requestParameters, initOverrides) {
@@ -252,7 +290,7 @@ class NFTApi extends runtime.BaseAPI {
         });
     }
     /**
-     * Get all NFT items from collection by collection address
+     * Search NFT items using filters
      */
     searchNFTItemsRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -296,7 +334,7 @@ class NFTApi extends runtime.BaseAPI {
         });
     }
     /**
-     * Get all NFT items from collection by collection address
+     * Search NFT items using filters
      */
     searchNFTItems(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {

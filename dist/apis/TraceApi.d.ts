@@ -11,6 +11,9 @@
  */
 import * as runtime from '../runtime';
 import type { TraceMsg, Traces } from '../models';
+export interface GetAnnotatedTraceRequest {
+    hash: string;
+}
 export interface GetTraceRequest {
     hash: string;
 }
@@ -25,6 +28,18 @@ export interface GetTracesByAccountRequest {
  * @interface TraceApiInterface
  */
 export interface TraceApiInterface {
+    /**
+     * Get trace message for trace ID
+     * @param {string} hash transaction hash in hex (without 0x) or base64url format
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TraceApiInterface
+     */
+    getAnnotatedTraceRaw(requestParameters: GetAnnotatedTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>>;
+    /**
+     * Get trace message for trace ID
+     */
+    getAnnotatedTrace(requestParameters: GetAnnotatedTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object>;
     /**
      * Get trace message for trace ID
      * @param {string} hash transaction hash in hex (without 0x) or base64url format
@@ -55,6 +70,14 @@ export interface TraceApiInterface {
  *
  */
 export declare class TraceApi extends runtime.BaseAPI implements TraceApiInterface {
+    /**
+     * Get trace message for trace ID
+     */
+    getAnnotatedTraceRaw(requestParameters: GetAnnotatedTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>>;
+    /**
+     * Get trace message for trace ID
+     */
+    getAnnotatedTrace(requestParameters: GetAnnotatedTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object>;
     /**
      * Get trace message for trace ID
      */

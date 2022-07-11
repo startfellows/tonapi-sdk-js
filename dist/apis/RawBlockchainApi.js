@@ -30,7 +30,7 @@ const models_1 = require("../models");
  */
 class RawBlockchainApi extends runtime.BaseAPI {
     /**
-     * Get all info about account address
+     * Get raw account data
      */
     getAccountRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -59,7 +59,7 @@ class RawBlockchainApi extends runtime.BaseAPI {
         });
     }
     /**
-     * Get all info about account address
+     * Get raw account data
      */
     getAccount(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {

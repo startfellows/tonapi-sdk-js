@@ -23,8 +23,6 @@ function instanceOfJettonTransferAction(value) {
     let isInstance = true;
     isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "jetton" in value;
-    isInstance = isInstance && "recipient" in value;
-    isInstance = isInstance && "sender" in value;
     return isInstance;
 }
 exports.instanceOfJettonTransferAction = instanceOfJettonTransferAction;
@@ -40,8 +38,8 @@ function JettonTransferActionFromJSONTyped(json, ignoreDiscriminator) {
         'amount': json['amount'],
         'comment': !(0, runtime_1.exists)(json, 'comment') ? undefined : json['comment'],
         'jetton': json['jetton'],
-        'recipient': (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
-        'sender': (0, AccountAddress_1.AccountAddressFromJSON)(json['sender']),
+        'recipient': !(0, runtime_1.exists)(json, 'recipient') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
+        'sender': !(0, runtime_1.exists)(json, 'sender') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['sender']),
     };
 }
 exports.JettonTransferActionFromJSONTyped = JettonTransferActionFromJSONTyped;

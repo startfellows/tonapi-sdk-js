@@ -13,6 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { ContractDeployAction } from './ContractDeployAction';
+import {
+    ContractDeployActionFromJSON,
+    ContractDeployActionFromJSONTyped,
+    ContractDeployActionToJSON,
+} from './ContractDeployAction';
 import type { JettonTransferAction } from './JettonTransferAction';
 import {
     JettonTransferActionFromJSON,
@@ -25,12 +31,24 @@ import {
     NftItemTransferActionFromJSONTyped,
     NftItemTransferActionToJSON,
 } from './NftItemTransferAction';
+import type { SubscriptionAction } from './SubscriptionAction';
+import {
+    SubscriptionActionFromJSON,
+    SubscriptionActionFromJSONTyped,
+    SubscriptionActionToJSON,
+} from './SubscriptionAction';
 import type { TonTransferAction } from './TonTransferAction';
 import {
     TonTransferActionFromJSON,
     TonTransferActionFromJSONTyped,
     TonTransferActionToJSON,
 } from './TonTransferAction';
+import type { UnSubscriptionAction } from './UnSubscriptionAction';
+import {
+    UnSubscriptionActionFromJSON,
+    UnSubscriptionActionFromJSONTyped,
+    UnSubscriptionActionToJSON,
+} from './UnSubscriptionAction';
 
 /**
  * 
@@ -38,6 +56,12 @@ import {
  * @interface Action
  */
 export interface Action {
+    /**
+     * 
+     * @type {ContractDeployAction}
+     * @memberof Action
+     */
+    contractDeploy?: ContractDeployAction;
     /**
      * 
      * @type {JettonTransferAction}
@@ -52,10 +76,22 @@ export interface Action {
     nftItemTransfer?: NftItemTransferAction;
     /**
      * 
+     * @type {SubscriptionAction}
+     * @memberof Action
+     */
+    subscribe?: SubscriptionAction;
+    /**
+     * 
      * @type {TonTransferAction}
      * @memberof Action
      */
     tonTransfer?: TonTransferAction;
+    /**
+     * 
+     * @type {UnSubscriptionAction}
+     * @memberof Action
+     */
+    unSubscribe?: UnSubscriptionAction;
     /**
      * 
      * @type {string}
@@ -88,6 +124,9 @@ export const ActionTypeEnum = {
     TonTransfer: 'TonTransfer',
     JettonTransfer: 'JettonTransfer',
     NftItemTransfer: 'NftItemTransfer',
+    ContractDeploy: 'ContractDeploy',
+    Subscribe: 'Subscribe',
+    UnSubscribe: 'UnSubscribe',
     Unknown: 'Unknown'
 } as const;
 export type ActionTypeEnum = typeof ActionTypeEnum[keyof typeof ActionTypeEnum];
@@ -114,9 +153,12 @@ export function ActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): Ac
     }
     return {
         
+        'contractDeploy': !exists(json, 'ContractDeploy') ? undefined : ContractDeployActionFromJSON(json['ContractDeploy']),
         'jettonTransfer': !exists(json, 'JettonTransfer') ? undefined : JettonTransferActionFromJSON(json['JettonTransfer']),
         'nftItemTransfer': !exists(json, 'NftItemTransfer') ? undefined : NftItemTransferActionFromJSON(json['NftItemTransfer']),
+        'subscribe': !exists(json, 'Subscribe') ? undefined : SubscriptionActionFromJSON(json['Subscribe']),
         'tonTransfer': !exists(json, 'TonTransfer') ? undefined : TonTransferActionFromJSON(json['TonTransfer']),
+        'unSubscribe': !exists(json, 'UnSubscribe') ? undefined : UnSubscriptionActionFromJSON(json['UnSubscribe']),
         'status': json['status'],
         'type': json['type'],
     };
@@ -131,9 +173,12 @@ export function ActionToJSON(value?: Action | null): any {
     }
     return {
         
+        'ContractDeploy': ContractDeployActionToJSON(value.contractDeploy),
         'JettonTransfer': JettonTransferActionToJSON(value.jettonTransfer),
         'NftItemTransfer': NftItemTransferActionToJSON(value.nftItemTransfer),
+        'Subscribe': SubscriptionActionToJSON(value.subscribe),
         'TonTransfer': TonTransferActionToJSON(value.tonTransfer),
+        'UnSubscribe': UnSubscriptionActionToJSON(value.unSubscribe),
         'status': value.status,
         'type': value.type,
     };

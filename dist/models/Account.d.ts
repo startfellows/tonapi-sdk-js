@@ -35,12 +35,6 @@ export interface Account {
     data?: string;
     /**
      *
-     * @type {Array<string>}
-     * @memberof Account
-     */
-    interfaces: Array<string>;
-    /**
-     *
      * @type {string}
      * @memberof Account
      */

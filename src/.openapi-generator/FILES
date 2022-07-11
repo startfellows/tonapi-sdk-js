@@ -1,9 +1,11 @@
-.openapi-generator-ignore
+apis/AccountApi.ts
 apis/EventApi.ts
 apis/JettonApi.ts
 apis/NFTApi.ts
 apis/RawBlockchainApi.ts
+apis/SendApi.ts
 apis/SubscriptionApi.ts
+apis/SystemApi.ts
 apis/TraceApi.ts
 apis/WalletApi.ts
 apis/index.ts
@@ -12,10 +14,16 @@ models/Account.ts
 models/AccountAddress.ts
 models/AccountEvent.ts
 models/AccountEvents200Response.ts
+models/AccountRepr.ts
+models/AccountReprAddress.ts
+models/AccountReprs.ts
 models/Action.ts
 models/Block.ts
+models/ContractDeployAction.ts
+models/CurrentTime200Response.ts
 models/Event.ts
 models/Fee.ts
+models/ImagePreview.ts
 models/JettonBalance.ts
 models/JettonInfo.ts
 models/JettonTransferAction.ts
@@ -33,7 +41,9 @@ models/NftItemsRepr.ts
 models/NftSalesResponse.ts
 models/Price.ts
 models/Sale.ts
+models/SendBocRequest.ts
 models/Subscription.ts
+models/SubscriptionAction.ts
 models/Subscriptions.ts
 models/TonTransferAction.ts
 models/Trace.ts
@@ -43,6 +53,7 @@ models/Traces.ts
 models/Transaction.ts
 models/Transactions.ts
 models/TxAnnotation.ts
+models/UnSubscriptionAction.ts
 models/Wallet.ts
 models/Wallets.ts
 models/index.ts

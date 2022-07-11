@@ -34,7 +34,7 @@ export interface GetTransactionsRequest {
  */
 export interface RawBlockchainApiInterface {
     /**
-     * Get all info about account address
+     * Get raw account data
      * @param {string} account address in raw (hex without 0x) or base64url format
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -42,7 +42,7 @@ export interface RawBlockchainApiInterface {
      */
     getAccountRaw(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Account>>;
     /**
-     * Get all info about account address
+     * Get raw account data
      */
     getAccount(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account>;
     /**
@@ -90,11 +90,11 @@ export interface RawBlockchainApiInterface {
  */
 export declare class RawBlockchainApi extends runtime.BaseAPI implements RawBlockchainApiInterface {
     /**
-     * Get all info about account address
+     * Get raw account data
      */
     getAccountRaw(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Account>>;
     /**
-     * Get all info about account address
+     * Get raw account data
      */
     getAccount(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account>;
     /**

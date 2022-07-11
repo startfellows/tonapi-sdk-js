@@ -25,6 +25,10 @@ import {
     TracesToJSON,
 } from '../models';
 
+export interface GetAnnotatedTraceRequest {
+    hash: string;
+}
+
 export interface GetTraceRequest {
     hash: string;
 }
@@ -41,6 +45,20 @@ export interface GetTracesByAccountRequest {
  * @interface TraceApiInterface
  */
 export interface TraceApiInterface {
+    /**
+     * Get trace message for trace ID
+     * @param {string} hash transaction hash in hex (without 0x) or base64url format
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TraceApiInterface
+     */
+    getAnnotatedTraceRaw(requestParameters: GetAnnotatedTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>>;
+
+    /**
+     * Get trace message for trace ID
+     */
+    getAnnotatedTrace(requestParameters: GetAnnotatedTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object>;
+
     /**
      * Get trace message for trace ID
      * @param {string} hash transaction hash in hex (without 0x) or base64url format
@@ -76,6 +94,48 @@ export interface TraceApiInterface {
  * 
  */
 export class TraceApi extends runtime.BaseAPI implements TraceApiInterface {
+
+    /**
+     * Get trace message for trace ID
+     */
+    async getAnnotatedTraceRaw(requestParameters: GetAnnotatedTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters.hash === null || requestParameters.hash === undefined) {
+            throw new runtime.RequiredError('hash','Required parameter requestParameters.hash was null or undefined when calling getAnnotatedTrace.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.hash !== undefined) {
+            queryParameters['hash'] = requestParameters.hash;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("JWTAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/v1/trace/getAnnotatedTrace`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Get trace message for trace ID
+     */
+    async getAnnotatedTrace(requestParameters: GetAnnotatedTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.getAnnotatedTraceRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Get trace message for trace ID

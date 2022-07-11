@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import type { AccountAddress } from './AccountAddress';
+import type { ImagePreview } from './ImagePreview';
 import type { Sale } from './Sale';
 /**
  *
@@ -47,6 +48,12 @@ export interface NftItemRepr {
      * @memberof NftItemRepr
      */
     owner?: AccountAddress;
+    /**
+     *
+     * @type {Array<ImagePreview>}
+     * @memberof NftItemRepr
+     */
+    previews?: Array<ImagePreview>;
     /**
      *
      * @type {Sale}

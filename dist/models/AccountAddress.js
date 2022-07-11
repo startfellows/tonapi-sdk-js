@@ -21,6 +21,7 @@ const runtime_1 = require("../runtime");
 function instanceOfAccountAddress(value) {
     let isInstance = true;
     isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "isScam" in value;
     return isInstance;
 }
 exports.instanceOfAccountAddress = instanceOfAccountAddress;
@@ -35,7 +36,7 @@ function AccountAddressFromJSONTyped(json, ignoreDiscriminator) {
     return {
         'address': json['address'],
         'icon': !(0, runtime_1.exists)(json, 'icon') ? undefined : json['icon'],
-        'isScam': !(0, runtime_1.exists)(json, 'isScam') ? undefined : json['isScam'],
+        'isScam': json['is_scam'],
         'name': !(0, runtime_1.exists)(json, 'name') ? undefined : json['name'],
     };
 }
@@ -50,7 +51,7 @@ function AccountAddressToJSON(value) {
     return {
         'address': value.address,
         'icon': value.icon,
-        'isScam': value.isScam,
+        'is_scam': value.isScam,
         'name': value.name,
     };
 }

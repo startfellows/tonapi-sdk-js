@@ -36,7 +36,7 @@ export interface AccountAddress {
      * @type {boolean}
      * @memberof AccountAddress
      */
-    isScam?: boolean;
+    isScam: boolean;
     /**
      * 
      * @type {string}
@@ -51,6 +51,7 @@ export interface AccountAddress {
 export function instanceOfAccountAddress(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "isScam" in value;
 
     return isInstance;
 }
@@ -67,7 +68,7 @@ export function AccountAddressFromJSONTyped(json: any, ignoreDiscriminator: bool
         
         'address': json['address'],
         'icon': !exists(json, 'icon') ? undefined : json['icon'],
-        'isScam': !exists(json, 'isScam') ? undefined : json['isScam'],
+        'isScam': json['is_scam'],
         'name': !exists(json, 'name') ? undefined : json['name'],
     };
 }
@@ -83,7 +84,7 @@ export function AccountAddressToJSON(value?: AccountAddress | null): any {
         
         'address': value.address,
         'icon': value.icon,
-        'isScam': value.isScam,
+        'is_scam': value.isScam,
         'name': value.name,
     };
 }

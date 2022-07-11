@@ -9,15 +9,24 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import type { ContractDeployAction } from './ContractDeployAction';
 import type { JettonTransferAction } from './JettonTransferAction';
 import type { NftItemTransferAction } from './NftItemTransferAction';
+import type { SubscriptionAction } from './SubscriptionAction';
 import type { TonTransferAction } from './TonTransferAction';
+import type { UnSubscriptionAction } from './UnSubscriptionAction';
 /**
  *
  * @export
  * @interface Action
  */
 export interface Action {
+    /**
+     *
+     * @type {ContractDeployAction}
+     * @memberof Action
+     */
+    contractDeploy?: ContractDeployAction;
     /**
      *
      * @type {JettonTransferAction}
@@ -32,10 +41,22 @@ export interface Action {
     nftItemTransfer?: NftItemTransferAction;
     /**
      *
+     * @type {SubscriptionAction}
+     * @memberof Action
+     */
+    subscribe?: SubscriptionAction;
+    /**
+     *
      * @type {TonTransferAction}
      * @memberof Action
      */
     tonTransfer?: TonTransferAction;
+    /**
+     *
+     * @type {UnSubscriptionAction}
+     * @memberof Action
+     */
+    unSubscribe?: UnSubscriptionAction;
     /**
      *
      * @type {string}
@@ -65,6 +86,9 @@ export declare const ActionTypeEnum: {
     readonly TonTransfer: "TonTransfer";
     readonly JettonTransfer: "JettonTransfer";
     readonly NftItemTransfer: "NftItemTransfer";
+    readonly ContractDeploy: "ContractDeploy";
+    readonly Subscribe: "Subscribe";
+    readonly UnSubscribe: "UnSubscribe";
     readonly Unknown: "Unknown";
 };
 export declare type ActionTypeEnum = typeof ActionTypeEnum[keyof typeof ActionTypeEnum];

@@ -19,6 +19,12 @@ import {
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
+import type { ImagePreview } from './ImagePreview';
+import {
+    ImagePreviewFromJSON,
+    ImagePreviewFromJSONTyped,
+    ImagePreviewToJSON,
+} from './ImagePreview';
 import type { Sale } from './Sale';
 import {
     SaleFromJSON,
@@ -64,6 +70,12 @@ export interface NftItemRepr {
     owner?: AccountAddress;
     /**
      * 
+     * @type {Array<ImagePreview>}
+     * @memberof NftItemRepr
+     */
+    previews?: Array<ImagePreview>;
+    /**
+     * 
      * @type {Sale}
      * @memberof NftItemRepr
      */
@@ -103,6 +115,7 @@ export function NftItemReprFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'index': json['index'],
         'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
         'owner': !exists(json, 'owner') ? undefined : AccountAddressFromJSON(json['owner']),
+        'previews': !exists(json, 'previews') ? undefined : ((json['previews'] as Array<any>).map(ImagePreviewFromJSON)),
         'sale': !exists(json, 'sale') ? undefined : SaleFromJSON(json['sale']),
         'verified': json['verified'],
     };
@@ -122,6 +135,7 @@ export function NftItemReprToJSON(value?: NftItemRepr | null): any {
         'index': value.index,
         'metadata': value.metadata,
         'owner': AccountAddressToJSON(value.owner),
+        'previews': value.previews === undefined ? undefined : ((value.previews as Array<any>).map(ImagePreviewToJSON)),
         'sale': SaleToJSON(value.sale),
         'verified': value.verified,
     };

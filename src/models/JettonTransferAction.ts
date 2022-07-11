@@ -28,10 +28,10 @@ import {
 export interface JettonTransferAction {
     /**
      * amount in quanta of tokens
-     * @type {number}
+     * @type {string}
      * @memberof JettonTransferAction
      */
-    amount: number;
+    amount: string;
     /**
      * 
      * @type {string}
@@ -49,13 +49,13 @@ export interface JettonTransferAction {
      * @type {AccountAddress}
      * @memberof JettonTransferAction
      */
-    recipient: AccountAddress;
+    recipient?: AccountAddress;
     /**
      * 
      * @type {AccountAddress}
      * @memberof JettonTransferAction
      */
-    sender: AccountAddress;
+    sender?: AccountAddress;
 }
 
 /**
@@ -65,8 +65,6 @@ export function instanceOfJettonTransferAction(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "jetton" in value;
-    isInstance = isInstance && "recipient" in value;
-    isInstance = isInstance && "sender" in value;
 
     return isInstance;
 }
@@ -84,8 +82,8 @@ export function JettonTransferActionFromJSONTyped(json: any, ignoreDiscriminator
         'amount': json['amount'],
         'comment': !exists(json, 'comment') ? undefined : json['comment'],
         'jetton': json['jetton'],
-        'recipient': AccountAddressFromJSON(json['recipient']),
-        'sender': AccountAddressFromJSON(json['sender']),
+        'recipient': !exists(json, 'recipient') ? undefined : AccountAddressFromJSON(json['recipient']),
+        'sender': !exists(json, 'sender') ? undefined : AccountAddressFromJSON(json['sender']),
     };
 }
 

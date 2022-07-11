@@ -32,7 +32,7 @@ export interface AccountAddress {
      * @type {boolean}
      * @memberof AccountAddress
      */
-    isScam?: boolean;
+    isScam: boolean;
     /**
      *
      * @type {string}

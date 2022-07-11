@@ -21,7 +21,6 @@ const runtime_1 = require("../runtime");
 function instanceOfAccount(value) {
     let isInstance = true;
     isInstance = isInstance && "balance" in value;
-    isInstance = isInstance && "interfaces" in value;
     isInstance = isInstance && "status" in value;
     return isInstance;
 }
@@ -38,7 +37,6 @@ function AccountFromJSONTyped(json, ignoreDiscriminator) {
         'balance': json['balance'],
         'code': !(0, runtime_1.exists)(json, 'code') ? undefined : json['code'],
         'data': !(0, runtime_1.exists)(json, 'data') ? undefined : json['data'],
-        'interfaces': json['interfaces'],
         'status': json['status'],
     };
 }
@@ -54,7 +52,6 @@ function AccountToJSON(value) {
         'balance': value.balance,
         'code': value.code,
         'data': value.data,
-        'interfaces': value.interfaces,
         'status': value.status,
     };
 }

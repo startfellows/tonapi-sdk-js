@@ -16,6 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NftItemReprToJSON = exports.NftItemReprFromJSONTyped = exports.NftItemReprFromJSON = exports.instanceOfNftItemRepr = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
+const ImagePreview_1 = require("./ImagePreview");
 const Sale_1 = require("./Sale");
 /**
  * Check if a given object implements the NftItemRepr interface.
@@ -42,6 +43,7 @@ function NftItemReprFromJSONTyped(json, ignoreDiscriminator) {
         'index': json['index'],
         'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
         'owner': !(0, runtime_1.exists)(json, 'owner') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['owner']),
+        'previews': !(0, runtime_1.exists)(json, 'previews') ? undefined : (json['previews'].map(ImagePreview_1.ImagePreviewFromJSON)),
         'sale': !(0, runtime_1.exists)(json, 'sale') ? undefined : (0, Sale_1.SaleFromJSON)(json['sale']),
         'verified': json['verified'],
     };
@@ -60,6 +62,7 @@ function NftItemReprToJSON(value) {
         'index': value.index,
         'metadata': value.metadata,
         'owner': (0, AccountAddress_1.AccountAddressToJSON)(value.owner),
+        'previews': value.previews === undefined ? undefined : (value.previews.map(ImagePreview_1.ImagePreviewToJSON)),
         'sale': (0, Sale_1.SaleToJSON)(value.sale),
         'verified': value.verified,
     };

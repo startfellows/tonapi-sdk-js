@@ -32,6 +32,44 @@ class TraceApi extends runtime.BaseAPI {
     /**
      * Get trace message for trace ID
      */
+    getAnnotatedTraceRaw(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (requestParameters.hash === null || requestParameters.hash === undefined) {
+                throw new runtime.RequiredError('hash', 'Required parameter requestParameters.hash was null or undefined when calling getAnnotatedTrace.');
+            }
+            const queryParameters = {};
+            if (requestParameters.hash !== undefined) {
+                queryParameters['hash'] = requestParameters.hash;
+            }
+            const headerParameters = {};
+            if (this.configuration && this.configuration.accessToken) {
+                const token = this.configuration.accessToken;
+                const tokenString = yield token("JWTAuth", []);
+                if (tokenString) {
+                    headerParameters["Authorization"] = `Bearer ${tokenString}`;
+                }
+            }
+            const response = yield this.request({
+                path: `/v1/trace/getAnnotatedTrace`,
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response);
+        });
+    }
+    /**
+     * Get trace message for trace ID
+     */
+    getAnnotatedTrace(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.getAnnotatedTraceRaw(requestParameters, initOverrides);
+            return yield response.value();
+        });
+    }
+    /**
+     * Get trace message for trace ID
+     */
     getTraceRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.hash === null || requestParameters.hash === undefined) {

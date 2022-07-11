@@ -18,10 +18,10 @@ import type { AccountAddress } from './AccountAddress';
 export interface JettonTransferAction {
     /**
      * amount in quanta of tokens
-     * @type {number}
+     * @type {string}
      * @memberof JettonTransferAction
      */
-    amount: number;
+    amount: string;
     /**
      *
      * @type {string}
@@ -39,13 +39,13 @@ export interface JettonTransferAction {
      * @type {AccountAddress}
      * @memberof JettonTransferAction
      */
-    recipient: AccountAddress;
+    recipient?: AccountAddress;
     /**
      *
      * @type {AccountAddress}
      * @memberof JettonTransferAction
      */
-    sender: AccountAddress;
+    sender?: AccountAddress;
 }
 /**
  * Check if a given object implements the JettonTransferAction interface.
