@@ -41,7 +41,7 @@ const { transactions } = await blockchainApi.getTransactions({
 })
 
 // Get list of nfts by owner address
-const nftApi = new NFTApi(configuration)
+const nftApi = new NFTApi()
 // Receive typed array of owner nfts
 const { nftItems } = await nftApi.getNftItemsByOwnerAddress({
     account: address,
