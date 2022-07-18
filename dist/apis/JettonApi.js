@@ -68,7 +68,7 @@ class JettonApi extends runtime.BaseAPI {
         });
     }
     /**
-     * Get all Jettons by owner address
+     * Get all Jettons balances by owner address
      */
     getJettonsBalancesRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -97,7 +97,7 @@ class JettonApi extends runtime.BaseAPI {
         });
     }
     /**
-     * Get all Jettons by owner address
+     * Get all Jettons balances by owner address
      */
     getJettonsBalances(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {

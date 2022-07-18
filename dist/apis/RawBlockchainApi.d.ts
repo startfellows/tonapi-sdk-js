@@ -70,7 +70,7 @@ export interface RawBlockchainApiInterface {
      */
     getTransaction(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transaction>;
     /**
-     * Get transactions by account address
+     * Get transactions
      * @param {string} [account] address in raw (hex without 0x) or base64url format
      * @param {number} [maxLt] omit this parameter to get last transactions
      * @param {number} [minLt] omit this parameter to get last transactions
@@ -81,7 +81,7 @@ export interface RawBlockchainApiInterface {
      */
     getTransactionsRaw(requestParameters: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transactions>>;
     /**
-     * Get transactions by account address
+     * Get transactions
      */
     getTransactions(requestParameters: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transactions>;
 }
@@ -114,11 +114,11 @@ export declare class RawBlockchainApi extends runtime.BaseAPI implements RawBloc
      */
     getTransaction(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transaction>;
     /**
-     * Get transactions by account address
+     * Get transactions
      */
     getTransactionsRaw(requestParameters: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transactions>>;
     /**
-     * Get transactions by account address
+     * Get transactions
      */
     getTransactions(requestParameters?: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transactions>;
 }

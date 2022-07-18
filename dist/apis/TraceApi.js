@@ -30,7 +30,7 @@ const models_1 = require("../models");
  */
 class TraceApi extends runtime.BaseAPI {
     /**
-     * Get trace message for trace ID
+     * Get the annotated trace by trace ID or hash of any transaction in trace
      */
     getAnnotatedTraceRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -59,7 +59,7 @@ class TraceApi extends runtime.BaseAPI {
         });
     }
     /**
-     * Get trace message for trace ID
+     * Get the annotated trace by trace ID or hash of any transaction in trace
      */
     getAnnotatedTrace(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -68,7 +68,7 @@ class TraceApi extends runtime.BaseAPI {
         });
     }
     /**
-     * Get trace message for trace ID
+     * Get the trace by trace ID or hash of any transaction in trace
      */
     getTraceRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -97,7 +97,7 @@ class TraceApi extends runtime.BaseAPI {
         });
     }
     /**
-     * Get trace message for trace ID
+     * Get the trace by trace ID or hash of any transaction in trace
      */
     getTrace(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {

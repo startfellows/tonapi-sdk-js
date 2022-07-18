@@ -29,27 +29,27 @@ export interface GetTracesByAccountRequest {
  */
 export interface TraceApiInterface {
     /**
-     * Get trace message for trace ID
-     * @param {string} hash transaction hash in hex (without 0x) or base64url format
+     * Get the annotated trace by trace ID or hash of any transaction in trace
+     * @param {string} hash trace ID or transaction hash in hex (without 0x) or base64url format
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TraceApiInterface
      */
     getAnnotatedTraceRaw(requestParameters: GetAnnotatedTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>>;
     /**
-     * Get trace message for trace ID
+     * Get the annotated trace by trace ID or hash of any transaction in trace
      */
     getAnnotatedTrace(requestParameters: GetAnnotatedTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object>;
     /**
-     * Get trace message for trace ID
-     * @param {string} hash transaction hash in hex (without 0x) or base64url format
+     * Get the trace by trace ID or hash of any transaction in trace
+     * @param {string} hash trace ID or transaction hash in hex (without 0x) or base64url format
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TraceApiInterface
      */
     getTraceRaw(requestParameters: GetTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TraceMsg>>;
     /**
-     * Get trace message for trace ID
+     * Get the trace by trace ID or hash of any transaction in trace
      */
     getTrace(requestParameters: GetTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TraceMsg>;
     /**
@@ -71,19 +71,19 @@ export interface TraceApiInterface {
  */
 export declare class TraceApi extends runtime.BaseAPI implements TraceApiInterface {
     /**
-     * Get trace message for trace ID
+     * Get the annotated trace by trace ID or hash of any transaction in trace
      */
     getAnnotatedTraceRaw(requestParameters: GetAnnotatedTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>>;
     /**
-     * Get trace message for trace ID
+     * Get the annotated trace by trace ID or hash of any transaction in trace
      */
     getAnnotatedTrace(requestParameters: GetAnnotatedTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object>;
     /**
-     * Get trace message for trace ID
+     * Get the trace by trace ID or hash of any transaction in trace
      */
     getTraceRaw(requestParameters: GetTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TraceMsg>>;
     /**
-     * Get trace message for trace ID
+     * Get the trace by trace ID or hash of any transaction in trace
      */
     getTrace(requestParameters: GetTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TraceMsg>;
     /**

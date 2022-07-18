@@ -23,6 +23,8 @@ function instanceOfJettonTransferAction(value) {
     let isInstance = true;
     isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "jetton" in value;
+    isInstance = isInstance && "recipientsWallet" in value;
+    isInstance = isInstance && "sendersWallet" in value;
     return isInstance;
 }
 exports.instanceOfJettonTransferAction = instanceOfJettonTransferAction;
@@ -39,7 +41,9 @@ function JettonTransferActionFromJSONTyped(json, ignoreDiscriminator) {
         'comment': !(0, runtime_1.exists)(json, 'comment') ? undefined : json['comment'],
         'jetton': json['jetton'],
         'recipient': !(0, runtime_1.exists)(json, 'recipient') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
+        'recipientsWallet': json['recipients_wallet'],
         'sender': !(0, runtime_1.exists)(json, 'sender') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['sender']),
+        'sendersWallet': json['senders_wallet'],
     };
 }
 exports.JettonTransferActionFromJSONTyped = JettonTransferActionFromJSONTyped;
@@ -55,7 +59,9 @@ function JettonTransferActionToJSON(value) {
         'comment': value.comment,
         'jetton': value.jetton,
         'recipient': (0, AccountAddress_1.AccountAddressToJSON)(value.recipient),
+        'recipients_wallet': value.recipientsWallet,
         'sender': (0, AccountAddress_1.AccountAddressToJSON)(value.sender),
+        'senders_wallet': value.sendersWallet,
     };
 }
 exports.JettonTransferActionToJSON = JettonTransferActionToJSON;

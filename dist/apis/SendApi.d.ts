@@ -23,7 +23,7 @@ export interface SendBocOperationRequest {
 export interface SendApiInterface {
     /**
      * Send message to blockchain
-     * @param {SendBocRequest} [sendBocRequest]
+     * @param {SendBocRequest} [sendBocRequest] bag-of-cells serialized to base64
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SendApiInterface

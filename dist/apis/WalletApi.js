@@ -39,7 +39,7 @@ class WalletApi extends runtime.BaseAPI {
             }
             const queryParameters = {};
             if (requestParameters.publicKey !== undefined) {
-                queryParameters['publicKey'] = requestParameters.publicKey;
+                queryParameters['public_key'] = requestParameters.publicKey;
             }
             const headerParameters = {};
             if (this.configuration && this.configuration.accessToken) {

@@ -77,7 +77,7 @@ export interface SearchNFTItemsRequest {
  */
 export interface NFTApiInterface {
     /**
-     * Search NFT items using filters
+     * Get NFT items by addresses
      * @param {Array<string>} addresses NFT items addresses in raw (hex without 0x) or base64url format
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -86,7 +86,7 @@ export interface NFTApiInterface {
     getNFTItemsRaw(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItemsRepr>>;
 
     /**
-     * Search NFT items using filters
+     * Get NFT items by addresses
      */
     getNFTItems(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItemsRepr>;
 
@@ -121,6 +121,7 @@ export interface NFTApiInterface {
      * Get NFT items for sale
      * @param {string} account address in raw (hex without 0x) or base64url format
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
@@ -135,6 +136,7 @@ export interface NFTApiInterface {
      * Get NFT item by its address
      * @param {string} account address in raw (hex without 0x) or base64url format
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
@@ -149,6 +151,7 @@ export interface NFTApiInterface {
      * Get all NFT items from collection by collection address
      * @param {string} account address in raw (hex without 0x) or base64url format
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
@@ -163,6 +166,7 @@ export interface NFTApiInterface {
      * Get all NFT items by owner address
      * @param {string} account address in raw (hex without 0x) or base64url format
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
@@ -175,8 +179,8 @@ export interface NFTApiInterface {
 
     /**
      * Search NFT items using filters
-     * @param {number} limit address in raw (hex without 0x) or base64url format
-     * @param {number} offset address in raw (hex without 0x) or base64url format
+     * @param {number} limit maximum qty of items
+     * @param {number} offset offset for pagination
      * @param {string} [owner] address in raw (hex without 0x) or base64url format or word \&#39;no\&#39; for items without owner
      * @param {string} [collection] address in raw (hex without 0x) or base64url format or word \&#39;no\&#39; for items without collection
      * @param {boolean} [includeOnSale] include nft items which are currently are on market
@@ -199,7 +203,7 @@ export interface NFTApiInterface {
 export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
 
     /**
-     * Search NFT items using filters
+     * Get NFT items by addresses
      */
     async getNFTItemsRaw(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItemsRepr>> {
         if (requestParameters.addresses === null || requestParameters.addresses === undefined) {
@@ -233,7 +237,7 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     }
 
     /**
-     * Search NFT items using filters
+     * Get NFT items by addresses
      */
     async getNFTItems(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItemsRepr> {
         const response = await this.getNFTItemsRaw(requestParameters, initOverrides);

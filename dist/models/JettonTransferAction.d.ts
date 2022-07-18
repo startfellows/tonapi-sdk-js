@@ -42,10 +42,22 @@ export interface JettonTransferAction {
     recipient?: AccountAddress;
     /**
      *
+     * @type {string}
+     * @memberof JettonTransferAction
+     */
+    recipientsWallet: string;
+    /**
+     *
      * @type {AccountAddress}
      * @memberof JettonTransferAction
      */
     sender?: AccountAddress;
+    /**
+     *
+     * @type {string}
+     * @memberof JettonTransferAction
+     */
+    sendersWallet: string;
 }
 /**
  * Check if a given object implements the JettonTransferAction interface.

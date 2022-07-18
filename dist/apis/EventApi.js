@@ -77,7 +77,7 @@ class EventApi extends runtime.BaseAPI {
         });
     }
     /**
-     * Get single event by transaction hash
+     * Get the event by event ID or hash of any transaction in trace
      */
     getEventRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -106,7 +106,7 @@ class EventApi extends runtime.BaseAPI {
         });
     }
     /**
-     * Get single event by transaction hash
+     * Get the event by event ID or hash of any transaction in trace
      */
     getEvent(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {

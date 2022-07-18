@@ -65,7 +65,7 @@ export class WalletApi extends runtime.BaseAPI implements WalletApiInterface {
         const queryParameters: any = {};
 
         if (requestParameters.publicKey !== undefined) {
-            queryParameters['publicKey'] = requestParameters.publicKey;
+            queryParameters['public_key'] = requestParameters.publicKey;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

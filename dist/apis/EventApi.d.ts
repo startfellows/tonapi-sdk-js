@@ -41,15 +41,15 @@ export interface EventApiInterface {
      */
     accountEvents(requestParameters: AccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents200Response>;
     /**
-     * Get single event by transaction hash
-     * @param {string} eventId transaction hash in hex (without 0x) or base64url format
+     * Get the event by event ID or hash of any transaction in trace
+     * @param {string} eventId event ID or transaction hash in hex (without 0x) or base64url format
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EventApiInterface
      */
     getEventRaw(requestParameters: GetEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Event>>;
     /**
-     * Get single event by transaction hash
+     * Get the event by event ID or hash of any transaction in trace
      */
     getEvent(requestParameters: GetEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Event>;
 }
@@ -66,11 +66,11 @@ export declare class EventApi extends runtime.BaseAPI implements EventApiInterfa
      */
     accountEvents(requestParameters: AccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents200Response>;
     /**
-     * Get single event by transaction hash
+     * Get the event by event ID or hash of any transaction in trace
      */
     getEventRaw(requestParameters: GetEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Event>>;
     /**
-     * Get single event by transaction hash
+     * Get the event by event ID or hash of any transaction in trace
      */
     getEvent(requestParameters: GetEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Event>;
 }

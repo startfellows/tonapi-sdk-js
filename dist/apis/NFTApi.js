@@ -30,7 +30,7 @@ const models_1 = require("../models");
  */
 class NFTApi extends runtime.BaseAPI {
     /**
-     * Search NFT items using filters
+     * Get NFT items by addresses
      */
     getNFTItemsRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -59,7 +59,7 @@ class NFTApi extends runtime.BaseAPI {
         });
     }
     /**
-     * Search NFT items using filters
+     * Get NFT items by addresses
      */
     getNFTItems(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {

@@ -100,7 +100,7 @@ export interface RawBlockchainApiInterface {
     getTransaction(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transaction>;
 
     /**
-     * Get transactions by account address
+     * Get transactions
      * @param {string} [account] address in raw (hex without 0x) or base64url format
      * @param {number} [maxLt] omit this parameter to get last transactions
      * @param {number} [minLt] omit this parameter to get last transactions
@@ -112,7 +112,7 @@ export interface RawBlockchainApiInterface {
     getTransactionsRaw(requestParameters: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transactions>>;
 
     /**
-     * Get transactions by account address
+     * Get transactions
      */
     getTransactions(requestParameters: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transactions>;
 
@@ -176,7 +176,7 @@ export class RawBlockchainApi extends runtime.BaseAPI implements RawBlockchainAp
         const queryParameters: any = {};
 
         if (requestParameters.blockId !== undefined) {
-            queryParameters['blockId'] = requestParameters.blockId;
+            queryParameters['block_id'] = requestParameters.blockId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -250,7 +250,7 @@ export class RawBlockchainApi extends runtime.BaseAPI implements RawBlockchainAp
     }
 
     /**
-     * Get transactions by account address
+     * Get transactions
      */
     async getTransactionsRaw(requestParameters: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transactions>> {
         const queryParameters: any = {};
@@ -292,7 +292,7 @@ export class RawBlockchainApi extends runtime.BaseAPI implements RawBlockchainAp
     }
 
     /**
-     * Get transactions by account address
+     * Get transactions
      */
     async getTransactions(requestParameters: GetTransactionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transactions> {
         const response = await this.getTransactionsRaw(requestParameters, initOverrides);

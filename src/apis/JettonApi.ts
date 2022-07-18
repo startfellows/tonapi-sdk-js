@@ -55,7 +55,7 @@ export interface JettonApiInterface {
     getJettonInfo(requestParameters: GetJettonInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonInfo>;
 
     /**
-     * Get all Jettons by owner address
+     * Get all Jettons balances by owner address
      * @param {string} account address in raw (hex without 0x) or base64url format
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -64,7 +64,7 @@ export interface JettonApiInterface {
     getJettonsBalancesRaw(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonsBalances>>;
 
     /**
-     * Get all Jettons by owner address
+     * Get all Jettons balances by owner address
      */
     getJettonsBalances(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonsBalances>;
 
@@ -118,7 +118,7 @@ export class JettonApi extends runtime.BaseAPI implements JettonApiInterface {
     }
 
     /**
-     * Get all Jettons by owner address
+     * Get all Jettons balances by owner address
      */
     async getJettonsBalancesRaw(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonsBalances>> {
         if (requestParameters.account === null || requestParameters.account === undefined) {
@@ -152,7 +152,7 @@ export class JettonApi extends runtime.BaseAPI implements JettonApiInterface {
     }
 
     /**
-     * Get all Jettons by owner address
+     * Get all Jettons balances by owner address
      */
     async getJettonsBalances(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonsBalances> {
         const response = await this.getJettonsBalancesRaw(requestParameters, initOverrides);

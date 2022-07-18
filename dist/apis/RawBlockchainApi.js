@@ -77,7 +77,7 @@ class RawBlockchainApi extends runtime.BaseAPI {
             }
             const queryParameters = {};
             if (requestParameters.blockId !== undefined) {
-                queryParameters['blockId'] = requestParameters.blockId;
+                queryParameters['block_id'] = requestParameters.blockId;
             }
             const headerParameters = {};
             if (this.configuration && this.configuration.accessToken) {
@@ -144,7 +144,7 @@ class RawBlockchainApi extends runtime.BaseAPI {
         });
     }
     /**
-     * Get transactions by account address
+     * Get transactions
      */
     getTransactionsRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -179,7 +179,7 @@ class RawBlockchainApi extends runtime.BaseAPI {
         });
     }
     /**
-     * Get transactions by account address
+     * Get transactions
      */
     getTransactions(requestParameters = {}, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
