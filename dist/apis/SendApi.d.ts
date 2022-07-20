@@ -10,7 +10,10 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { SendBocRequest } from '../models';
+import type { AccountEvent, SendBocRequest } from '../models';
+export interface EstimateTxRequest {
+    sendBocRequest?: SendBocRequest;
+}
 export interface SendBocOperationRequest {
     sendBocRequest?: SendBocRequest;
 }
@@ -21,6 +24,18 @@ export interface SendBocOperationRequest {
  * @interface SendApiInterface
  */
 export interface SendApiInterface {
+    /**
+     * Estimate fees for message
+     * @param {SendBocRequest} [sendBocRequest] bag-of-cells serialized to base64
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SendApiInterface
+     */
+    estimateTxRaw(requestParameters: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvent>>;
+    /**
+     * Estimate fees for message
+     */
+    estimateTx(requestParameters: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvent>;
     /**
      * Send message to blockchain
      * @param {SendBocRequest} [sendBocRequest] bag-of-cells serialized to base64
@@ -38,6 +53,14 @@ export interface SendApiInterface {
  *
  */
 export declare class SendApi extends runtime.BaseAPI implements SendApiInterface {
+    /**
+     * Estimate fees for message
+     */
+    estimateTxRaw(requestParameters: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvent>>;
+    /**
+     * Estimate fees for message
+     */
+    estimateTx(requestParameters?: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvent>;
     /**
      * Send message to blockchain
      */

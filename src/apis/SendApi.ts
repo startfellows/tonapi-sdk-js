@@ -15,12 +15,19 @@
 
 import * as runtime from '../runtime';
 import type {
+  AccountEvent,
   SendBocRequest,
 } from '../models';
 import {
+    AccountEventFromJSON,
+    AccountEventToJSON,
     SendBocRequestFromJSON,
     SendBocRequestToJSON,
 } from '../models';
+
+export interface EstimateTxRequest {
+    sendBocRequest?: SendBocRequest;
+}
 
 export interface SendBocOperationRequest {
     sendBocRequest?: SendBocRequest;
@@ -33,6 +40,20 @@ export interface SendBocOperationRequest {
  * @interface SendApiInterface
  */
 export interface SendApiInterface {
+    /**
+     * Estimate fees for message
+     * @param {SendBocRequest} [sendBocRequest] bag-of-cells serialized to base64
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SendApiInterface
+     */
+    estimateTxRaw(requestParameters: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvent>>;
+
+    /**
+     * Estimate fees for message
+     */
+    estimateTx(requestParameters: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvent>;
+
     /**
      * Send message to blockchain
      * @param {SendBocRequest} [sendBocRequest] bag-of-cells serialized to base64
@@ -53,6 +74,43 @@ export interface SendApiInterface {
  * 
  */
 export class SendApi extends runtime.BaseAPI implements SendApiInterface {
+
+    /**
+     * Estimate fees for message
+     */
+    async estimateTxRaw(requestParameters: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvent>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("JWTAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/v1/send/estimateTx`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: SendBocRequestToJSON(requestParameters.sendBocRequest),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AccountEventFromJSON(jsonValue));
+    }
+
+    /**
+     * Estimate fees for message
+     */
+    async estimateTx(requestParameters: EstimateTxRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvent> {
+        const response = await this.estimateTxRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Send message to blockchain
