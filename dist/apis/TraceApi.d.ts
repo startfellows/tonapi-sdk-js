@@ -57,6 +57,7 @@ export interface TraceApiInterface {
      * @param {string} account address in raw (hex without 0x) or base64url format
      * @param {number} [limit]
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof TraceApiInterface
      */

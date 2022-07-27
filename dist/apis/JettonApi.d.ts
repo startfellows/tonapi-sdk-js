@@ -10,7 +10,10 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { JettonInfo, JettonsBalances } from '../models';
+import type { JettonHistory, JettonInfo, JettonsBalances } from '../models';
+export interface GetJettonHistoryRequest {
+    account: string;
+}
 export interface GetJettonInfoRequest {
     account: string;
 }
@@ -24,6 +27,18 @@ export interface GetJettonsBalancesRequest {
  * @interface JettonApiInterface
  */
 export interface JettonApiInterface {
+    /**
+     * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
+     * @param {string} account address in raw (hex without 0x) or base64url format
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JettonApiInterface
+     */
+    getJettonHistoryRaw(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonHistory>>;
+    /**
+     * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
+     */
+    getJettonHistory(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonHistory>;
     /**
      * Get jetton metadata by jetton master address
      * @param {string} account address in raw (hex without 0x) or base64url format
@@ -53,6 +68,14 @@ export interface JettonApiInterface {
  *
  */
 export declare class JettonApi extends runtime.BaseAPI implements JettonApiInterface {
+    /**
+     * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
+     */
+    getJettonHistoryRaw(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonHistory>>;
+    /**
+     * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
+     */
+    getJettonHistory(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonHistory>;
     /**
      * Get jetton metadata by jetton master address
      */

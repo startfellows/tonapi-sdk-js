@@ -63,9 +63,9 @@ export declare class ResponseError extends Error {
     constructor(response: Response, msg?: string);
 }
 export declare class FetchError extends Error {
-    cause: unknown;
+    cause: Error;
     name: "FetchError";
-    constructor(cause: unknown, msg?: string);
+    constructor(cause: Error, msg?: string);
 }
 export declare class RequiredError extends Error {
     field: string;

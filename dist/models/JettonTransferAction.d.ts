@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import type { AccountAddress } from './AccountAddress';
+import type { Jetton } from './Jetton';
 /**
  *
  * @export
@@ -30,10 +31,10 @@ export interface JettonTransferAction {
     comment?: string;
     /**
      *
-     * @type {object}
+     * @type {Jetton}
      * @memberof JettonTransferAction
      */
-    jetton: object;
+    jetton: Jetton;
     /**
      *
      * @type {AccountAddress}

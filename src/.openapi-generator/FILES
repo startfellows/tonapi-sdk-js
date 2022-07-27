@@ -24,8 +24,11 @@ models/CurrentTime200Response.ts
 models/Event.ts
 models/Fee.ts
 models/ImagePreview.ts
+models/Jetton.ts
 models/JettonBalance.ts
+models/JettonHistory.ts
 models/JettonInfo.ts
+models/JettonSimpleTransfer.ts
 models/JettonTransferAction.ts
 models/JettonsBalances.ts
 models/Message.ts

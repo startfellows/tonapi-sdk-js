@@ -30,6 +30,44 @@ const models_1 = require("../models");
  */
 class JettonApi extends runtime.BaseAPI {
     /**
+     * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
+     */
+    getJettonHistoryRaw(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (requestParameters.account === null || requestParameters.account === undefined) {
+                throw new runtime.RequiredError('account', 'Required parameter requestParameters.account was null or undefined when calling getJettonHistory.');
+            }
+            const queryParameters = {};
+            if (requestParameters.account !== undefined) {
+                queryParameters['account'] = requestParameters.account;
+            }
+            const headerParameters = {};
+            if (this.configuration && this.configuration.accessToken) {
+                const token = this.configuration.accessToken;
+                const tokenString = yield token("JWTAuth", []);
+                if (tokenString) {
+                    headerParameters["Authorization"] = `Bearer ${tokenString}`;
+                }
+            }
+            const response = yield this.request({
+                path: `/v1/jetton/getHistory`,
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, models_1.JettonHistoryFromJSON)(jsonValue));
+        });
+    }
+    /**
+     * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
+     */
+    getJettonHistory(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.getJettonHistoryRaw(requestParameters, initOverrides);
+            return yield response.value();
+        });
+    }
+    /**
      * Get jetton metadata by jetton master address
      */
     getJettonInfoRaw(requestParameters, initOverrides) {

@@ -16,6 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.JettonTransferActionToJSON = exports.JettonTransferActionFromJSONTyped = exports.JettonTransferActionFromJSON = exports.instanceOfJettonTransferAction = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
+const Jetton_1 = require("./Jetton");
 /**
  * Check if a given object implements the JettonTransferAction interface.
  */
@@ -39,7 +40,7 @@ function JettonTransferActionFromJSONTyped(json, ignoreDiscriminator) {
     return {
         'amount': json['amount'],
         'comment': !(0, runtime_1.exists)(json, 'comment') ? undefined : json['comment'],
-        'jetton': json['jetton'],
+        'jetton': (0, Jetton_1.JettonFromJSON)(json['jetton']),
         'recipient': !(0, runtime_1.exists)(json, 'recipient') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
         'recipientsWallet': json['recipients_wallet'],
         'sender': !(0, runtime_1.exists)(json, 'sender') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['sender']),
@@ -57,7 +58,7 @@ function JettonTransferActionToJSON(value) {
     return {
         'amount': value.amount,
         'comment': value.comment,
-        'jetton': value.jetton,
+        'jetton': (0, Jetton_1.JettonToJSON)(value.jetton),
         'recipient': (0, AccountAddress_1.AccountAddressToJSON)(value.recipient),
         'recipients_wallet': value.recipientsWallet,
         'sender': (0, AccountAddress_1.AccountAddressToJSON)(value.sender),

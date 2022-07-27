@@ -15,15 +15,22 @@
 
 import * as runtime from '../runtime';
 import type {
+  JettonHistory,
   JettonInfo,
   JettonsBalances,
 } from '../models';
 import {
+    JettonHistoryFromJSON,
+    JettonHistoryToJSON,
     JettonInfoFromJSON,
     JettonInfoToJSON,
     JettonsBalancesFromJSON,
     JettonsBalancesToJSON,
 } from '../models';
+
+export interface GetJettonHistoryRequest {
+    account: string;
+}
 
 export interface GetJettonInfoRequest {
     account: string;
@@ -40,6 +47,20 @@ export interface GetJettonsBalancesRequest {
  * @interface JettonApiInterface
  */
 export interface JettonApiInterface {
+    /**
+     * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
+     * @param {string} account address in raw (hex without 0x) or base64url format
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JettonApiInterface
+     */
+    getJettonHistoryRaw(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonHistory>>;
+
+    /**
+     * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
+     */
+    getJettonHistory(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonHistory>;
+
     /**
      * Get jetton metadata by jetton master address
      * @param {string} account address in raw (hex without 0x) or base64url format
@@ -74,6 +95,48 @@ export interface JettonApiInterface {
  * 
  */
 export class JettonApi extends runtime.BaseAPI implements JettonApiInterface {
+
+    /**
+     * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
+     */
+    async getJettonHistoryRaw(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonHistory>> {
+        if (requestParameters.account === null || requestParameters.account === undefined) {
+            throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getJettonHistory.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.account !== undefined) {
+            queryParameters['account'] = requestParameters.account;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("JWTAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/v1/jetton/getHistory`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => JettonHistoryFromJSON(jsonValue));
+    }
+
+    /**
+     * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
+     */
+    async getJettonHistory(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonHistory> {
+        const response = await this.getJettonHistoryRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Get jetton metadata by jetton master address

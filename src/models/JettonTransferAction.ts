@@ -19,6 +19,12 @@ import {
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
+import type { Jetton } from './Jetton';
+import {
+    JettonFromJSON,
+    JettonFromJSONTyped,
+    JettonToJSON,
+} from './Jetton';
 
 /**
  * 
@@ -40,10 +46,10 @@ export interface JettonTransferAction {
     comment?: string;
     /**
      * 
-     * @type {object}
+     * @type {Jetton}
      * @memberof JettonTransferAction
      */
-    jetton: object;
+    jetton: Jetton;
     /**
      * 
      * @type {AccountAddress}
@@ -95,7 +101,7 @@ export function JettonTransferActionFromJSONTyped(json: any, ignoreDiscriminator
         
         'amount': json['amount'],
         'comment': !exists(json, 'comment') ? undefined : json['comment'],
-        'jetton': json['jetton'],
+        'jetton': JettonFromJSON(json['jetton']),
         'recipient': !exists(json, 'recipient') ? undefined : AccountAddressFromJSON(json['recipient']),
         'recipientsWallet': json['recipients_wallet'],
         'sender': !exists(json, 'sender') ? undefined : AccountAddressFromJSON(json['sender']),
@@ -114,7 +120,7 @@ export function JettonTransferActionToJSON(value?: JettonTransferAction | null):
         
         'amount': value.amount,
         'comment': value.comment,
-        'jetton': value.jetton,
+        'jetton': JettonToJSON(value.jetton),
         'recipient': AccountAddressToJSON(value.recipient),
         'recipients_wallet': value.recipientsWallet,
         'sender': AccountAddressToJSON(value.sender),
