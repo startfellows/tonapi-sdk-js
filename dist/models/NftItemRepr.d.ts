@@ -11,6 +11,7 @@
  */
 import type { AccountAddress } from './AccountAddress';
 import type { ImagePreview } from './ImagePreview';
+import type { NftItemReprCollection } from './NftItemReprCollection';
 import type { Sale } from './Sale';
 /**
  *
@@ -26,10 +27,23 @@ export interface NftItemRepr {
     address: string;
     /**
      *
+     * @type {NftItemReprCollection}
+     * @memberof NftItemRepr
+     */
+    collection?: NftItemReprCollection;
+    /**
+     * deprecated
+     * @type {string}
+     * @memberof NftItemRepr
+     * @deprecated
+     */
+    collectionAddress?: string;
+    /**
+     *
      * @type {string}
      * @memberof NftItemRepr
      */
-    collectionAddress?: string;
+    dns?: string;
     /**
      *
      * @type {number}

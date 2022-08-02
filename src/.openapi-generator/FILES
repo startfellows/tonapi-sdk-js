@@ -38,6 +38,7 @@ models/NftCollections.ts
 models/NftForSale.ts
 models/NftItem.ts
 models/NftItemRepr.ts
+models/NftItemReprCollection.ts
 models/NftItemTransferAction.ts
 models/NftItems.ts
 models/NftItemsRepr.ts

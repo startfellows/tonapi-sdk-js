@@ -25,6 +25,12 @@ import {
     ImagePreviewFromJSONTyped,
     ImagePreviewToJSON,
 } from './ImagePreview';
+import type { NftItemReprCollection } from './NftItemReprCollection';
+import {
+    NftItemReprCollectionFromJSON,
+    NftItemReprCollectionFromJSONTyped,
+    NftItemReprCollectionToJSON,
+} from './NftItemReprCollection';
 import type { Sale } from './Sale';
 import {
     SaleFromJSON,
@@ -46,10 +52,23 @@ export interface NftItemRepr {
     address: string;
     /**
      * 
+     * @type {NftItemReprCollection}
+     * @memberof NftItemRepr
+     */
+    collection?: NftItemReprCollection;
+    /**
+     * deprecated
+     * @type {string}
+     * @memberof NftItemRepr
+     * @deprecated
+     */
+    collectionAddress?: string;
+    /**
+     * 
      * @type {string}
      * @memberof NftItemRepr
      */
-    collectionAddress?: string;
+    dns?: string;
     /**
      * 
      * @type {number}
@@ -111,7 +130,9 @@ export function NftItemReprFromJSONTyped(json: any, ignoreDiscriminator: boolean
     return {
         
         'address': json['address'],
+        'collection': !exists(json, 'collection') ? undefined : NftItemReprCollectionFromJSON(json['collection']),
         'collectionAddress': !exists(json, 'collection_address') ? undefined : json['collection_address'],
+        'dns': !exists(json, 'dns') ? undefined : json['dns'],
         'index': json['index'],
         'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
         'owner': !exists(json, 'owner') ? undefined : AccountAddressFromJSON(json['owner']),
@@ -131,7 +152,9 @@ export function NftItemReprToJSON(value?: NftItemRepr | null): any {
     return {
         
         'address': value.address,
+        'collection': NftItemReprCollectionToJSON(value.collection),
         'collection_address': value.collectionAddress,
+        'dns': value.dns,
         'index': value.index,
         'metadata': value.metadata,
         'owner': AccountAddressToJSON(value.owner),

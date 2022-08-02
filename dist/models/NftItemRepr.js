@@ -17,6 +17,7 @@ exports.NftItemReprToJSON = exports.NftItemReprFromJSONTyped = exports.NftItemRe
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
 const ImagePreview_1 = require("./ImagePreview");
+const NftItemReprCollection_1 = require("./NftItemReprCollection");
 const Sale_1 = require("./Sale");
 /**
  * Check if a given object implements the NftItemRepr interface.
@@ -39,7 +40,9 @@ function NftItemReprFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'address': json['address'],
+        'collection': !(0, runtime_1.exists)(json, 'collection') ? undefined : (0, NftItemReprCollection_1.NftItemReprCollectionFromJSON)(json['collection']),
         'collectionAddress': !(0, runtime_1.exists)(json, 'collection_address') ? undefined : json['collection_address'],
+        'dns': !(0, runtime_1.exists)(json, 'dns') ? undefined : json['dns'],
         'index': json['index'],
         'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
         'owner': !(0, runtime_1.exists)(json, 'owner') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['owner']),
@@ -58,7 +61,9 @@ function NftItemReprToJSON(value) {
     }
     return {
         'address': value.address,
+        'collection': (0, NftItemReprCollection_1.NftItemReprCollectionToJSON)(value.collection),
         'collection_address': value.collectionAddress,
+        'dns': value.dns,
         'index': value.index,
         'metadata': value.metadata,
         'owner': (0, AccountAddress_1.AccountAddressToJSON)(value.owner),

@@ -44,6 +44,7 @@ __exportStar(require("./NftCollections"), exports);
 __exportStar(require("./NftForSale"), exports);
 __exportStar(require("./NftItem"), exports);
 __exportStar(require("./NftItemRepr"), exports);
+__exportStar(require("./NftItemReprCollection"), exports);
 __exportStar(require("./NftItemTransferAction"), exports);
 __exportStar(require("./NftItems"), exports);
 __exportStar(require("./NftItemsRepr"), exports);

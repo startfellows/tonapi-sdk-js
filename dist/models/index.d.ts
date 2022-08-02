@@ -26,6 +26,7 @@ export * from './NftCollections';
 export * from './NftForSale';
 export * from './NftItem';
 export * from './NftItemRepr';
+export * from './NftItemReprCollection';
 export * from './NftItemTransferAction';
 export * from './NftItems';
 export * from './NftItemsRepr';
