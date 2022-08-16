@@ -19,6 +19,12 @@ import {
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
+import type { Jetton } from './Jetton';
+import {
+    JettonFromJSON,
+    JettonFromJSONTyped,
+    JettonToJSON,
+} from './Jetton';
 
 /**
  * 
@@ -40,10 +46,10 @@ export interface JettonBalance {
     jettonAddress: string;
     /**
      * 
-     * @type {object}
+     * @type {Jetton}
      * @memberof JettonBalance
      */
-    metadata?: object;
+    metadata?: Jetton;
     /**
      * 
      * @type {AccountAddress}
@@ -76,7 +82,7 @@ export function JettonBalanceFromJSONTyped(json: any, ignoreDiscriminator: boole
         
         'balance': json['balance'],
         'jettonAddress': json['jetton_address'],
-        'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
+        'metadata': !exists(json, 'metadata') ? undefined : JettonFromJSON(json['metadata']),
         'walletAddress': AccountAddressFromJSON(json['wallet_address']),
     };
 }
@@ -92,7 +98,7 @@ export function JettonBalanceToJSON(value?: JettonBalance | null): any {
         
         'balance': value.balance,
         'jetton_address': value.jettonAddress,
-        'metadata': value.metadata,
+        'metadata': JettonToJSON(value.metadata),
         'wallet_address': AccountAddressToJSON(value.walletAddress),
     };
 }

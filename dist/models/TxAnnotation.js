@@ -14,13 +14,11 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TxAnnotationToJSON = exports.TxAnnotationFromJSONTyped = exports.TxAnnotationFromJSON = exports.instanceOfTxAnnotation = void 0;
-const AccountAddress_1 = require("./AccountAddress");
 /**
  * Check if a given object implements the TxAnnotation interface.
  */
 function instanceOfTxAnnotation(value) {
     let isInstance = true;
-    isInstance = isInstance && "address" in value;
     isInstance = isInstance && "data" in value;
     isInstance = isInstance && "name" in value;
     return isInstance;
@@ -35,7 +33,6 @@ function TxAnnotationFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'address': (0, AccountAddress_1.AccountAddressFromJSON)(json['address']),
         'data': json['data'],
         'name': json['name'],
     };
@@ -49,7 +46,6 @@ function TxAnnotationToJSON(value) {
         return null;
     }
     return {
-        'address': (0, AccountAddress_1.AccountAddressToJSON)(value.address),
         'data': value.data,
         'name': value.name,
     };

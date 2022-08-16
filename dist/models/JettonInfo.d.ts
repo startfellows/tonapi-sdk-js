@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import type { JettonMetadata } from './JettonMetadata';
 /**
  *
  * @export
@@ -17,10 +18,10 @@
 export interface JettonInfo {
     /**
      *
-     * @type {any}
+     * @type {JettonMetadata}
      * @memberof JettonInfo
      */
-    metadata: any | null;
+    metadata: JettonMetadata;
     /**
      *
      * @type {boolean}

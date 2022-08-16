@@ -14,6 +14,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JettonInfoToJSON = exports.JettonInfoFromJSONTyped = exports.JettonInfoFromJSON = exports.instanceOfJettonInfo = void 0;
+const JettonMetadata_1 = require("./JettonMetadata");
 /**
  * Check if a given object implements the JettonInfo interface.
  */
@@ -34,7 +35,7 @@ function JettonInfoFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'metadata': json['metadata'],
+        'metadata': (0, JettonMetadata_1.JettonMetadataFromJSON)(json['metadata']),
         'mintable': json['mintable'],
         'totalSupply': json['total_supply'],
     };
@@ -48,7 +49,7 @@ function JettonInfoToJSON(value) {
         return null;
     }
     return {
-        'metadata': value.metadata,
+        'metadata': (0, JettonMetadata_1.JettonMetadataToJSON)(value.metadata),
         'mintable': value.mintable,
         'total_supply': value.totalSupply,
     };

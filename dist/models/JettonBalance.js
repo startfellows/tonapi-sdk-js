@@ -16,6 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.JettonBalanceToJSON = exports.JettonBalanceFromJSONTyped = exports.JettonBalanceFromJSON = exports.instanceOfJettonBalance = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
+const Jetton_1 = require("./Jetton");
 /**
  * Check if a given object implements the JettonBalance interface.
  */
@@ -38,7 +39,7 @@ function JettonBalanceFromJSONTyped(json, ignoreDiscriminator) {
     return {
         'balance': json['balance'],
         'jettonAddress': json['jetton_address'],
-        'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
+        'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : (0, Jetton_1.JettonFromJSON)(json['metadata']),
         'walletAddress': (0, AccountAddress_1.AccountAddressFromJSON)(json['wallet_address']),
     };
 }
@@ -53,7 +54,7 @@ function JettonBalanceToJSON(value) {
     return {
         'balance': value.balance,
         'jetton_address': value.jettonAddress,
-        'metadata': value.metadata,
+        'metadata': (0, Jetton_1.JettonToJSON)(value.metadata),
         'wallet_address': (0, AccountAddress_1.AccountAddressToJSON)(value.walletAddress),
     };
 }

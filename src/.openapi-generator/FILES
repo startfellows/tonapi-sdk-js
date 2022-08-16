@@ -1,4 +1,5 @@
 apis/AccountApi.ts
+apis/DNSApi.ts
 apis/EventApi.ts
 apis/JettonApi.ts
 apis/NFTApi.ts
@@ -18,9 +19,13 @@ models/AccountRepr.ts
 models/AccountReprAddress.ts
 models/AccountReprs.ts
 models/Action.ts
+models/AnnotatedTrace.ts
 models/Block.ts
 models/ContractDeployAction.ts
 models/CurrentTime200Response.ts
+models/DnsRecord.ts
+models/DomainInfo.ts
+models/DomainInfoNftItem.ts
 models/Event.ts
 models/Fee.ts
 models/ImagePreview.ts
@@ -28,6 +33,7 @@ models/Jetton.ts
 models/JettonBalance.ts
 models/JettonHistory.ts
 models/JettonInfo.ts
+models/JettonMetadata.ts
 models/JettonSimpleTransfer.ts
 models/JettonTransferAction.ts
 models/JettonsBalances.ts
@@ -59,6 +65,7 @@ models/Transactions.ts
 models/TxAnnotation.ts
 models/UnSubscriptionAction.ts
 models/Wallet.ts
+models/WalletDNS.ts
 models/Wallets.ts
 models/index.ts
 runtime.ts

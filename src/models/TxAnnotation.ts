@@ -13,25 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { AccountAddress } from './AccountAddress';
-import {
-    AccountAddressFromJSON,
-    AccountAddressFromJSONTyped,
-    AccountAddressToJSON,
-} from './AccountAddress';
-
 /**
  * 
  * @export
  * @interface TxAnnotation
  */
 export interface TxAnnotation {
-    /**
-     * 
-     * @type {AccountAddress}
-     * @memberof TxAnnotation
-     */
-    address: AccountAddress;
     /**
      * annotation data struct
      * @type {any}
@@ -51,7 +38,6 @@ export interface TxAnnotation {
  */
 export function instanceOfTxAnnotation(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "address" in value;
     isInstance = isInstance && "data" in value;
     isInstance = isInstance && "name" in value;
 
@@ -68,7 +54,6 @@ export function TxAnnotationFromJSONTyped(json: any, ignoreDiscriminator: boolea
     }
     return {
         
-        'address': AccountAddressFromJSON(json['address']),
         'data': json['data'],
         'name': json['name'],
     };
@@ -83,7 +68,6 @@ export function TxAnnotationToJSON(value?: TxAnnotation | null): any {
     }
     return {
         
-        'address': AccountAddressToJSON(value.address),
         'data': value.data,
         'name': value.name,
     };

@@ -9,19 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { AccountAddress } from './AccountAddress';
 /**
  *
  * @export
  * @interface TxAnnotation
  */
 export interface TxAnnotation {
-    /**
-     *
-     * @type {AccountAddress}
-     * @memberof TxAnnotation
-     */
-    address: AccountAddress;
     /**
      * annotation data struct
      * @type {any}

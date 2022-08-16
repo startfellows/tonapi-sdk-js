@@ -1,4 +1,5 @@
 export * from './AccountApi';
+export * from './DNSApi';
 export * from './EventApi';
 export * from './JettonApi';
 export * from './NFTApi';

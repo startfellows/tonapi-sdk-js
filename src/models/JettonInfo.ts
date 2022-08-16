@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { JettonMetadata } from './JettonMetadata';
+import {
+    JettonMetadataFromJSON,
+    JettonMetadataFromJSONTyped,
+    JettonMetadataToJSON,
+} from './JettonMetadata';
+
 /**
  * 
  * @export
@@ -21,10 +28,10 @@ import { exists, mapValues } from '../runtime';
 export interface JettonInfo {
     /**
      * 
-     * @type {any}
+     * @type {JettonMetadata}
      * @memberof JettonInfo
      */
-    metadata: any | null;
+    metadata: JettonMetadata;
     /**
      * 
      * @type {boolean}
@@ -61,7 +68,7 @@ export function JettonInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     }
     return {
         
-        'metadata': json['metadata'],
+        'metadata': JettonMetadataFromJSON(json['metadata']),
         'mintable': json['mintable'],
         'totalSupply': json['total_supply'],
     };
@@ -76,7 +83,7 @@ export function JettonInfoToJSON(value?: JettonInfo | null): any {
     }
     return {
         
-        'metadata': value.metadata,
+        'metadata': JettonMetadataToJSON(value.metadata),
         'mintable': value.mintable,
         'total_supply': value.totalSupply,
     };
