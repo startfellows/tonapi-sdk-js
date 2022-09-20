@@ -45,17 +45,6 @@ export interface Account {
     status: string;
 }
 
-/**
- * Check if a given object implements the Account interface.
- */
-export function instanceOfAccount(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "balance" in value;
-    isInstance = isInstance && "status" in value;
-
-    return isInstance;
-}
-
 export function AccountFromJSON(json: any): Account {
     return AccountFromJSONTyped(json, false);
 }

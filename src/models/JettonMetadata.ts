@@ -27,16 +27,22 @@ export interface JettonMetadata {
     address: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof JettonMetadata
      */
-    decimal: number;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof JettonMetadata
      */
-    description?: string;
+    symbol: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof JettonMetadata
+     */
+    decimals: number;
     /**
      * 
      * @type {string}
@@ -48,26 +54,7 @@ export interface JettonMetadata {
      * @type {string}
      * @memberof JettonMetadata
      */
-    name: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof JettonMetadata
-     */
-    symbol: string;
-}
-
-/**
- * Check if a given object implements the JettonMetadata interface.
- */
-export function instanceOfJettonMetadata(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "decimal" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "symbol" in value;
-
-    return isInstance;
+    description?: string;
 }
 
 export function JettonMetadataFromJSON(json: any): JettonMetadata {
@@ -81,11 +68,11 @@ export function JettonMetadataFromJSONTyped(json: any, ignoreDiscriminator: bool
     return {
         
         'address': json['address'],
-        'decimal': json['decimal'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'image': !exists(json, 'image') ? undefined : json['image'],
         'name': json['name'],
         'symbol': json['symbol'],
+        'decimals': json['decimals'],
+        'image': !exists(json, 'image') ? undefined : json['image'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
     };
 }
 
@@ -99,11 +86,11 @@ export function JettonMetadataToJSON(value?: JettonMetadata | null): any {
     return {
         
         'address': value.address,
-        'decimal': value.decimal,
-        'description': value.description,
-        'image': value.image,
         'name': value.name,
         'symbol': value.symbol,
+        'decimals': value.decimals,
+        'image': value.image,
+        'description': value.description,
     };
 }
 

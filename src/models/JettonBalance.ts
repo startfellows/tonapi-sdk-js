@@ -13,14 +13,14 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { AccountAddress } from './AccountAddress';
 import {
+    AccountAddress,
     AccountAddressFromJSON,
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
-import type { Jetton } from './Jetton';
 import {
+    Jetton,
     JettonFromJSON,
     JettonFromJSONTyped,
     JettonToJSON,
@@ -46,28 +46,16 @@ export interface JettonBalance {
     jettonAddress: string;
     /**
      * 
-     * @type {Jetton}
-     * @memberof JettonBalance
-     */
-    metadata?: Jetton;
-    /**
-     * 
      * @type {AccountAddress}
      * @memberof JettonBalance
      */
     walletAddress: AccountAddress;
-}
-
-/**
- * Check if a given object implements the JettonBalance interface.
- */
-export function instanceOfJettonBalance(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "balance" in value;
-    isInstance = isInstance && "jettonAddress" in value;
-    isInstance = isInstance && "walletAddress" in value;
-
-    return isInstance;
+    /**
+     * 
+     * @type {Jetton}
+     * @memberof JettonBalance
+     */
+    metadata?: Jetton;
 }
 
 export function JettonBalanceFromJSON(json: any): JettonBalance {
@@ -82,8 +70,8 @@ export function JettonBalanceFromJSONTyped(json: any, ignoreDiscriminator: boole
         
         'balance': json['balance'],
         'jettonAddress': json['jetton_address'],
-        'metadata': !exists(json, 'metadata') ? undefined : JettonFromJSON(json['metadata']),
         'walletAddress': AccountAddressFromJSON(json['wallet_address']),
+        'metadata': !exists(json, 'metadata') ? undefined : JettonFromJSON(json['metadata']),
     };
 }
 
@@ -98,8 +86,8 @@ export function JettonBalanceToJSON(value?: JettonBalance | null): any {
         
         'balance': value.balance,
         'jetton_address': value.jettonAddress,
-        'metadata': JettonToJSON(value.metadata),
         'wallet_address': AccountAddressToJSON(value.walletAddress),
+        'metadata': JettonToJSON(value.metadata),
     };
 }
 

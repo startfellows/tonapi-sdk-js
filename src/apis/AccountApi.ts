@@ -14,13 +14,11 @@
 
 
 import * as runtime from '../runtime';
-import type {
-  AccountRepr,
-  AccountReprs,
-} from '../models';
 import {
+    AccountRepr,
     AccountReprFromJSON,
     AccountReprToJSON,
+    AccountReprs,
     AccountReprsFromJSON,
     AccountReprsToJSON,
 } from '../models';
@@ -47,12 +45,12 @@ export interface AccountApiInterface {
      * @throws {RequiredError}
      * @memberof AccountApiInterface
      */
-    getAccountInfoRaw(requestParameters: GetAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountRepr>>;
+    getAccountInfoRaw(requestParameters: GetAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<AccountRepr>>;
 
     /**
      * Get info about account
      */
-    getAccountInfo(requestParameters: GetAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountRepr>;
+    getAccountInfo(requestParameters: GetAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<AccountRepr>;
 
     /**
      * Get info about few accounts account by one request
@@ -61,12 +59,12 @@ export interface AccountApiInterface {
      * @throws {RequiredError}
      * @memberof AccountApiInterface
      */
-    getBulkAccountInfoRaw(requestParameters: GetBulkAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountReprs>>;
+    getBulkAccountInfoRaw(requestParameters: GetBulkAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<AccountReprs>>;
 
     /**
      * Get info about few accounts account by one request
      */
-    getBulkAccountInfo(requestParameters: GetBulkAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountReprs>;
+    getBulkAccountInfo(requestParameters: GetBulkAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<AccountReprs>;
 
 }
 
@@ -78,7 +76,7 @@ export class AccountApi extends runtime.BaseAPI implements AccountApiInterface {
     /**
      * Get info about account
      */
-    async getAccountInfoRaw(requestParameters: GetAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountRepr>> {
+    async getAccountInfoRaw(requestParameters: GetAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<AccountRepr>> {
         if (requestParameters.account === null || requestParameters.account === undefined) {
             throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getAccountInfo.');
         }
@@ -112,7 +110,7 @@ export class AccountApi extends runtime.BaseAPI implements AccountApiInterface {
     /**
      * Get info about account
      */
-    async getAccountInfo(requestParameters: GetAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountRepr> {
+    async getAccountInfo(requestParameters: GetAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<AccountRepr> {
         const response = await this.getAccountInfoRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -120,7 +118,7 @@ export class AccountApi extends runtime.BaseAPI implements AccountApiInterface {
     /**
      * Get info about few accounts account by one request
      */
-    async getBulkAccountInfoRaw(requestParameters: GetBulkAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountReprs>> {
+    async getBulkAccountInfoRaw(requestParameters: GetBulkAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<AccountReprs>> {
         if (requestParameters.addresses === null || requestParameters.addresses === undefined) {
             throw new runtime.RequiredError('addresses','Required parameter requestParameters.addresses was null or undefined when calling getBulkAccountInfo.');
         }
@@ -154,7 +152,7 @@ export class AccountApi extends runtime.BaseAPI implements AccountApiInterface {
     /**
      * Get info about few accounts account by one request
      */
-    async getBulkAccountInfo(requestParameters: GetBulkAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountReprs> {
+    async getBulkAccountInfo(requestParameters: GetBulkAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<AccountReprs> {
         const response = await this.getBulkAccountInfoRaw(requestParameters, initOverrides);
         return await response.value();
     }

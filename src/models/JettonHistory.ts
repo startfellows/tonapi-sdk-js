@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { JettonSimpleTransfer } from './JettonSimpleTransfer';
 import {
+    JettonSimpleTransfer,
     JettonSimpleTransferFromJSON,
     JettonSimpleTransferFromJSONTyped,
     JettonSimpleTransferToJSON,
@@ -32,16 +32,6 @@ export interface JettonHistory {
      * @memberof JettonHistory
      */
     history: Array<JettonSimpleTransfer>;
-}
-
-/**
- * Check if a given object implements the JettonHistory interface.
- */
-export function instanceOfJettonHistory(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "history" in value;
-
-    return isInstance;
 }
 
 export function JettonHistoryFromJSON(json: any): JettonHistory {

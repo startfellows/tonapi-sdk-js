@@ -27,18 +27,6 @@ export interface Jetton {
     address: string;
     /**
      * 
-     * @type {number}
-     * @memberof Jetton
-     */
-    decimal: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Jetton
-     */
-    image?: string;
-    /**
-     * 
      * @type {string}
      * @memberof Jetton
      */
@@ -49,19 +37,18 @@ export interface Jetton {
      * @memberof Jetton
      */
     symbol: string;
-}
-
-/**
- * Check if a given object implements the Jetton interface.
- */
-export function instanceOfJetton(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "decimal" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "symbol" in value;
-
-    return isInstance;
+    /**
+     * 
+     * @type {number}
+     * @memberof Jetton
+     */
+    decimals: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Jetton
+     */
+    image?: string;
 }
 
 export function JettonFromJSON(json: any): Jetton {
@@ -75,10 +62,10 @@ export function JettonFromJSONTyped(json: any, ignoreDiscriminator: boolean): Je
     return {
         
         'address': json['address'],
-        'decimal': json['decimal'],
-        'image': !exists(json, 'image') ? undefined : json['image'],
         'name': json['name'],
         'symbol': json['symbol'],
+        'decimals': json['decimals'],
+        'image': !exists(json, 'image') ? undefined : json['image'],
     };
 }
 
@@ -92,10 +79,10 @@ export function JettonToJSON(value?: Jetton | null): any {
     return {
         
         'address': value.address,
-        'decimal': value.decimal,
-        'image': value.image,
         'name': value.name,
         'symbol': value.symbol,
+        'decimals': value.decimals,
+        'image': value.image,
     };
 }
 

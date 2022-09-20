@@ -13,20 +13,20 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { AccountAddress } from './AccountAddress';
 import {
+    AccountAddress,
     AccountAddressFromJSON,
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
-import type { Action } from './Action';
 import {
+    Action,
     ActionFromJSON,
     ActionFromJSONTyped,
     ActionToJSON,
 } from './Action';
-import type { Fee } from './Fee';
 import {
+    Fee,
     FeeFromJSON,
     FeeFromJSONTyped,
     FeeToJSON,
@@ -40,10 +40,22 @@ import {
 export interface AccountEvent {
     /**
      * 
+     * @type {string}
+     * @memberof AccountEvent
+     */
+    eventId: string;
+    /**
+     * 
      * @type {AccountAddress}
      * @memberof AccountEvent
      */
     account: AccountAddress;
+    /**
+     * 
+     * @type {number}
+     * @memberof AccountEvent
+     */
+    timestamp: number;
     /**
      * 
      * @type {Array<Action>}
@@ -52,22 +64,10 @@ export interface AccountEvent {
     actions: Array<Action>;
     /**
      * 
-     * @type {string}
-     * @memberof AccountEvent
-     */
-    eventId: string;
-    /**
-     * 
      * @type {Fee}
      * @memberof AccountEvent
      */
     fee: Fee;
-    /**
-     * Event is not finished yet. Transactions still happening
-     * @type {boolean}
-     * @memberof AccountEvent
-     */
-    inProgress: boolean;
     /**
      * scam
      * @type {boolean}
@@ -81,28 +81,11 @@ export interface AccountEvent {
      */
     lt: number;
     /**
-     * 
-     * @type {number}
+     * Event is not finished yet. Transactions still happening
+     * @type {boolean}
      * @memberof AccountEvent
      */
-    timestamp: number;
-}
-
-/**
- * Check if a given object implements the AccountEvent interface.
- */
-export function instanceOfAccountEvent(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "account" in value;
-    isInstance = isInstance && "actions" in value;
-    isInstance = isInstance && "eventId" in value;
-    isInstance = isInstance && "fee" in value;
-    isInstance = isInstance && "inProgress" in value;
-    isInstance = isInstance && "isScam" in value;
-    isInstance = isInstance && "lt" in value;
-    isInstance = isInstance && "timestamp" in value;
-
-    return isInstance;
+    inProgress: boolean;
 }
 
 export function AccountEventFromJSON(json: any): AccountEvent {
@@ -115,14 +98,14 @@ export function AccountEventFromJSONTyped(json: any, ignoreDiscriminator: boolea
     }
     return {
         
-        'account': AccountAddressFromJSON(json['account']),
-        'actions': ((json['actions'] as Array<any>).map(ActionFromJSON)),
         'eventId': json['event_id'],
+        'account': AccountAddressFromJSON(json['account']),
+        'timestamp': json['timestamp'],
+        'actions': ((json['actions'] as Array<any>).map(ActionFromJSON)),
         'fee': FeeFromJSON(json['fee']),
-        'inProgress': json['in_progress'],
         'isScam': json['is_scam'],
         'lt': json['lt'],
-        'timestamp': json['timestamp'],
+        'inProgress': json['in_progress'],
     };
 }
 
@@ -135,14 +118,14 @@ export function AccountEventToJSON(value?: AccountEvent | null): any {
     }
     return {
         
-        'account': AccountAddressToJSON(value.account),
-        'actions': ((value.actions as Array<any>).map(ActionToJSON)),
         'event_id': value.eventId,
+        'account': AccountAddressToJSON(value.account),
+        'timestamp': value.timestamp,
+        'actions': ((value.actions as Array<any>).map(ActionToJSON)),
         'fee': FeeToJSON(value.fee),
-        'in_progress': value.inProgress,
         'is_scam': value.isScam,
         'lt': value.lt,
-        'timestamp': value.timestamp,
+        'in_progress': value.inProgress,
     };
 }
 

@@ -16,39 +16,53 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface Price
+ * @interface DomainBid
  */
-export interface Price {
+export interface DomainBid {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DomainBid
+     */
+    success: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof DomainBid
+     */
+    value: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DomainBid
+     */
+    txTime: number;
     /**
      * 
      * @type {string}
-     * @memberof Price
+     * @memberof DomainBid
      */
-    value: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Price
-     */
-    tokenName: string;
+    bidderA: string;
 }
 
-export function PriceFromJSON(json: any): Price {
-    return PriceFromJSONTyped(json, false);
+export function DomainBidFromJSON(json: any): DomainBid {
+    return DomainBidFromJSONTyped(json, false);
 }
 
-export function PriceFromJSONTyped(json: any, ignoreDiscriminator: boolean): Price {
+export function DomainBidFromJSONTyped(json: any, ignoreDiscriminator: boolean): DomainBid {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
+        'success': json['success'],
         'value': json['value'],
-        'tokenName': json['token_name'],
+        'txTime': json['txTime'],
+        'bidderA': json['bidderA'],
     };
 }
 
-export function PriceToJSON(value?: Price | null): any {
+export function DomainBidToJSON(value?: DomainBid | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -57,8 +71,10 @@ export function PriceToJSON(value?: Price | null): any {
     }
     return {
         
+        'success': value.success,
         'value': value.value,
-        'token_name': value.tokenName,
+        'txTime': value.txTime,
+        'bidderA': value.bidderA,
     };
 }
 

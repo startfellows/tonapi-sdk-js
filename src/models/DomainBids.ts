@@ -13,42 +13,42 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import {
+    DomainBid,
+    DomainBidFromJSON,
+    DomainBidFromJSONTyped,
+    DomainBidToJSON,
+} from './DomainBid';
+
 /**
  * 
  * @export
- * @interface NftItemReprCollection
+ * @interface DomainBids
  */
-export interface NftItemReprCollection {
+export interface DomainBids {
     /**
      * 
-     * @type {string}
-     * @memberof NftItemReprCollection
+     * @type {Array<DomainBid>}
+     * @memberof DomainBids
      */
-    address: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NftItemReprCollection
-     */
-    name: string;
+    data: Array<DomainBid>;
 }
 
-export function NftItemReprCollectionFromJSON(json: any): NftItemReprCollection {
-    return NftItemReprCollectionFromJSONTyped(json, false);
+export function DomainBidsFromJSON(json: any): DomainBids {
+    return DomainBidsFromJSONTyped(json, false);
 }
 
-export function NftItemReprCollectionFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftItemReprCollection {
+export function DomainBidsFromJSONTyped(json: any, ignoreDiscriminator: boolean): DomainBids {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'address': json['address'],
-        'name': json['name'],
+        'data': ((json['data'] as Array<any>).map(DomainBidFromJSON)),
     };
 }
 
-export function NftItemReprCollectionToJSON(value?: NftItemReprCollection | null): any {
+export function DomainBidsToJSON(value?: DomainBids | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -57,8 +57,7 @@ export function NftItemReprCollectionToJSON(value?: NftItemReprCollection | null
     }
     return {
         
-        'address': value.address,
-        'name': value.name,
+        'data': ((value.data as Array<any>).map(DomainBidToJSON)),
     };
 }
 

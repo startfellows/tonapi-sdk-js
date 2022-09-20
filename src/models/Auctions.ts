@@ -13,42 +13,42 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import {
+    Auction,
+    AuctionFromJSON,
+    AuctionFromJSONTyped,
+    AuctionToJSON,
+} from './Auction';
+
 /**
  * 
  * @export
- * @interface NftItemReprCollection
+ * @interface Auctions
  */
-export interface NftItemReprCollection {
+export interface Auctions {
     /**
      * 
-     * @type {string}
-     * @memberof NftItemReprCollection
+     * @type {Array<Auction>}
+     * @memberof Auctions
      */
-    address: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NftItemReprCollection
-     */
-    name: string;
+    data: Array<Auction>;
 }
 
-export function NftItemReprCollectionFromJSON(json: any): NftItemReprCollection {
-    return NftItemReprCollectionFromJSONTyped(json, false);
+export function AuctionsFromJSON(json: any): Auctions {
+    return AuctionsFromJSONTyped(json, false);
 }
 
-export function NftItemReprCollectionFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftItemReprCollection {
+export function AuctionsFromJSONTyped(json: any, ignoreDiscriminator: boolean): Auctions {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'address': json['address'],
-        'name': json['name'],
+        'data': ((json['data'] as Array<any>).map(AuctionFromJSON)),
     };
 }
 
-export function NftItemReprCollectionToJSON(value?: NftItemReprCollection | null): any {
+export function AuctionsToJSON(value?: Auctions | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -57,8 +57,7 @@ export function NftItemReprCollectionToJSON(value?: NftItemReprCollection | null
     }
     return {
         
-        'address': value.address,
-        'name': value.name,
+        'data': ((value.data as Array<any>).map(AuctionToJSON)),
     };
 }
 

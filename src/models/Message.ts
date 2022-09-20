@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { AccountAddress } from './AccountAddress';
 import {
+    AccountAddress,
     AccountAddressFromJSON,
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
@@ -31,18 +31,6 @@ export interface Message {
      * @type {number}
      * @memberof Message
      */
-    createdLt: number;
-    /**
-     * 
-     * @type {AccountAddress}
-     * @memberof Message
-     */
-    destination?: AccountAddress;
-    /**
-     * 
-     * @type {number}
-     * @memberof Message
-     */
     fwdFee: number;
     /**
      * 
@@ -52,10 +40,22 @@ export interface Message {
     ihrFee: number;
     /**
      * 
-     * @type {any}
+     * @type {number}
      * @memberof Message
      */
-    msgData: any | null;
+    createdLt: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Message
+     */
+    value: number;
+    /**
+     * 
+     * @type {AccountAddress}
+     * @memberof Message
+     */
+    destination?: AccountAddress;
     /**
      * 
      * @type {AccountAddress}
@@ -64,24 +64,10 @@ export interface Message {
     source?: AccountAddress;
     /**
      * 
-     * @type {number}
+     * @type {any}
      * @memberof Message
      */
-    value: number;
-}
-
-/**
- * Check if a given object implements the Message interface.
- */
-export function instanceOfMessage(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "createdLt" in value;
-    isInstance = isInstance && "fwdFee" in value;
-    isInstance = isInstance && "ihrFee" in value;
-    isInstance = isInstance && "msgData" in value;
-    isInstance = isInstance && "value" in value;
-
-    return isInstance;
+    msgData: any | null;
 }
 
 export function MessageFromJSON(json: any): Message {
@@ -94,13 +80,13 @@ export function MessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): M
     }
     return {
         
-        'createdLt': json['created_lt'],
-        'destination': !exists(json, 'destination') ? undefined : AccountAddressFromJSON(json['destination']),
         'fwdFee': json['fwd_fee'],
         'ihrFee': json['ihr_fee'],
-        'msgData': json['msg_data'],
-        'source': !exists(json, 'source') ? undefined : AccountAddressFromJSON(json['source']),
+        'createdLt': json['created_lt'],
         'value': json['value'],
+        'destination': !exists(json, 'destination') ? undefined : AccountAddressFromJSON(json['destination']),
+        'source': !exists(json, 'source') ? undefined : AccountAddressFromJSON(json['source']),
+        'msgData': json['msg_data'],
     };
 }
 
@@ -113,13 +99,13 @@ export function MessageToJSON(value?: Message | null): any {
     }
     return {
         
-        'created_lt': value.createdLt,
-        'destination': AccountAddressToJSON(value.destination),
         'fwd_fee': value.fwdFee,
         'ihr_fee': value.ihrFee,
-        'msg_data': value.msgData,
-        'source': AccountAddressToJSON(value.source),
+        'created_lt': value.createdLt,
         'value': value.value,
+        'destination': AccountAddressToJSON(value.destination),
+        'source': AccountAddressToJSON(value.source),
+        'msg_data': value.msgData,
     };
 }
 

@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { Jetton } from './Jetton';
 import {
+    Jetton,
     JettonFromJSON,
     JettonFromJSONTyped,
     JettonToJSON,
@@ -31,6 +31,12 @@ export interface JettonSimpleTransfer {
      * @type {string}
      * @memberof JettonSimpleTransfer
      */
+    type: JettonSimpleTransferTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof JettonSimpleTransfer
+     */
     amount: string;
     /**
      * 
@@ -38,12 +44,6 @@ export interface JettonSimpleTransfer {
      * @memberof JettonSimpleTransfer
      */
     jetton: Jetton;
-    /**
-     * 
-     * @type {string}
-     * @memberof JettonSimpleTransfer
-     */
-    type: JettonSimpleTransferTypeEnum;
 }
 
 
@@ -57,18 +57,6 @@ export const JettonSimpleTransferTypeEnum = {
 export type JettonSimpleTransferTypeEnum = typeof JettonSimpleTransferTypeEnum[keyof typeof JettonSimpleTransferTypeEnum];
 
 
-/**
- * Check if a given object implements the JettonSimpleTransfer interface.
- */
-export function instanceOfJettonSimpleTransfer(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "jetton" in value;
-    isInstance = isInstance && "type" in value;
-
-    return isInstance;
-}
-
 export function JettonSimpleTransferFromJSON(json: any): JettonSimpleTransfer {
     return JettonSimpleTransferFromJSONTyped(json, false);
 }
@@ -79,9 +67,9 @@ export function JettonSimpleTransferFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
+        'type': json['type'],
         'amount': json['amount'],
         'jetton': JettonFromJSON(json['jetton']),
-        'type': json['type'],
     };
 }
 
@@ -94,9 +82,9 @@ export function JettonSimpleTransferToJSON(value?: JettonSimpleTransfer | null):
     }
     return {
         
+        'type': value.type,
         'amount': value.amount,
         'jetton': JettonToJSON(value.jetton),
-        'type': value.type,
     };
 }
 

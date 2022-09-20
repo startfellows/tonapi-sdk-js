@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { AccountAddress } from './AccountAddress';
 import {
+    AccountAddress,
     AccountAddressFromJSON,
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
@@ -26,6 +26,18 @@ import {
  * @interface TonTransferAction
  */
 export interface TonTransferAction {
+    /**
+     * 
+     * @type {AccountAddress}
+     * @memberof TonTransferAction
+     */
+    sender: AccountAddress;
+    /**
+     * 
+     * @type {AccountAddress}
+     * @memberof TonTransferAction
+     */
+    recipient: AccountAddress;
     /**
      * amount in nanotons
      * @type {number}
@@ -44,30 +56,6 @@ export interface TonTransferAction {
      * @memberof TonTransferAction
      */
     payload?: string;
-    /**
-     * 
-     * @type {AccountAddress}
-     * @memberof TonTransferAction
-     */
-    recipient: AccountAddress;
-    /**
-     * 
-     * @type {AccountAddress}
-     * @memberof TonTransferAction
-     */
-    sender: AccountAddress;
-}
-
-/**
- * Check if a given object implements the TonTransferAction interface.
- */
-export function instanceOfTonTransferAction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "recipient" in value;
-    isInstance = isInstance && "sender" in value;
-
-    return isInstance;
 }
 
 export function TonTransferActionFromJSON(json: any): TonTransferAction {
@@ -80,11 +68,11 @@ export function TonTransferActionFromJSONTyped(json: any, ignoreDiscriminator: b
     }
     return {
         
+        'sender': AccountAddressFromJSON(json['sender']),
+        'recipient': AccountAddressFromJSON(json['recipient']),
         'amount': json['amount'],
         'comment': !exists(json, 'comment') ? undefined : json['comment'],
         'payload': !exists(json, 'payload') ? undefined : json['payload'],
-        'recipient': AccountAddressFromJSON(json['recipient']),
-        'sender': AccountAddressFromJSON(json['sender']),
     };
 }
 
@@ -97,11 +85,11 @@ export function TonTransferActionToJSON(value?: TonTransferAction | null): any {
     }
     return {
         
+        'sender': AccountAddressToJSON(value.sender),
+        'recipient': AccountAddressToJSON(value.recipient),
         'amount': value.amount,
         'comment': value.comment,
         'payload': value.payload,
-        'recipient': AccountAddressToJSON(value.recipient),
-        'sender': AccountAddressToJSON(value.sender),
     };
 }
 

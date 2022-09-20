@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { Transaction } from './Transaction';
 import {
+    Transaction,
     TransactionFromJSON,
     TransactionFromJSONTyped,
     TransactionToJSON,
@@ -32,16 +32,6 @@ export interface Transactions {
      * @memberof Transactions
      */
     transactions: Array<Transaction>;
-}
-
-/**
- * Check if a given object implements the Transactions interface.
- */
-export function instanceOfTransactions(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "transactions" in value;
-
-    return isInstance;
 }
 
 export function TransactionsFromJSON(json: any): Transactions {

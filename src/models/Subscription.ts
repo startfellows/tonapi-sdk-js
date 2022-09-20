@@ -27,10 +27,10 @@ export interface Subscription {
     address: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof Subscription
      */
-    amount: number;
+    walletAddress: string;
     /**
      * 
      * @type {string}
@@ -42,19 +42,7 @@ export interface Subscription {
      * @type {number}
      * @memberof Subscription
      */
-    failedAttempts: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Subscription
-     */
-    lastPaymentTime: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Subscription
-     */
-    lastRequestTime: number;
+    amount: number;
     /**
      * 
      * @type {number}
@@ -72,39 +60,31 @@ export interface Subscription {
      * @type {number}
      * @memberof Subscription
      */
+    timeout: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Subscription
+     */
+    lastPaymentTime: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Subscription
+     */
+    lastRequestTime: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Subscription
+     */
     subscriptionId: number;
     /**
      * 
      * @type {number}
      * @memberof Subscription
      */
-    timeout: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Subscription
-     */
-    walletAddress: string;
-}
-
-/**
- * Check if a given object implements the Subscription interface.
- */
-export function instanceOfSubscription(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "beneficiaryAddress" in value;
-    isInstance = isInstance && "failedAttempts" in value;
-    isInstance = isInstance && "lastPaymentTime" in value;
-    isInstance = isInstance && "lastRequestTime" in value;
-    isInstance = isInstance && "period" in value;
-    isInstance = isInstance && "startTime" in value;
-    isInstance = isInstance && "subscriptionId" in value;
-    isInstance = isInstance && "timeout" in value;
-    isInstance = isInstance && "walletAddress" in value;
-
-    return isInstance;
+    failedAttempts: number;
 }
 
 export function SubscriptionFromJSON(json: any): Subscription {
@@ -118,16 +98,16 @@ export function SubscriptionFromJSONTyped(json: any, ignoreDiscriminator: boolea
     return {
         
         'address': json['address'],
-        'amount': json['amount'],
+        'walletAddress': json['wallet_address'],
         'beneficiaryAddress': json['beneficiary_address'],
-        'failedAttempts': json['failed_attempts'],
-        'lastPaymentTime': json['last_payment_time'],
-        'lastRequestTime': json['last_request_time'],
+        'amount': json['amount'],
         'period': json['period'],
         'startTime': json['start_time'],
-        'subscriptionId': json['subscription_id'],
         'timeout': json['timeout'],
-        'walletAddress': json['wallet_address'],
+        'lastPaymentTime': json['last_payment_time'],
+        'lastRequestTime': json['last_request_time'],
+        'subscriptionId': json['subscription_id'],
+        'failedAttempts': json['failed_attempts'],
     };
 }
 
@@ -141,16 +121,16 @@ export function SubscriptionToJSON(value?: Subscription | null): any {
     return {
         
         'address': value.address,
-        'amount': value.amount,
+        'wallet_address': value.walletAddress,
         'beneficiary_address': value.beneficiaryAddress,
-        'failed_attempts': value.failedAttempts,
-        'last_payment_time': value.lastPaymentTime,
-        'last_request_time': value.lastRequestTime,
+        'amount': value.amount,
         'period': value.period,
         'start_time': value.startTime,
-        'subscription_id': value.subscriptionId,
         'timeout': value.timeout,
-        'wallet_address': value.walletAddress,
+        'last_payment_time': value.lastPaymentTime,
+        'last_request_time': value.lastRequestTime,
+        'subscription_id': value.subscriptionId,
+        'failed_attempts': value.failedAttempts,
     };
 }
 

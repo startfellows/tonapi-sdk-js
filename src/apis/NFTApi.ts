@@ -14,25 +14,23 @@
 
 
 import * as runtime from '../runtime';
-import type {
-  NftCollection,
-  NftCollections,
-  NftItem,
-  NftItems,
-  NftItemsRepr,
-  NftSalesResponse,
-} from '../models';
 import {
+    NftCollection,
     NftCollectionFromJSON,
     NftCollectionToJSON,
+    NftCollections,
     NftCollectionsFromJSON,
     NftCollectionsToJSON,
+    NftItem,
     NftItemFromJSON,
     NftItemToJSON,
+    NftItems,
     NftItemsFromJSON,
     NftItemsToJSON,
+    NftItemsRepr,
     NftItemsReprFromJSON,
     NftItemsReprToJSON,
+    NftSalesResponse,
     NftSalesResponseFromJSON,
     NftSalesResponseToJSON,
 } from '../models';
@@ -83,12 +81,12 @@ export interface NFTApiInterface {
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
-    getNFTItemsRaw(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItemsRepr>>;
+    getNFTItemsRaw(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftItemsRepr>>;
 
     /**
      * Get NFT items by addresses
      */
-    getNFTItems(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItemsRepr>;
+    getNFTItems(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftItemsRepr>;
 
     /**
      * Get NFT collection by collection address
@@ -97,12 +95,12 @@ export interface NFTApiInterface {
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
-    getNftCollectionRaw(requestParameters: GetNftCollectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftCollection>>;
+    getNftCollectionRaw(requestParameters: GetNftCollectionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftCollection>>;
 
     /**
      * Get NFT collection by collection address
      */
-    getNftCollection(requestParameters: GetNftCollectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollection>;
+    getNftCollection(requestParameters: GetNftCollectionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftCollection>;
 
     /**
      * Get all NFT collections
@@ -110,12 +108,12 @@ export interface NFTApiInterface {
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
-    getNftCollectionsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftCollections>>;
+    getNftCollectionsRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftCollections>>;
 
     /**
      * Get all NFT collections
      */
-    getNftCollections(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollections>;
+    getNftCollections(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftCollections>;
 
     /**
      * Get NFT items for sale
@@ -125,12 +123,12 @@ export interface NFTApiInterface {
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
-    getNftForSaleRaw(requestParameters: GetNftForSaleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftSalesResponse>>;
+    getNftForSaleRaw(requestParameters: GetNftForSaleRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftSalesResponse>>;
 
     /**
      * Get NFT items for sale
      */
-    getNftForSale(requestParameters: GetNftForSaleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftSalesResponse>;
+    getNftForSale(requestParameters: GetNftForSaleRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftSalesResponse>;
 
     /**
      * Get NFT item by its address
@@ -140,12 +138,12 @@ export interface NFTApiInterface {
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
-    getNftItemByAddressRaw(requestParameters: GetNftItemByAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItem>>;
+    getNftItemByAddressRaw(requestParameters: GetNftItemByAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftItem>>;
 
     /**
      * Get NFT item by its address
      */
-    getNftItemByAddress(requestParameters: GetNftItemByAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItem>;
+    getNftItemByAddress(requestParameters: GetNftItemByAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftItem>;
 
     /**
      * Get all NFT items from collection by collection address
@@ -155,12 +153,12 @@ export interface NFTApiInterface {
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
-    getNftItemsByCollectionAddressRaw(requestParameters: GetNftItemsByCollectionAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>>;
+    getNftItemsByCollectionAddressRaw(requestParameters: GetNftItemsByCollectionAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftItems>>;
 
     /**
      * Get all NFT items from collection by collection address
      */
-    getNftItemsByCollectionAddress(requestParameters: GetNftItemsByCollectionAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems>;
+    getNftItemsByCollectionAddress(requestParameters: GetNftItemsByCollectionAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftItems>;
 
     /**
      * Get all NFT items by owner address
@@ -170,12 +168,12 @@ export interface NFTApiInterface {
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
-    getNftItemsByOwnerAddressRaw(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>>;
+    getNftItemsByOwnerAddressRaw(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftItems>>;
 
     /**
      * Get all NFT items by owner address
      */
-    getNftItemsByOwnerAddress(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems>;
+    getNftItemsByOwnerAddress(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftItems>;
 
     /**
      * Search NFT items using filters
@@ -188,12 +186,12 @@ export interface NFTApiInterface {
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
-    searchNFTItemsRaw(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItemsRepr>>;
+    searchNFTItemsRaw(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftItemsRepr>>;
 
     /**
      * Search NFT items using filters
      */
-    searchNFTItems(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItemsRepr>;
+    searchNFTItems(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftItemsRepr>;
 
 }
 
@@ -205,7 +203,7 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
      * Get NFT items by addresses
      */
-    async getNFTItemsRaw(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItemsRepr>> {
+    async getNFTItemsRaw(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftItemsRepr>> {
         if (requestParameters.addresses === null || requestParameters.addresses === undefined) {
             throw new runtime.RequiredError('addresses','Required parameter requestParameters.addresses was null or undefined when calling getNFTItems.');
         }
@@ -239,7 +237,7 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
      * Get NFT items by addresses
      */
-    async getNFTItems(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItemsRepr> {
+    async getNFTItems(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftItemsRepr> {
         const response = await this.getNFTItemsRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -247,7 +245,7 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
      * Get NFT collection by collection address
      */
-    async getNftCollectionRaw(requestParameters: GetNftCollectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftCollection>> {
+    async getNftCollectionRaw(requestParameters: GetNftCollectionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftCollection>> {
         if (requestParameters.account === null || requestParameters.account === undefined) {
             throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getNftCollection.');
         }
@@ -281,7 +279,7 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
      * Get NFT collection by collection address
      */
-    async getNftCollection(requestParameters: GetNftCollectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollection> {
+    async getNftCollection(requestParameters: GetNftCollectionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftCollection> {
         const response = await this.getNftCollectionRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -289,7 +287,7 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
      * Get all NFT collections
      */
-    async getNftCollectionsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftCollections>> {
+    async getNftCollectionsRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftCollections>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -315,7 +313,7 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
      * Get all NFT collections
      */
-    async getNftCollections(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollections> {
+    async getNftCollections(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftCollections> {
         const response = await this.getNftCollectionsRaw(initOverrides);
         return await response.value();
     }
@@ -323,7 +321,7 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
      * Get NFT items for sale
      */
-    async getNftForSaleRaw(requestParameters: GetNftForSaleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftSalesResponse>> {
+    async getNftForSaleRaw(requestParameters: GetNftForSaleRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftSalesResponse>> {
         if (requestParameters.account === null || requestParameters.account === undefined) {
             throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getNftForSale.');
         }
@@ -357,7 +355,7 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
      * Get NFT items for sale
      */
-    async getNftForSale(requestParameters: GetNftForSaleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftSalesResponse> {
+    async getNftForSale(requestParameters: GetNftForSaleRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftSalesResponse> {
         const response = await this.getNftForSaleRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -365,7 +363,7 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
      * Get NFT item by its address
      */
-    async getNftItemByAddressRaw(requestParameters: GetNftItemByAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItem>> {
+    async getNftItemByAddressRaw(requestParameters: GetNftItemByAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftItem>> {
         if (requestParameters.account === null || requestParameters.account === undefined) {
             throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getNftItemByAddress.');
         }
@@ -399,7 +397,7 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
      * Get NFT item by its address
      */
-    async getNftItemByAddress(requestParameters: GetNftItemByAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItem> {
+    async getNftItemByAddress(requestParameters: GetNftItemByAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftItem> {
         const response = await this.getNftItemByAddressRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -407,7 +405,7 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
      * Get all NFT items from collection by collection address
      */
-    async getNftItemsByCollectionAddressRaw(requestParameters: GetNftItemsByCollectionAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>> {
+    async getNftItemsByCollectionAddressRaw(requestParameters: GetNftItemsByCollectionAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftItems>> {
         if (requestParameters.account === null || requestParameters.account === undefined) {
             throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getNftItemsByCollectionAddress.');
         }
@@ -441,7 +439,7 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
      * Get all NFT items from collection by collection address
      */
-    async getNftItemsByCollectionAddress(requestParameters: GetNftItemsByCollectionAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems> {
+    async getNftItemsByCollectionAddress(requestParameters: GetNftItemsByCollectionAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftItems> {
         const response = await this.getNftItemsByCollectionAddressRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -449,7 +447,7 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
      * Get all NFT items by owner address
      */
-    async getNftItemsByOwnerAddressRaw(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>> {
+    async getNftItemsByOwnerAddressRaw(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftItems>> {
         if (requestParameters.account === null || requestParameters.account === undefined) {
             throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getNftItemsByOwnerAddress.');
         }
@@ -483,7 +481,7 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
      * Get all NFT items by owner address
      */
-    async getNftItemsByOwnerAddress(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems> {
+    async getNftItemsByOwnerAddress(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftItems> {
         const response = await this.getNftItemsByOwnerAddressRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -491,7 +489,7 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
      * Search NFT items using filters
      */
-    async searchNFTItemsRaw(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItemsRepr>> {
+    async searchNFTItemsRaw(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftItemsRepr>> {
         if (requestParameters.limit === null || requestParameters.limit === undefined) {
             throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling searchNFTItems.');
         }
@@ -545,7 +543,7 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
      * Search NFT items using filters
      */
-    async searchNFTItems(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItemsRepr> {
+    async searchNFTItems(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftItemsRepr> {
         const response = await this.searchNFTItemsRaw(requestParameters, initOverrides);
         return await response.value();
     }

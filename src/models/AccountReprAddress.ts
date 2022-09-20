@@ -24,6 +24,12 @@ export interface AccountReprAddress {
      * @type {string}
      * @memberof AccountReprAddress
      */
+    raw: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountReprAddress
+     */
     bounceable: string;
     /**
      * 
@@ -31,24 +37,6 @@ export interface AccountReprAddress {
      * @memberof AccountReprAddress
      */
     nonBounceable: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountReprAddress
-     */
-    raw: string;
-}
-
-/**
- * Check if a given object implements the AccountReprAddress interface.
- */
-export function instanceOfAccountReprAddress(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "bounceable" in value;
-    isInstance = isInstance && "nonBounceable" in value;
-    isInstance = isInstance && "raw" in value;
-
-    return isInstance;
 }
 
 export function AccountReprAddressFromJSON(json: any): AccountReprAddress {
@@ -61,9 +49,9 @@ export function AccountReprAddressFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
+        'raw': json['raw'],
         'bounceable': json['bounceable'],
         'nonBounceable': json['non_bounceable'],
-        'raw': json['raw'],
     };
 }
 
@@ -76,9 +64,9 @@ export function AccountReprAddressToJSON(value?: AccountReprAddress | null): any
     }
     return {
         
+        'raw': value.raw,
         'bounceable': value.bounceable,
         'non_bounceable': value.nonBounceable,
-        'raw': value.raw,
     };
 }
 

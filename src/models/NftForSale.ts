@@ -13,14 +13,14 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { NftItem } from './NftItem';
 import {
+    NftItem,
     NftItemFromJSON,
     NftItemFromJSONTyped,
     NftItemToJSON,
 } from './NftItem';
-import type { Sale } from './Sale';
 import {
+    Sale,
     SaleFromJSON,
     SaleFromJSONTyped,
     SaleToJSON,
@@ -34,12 +34,6 @@ import {
 export interface NftForSale {
     /**
      * 
-     * @type {NftItem}
-     * @memberof NftForSale
-     */
-    nft: NftItem;
-    /**
-     * 
      * @type {Sale}
      * @memberof NftForSale
      */
@@ -50,18 +44,12 @@ export interface NftForSale {
      * @memberof NftForSale
      */
     saleContract: string;
-}
-
-/**
- * Check if a given object implements the NftForSale interface.
- */
-export function instanceOfNftForSale(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "nft" in value;
-    isInstance = isInstance && "sale" in value;
-    isInstance = isInstance && "saleContract" in value;
-
-    return isInstance;
+    /**
+     * 
+     * @type {NftItem}
+     * @memberof NftForSale
+     */
+    nft: NftItem;
 }
 
 export function NftForSaleFromJSON(json: any): NftForSale {
@@ -74,9 +62,9 @@ export function NftForSaleFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     }
     return {
         
-        'nft': NftItemFromJSON(json['nft']),
         'sale': SaleFromJSON(json['sale']),
         'saleContract': json['sale_contract'],
+        'nft': NftItemFromJSON(json['nft']),
     };
 }
 
@@ -89,9 +77,9 @@ export function NftForSaleToJSON(value?: NftForSale | null): any {
     }
     return {
         
-        'nft': NftItemToJSON(value.nft),
         'sale': SaleToJSON(value.sale),
         'sale_contract': value.saleContract,
+        'nft': NftItemToJSON(value.nft),
     };
 }
 

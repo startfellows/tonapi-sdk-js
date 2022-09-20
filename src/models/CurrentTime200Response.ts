@@ -27,16 +27,6 @@ export interface CurrentTime200Response {
     time: number;
 }
 
-/**
- * Check if a given object implements the CurrentTime200Response interface.
- */
-export function instanceOfCurrentTime200Response(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "time" in value;
-
-    return isInstance;
-}
-
 export function CurrentTime200ResponseFromJSON(json: any): CurrentTime200Response {
     return CurrentTime200ResponseFromJSONTyped(json, false);
 }

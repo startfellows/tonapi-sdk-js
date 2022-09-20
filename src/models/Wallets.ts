@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { Wallet } from './Wallet';
 import {
+    Wallet,
     WalletFromJSON,
     WalletFromJSONTyped,
     WalletToJSON,
@@ -32,16 +32,6 @@ export interface Wallets {
      * @memberof Wallets
      */
     wallets: Array<Wallet>;
-}
-
-/**
- * Check if a given object implements the Wallets interface.
- */
-export function instanceOfWallets(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "wallets" in value;
-
-    return isInstance;
 }
 
 export function WalletsFromJSON(json: any): Wallets {

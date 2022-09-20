@@ -13,14 +13,14 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { AccountAddress } from './AccountAddress';
 import {
+    AccountAddress,
     AccountAddressFromJSON,
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
-import type { TxAnnotation } from './TxAnnotation';
 import {
+    TxAnnotation,
     TxAnnotationFromJSON,
     TxAnnotationFromJSONTyped,
     TxAnnotationToJSON,
@@ -34,30 +34,6 @@ import {
 export interface AnnotatedTrace {
     /**
      * 
-     * @type {AccountAddress}
-     * @memberof AnnotatedTrace
-     */
-    account: AccountAddress;
-    /**
-     * 
-     * @type {Array<TxAnnotation>}
-     * @memberof AnnotatedTrace
-     */
-    annotations: Array<TxAnnotation>;
-    /**
-     * 
-     * @type {Array<AnnotatedTrace>}
-     * @memberof AnnotatedTrace
-     */
-    children: Array<AnnotatedTrace>;
-    /**
-     * 
-     * @type {number}
-     * @memberof AnnotatedTrace
-     */
-    fee: number;
-    /**
-     * 
      * @type {string}
      * @memberof AnnotatedTrace
      */
@@ -67,19 +43,25 @@ export interface AnnotatedTrace {
      * @type {number}
      * @memberof AnnotatedTrace
      */
-    inputValue: number;
+    lt: number;
     /**
      * 
-     * @type {Array<string>}
+     * @type {AccountAddress}
      * @memberof AnnotatedTrace
      */
-    interfaces: Array<string>;
+    account: AccountAddress;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AnnotatedTrace
+     */
+    success: boolean;
     /**
      * 
      * @type {number}
      * @memberof AnnotatedTrace
      */
-    lt: number;
+    fee: number;
     /**
      * 
      * @type {number}
@@ -94,30 +76,28 @@ export interface AnnotatedTrace {
     storageFee: number;
     /**
      * 
-     * @type {boolean}
+     * @type {number}
      * @memberof AnnotatedTrace
      */
-    success: boolean;
-}
-
-/**
- * Check if a given object implements the AnnotatedTrace interface.
- */
-export function instanceOfAnnotatedTrace(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "account" in value;
-    isInstance = isInstance && "annotations" in value;
-    isInstance = isInstance && "children" in value;
-    isInstance = isInstance && "fee" in value;
-    isInstance = isInstance && "hash" in value;
-    isInstance = isInstance && "inputValue" in value;
-    isInstance = isInstance && "interfaces" in value;
-    isInstance = isInstance && "lt" in value;
-    isInstance = isInstance && "otherFee" in value;
-    isInstance = isInstance && "storageFee" in value;
-    isInstance = isInstance && "success" in value;
-
-    return isInstance;
+    inputValue: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AnnotatedTrace
+     */
+    interfaces: Array<string>;
+    /**
+     * 
+     * @type {Array<TxAnnotation>}
+     * @memberof AnnotatedTrace
+     */
+    annotations: Array<TxAnnotation>;
+    /**
+     * 
+     * @type {Array<AnnotatedTrace>}
+     * @memberof AnnotatedTrace
+     */
+    children: Array<AnnotatedTrace>;
 }
 
 export function AnnotatedTraceFromJSON(json: any): AnnotatedTrace {
@@ -130,17 +110,17 @@ export function AnnotatedTraceFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'account': AccountAddressFromJSON(json['account']),
-        'annotations': ((json['annotations'] as Array<any>).map(TxAnnotationFromJSON)),
-        'children': ((json['children'] as Array<any>).map(AnnotatedTraceFromJSON)),
-        'fee': json['fee'],
         'hash': json['hash'],
-        'inputValue': json['input_value'],
-        'interfaces': json['interfaces'],
         'lt': json['lt'],
+        'account': AccountAddressFromJSON(json['account']),
+        'success': json['success'],
+        'fee': json['fee'],
         'otherFee': json['other_fee'],
         'storageFee': json['storage_fee'],
-        'success': json['success'],
+        'inputValue': json['input_value'],
+        'interfaces': json['interfaces'],
+        'annotations': ((json['annotations'] as Array<any>).map(TxAnnotationFromJSON)),
+        'children': ((json['children'] as Array<any>).map(AnnotatedTraceFromJSON)),
     };
 }
 
@@ -153,17 +133,17 @@ export function AnnotatedTraceToJSON(value?: AnnotatedTrace | null): any {
     }
     return {
         
-        'account': AccountAddressToJSON(value.account),
-        'annotations': ((value.annotations as Array<any>).map(TxAnnotationToJSON)),
-        'children': ((value.children as Array<any>).map(AnnotatedTraceToJSON)),
-        'fee': value.fee,
         'hash': value.hash,
-        'input_value': value.inputValue,
-        'interfaces': value.interfaces,
         'lt': value.lt,
+        'account': AccountAddressToJSON(value.account),
+        'success': value.success,
+        'fee': value.fee,
         'other_fee': value.otherFee,
         'storage_fee': value.storageFee,
-        'success': value.success,
+        'input_value': value.inputValue,
+        'interfaces': value.interfaces,
+        'annotations': ((value.annotations as Array<any>).map(TxAnnotationToJSON)),
+        'children': ((value.children as Array<any>).map(AnnotatedTraceToJSON)),
     };
 }
 

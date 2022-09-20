@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { AccountAddress } from './AccountAddress';
 import {
+    AccountAddress,
     AccountAddressFromJSON,
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
@@ -44,18 +44,6 @@ export interface ContractDeployAction {
      * @memberof ContractDeployAction
      */
     interfaces: Array<string>;
-}
-
-/**
- * Check if a given object implements the ContractDeployAction interface.
- */
-export function instanceOfContractDeployAction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "deployer" in value;
-    isInstance = isInstance && "interfaces" in value;
-
-    return isInstance;
 }
 
 export function ContractDeployActionFromJSON(json: any): ContractDeployAction {

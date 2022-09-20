@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { JettonBalance } from './JettonBalance';
 import {
+    JettonBalance,
     JettonBalanceFromJSON,
     JettonBalanceFromJSONTyped,
     JettonBalanceToJSON,
@@ -32,16 +32,6 @@ export interface JettonsBalances {
      * @memberof JettonsBalances
      */
     balances: Array<JettonBalance>;
-}
-
-/**
- * Check if a given object implements the JettonsBalances interface.
- */
-export function instanceOfJettonsBalances(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "balances" in value;
-
-    return isInstance;
 }
 
 export function JettonsBalancesFromJSON(json: any): JettonsBalances {

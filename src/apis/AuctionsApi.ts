@@ -15,42 +15,42 @@
 
 import * as runtime from '../runtime';
 import {
-    CurrentTime200Response,
-    CurrentTime200ResponseFromJSON,
-    CurrentTime200ResponseToJSON,
+    Auctions,
+    AuctionsFromJSON,
+    AuctionsToJSON,
 } from '../models';
 
 /**
- * SystemApi - interface
+ * AuctionsApi - interface
  * 
  * @export
- * @interface SystemApiInterface
+ * @interface AuctionsApiInterface
  */
-export interface SystemApiInterface {
+export interface AuctionsApiInterface {
     /**
-     * Get current time
+     * Get all auctions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SystemApiInterface
+     * @memberof AuctionsApiInterface
      */
-    currentTimeRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<CurrentTime200Response>>;
+    getAllAuctionsRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Auctions>>;
 
     /**
-     * Get current time
+     * Get all auctions
      */
-    currentTime(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<CurrentTime200Response>;
+    getAllAuctions(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Auctions>;
 
 }
 
 /**
  * 
  */
-export class SystemApi extends runtime.BaseAPI implements SystemApiInterface {
+export class AuctionsApi extends runtime.BaseAPI implements AuctionsApiInterface {
 
     /**
-     * Get current time
+     * Get all auctions
      */
-    async currentTimeRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<CurrentTime200Response>> {
+    async getAllAuctionsRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Auctions>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -64,20 +64,20 @@ export class SystemApi extends runtime.BaseAPI implements SystemApiInterface {
             }
         }
         const response = await this.request({
-            path: `/v1/system/time`,
+            path: `/v1/auction/getCurrent`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => CurrentTime200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => AuctionsFromJSON(jsonValue));
     }
 
     /**
-     * Get current time
+     * Get all auctions
      */
-    async currentTime(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<CurrentTime200Response> {
-        const response = await this.currentTimeRaw(initOverrides);
+    async getAllAuctions(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Auctions> {
+        const response = await this.getAllAuctionsRaw(initOverrides);
         return await response.value();
     }
 

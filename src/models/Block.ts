@@ -24,7 +24,19 @@ export interface Block {
      * @type {number}
      * @memberof Block
      */
-    endLt: number;
+    seqno: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Block
+     */
+    workchainId: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Block
+     */
+    rootHash: string;
     /**
      * 
      * @type {string}
@@ -36,19 +48,7 @@ export interface Block {
      * @type {string}
      * @memberof Block
      */
-    rootHash: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Block
-     */
-    seqno: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Block
-     */
-    shard: number;
+    shard: string;
     /**
      * 
      * @type {number}
@@ -60,23 +60,7 @@ export interface Block {
      * @type {number}
      * @memberof Block
      */
-    workchainId: number;
-}
-
-/**
- * Check if a given object implements the Block interface.
- */
-export function instanceOfBlock(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "endLt" in value;
-    isInstance = isInstance && "fileHash" in value;
-    isInstance = isInstance && "rootHash" in value;
-    isInstance = isInstance && "seqno" in value;
-    isInstance = isInstance && "shard" in value;
-    isInstance = isInstance && "startLt" in value;
-    isInstance = isInstance && "workchainId" in value;
-
-    return isInstance;
+    endLt: number;
 }
 
 export function BlockFromJSON(json: any): Block {
@@ -89,13 +73,13 @@ export function BlockFromJSONTyped(json: any, ignoreDiscriminator: boolean): Blo
     }
     return {
         
-        'endLt': json['end_lt'],
-        'fileHash': json['file_hash'],
-        'rootHash': json['root_hash'],
         'seqno': json['seqno'],
+        'workchainId': json['workchain_id'],
+        'rootHash': json['root_hash'],
+        'fileHash': json['file_hash'],
         'shard': json['shard'],
         'startLt': json['start_lt'],
-        'workchainId': json['workchain_id'],
+        'endLt': json['end_lt'],
     };
 }
 
@@ -108,13 +92,13 @@ export function BlockToJSON(value?: Block | null): any {
     }
     return {
         
-        'end_lt': value.endLt,
-        'file_hash': value.fileHash,
-        'root_hash': value.rootHash,
         'seqno': value.seqno,
+        'workchain_id': value.workchainId,
+        'root_hash': value.rootHash,
+        'file_hash': value.fileHash,
         'shard': value.shard,
         'start_lt': value.startLt,
-        'workchain_id': value.workchainId,
+        'end_lt': value.endLt,
     };
 }
 

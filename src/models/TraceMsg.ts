@@ -13,14 +13,14 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { AccountAddress } from './AccountAddress';
 import {
+    AccountAddress,
     AccountAddressFromJSON,
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
-import type { TraceTX } from './TraceTX';
 import {
+    TraceTX,
     TraceTXFromJSON,
     TraceTXFromJSONTyped,
     TraceTXToJSON,
@@ -32,24 +32,6 @@ import {
  * @interface TraceMsg
  */
 export interface TraceMsg {
-    /**
-     * 
-     * @type {string}
-     * @memberof TraceMsg
-     */
-    comment?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof TraceMsg
-     */
-    createdLt: number;
-    /**
-     * 
-     * @type {AccountAddress}
-     * @memberof TraceMsg
-     */
-    destination: AccountAddress;
     /**
      * 
      * @type {number}
@@ -64,37 +46,40 @@ export interface TraceMsg {
     ihrFee: number;
     /**
      * 
-     * @type {AccountAddress}
+     * @type {number}
      * @memberof TraceMsg
      */
-    source: AccountAddress;
-    /**
-     * 
-     * @type {TraceTX}
-     * @memberof TraceMsg
-     */
-    tx?: TraceTX;
+    createdLt: number;
     /**
      * 
      * @type {number}
      * @memberof TraceMsg
      */
     value: number;
-}
-
-/**
- * Check if a given object implements the TraceMsg interface.
- */
-export function instanceOfTraceMsg(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "createdLt" in value;
-    isInstance = isInstance && "destination" in value;
-    isInstance = isInstance && "fwdFee" in value;
-    isInstance = isInstance && "ihrFee" in value;
-    isInstance = isInstance && "source" in value;
-    isInstance = isInstance && "value" in value;
-
-    return isInstance;
+    /**
+     * 
+     * @type {AccountAddress}
+     * @memberof TraceMsg
+     */
+    destination: AccountAddress;
+    /**
+     * 
+     * @type {AccountAddress}
+     * @memberof TraceMsg
+     */
+    source: AccountAddress;
+    /**
+     * 
+     * @type {string}
+     * @memberof TraceMsg
+     */
+    comment?: string;
+    /**
+     * 
+     * @type {TraceTX}
+     * @memberof TraceMsg
+     */
+    tx?: TraceTX;
 }
 
 export function TraceMsgFromJSON(json: any): TraceMsg {
@@ -107,14 +92,14 @@ export function TraceMsgFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     }
     return {
         
-        'comment': !exists(json, 'comment') ? undefined : json['comment'],
-        'createdLt': json['created_lt'],
-        'destination': AccountAddressFromJSON(json['destination']),
         'fwdFee': json['fwd_fee'],
         'ihrFee': json['ihr_fee'],
-        'source': AccountAddressFromJSON(json['source']),
-        'tx': !exists(json, 'tx') ? undefined : TraceTXFromJSON(json['tx']),
+        'createdLt': json['created_lt'],
         'value': json['value'],
+        'destination': AccountAddressFromJSON(json['destination']),
+        'source': AccountAddressFromJSON(json['source']),
+        'comment': !exists(json, 'comment') ? undefined : json['comment'],
+        'tx': !exists(json, 'tx') ? undefined : TraceTXFromJSON(json['tx']),
     };
 }
 
@@ -127,14 +112,14 @@ export function TraceMsgToJSON(value?: TraceMsg | null): any {
     }
     return {
         
-        'comment': value.comment,
-        'created_lt': value.createdLt,
-        'destination': AccountAddressToJSON(value.destination),
         'fwd_fee': value.fwdFee,
         'ihr_fee': value.ihrFee,
-        'source': AccountAddressToJSON(value.source),
-        'tx': TraceTXToJSON(value.tx),
+        'created_lt': value.createdLt,
         'value': value.value,
+        'destination': AccountAddressToJSON(value.destination),
+        'source': AccountAddressToJSON(value.source),
+        'comment': value.comment,
+        'tx': TraceTXToJSON(value.tx),
     };
 }
 

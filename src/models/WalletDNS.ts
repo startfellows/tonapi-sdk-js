@@ -30,6 +30,12 @@ export interface WalletDNS {
      * @type {boolean}
      * @memberof WalletDNS
      */
+    isWallet: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WalletDNS
+     */
     hasMethodPubkey: boolean;
     /**
      * 
@@ -39,30 +45,10 @@ export interface WalletDNS {
     hasMethodSeqno: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof WalletDNS
-     */
-    isWallet: boolean;
-    /**
-     * 
      * @type {Array<string>}
      * @memberof WalletDNS
      */
     names: Array<string>;
-}
-
-/**
- * Check if a given object implements the WalletDNS interface.
- */
-export function instanceOfWalletDNS(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "hasMethodPubkey" in value;
-    isInstance = isInstance && "hasMethodSeqno" in value;
-    isInstance = isInstance && "isWallet" in value;
-    isInstance = isInstance && "names" in value;
-
-    return isInstance;
 }
 
 export function WalletDNSFromJSON(json: any): WalletDNS {
@@ -76,9 +62,9 @@ export function WalletDNSFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     return {
         
         'address': json['address'],
+        'isWallet': json['is_wallet'],
         'hasMethodPubkey': json['has_method_pubkey'],
         'hasMethodSeqno': json['has_method_seqno'],
-        'isWallet': json['is_wallet'],
         'names': json['names'],
     };
 }
@@ -93,9 +79,9 @@ export function WalletDNSToJSON(value?: WalletDNS | null): any {
     return {
         
         'address': value.address,
+        'is_wallet': value.isWallet,
         'has_method_pubkey': value.hasMethodPubkey,
         'has_method_seqno': value.hasMethodSeqno,
-        'is_wallet': value.isWallet,
         'names': value.names,
     };
 }

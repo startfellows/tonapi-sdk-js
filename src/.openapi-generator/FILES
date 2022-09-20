@@ -1,5 +1,8 @@
 apis/AccountApi.ts
+apis/AuctionsApi.ts
+apis/BackupApi.ts
 apis/DNSApi.ts
+apis/DomainBidsApi.ts
 apis/EventApi.ts
 apis/JettonApi.ts
 apis/NFTApi.ts
@@ -20,12 +23,17 @@ models/AccountReprAddress.ts
 models/AccountReprs.ts
 models/Action.ts
 models/AnnotatedTrace.ts
+models/Auction.ts
+models/Auctions.ts
 models/Block.ts
 models/ContractDeployAction.ts
 models/CurrentTime200Response.ts
 models/DnsRecord.ts
+models/DomainBid.ts
+models/DomainBids.ts
 models/DomainInfo.ts
 models/DomainInfoNftItem.ts
+models/DomainNames.ts
 models/Event.ts
 models/Fee.ts
 models/ImagePreview.ts

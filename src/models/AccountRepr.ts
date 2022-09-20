@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { AccountReprAddress } from './AccountReprAddress';
 import {
+    AccountReprAddress,
     AccountReprAddressFromJSON,
     AccountReprAddressFromJSONTyped,
     AccountReprAddressToJSON,
@@ -28,12 +28,6 @@ import {
 export interface AccountRepr {
     /**
      * 
-     * @type {AccountReprAddress}
-     * @memberof AccountRepr
-     */
-    address: AccountReprAddress;
-    /**
-     * 
      * @type {number}
      * @memberof AccountRepr
      */
@@ -43,7 +37,7 @@ export interface AccountRepr {
      * @type {string}
      * @memberof AccountRepr
      */
-    icon?: string;
+    status: string;
     /**
      * 
      * @type {Array<string>}
@@ -52,22 +46,10 @@ export interface AccountRepr {
     interfaces: Array<string>;
     /**
      * 
-     * @type {boolean}
+     * @type {AccountReprAddress}
      * @memberof AccountRepr
      */
-    isScam: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof AccountRepr
-     */
-    lastUpdate: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AccountRepr
-     */
-    memoRequired: boolean;
+    address: AccountReprAddress;
     /**
      * 
      * @type {string}
@@ -76,26 +58,28 @@ export interface AccountRepr {
     name?: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof AccountRepr
+     */
+    isScam: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof AccountRepr
      */
-    status: string;
-}
-
-/**
- * Check if a given object implements the AccountRepr interface.
- */
-export function instanceOfAccountRepr(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "balance" in value;
-    isInstance = isInstance && "interfaces" in value;
-    isInstance = isInstance && "isScam" in value;
-    isInstance = isInstance && "lastUpdate" in value;
-    isInstance = isInstance && "memoRequired" in value;
-    isInstance = isInstance && "status" in value;
-
-    return isInstance;
+    icon?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AccountRepr
+     */
+    memoRequired: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof AccountRepr
+     */
+    lastUpdate: number;
 }
 
 export function AccountReprFromJSON(json: any): AccountRepr {
@@ -108,15 +92,15 @@ export function AccountReprFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
         
-        'address': AccountReprAddressFromJSON(json['address']),
         'balance': json['balance'],
-        'icon': !exists(json, 'icon') ? undefined : json['icon'],
-        'interfaces': json['interfaces'],
-        'isScam': json['is_scam'],
-        'lastUpdate': json['last_update'],
-        'memoRequired': json['memo_required'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
         'status': json['status'],
+        'interfaces': json['interfaces'],
+        'address': AccountReprAddressFromJSON(json['address']),
+        'name': !exists(json, 'name') ? undefined : json['name'],
+        'isScam': json['is_scam'],
+        'icon': !exists(json, 'icon') ? undefined : json['icon'],
+        'memoRequired': json['memo_required'],
+        'lastUpdate': json['last_update'],
     };
 }
 
@@ -129,15 +113,15 @@ export function AccountReprToJSON(value?: AccountRepr | null): any {
     }
     return {
         
-        'address': AccountReprAddressToJSON(value.address),
         'balance': value.balance,
-        'icon': value.icon,
-        'interfaces': value.interfaces,
-        'is_scam': value.isScam,
-        'last_update': value.lastUpdate,
-        'memo_required': value.memoRequired,
-        'name': value.name,
         'status': value.status,
+        'interfaces': value.interfaces,
+        'address': AccountReprAddressToJSON(value.address),
+        'name': value.name,
+        'is_scam': value.isScam,
+        'icon': value.icon,
+        'memo_required': value.memoRequired,
+        'last_update': value.lastUpdate,
     };
 }
 

@@ -14,10 +14,8 @@
 
 
 import * as runtime from '../runtime';
-import type {
-  Subscriptions,
-} from '../models';
 import {
+    Subscriptions,
     SubscriptionsFromJSON,
     SubscriptionsToJSON,
 } from '../models';
@@ -40,12 +38,12 @@ export interface SubscriptionApiInterface {
      * @throws {RequiredError}
      * @memberof SubscriptionApiInterface
      */
-    getSubscriptionsByWalletRaw(requestParameters: GetSubscriptionsByWalletRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Subscriptions>>;
+    getSubscriptionsByWalletRaw(requestParameters: GetSubscriptionsByWalletRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Subscriptions>>;
 
     /**
      * Get all subscriptions by wallet address
      */
-    getSubscriptionsByWallet(requestParameters: GetSubscriptionsByWalletRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Subscriptions>;
+    getSubscriptionsByWallet(requestParameters: GetSubscriptionsByWalletRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Subscriptions>;
 
 }
 
@@ -57,7 +55,7 @@ export class SubscriptionApi extends runtime.BaseAPI implements SubscriptionApiI
     /**
      * Get all subscriptions by wallet address
      */
-    async getSubscriptionsByWalletRaw(requestParameters: GetSubscriptionsByWalletRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Subscriptions>> {
+    async getSubscriptionsByWalletRaw(requestParameters: GetSubscriptionsByWalletRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Subscriptions>> {
         if (requestParameters.account === null || requestParameters.account === undefined) {
             throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getSubscriptionsByWallet.');
         }
@@ -91,7 +89,7 @@ export class SubscriptionApi extends runtime.BaseAPI implements SubscriptionApiI
     /**
      * Get all subscriptions by wallet address
      */
-    async getSubscriptionsByWallet(requestParameters: GetSubscriptionsByWalletRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Subscriptions> {
+    async getSubscriptionsByWallet(requestParameters: GetSubscriptionsByWalletRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Subscriptions> {
         const response = await this.getSubscriptionsByWalletRaw(requestParameters, initOverrides);
         return await response.value();
     }

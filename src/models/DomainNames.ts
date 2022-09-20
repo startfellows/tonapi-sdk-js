@@ -16,39 +16,32 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface NftItemReprCollection
+ * @interface DomainNames
  */
-export interface NftItemReprCollection {
+export interface DomainNames {
     /**
      * 
-     * @type {string}
-     * @memberof NftItemReprCollection
+     * @type {Array<string>}
+     * @memberof DomainNames
      */
-    address: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NftItemReprCollection
-     */
-    name: string;
+    domains: Array<string>;
 }
 
-export function NftItemReprCollectionFromJSON(json: any): NftItemReprCollection {
-    return NftItemReprCollectionFromJSONTyped(json, false);
+export function DomainNamesFromJSON(json: any): DomainNames {
+    return DomainNamesFromJSONTyped(json, false);
 }
 
-export function NftItemReprCollectionFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftItemReprCollection {
+export function DomainNamesFromJSONTyped(json: any, ignoreDiscriminator: boolean): DomainNames {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'address': json['address'],
-        'name': json['name'],
+        'domains': json['domains'],
     };
 }
 
-export function NftItemReprCollectionToJSON(value?: NftItemReprCollection | null): any {
+export function DomainNamesToJSON(value?: DomainNames | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -57,8 +50,7 @@ export function NftItemReprCollectionToJSON(value?: NftItemReprCollection | null
     }
     return {
         
-        'address': value.address,
-        'name': value.name,
+        'domains': value.domains,
     };
 }
 

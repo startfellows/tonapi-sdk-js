@@ -33,17 +33,6 @@ export interface ImagePreview {
     url: string;
 }
 
-/**
- * Check if a given object implements the ImagePreview interface.
- */
-export function instanceOfImagePreview(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "resolution" in value;
-    isInstance = isInstance && "url" in value;
-
-    return isInstance;
-}
-
 export function ImagePreviewFromJSON(json: any): ImagePreview {
     return ImagePreviewFromJSONTyped(json, false);
 }

@@ -13,14 +13,14 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { AccountAddress } from './AccountAddress';
 import {
+    AccountAddress,
     AccountAddressFromJSON,
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
-import type { Jetton } from './Jetton';
 import {
+    Jetton,
     JettonFromJSON,
     JettonFromJSONTyped,
     JettonToJSON,
@@ -32,6 +32,30 @@ import {
  * @interface JettonTransferAction
  */
 export interface JettonTransferAction {
+    /**
+     * 
+     * @type {AccountAddress}
+     * @memberof JettonTransferAction
+     */
+    sender?: AccountAddress;
+    /**
+     * 
+     * @type {AccountAddress}
+     * @memberof JettonTransferAction
+     */
+    recipient?: AccountAddress;
+    /**
+     * 
+     * @type {string}
+     * @memberof JettonTransferAction
+     */
+    sendersWallet: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JettonTransferAction
+     */
+    recipientsWallet: string;
     /**
      * amount in quanta of tokens
      * @type {string}
@@ -50,43 +74,6 @@ export interface JettonTransferAction {
      * @memberof JettonTransferAction
      */
     jetton: Jetton;
-    /**
-     * 
-     * @type {AccountAddress}
-     * @memberof JettonTransferAction
-     */
-    recipient?: AccountAddress;
-    /**
-     * 
-     * @type {string}
-     * @memberof JettonTransferAction
-     */
-    recipientsWallet: string;
-    /**
-     * 
-     * @type {AccountAddress}
-     * @memberof JettonTransferAction
-     */
-    sender?: AccountAddress;
-    /**
-     * 
-     * @type {string}
-     * @memberof JettonTransferAction
-     */
-    sendersWallet: string;
-}
-
-/**
- * Check if a given object implements the JettonTransferAction interface.
- */
-export function instanceOfJettonTransferAction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "jetton" in value;
-    isInstance = isInstance && "recipientsWallet" in value;
-    isInstance = isInstance && "sendersWallet" in value;
-
-    return isInstance;
 }
 
 export function JettonTransferActionFromJSON(json: any): JettonTransferAction {
@@ -99,13 +86,13 @@ export function JettonTransferActionFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
+        'sender': !exists(json, 'sender') ? undefined : AccountAddressFromJSON(json['sender']),
+        'recipient': !exists(json, 'recipient') ? undefined : AccountAddressFromJSON(json['recipient']),
+        'sendersWallet': json['senders_wallet'],
+        'recipientsWallet': json['recipients_wallet'],
         'amount': json['amount'],
         'comment': !exists(json, 'comment') ? undefined : json['comment'],
         'jetton': JettonFromJSON(json['jetton']),
-        'recipient': !exists(json, 'recipient') ? undefined : AccountAddressFromJSON(json['recipient']),
-        'recipientsWallet': json['recipients_wallet'],
-        'sender': !exists(json, 'sender') ? undefined : AccountAddressFromJSON(json['sender']),
-        'sendersWallet': json['senders_wallet'],
     };
 }
 
@@ -118,13 +105,13 @@ export function JettonTransferActionToJSON(value?: JettonTransferAction | null):
     }
     return {
         
+        'sender': AccountAddressToJSON(value.sender),
+        'recipient': AccountAddressToJSON(value.recipient),
+        'senders_wallet': value.sendersWallet,
+        'recipients_wallet': value.recipientsWallet,
         'amount': value.amount,
         'comment': value.comment,
         'jetton': JettonToJSON(value.jetton),
-        'recipient': AccountAddressToJSON(value.recipient),
-        'recipients_wallet': value.recipientsWallet,
-        'sender': AccountAddressToJSON(value.sender),
-        'senders_wallet': value.sendersWallet,
     };
 }
 

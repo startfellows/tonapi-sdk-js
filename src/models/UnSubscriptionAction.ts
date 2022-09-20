@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { AccountAddress } from './AccountAddress';
 import {
+    AccountAddress,
     AccountAddressFromJSON,
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
@@ -31,12 +31,6 @@ export interface UnSubscriptionAction {
      * @type {AccountAddress}
      * @memberof UnSubscriptionAction
      */
-    beneficiary: AccountAddress;
-    /**
-     * 
-     * @type {AccountAddress}
-     * @memberof UnSubscriptionAction
-     */
     subscriber: AccountAddress;
     /**
      * 
@@ -44,18 +38,12 @@ export interface UnSubscriptionAction {
      * @memberof UnSubscriptionAction
      */
     subscription: string;
-}
-
-/**
- * Check if a given object implements the UnSubscriptionAction interface.
- */
-export function instanceOfUnSubscriptionAction(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "beneficiary" in value;
-    isInstance = isInstance && "subscriber" in value;
-    isInstance = isInstance && "subscription" in value;
-
-    return isInstance;
+    /**
+     * 
+     * @type {AccountAddress}
+     * @memberof UnSubscriptionAction
+     */
+    beneficiary: AccountAddress;
 }
 
 export function UnSubscriptionActionFromJSON(json: any): UnSubscriptionAction {
@@ -68,9 +56,9 @@ export function UnSubscriptionActionFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
-        'beneficiary': AccountAddressFromJSON(json['beneficiary']),
         'subscriber': AccountAddressFromJSON(json['subscriber']),
         'subscription': json['subscription'],
+        'beneficiary': AccountAddressFromJSON(json['beneficiary']),
     };
 }
 
@@ -83,9 +71,9 @@ export function UnSubscriptionActionToJSON(value?: UnSubscriptionAction | null):
     }
     return {
         
-        'beneficiary': AccountAddressToJSON(value.beneficiary),
         'subscriber': AccountAddressToJSON(value.subscriber),
         'subscription': value.subscription,
+        'beneficiary': AccountAddressToJSON(value.beneficiary),
     };
 }
 

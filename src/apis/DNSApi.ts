@@ -14,16 +14,21 @@
 
 
 import * as runtime from '../runtime';
-import type {
-  DnsRecord,
-  DomainInfo,
-} from '../models';
 import {
+    DnsRecord,
     DnsRecordFromJSON,
     DnsRecordToJSON,
+    DomainInfo,
     DomainInfoFromJSON,
     DomainInfoToJSON,
+    DomainNames,
+    DomainNamesFromJSON,
+    DomainNamesToJSON,
 } from '../models';
+
+export interface DnsBackResolveRequest {
+    account: string;
+}
 
 export interface DnsResolveRequest {
     name: string;
@@ -41,18 +46,32 @@ export interface GetDomainInfoRequest {
  */
 export interface DNSApiInterface {
     /**
+     * DNS back resolve for wallet address
+     * @param {string} account address in raw (hex without 0x) or base64url format
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DNSApiInterface
+     */
+    dnsBackResolveRaw(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<DomainNames>>;
+
+    /**
+     * DNS back resolve for wallet address
+     */
+    dnsBackResolve(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<DomainNames>;
+
+    /**
      * DNS resolve for domain name
      * @param {string} name domain name with .ton
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DNSApiInterface
      */
-    dnsResolveRaw(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DnsRecord>>;
+    dnsResolveRaw(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<DnsRecord>>;
 
     /**
      * DNS resolve for domain name
      */
-    dnsResolve(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DnsRecord>;
+    dnsResolve(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<DnsRecord>;
 
     /**
      * domain info
@@ -61,12 +80,12 @@ export interface DNSApiInterface {
      * @throws {RequiredError}
      * @memberof DNSApiInterface
      */
-    getDomainInfoRaw(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainInfo>>;
+    getDomainInfoRaw(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<DomainInfo>>;
 
     /**
      * domain info
      */
-    getDomainInfo(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainInfo>;
+    getDomainInfo(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<DomainInfo>;
 
 }
 
@@ -76,9 +95,51 @@ export interface DNSApiInterface {
 export class DNSApi extends runtime.BaseAPI implements DNSApiInterface {
 
     /**
+     * DNS back resolve for wallet address
+     */
+    async dnsBackResolveRaw(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<DomainNames>> {
+        if (requestParameters.account === null || requestParameters.account === undefined) {
+            throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling dnsBackResolve.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.account !== undefined) {
+            queryParameters['account'] = requestParameters.account;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("JWTAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/v1/dns/backresolve`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DomainNamesFromJSON(jsonValue));
+    }
+
+    /**
+     * DNS back resolve for wallet address
+     */
+    async dnsBackResolve(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<DomainNames> {
+        const response = await this.dnsBackResolveRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * DNS resolve for domain name
      */
-    async dnsResolveRaw(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DnsRecord>> {
+    async dnsResolveRaw(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<DnsRecord>> {
         if (requestParameters.name === null || requestParameters.name === undefined) {
             throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling dnsResolve.');
         }
@@ -112,7 +173,7 @@ export class DNSApi extends runtime.BaseAPI implements DNSApiInterface {
     /**
      * DNS resolve for domain name
      */
-    async dnsResolve(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DnsRecord> {
+    async dnsResolve(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<DnsRecord> {
         const response = await this.dnsResolveRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -120,7 +181,7 @@ export class DNSApi extends runtime.BaseAPI implements DNSApiInterface {
     /**
      * domain info
      */
-    async getDomainInfoRaw(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainInfo>> {
+    async getDomainInfoRaw(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<DomainInfo>> {
         if (requestParameters.name === null || requestParameters.name === undefined) {
             throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling getDomainInfo.');
         }
@@ -154,7 +215,7 @@ export class DNSApi extends runtime.BaseAPI implements DNSApiInterface {
     /**
      * domain info
      */
-    async getDomainInfo(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainInfo> {
+    async getDomainInfo(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<DomainInfo> {
         const response = await this.getDomainInfoRaw(requestParameters, initOverrides);
         return await response.value();
     }

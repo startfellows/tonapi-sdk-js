@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { AccountEvent } from './AccountEvent';
 import {
+    AccountEvent,
     AccountEventFromJSON,
     AccountEventFromJSONTyped,
     AccountEventToJSON,
@@ -32,16 +32,6 @@ export interface AccountEvents200Response {
      * @memberof AccountEvents200Response
      */
     events: Array<AccountEvent>;
-}
-
-/**
- * Check if a given object implements the AccountEvents200Response interface.
- */
-export function instanceOfAccountEvents200Response(value: object): boolean {
-    let isInstance = true;
-    isInstance = isInstance && "events" in value;
-
-    return isInstance;
 }
 
 export function AccountEvents200ResponseFromJSON(json: any): AccountEvents200Response {
