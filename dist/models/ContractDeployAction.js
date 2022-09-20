@@ -13,19 +13,8 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ContractDeployActionToJSON = exports.ContractDeployActionFromJSONTyped = exports.ContractDeployActionFromJSON = exports.instanceOfContractDeployAction = void 0;
+exports.ContractDeployActionToJSON = exports.ContractDeployActionFromJSONTyped = exports.ContractDeployActionFromJSON = void 0;
 const AccountAddress_1 = require("./AccountAddress");
-/**
- * Check if a given object implements the ContractDeployAction interface.
- */
-function instanceOfContractDeployAction(value) {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "deployer" in value;
-    isInstance = isInstance && "interfaces" in value;
-    return isInstance;
-}
-exports.instanceOfContractDeployAction = instanceOfContractDeployAction;
 function ContractDeployActionFromJSON(json) {
     return ContractDeployActionFromJSONTyped(json, false);
 }

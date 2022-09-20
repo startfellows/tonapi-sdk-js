@@ -13,20 +13,9 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NftCollectionToJSON = exports.NftCollectionFromJSONTyped = exports.NftCollectionFromJSON = exports.instanceOfNftCollection = void 0;
+exports.NftCollectionToJSON = exports.NftCollectionFromJSONTyped = exports.NftCollectionFromJSON = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
-/**
- * Check if a given object implements the NftCollection interface.
- */
-function instanceOfNftCollection(value) {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "nextItemIndex" in value;
-    isInstance = isInstance && "rawCollectionContent" in value;
-    return isInstance;
-}
-exports.instanceOfNftCollection = instanceOfNftCollection;
 function NftCollectionFromJSON(json) {
     return NftCollectionFromJSONTyped(json, false);
 }
@@ -37,10 +26,10 @@ function NftCollectionFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'address': json['address'],
-        'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
         'nextItemIndex': json['next_item_index'],
         'owner': !(0, runtime_1.exists)(json, 'owner') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['owner']),
         'rawCollectionContent': json['raw_collection_content'],
+        'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
     };
 }
 exports.NftCollectionFromJSONTyped = NftCollectionFromJSONTyped;
@@ -53,10 +42,10 @@ function NftCollectionToJSON(value) {
     }
     return {
         'address': value.address,
-        'metadata': value.metadata,
         'next_item_index': value.nextItemIndex,
         'owner': (0, AccountAddress_1.AccountAddressToJSON)(value.owner),
         'raw_collection_content': value.rawCollectionContent,
+        'metadata': value.metadata,
     };
 }
 exports.NftCollectionToJSON = NftCollectionToJSON;

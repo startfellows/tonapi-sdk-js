@@ -20,7 +20,19 @@ export interface Block {
      * @type {number}
      * @memberof Block
      */
-    endLt: number;
+    seqno: number;
+    /**
+     *
+     * @type {number}
+     * @memberof Block
+     */
+    workchainId: number;
+    /**
+     *
+     * @type {string}
+     * @memberof Block
+     */
+    rootHash: string;
     /**
      *
      * @type {string}
@@ -32,19 +44,7 @@ export interface Block {
      * @type {string}
      * @memberof Block
      */
-    rootHash: string;
-    /**
-     *
-     * @type {number}
-     * @memberof Block
-     */
-    seqno: number;
-    /**
-     *
-     * @type {number}
-     * @memberof Block
-     */
-    shard: number;
+    shard: string;
     /**
      *
      * @type {number}
@@ -56,12 +56,8 @@ export interface Block {
      * @type {number}
      * @memberof Block
      */
-    workchainId: number;
+    endLt: number;
 }
-/**
- * Check if a given object implements the Block interface.
- */
-export declare function instanceOfBlock(value: object): boolean;
 export declare function BlockFromJSON(json: any): Block;
 export declare function BlockFromJSONTyped(json: any, ignoreDiscriminator: boolean): Block;
 export declare function BlockToJSON(value?: Block | null): any;

@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { JettonHistory, JettonInfo, JettonsBalances } from '../models';
+import { JettonHistory, JettonInfo, JettonsBalances } from '../models';
 export interface GetJettonHistoryRequest {
     account: string;
 }
@@ -34,11 +34,11 @@ export interface JettonApiInterface {
      * @throws {RequiredError}
      * @memberof JettonApiInterface
      */
-    getJettonHistoryRaw(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonHistory>>;
+    getJettonHistoryRaw(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<JettonHistory>>;
     /**
      * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
      */
-    getJettonHistory(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonHistory>;
+    getJettonHistory(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<JettonHistory>;
     /**
      * Get jetton metadata by jetton master address
      * @param {string} account address in raw (hex without 0x) or base64url format
@@ -46,11 +46,11 @@ export interface JettonApiInterface {
      * @throws {RequiredError}
      * @memberof JettonApiInterface
      */
-    getJettonInfoRaw(requestParameters: GetJettonInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonInfo>>;
+    getJettonInfoRaw(requestParameters: GetJettonInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<JettonInfo>>;
     /**
      * Get jetton metadata by jetton master address
      */
-    getJettonInfo(requestParameters: GetJettonInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonInfo>;
+    getJettonInfo(requestParameters: GetJettonInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<JettonInfo>;
     /**
      * Get all Jettons balances by owner address
      * @param {string} account address in raw (hex without 0x) or base64url format
@@ -58,11 +58,11 @@ export interface JettonApiInterface {
      * @throws {RequiredError}
      * @memberof JettonApiInterface
      */
-    getJettonsBalancesRaw(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonsBalances>>;
+    getJettonsBalancesRaw(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<JettonsBalances>>;
     /**
      * Get all Jettons balances by owner address
      */
-    getJettonsBalances(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonsBalances>;
+    getJettonsBalances(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<JettonsBalances>;
 }
 /**
  *
@@ -71,25 +71,25 @@ export declare class JettonApi extends runtime.BaseAPI implements JettonApiInter
     /**
      * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
      */
-    getJettonHistoryRaw(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonHistory>>;
+    getJettonHistoryRaw(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<JettonHistory>>;
     /**
      * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
      */
-    getJettonHistory(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonHistory>;
+    getJettonHistory(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<JettonHistory>;
     /**
      * Get jetton metadata by jetton master address
      */
-    getJettonInfoRaw(requestParameters: GetJettonInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonInfo>>;
+    getJettonInfoRaw(requestParameters: GetJettonInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<JettonInfo>>;
     /**
      * Get jetton metadata by jetton master address
      */
-    getJettonInfo(requestParameters: GetJettonInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonInfo>;
+    getJettonInfo(requestParameters: GetJettonInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<JettonInfo>;
     /**
      * Get all Jettons balances by owner address
      */
-    getJettonsBalancesRaw(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonsBalances>>;
+    getJettonsBalancesRaw(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<JettonsBalances>>;
     /**
      * Get all Jettons balances by owner address
      */
-    getJettonsBalances(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonsBalances>;
+    getJettonsBalances(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<JettonsBalances>;
 }

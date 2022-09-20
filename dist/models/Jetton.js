@@ -13,20 +13,8 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JettonToJSON = exports.JettonFromJSONTyped = exports.JettonFromJSON = exports.instanceOfJetton = void 0;
+exports.JettonToJSON = exports.JettonFromJSONTyped = exports.JettonFromJSON = void 0;
 const runtime_1 = require("../runtime");
-/**
- * Check if a given object implements the Jetton interface.
- */
-function instanceOfJetton(value) {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "decimal" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "symbol" in value;
-    return isInstance;
-}
-exports.instanceOfJetton = instanceOfJetton;
 function JettonFromJSON(json) {
     return JettonFromJSONTyped(json, false);
 }
@@ -37,10 +25,10 @@ function JettonFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'address': json['address'],
-        'decimal': json['decimal'],
-        'image': !(0, runtime_1.exists)(json, 'image') ? undefined : json['image'],
         'name': json['name'],
         'symbol': json['symbol'],
+        'decimals': json['decimals'],
+        'image': !(0, runtime_1.exists)(json, 'image') ? undefined : json['image'],
     };
 }
 exports.JettonFromJSONTyped = JettonFromJSONTyped;
@@ -53,10 +41,10 @@ function JettonToJSON(value) {
     }
     return {
         'address': value.address,
-        'decimal': value.decimal,
-        'image': value.image,
         'name': value.name,
         'symbol': value.symbol,
+        'decimals': value.decimals,
+        'image': value.image,
     };
 }
 exports.JettonToJSON = JettonToJSON;

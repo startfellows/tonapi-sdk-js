@@ -13,16 +13,7 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CurrentTime200ResponseToJSON = exports.CurrentTime200ResponseFromJSONTyped = exports.CurrentTime200ResponseFromJSON = exports.instanceOfCurrentTime200Response = void 0;
-/**
- * Check if a given object implements the CurrentTime200Response interface.
- */
-function instanceOfCurrentTime200Response(value) {
-    let isInstance = true;
-    isInstance = isInstance && "time" in value;
-    return isInstance;
-}
-exports.instanceOfCurrentTime200Response = instanceOfCurrentTime200Response;
+exports.CurrentTime200ResponseToJSON = exports.CurrentTime200ResponseFromJSONTyped = exports.CurrentTime200ResponseFromJSON = void 0;
 function CurrentTime200ResponseFromJSON(json) {
     return CurrentTime200ResponseFromJSONTyped(json, false);
 }

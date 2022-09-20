@@ -13,24 +13,9 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EventToJSON = exports.EventFromJSONTyped = exports.EventFromJSON = exports.instanceOfEvent = void 0;
+exports.EventToJSON = exports.EventFromJSONTyped = exports.EventFromJSON = void 0;
 const Action_1 = require("./Action");
 const Fee_1 = require("./Fee");
-/**
- * Check if a given object implements the Event interface.
- */
-function instanceOfEvent(value) {
-    let isInstance = true;
-    isInstance = isInstance && "actions" in value;
-    isInstance = isInstance && "eventId" in value;
-    isInstance = isInstance && "fees" in value;
-    isInstance = isInstance && "inProgress" in value;
-    isInstance = isInstance && "isScam" in value;
-    isInstance = isInstance && "lt" in value;
-    isInstance = isInstance && "timestamp" in value;
-    return isInstance;
-}
-exports.instanceOfEvent = instanceOfEvent;
 function EventFromJSON(json) {
     return EventFromJSONTyped(json, false);
 }
@@ -40,13 +25,13 @@ function EventFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'actions': (json['actions'].map(Action_1.ActionFromJSON)),
         'eventId': json['event_id'],
+        'timestamp': json['timestamp'],
+        'actions': (json['actions'].map(Action_1.ActionFromJSON)),
         'fees': (json['fees'].map(Fee_1.FeeFromJSON)),
-        'inProgress': json['in_progress'],
         'isScam': json['is_scam'],
         'lt': json['lt'],
-        'timestamp': json['timestamp'],
+        'inProgress': json['in_progress'],
     };
 }
 exports.EventFromJSONTyped = EventFromJSONTyped;
@@ -58,13 +43,13 @@ function EventToJSON(value) {
         return null;
     }
     return {
-        'actions': (value.actions.map(Action_1.ActionToJSON)),
         'event_id': value.eventId,
+        'timestamp': value.timestamp,
+        'actions': (value.actions.map(Action_1.ActionToJSON)),
         'fees': (value.fees.map(Fee_1.FeeToJSON)),
-        'in_progress': value.inProgress,
         'is_scam': value.isScam,
         'lt': value.lt,
-        'timestamp': value.timestamp,
+        'in_progress': value.inProgress,
     };
 }
 exports.EventToJSON = EventToJSON;

@@ -9,31 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { AccountAddress } from './AccountAddress';
+import { AccountAddress } from './AccountAddress';
 /**
  *
  * @export
  * @interface SubscriptionAction
  */
 export interface SubscriptionAction {
-    /**
-     *
-     * @type {number}
-     * @memberof SubscriptionAction
-     */
-    amount: number;
-    /**
-     *
-     * @type {AccountAddress}
-     * @memberof SubscriptionAction
-     */
-    beneficiary: AccountAddress;
-    /**
-     *
-     * @type {boolean}
-     * @memberof SubscriptionAction
-     */
-    initial: boolean;
     /**
      *
      * @type {AccountAddress}
@@ -46,11 +28,25 @@ export interface SubscriptionAction {
      * @memberof SubscriptionAction
      */
     subscription: string;
+    /**
+     *
+     * @type {AccountAddress}
+     * @memberof SubscriptionAction
+     */
+    beneficiary: AccountAddress;
+    /**
+     *
+     * @type {number}
+     * @memberof SubscriptionAction
+     */
+    amount: number;
+    /**
+     *
+     * @type {boolean}
+     * @memberof SubscriptionAction
+     */
+    initial: boolean;
 }
-/**
- * Check if a given object implements the SubscriptionAction interface.
- */
-export declare function instanceOfSubscriptionAction(value: object): boolean;
 export declare function SubscriptionActionFromJSON(json: any): SubscriptionAction;
 export declare function SubscriptionActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): SubscriptionAction;
 export declare function SubscriptionActionToJSON(value?: SubscriptionAction | null): any;

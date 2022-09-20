@@ -13,7 +13,7 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JettonSimpleTransferToJSON = exports.JettonSimpleTransferFromJSONTyped = exports.JettonSimpleTransferFromJSON = exports.instanceOfJettonSimpleTransfer = exports.JettonSimpleTransferTypeEnum = void 0;
+exports.JettonSimpleTransferToJSON = exports.JettonSimpleTransferFromJSONTyped = exports.JettonSimpleTransferFromJSON = exports.JettonSimpleTransferTypeEnum = void 0;
 const Jetton_1 = require("./Jetton");
 /**
  * @export
@@ -22,17 +22,6 @@ exports.JettonSimpleTransferTypeEnum = {
     Income: 'income',
     Outcome: 'outcome'
 };
-/**
- * Check if a given object implements the JettonSimpleTransfer interface.
- */
-function instanceOfJettonSimpleTransfer(value) {
-    let isInstance = true;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "jetton" in value;
-    isInstance = isInstance && "type" in value;
-    return isInstance;
-}
-exports.instanceOfJettonSimpleTransfer = instanceOfJettonSimpleTransfer;
 function JettonSimpleTransferFromJSON(json) {
     return JettonSimpleTransferFromJSONTyped(json, false);
 }
@@ -42,9 +31,9 @@ function JettonSimpleTransferFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
+        'type': json['type'],
         'amount': json['amount'],
         'jetton': (0, Jetton_1.JettonFromJSON)(json['jetton']),
-        'type': json['type'],
     };
 }
 exports.JettonSimpleTransferFromJSONTyped = JettonSimpleTransferFromJSONTyped;
@@ -56,9 +45,9 @@ function JettonSimpleTransferToJSON(value) {
         return null;
     }
     return {
+        'type': value.type,
         'amount': value.amount,
         'jetton': (0, Jetton_1.JettonToJSON)(value.jetton),
-        'type': value.type,
     };
 }
 exports.JettonSimpleTransferToJSON = JettonSimpleTransferToJSON;

@@ -9,20 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { NftItem } from './NftItem';
-import type { Sale } from './Sale';
+import { NftItem } from './NftItem';
+import { Sale } from './Sale';
 /**
  *
  * @export
  * @interface NftForSale
  */
 export interface NftForSale {
-    /**
-     *
-     * @type {NftItem}
-     * @memberof NftForSale
-     */
-    nft: NftItem;
     /**
      *
      * @type {Sale}
@@ -35,11 +29,13 @@ export interface NftForSale {
      * @memberof NftForSale
      */
     saleContract: string;
+    /**
+     *
+     * @type {NftItem}
+     * @memberof NftForSale
+     */
+    nft: NftItem;
 }
-/**
- * Check if a given object implements the NftForSale interface.
- */
-export declare function instanceOfNftForSale(value: object): boolean;
 export declare function NftForSaleFromJSON(json: any): NftForSale;
 export declare function NftForSaleFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftForSale;
 export declare function NftForSaleToJSON(value?: NftForSale | null): any;

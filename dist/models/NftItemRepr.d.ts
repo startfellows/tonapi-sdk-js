@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { AccountAddress } from './AccountAddress';
-import type { ImagePreview } from './ImagePreview';
-import type { NftItemReprCollection } from './NftItemReprCollection';
-import type { Sale } from './Sale';
+import { AccountAddress } from './AccountAddress';
+import { ImagePreview } from './ImagePreview';
+import { NftItemReprCollection } from './NftItemReprCollection';
+import { Sale } from './Sale';
 /**
  *
  * @export
@@ -27,10 +27,16 @@ export interface NftItemRepr {
     address: string;
     /**
      *
-     * @type {NftItemReprCollection}
+     * @type {number}
      * @memberof NftItemRepr
      */
-    collection?: NftItemReprCollection;
+    index: number;
+    /**
+     *
+     * @type {AccountAddress}
+     * @memberof NftItemRepr
+     */
+    owner?: AccountAddress;
     /**
      * deprecated
      * @type {string}
@@ -40,16 +46,16 @@ export interface NftItemRepr {
     collectionAddress?: string;
     /**
      *
-     * @type {string}
+     * @type {NftItemReprCollection}
      * @memberof NftItemRepr
      */
-    dns?: string;
+    collection?: NftItemReprCollection;
     /**
      *
-     * @type {number}
+     * @type {boolean}
      * @memberof NftItemRepr
      */
-    index: number;
+    verified: boolean;
     /**
      *
      * @type {any}
@@ -58,10 +64,10 @@ export interface NftItemRepr {
     metadata?: any | null;
     /**
      *
-     * @type {AccountAddress}
+     * @type {Sale}
      * @memberof NftItemRepr
      */
-    owner?: AccountAddress;
+    sale?: Sale;
     /**
      *
      * @type {Array<ImagePreview>}
@@ -70,21 +76,11 @@ export interface NftItemRepr {
     previews?: Array<ImagePreview>;
     /**
      *
-     * @type {Sale}
+     * @type {string}
      * @memberof NftItemRepr
      */
-    sale?: Sale;
-    /**
-     *
-     * @type {boolean}
-     * @memberof NftItemRepr
-     */
-    verified: boolean;
+    dns?: string;
 }
-/**
- * Check if a given object implements the NftItemRepr interface.
- */
-export declare function instanceOfNftItemRepr(value: object): boolean;
 export declare function NftItemReprFromJSON(json: any): NftItemRepr;
 export declare function NftItemReprFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftItemRepr;
 export declare function NftItemReprToJSON(value?: NftItemRepr | null): any;

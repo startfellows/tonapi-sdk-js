@@ -9,25 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { AccountAddress } from './AccountAddress';
+import { AccountAddress } from './AccountAddress';
 /**
  *
  * @export
  * @interface Message
  */
 export interface Message {
-    /**
-     *
-     * @type {number}
-     * @memberof Message
-     */
-    createdLt: number;
-    /**
-     *
-     * @type {AccountAddress}
-     * @memberof Message
-     */
-    destination?: AccountAddress;
     /**
      *
      * @type {number}
@@ -42,10 +30,22 @@ export interface Message {
     ihrFee: number;
     /**
      *
-     * @type {any}
+     * @type {number}
      * @memberof Message
      */
-    msgData: any | null;
+    createdLt: number;
+    /**
+     *
+     * @type {number}
+     * @memberof Message
+     */
+    value: number;
+    /**
+     *
+     * @type {AccountAddress}
+     * @memberof Message
+     */
+    destination?: AccountAddress;
     /**
      *
      * @type {AccountAddress}
@@ -54,15 +54,11 @@ export interface Message {
     source?: AccountAddress;
     /**
      *
-     * @type {number}
+     * @type {any}
      * @memberof Message
      */
-    value: number;
+    msgData: any | null;
 }
-/**
- * Check if a given object implements the Message interface.
- */
-export declare function instanceOfMessage(value: object): boolean;
 export declare function MessageFromJSON(json: any): Message;
 export declare function MessageFromJSONTyped(json: any, ignoreDiscriminator: boolean): Message;
 export declare function MessageToJSON(value?: Message | null): any;

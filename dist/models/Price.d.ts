@@ -20,18 +20,14 @@ export interface Price {
      * @type {string}
      * @memberof Price
      */
-    tokenName: string;
+    value: string;
     /**
      *
      * @type {string}
      * @memberof Price
      */
-    value: string;
+    tokenName: string;
 }
-/**
- * Check if a given object implements the Price interface.
- */
-export declare function instanceOfPrice(value: object): boolean;
 export declare function PriceFromJSON(json: any): Price;
 export declare function PriceFromJSONTyped(json: any, ignoreDiscriminator: boolean): Price;
 export declare function PriceToJSON(value?: Price | null): any;

@@ -26,6 +26,12 @@ export interface WalletDNS {
      * @type {boolean}
      * @memberof WalletDNS
      */
+    isWallet: boolean;
+    /**
+     *
+     * @type {boolean}
+     * @memberof WalletDNS
+     */
     hasMethodPubkey: boolean;
     /**
      *
@@ -35,21 +41,11 @@ export interface WalletDNS {
     hasMethodSeqno: boolean;
     /**
      *
-     * @type {boolean}
-     * @memberof WalletDNS
-     */
-    isWallet: boolean;
-    /**
-     *
      * @type {Array<string>}
      * @memberof WalletDNS
      */
     names: Array<string>;
 }
-/**
- * Check if a given object implements the WalletDNS interface.
- */
-export declare function instanceOfWalletDNS(value: object): boolean;
 export declare function WalletDNSFromJSON(json: any): WalletDNS;
 export declare function WalletDNSFromJSONTyped(json: any, ignoreDiscriminator: boolean): WalletDNS;
 export declare function WalletDNSToJSON(value?: WalletDNS | null): any;

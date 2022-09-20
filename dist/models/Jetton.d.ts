@@ -23,18 +23,6 @@ export interface Jetton {
     address: string;
     /**
      *
-     * @type {number}
-     * @memberof Jetton
-     */
-    decimal: number;
-    /**
-     *
-     * @type {string}
-     * @memberof Jetton
-     */
-    image?: string;
-    /**
-     *
      * @type {string}
      * @memberof Jetton
      */
@@ -45,11 +33,19 @@ export interface Jetton {
      * @memberof Jetton
      */
     symbol: string;
+    /**
+     *
+     * @type {number}
+     * @memberof Jetton
+     */
+    decimals: number;
+    /**
+     *
+     * @type {string}
+     * @memberof Jetton
+     */
+    image?: string;
 }
-/**
- * Check if a given object implements the Jetton interface.
- */
-export declare function instanceOfJetton(value: object): boolean;
 export declare function JettonFromJSON(json: any): Jetton;
 export declare function JettonFromJSONTyped(json: any, ignoreDiscriminator: boolean): Jetton;
 export declare function JettonToJSON(value?: Jetton | null): any;

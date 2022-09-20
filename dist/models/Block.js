@@ -13,22 +13,7 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BlockToJSON = exports.BlockFromJSONTyped = exports.BlockFromJSON = exports.instanceOfBlock = void 0;
-/**
- * Check if a given object implements the Block interface.
- */
-function instanceOfBlock(value) {
-    let isInstance = true;
-    isInstance = isInstance && "endLt" in value;
-    isInstance = isInstance && "fileHash" in value;
-    isInstance = isInstance && "rootHash" in value;
-    isInstance = isInstance && "seqno" in value;
-    isInstance = isInstance && "shard" in value;
-    isInstance = isInstance && "startLt" in value;
-    isInstance = isInstance && "workchainId" in value;
-    return isInstance;
-}
-exports.instanceOfBlock = instanceOfBlock;
+exports.BlockToJSON = exports.BlockFromJSONTyped = exports.BlockFromJSON = void 0;
 function BlockFromJSON(json) {
     return BlockFromJSONTyped(json, false);
 }
@@ -38,13 +23,13 @@ function BlockFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'endLt': json['end_lt'],
-        'fileHash': json['file_hash'],
-        'rootHash': json['root_hash'],
         'seqno': json['seqno'],
+        'workchainId': json['workchain_id'],
+        'rootHash': json['root_hash'],
+        'fileHash': json['file_hash'],
         'shard': json['shard'],
         'startLt': json['start_lt'],
-        'workchainId': json['workchain_id'],
+        'endLt': json['end_lt'],
     };
 }
 exports.BlockFromJSONTyped = BlockFromJSONTyped;
@@ -56,13 +41,13 @@ function BlockToJSON(value) {
         return null;
     }
     return {
-        'end_lt': value.endLt,
-        'file_hash': value.fileHash,
-        'root_hash': value.rootHash,
         'seqno': value.seqno,
+        'workchain_id': value.workchainId,
+        'root_hash': value.rootHash,
+        'file_hash': value.fileHash,
         'shard': value.shard,
         'start_lt': value.startLt,
-        'workchain_id': value.workchainId,
+        'end_lt': value.endLt,
     };
 }
 exports.BlockToJSON = BlockToJSON;

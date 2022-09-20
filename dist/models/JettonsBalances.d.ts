@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { JettonBalance } from './JettonBalance';
+import { JettonBalance } from './JettonBalance';
 /**
  *
  * @export
@@ -23,10 +23,6 @@ export interface JettonsBalances {
      */
     balances: Array<JettonBalance>;
 }
-/**
- * Check if a given object implements the JettonsBalances interface.
- */
-export declare function instanceOfJettonsBalances(value: object): boolean;
 export declare function JettonsBalancesFromJSON(json: any): JettonsBalances;
 export declare function JettonsBalancesFromJSONTyped(json: any, ignoreDiscriminator: boolean): JettonsBalances;
 export declare function JettonsBalancesToJSON(value?: JettonsBalances | null): any;

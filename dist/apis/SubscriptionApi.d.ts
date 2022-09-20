@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { Subscriptions } from '../models';
+import { Subscriptions } from '../models';
 export interface GetSubscriptionsByWalletRequest {
     account: string;
 }
@@ -28,11 +28,11 @@ export interface SubscriptionApiInterface {
      * @throws {RequiredError}
      * @memberof SubscriptionApiInterface
      */
-    getSubscriptionsByWalletRaw(requestParameters: GetSubscriptionsByWalletRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Subscriptions>>;
+    getSubscriptionsByWalletRaw(requestParameters: GetSubscriptionsByWalletRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Subscriptions>>;
     /**
      * Get all subscriptions by wallet address
      */
-    getSubscriptionsByWallet(requestParameters: GetSubscriptionsByWalletRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Subscriptions>;
+    getSubscriptionsByWallet(requestParameters: GetSubscriptionsByWalletRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Subscriptions>;
 }
 /**
  *
@@ -41,9 +41,9 @@ export declare class SubscriptionApi extends runtime.BaseAPI implements Subscrip
     /**
      * Get all subscriptions by wallet address
      */
-    getSubscriptionsByWalletRaw(requestParameters: GetSubscriptionsByWalletRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Subscriptions>>;
+    getSubscriptionsByWalletRaw(requestParameters: GetSubscriptionsByWalletRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Subscriptions>>;
     /**
      * Get all subscriptions by wallet address
      */
-    getSubscriptionsByWallet(requestParameters: GetSubscriptionsByWalletRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Subscriptions>;
+    getSubscriptionsByWallet(requestParameters: GetSubscriptionsByWalletRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Subscriptions>;
 }

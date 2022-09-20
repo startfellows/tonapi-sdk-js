@@ -13,16 +13,7 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ModelErrorToJSON = exports.ModelErrorFromJSONTyped = exports.ModelErrorFromJSON = exports.instanceOfModelError = void 0;
-/**
- * Check if a given object implements the ModelError interface.
- */
-function instanceOfModelError(value) {
-    let isInstance = true;
-    isInstance = isInstance && "error" in value;
-    return isInstance;
-}
-exports.instanceOfModelError = instanceOfModelError;
+exports.ModelErrorToJSON = exports.ModelErrorFromJSONTyped = exports.ModelErrorFromJSON = void 0;
 function ModelErrorFromJSON(json) {
     return ModelErrorFromJSONTyped(json, false);
 }

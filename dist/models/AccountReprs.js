@@ -13,17 +13,8 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AccountReprsToJSON = exports.AccountReprsFromJSONTyped = exports.AccountReprsFromJSON = exports.instanceOfAccountReprs = void 0;
+exports.AccountReprsToJSON = exports.AccountReprsFromJSONTyped = exports.AccountReprsFromJSON = void 0;
 const AccountRepr_1 = require("./AccountRepr");
-/**
- * Check if a given object implements the AccountReprs interface.
- */
-function instanceOfAccountReprs(value) {
-    let isInstance = true;
-    isInstance = isInstance && "accounts" in value;
-    return isInstance;
-}
-exports.instanceOfAccountReprs = instanceOfAccountReprs;
 function AccountReprsFromJSON(json) {
     return AccountReprsFromJSONTyped(json, false);
 }

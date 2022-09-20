@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { JettonSimpleTransfer } from './JettonSimpleTransfer';
+import { JettonSimpleTransfer } from './JettonSimpleTransfer';
 /**
  *
  * @export
@@ -23,10 +23,6 @@ export interface JettonHistory {
      */
     history: Array<JettonSimpleTransfer>;
 }
-/**
- * Check if a given object implements the JettonHistory interface.
- */
-export declare function instanceOfJettonHistory(value: object): boolean;
 export declare function JettonHistoryFromJSON(json: any): JettonHistory;
 export declare function JettonHistoryFromJSONTyped(json: any, ignoreDiscriminator: boolean): JettonHistory;
 export declare function JettonHistoryToJSON(value?: JettonHistory | null): any;

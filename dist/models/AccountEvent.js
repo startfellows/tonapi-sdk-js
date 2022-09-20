@@ -13,26 +13,10 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AccountEventToJSON = exports.AccountEventFromJSONTyped = exports.AccountEventFromJSON = exports.instanceOfAccountEvent = void 0;
+exports.AccountEventToJSON = exports.AccountEventFromJSONTyped = exports.AccountEventFromJSON = void 0;
 const AccountAddress_1 = require("./AccountAddress");
 const Action_1 = require("./Action");
 const Fee_1 = require("./Fee");
-/**
- * Check if a given object implements the AccountEvent interface.
- */
-function instanceOfAccountEvent(value) {
-    let isInstance = true;
-    isInstance = isInstance && "account" in value;
-    isInstance = isInstance && "actions" in value;
-    isInstance = isInstance && "eventId" in value;
-    isInstance = isInstance && "fee" in value;
-    isInstance = isInstance && "inProgress" in value;
-    isInstance = isInstance && "isScam" in value;
-    isInstance = isInstance && "lt" in value;
-    isInstance = isInstance && "timestamp" in value;
-    return isInstance;
-}
-exports.instanceOfAccountEvent = instanceOfAccountEvent;
 function AccountEventFromJSON(json) {
     return AccountEventFromJSONTyped(json, false);
 }
@@ -42,14 +26,14 @@ function AccountEventFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'account': (0, AccountAddress_1.AccountAddressFromJSON)(json['account']),
-        'actions': (json['actions'].map(Action_1.ActionFromJSON)),
         'eventId': json['event_id'],
+        'account': (0, AccountAddress_1.AccountAddressFromJSON)(json['account']),
+        'timestamp': json['timestamp'],
+        'actions': (json['actions'].map(Action_1.ActionFromJSON)),
         'fee': (0, Fee_1.FeeFromJSON)(json['fee']),
-        'inProgress': json['in_progress'],
         'isScam': json['is_scam'],
         'lt': json['lt'],
-        'timestamp': json['timestamp'],
+        'inProgress': json['in_progress'],
     };
 }
 exports.AccountEventFromJSONTyped = AccountEventFromJSONTyped;
@@ -61,14 +45,14 @@ function AccountEventToJSON(value) {
         return null;
     }
     return {
-        'account': (0, AccountAddress_1.AccountAddressToJSON)(value.account),
-        'actions': (value.actions.map(Action_1.ActionToJSON)),
         'event_id': value.eventId,
+        'account': (0, AccountAddress_1.AccountAddressToJSON)(value.account),
+        'timestamp': value.timestamp,
+        'actions': (value.actions.map(Action_1.ActionToJSON)),
         'fee': (0, Fee_1.FeeToJSON)(value.fee),
-        'in_progress': value.inProgress,
         'is_scam': value.isScam,
         'lt': value.lt,
-        'timestamp': value.timestamp,
+        'in_progress': value.inProgress,
     };
 }
 exports.AccountEventToJSON = AccountEventToJSON;

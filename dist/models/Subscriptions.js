@@ -13,17 +13,8 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SubscriptionsToJSON = exports.SubscriptionsFromJSONTyped = exports.SubscriptionsFromJSON = exports.instanceOfSubscriptions = void 0;
+exports.SubscriptionsToJSON = exports.SubscriptionsFromJSONTyped = exports.SubscriptionsFromJSON = void 0;
 const Subscription_1 = require("./Subscription");
-/**
- * Check if a given object implements the Subscriptions interface.
- */
-function instanceOfSubscriptions(value) {
-    let isInstance = true;
-    isInstance = isInstance && "subscriptions" in value;
-    return isInstance;
-}
-exports.instanceOfSubscriptions = instanceOfSubscriptions;
 function SubscriptionsFromJSON(json) {
     return SubscriptionsFromJSONTyped(json, false);
 }

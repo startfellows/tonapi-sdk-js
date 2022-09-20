@@ -13,18 +13,8 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AccountToJSON = exports.AccountFromJSONTyped = exports.AccountFromJSON = exports.instanceOfAccount = void 0;
+exports.AccountToJSON = exports.AccountFromJSONTyped = exports.AccountFromJSON = void 0;
 const runtime_1 = require("../runtime");
-/**
- * Check if a given object implements the Account interface.
- */
-function instanceOfAccount(value) {
-    let isInstance = true;
-    isInstance = isInstance && "balance" in value;
-    isInstance = isInstance && "status" in value;
-    return isInstance;
-}
-exports.instanceOfAccount = instanceOfAccount;
 function AccountFromJSON(json) {
     return AccountFromJSONTyped(json, false);
 }

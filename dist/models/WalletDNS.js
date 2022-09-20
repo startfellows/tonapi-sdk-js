@@ -13,20 +13,7 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WalletDNSToJSON = exports.WalletDNSFromJSONTyped = exports.WalletDNSFromJSON = exports.instanceOfWalletDNS = void 0;
-/**
- * Check if a given object implements the WalletDNS interface.
- */
-function instanceOfWalletDNS(value) {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "hasMethodPubkey" in value;
-    isInstance = isInstance && "hasMethodSeqno" in value;
-    isInstance = isInstance && "isWallet" in value;
-    isInstance = isInstance && "names" in value;
-    return isInstance;
-}
-exports.instanceOfWalletDNS = instanceOfWalletDNS;
+exports.WalletDNSToJSON = exports.WalletDNSFromJSONTyped = exports.WalletDNSFromJSON = void 0;
 function WalletDNSFromJSON(json) {
     return WalletDNSFromJSONTyped(json, false);
 }
@@ -37,9 +24,9 @@ function WalletDNSFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'address': json['address'],
+        'isWallet': json['is_wallet'],
         'hasMethodPubkey': json['has_method_pubkey'],
         'hasMethodSeqno': json['has_method_seqno'],
-        'isWallet': json['is_wallet'],
         'names': json['names'],
     };
 }
@@ -53,9 +40,9 @@ function WalletDNSToJSON(value) {
     }
     return {
         'address': value.address,
+        'is_wallet': value.isWallet,
         'has_method_pubkey': value.hasMethodPubkey,
         'has_method_seqno': value.hasMethodSeqno,
-        'is_wallet': value.isWallet,
         'names': value.names,
     };
 }

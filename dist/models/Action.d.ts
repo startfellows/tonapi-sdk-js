@@ -9,18 +9,36 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { ContractDeployAction } from './ContractDeployAction';
-import type { JettonTransferAction } from './JettonTransferAction';
-import type { NftItemTransferAction } from './NftItemTransferAction';
-import type { SubscriptionAction } from './SubscriptionAction';
-import type { TonTransferAction } from './TonTransferAction';
-import type { UnSubscriptionAction } from './UnSubscriptionAction';
+import { ContractDeployAction } from './ContractDeployAction';
+import { JettonTransferAction } from './JettonTransferAction';
+import { NftItemTransferAction } from './NftItemTransferAction';
+import { SubscriptionAction } from './SubscriptionAction';
+import { TonTransferAction } from './TonTransferAction';
+import { UnSubscriptionAction } from './UnSubscriptionAction';
 /**
  *
  * @export
  * @interface Action
  */
 export interface Action {
+    /**
+     *
+     * @type {string}
+     * @memberof Action
+     */
+    type: ActionTypeEnum;
+    /**
+     *
+     * @type {string}
+     * @memberof Action
+     */
+    status: ActionStatusEnum;
+    /**
+     *
+     * @type {TonTransferAction}
+     * @memberof Action
+     */
+    tonTransfer?: TonTransferAction;
     /**
      *
      * @type {ContractDeployAction}
@@ -47,38 +65,11 @@ export interface Action {
     subscribe?: SubscriptionAction;
     /**
      *
-     * @type {TonTransferAction}
-     * @memberof Action
-     */
-    tonTransfer?: TonTransferAction;
-    /**
-     *
      * @type {UnSubscriptionAction}
      * @memberof Action
      */
     unSubscribe?: UnSubscriptionAction;
-    /**
-     *
-     * @type {string}
-     * @memberof Action
-     */
-    status: ActionStatusEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof Action
-     */
-    type: ActionTypeEnum;
 }
-/**
- * @export
- */
-export declare const ActionStatusEnum: {
-    readonly Ok: "ok";
-    readonly Failed: "failed";
-    readonly Pending: "pending";
-};
-export declare type ActionStatusEnum = typeof ActionStatusEnum[keyof typeof ActionStatusEnum];
 /**
  * @export
  */
@@ -93,9 +84,14 @@ export declare const ActionTypeEnum: {
 };
 export declare type ActionTypeEnum = typeof ActionTypeEnum[keyof typeof ActionTypeEnum];
 /**
- * Check if a given object implements the Action interface.
+ * @export
  */
-export declare function instanceOfAction(value: object): boolean;
+export declare const ActionStatusEnum: {
+    readonly Ok: "ok";
+    readonly Failed: "failed";
+    readonly Pending: "pending";
+};
+export declare type ActionStatusEnum = typeof ActionStatusEnum[keyof typeof ActionStatusEnum];
 export declare function ActionFromJSON(json: any): Action;
 export declare function ActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): Action;
 export declare function ActionToJSON(value?: Action | null): any;

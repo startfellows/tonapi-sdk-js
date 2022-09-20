@@ -9,8 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { TraceMsg } from './TraceMsg';
-import type { TxAnnotation } from './TxAnnotation';
+import { TraceMsg } from './TraceMsg';
+import { TxAnnotation } from './TxAnnotation';
 /**
  *
  * @export
@@ -19,22 +19,10 @@ import type { TxAnnotation } from './TxAnnotation';
 export interface TraceTX {
     /**
      *
-     * @type {Array<TxAnnotation>}
+     * @type {Array<TraceMsg>}
      * @memberof TraceTX
      */
-    annotations: Array<TxAnnotation>;
-    /**
-     *
-     * @type {string}
-     * @memberof TraceTX
-     */
-    blockId: string;
-    /**
-     *
-     * @type {number}
-     * @memberof TraceTX
-     */
-    fee: number;
+    outMsgs: Array<TraceMsg>;
     /**
      *
      * @type {string}
@@ -46,19 +34,7 @@ export interface TraceTX {
      * @type {number}
      * @memberof TraceTX
      */
-    lt: number;
-    /**
-     *
-     * @type {number}
-     * @memberof TraceTX
-     */
-    otherFee: number;
-    /**
-     *
-     * @type {Array<TraceMsg>}
-     * @memberof TraceTX
-     */
-    outMsgs: Array<TraceMsg>;
+    fee: number;
     /**
      *
      * @type {number}
@@ -70,12 +46,32 @@ export interface TraceTX {
      * @type {number}
      * @memberof TraceTX
      */
+    otherFee: number;
+    /**
+     *
+     * @type {number}
+     * @memberof TraceTX
+     */
+    lt: number;
+    /**
+     *
+     * @type {number}
+     * @memberof TraceTX
+     */
     utime: number;
+    /**
+     *
+     * @type {string}
+     * @memberof TraceTX
+     */
+    blockId: string;
+    /**
+     *
+     * @type {Array<TxAnnotation>}
+     * @memberof TraceTX
+     */
+    annotations: Array<TxAnnotation>;
 }
-/**
- * Check if a given object implements the TraceTX interface.
- */
-export declare function instanceOfTraceTX(value: object): boolean;
 export declare function TraceTXFromJSON(json: any): TraceTX;
 export declare function TraceTXFromJSONTyped(json: any, ignoreDiscriminator: boolean): TraceTX;
 export declare function TraceTXToJSON(value?: TraceTX | null): any;

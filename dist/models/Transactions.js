@@ -13,17 +13,8 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TransactionsToJSON = exports.TransactionsFromJSONTyped = exports.TransactionsFromJSON = exports.instanceOfTransactions = void 0;
+exports.TransactionsToJSON = exports.TransactionsFromJSONTyped = exports.TransactionsFromJSON = void 0;
 const Transaction_1 = require("./Transaction");
-/**
- * Check if a given object implements the Transactions interface.
- */
-function instanceOfTransactions(value) {
-    let isInstance = true;
-    isInstance = isInstance && "transactions" in value;
-    return isInstance;
-}
-exports.instanceOfTransactions = instanceOfTransactions;
 function TransactionsFromJSON(json) {
     return TransactionsFromJSONTyped(json, false);
 }

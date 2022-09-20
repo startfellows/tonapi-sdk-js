@@ -40,10 +40,6 @@ export interface Account {
      */
     status: string;
 }
-/**
- * Check if a given object implements the Account interface.
- */
-export declare function instanceOfAccount(value: object): boolean;
 export declare function AccountFromJSON(json: any): Account;
 export declare function AccountFromJSONTyped(json: any, ignoreDiscriminator: boolean): Account;
 export declare function AccountToJSON(value?: Account | null): any;

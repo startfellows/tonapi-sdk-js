@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { NftForSale } from './NftForSale';
+import { NftForSale } from './NftForSale';
 /**
  *
  * @export
@@ -21,13 +21,13 @@ export interface NftSalesResponse {
      * @type {Array<NftForSale>}
      * @memberof NftSalesResponse
      */
-    disintar?: Array<NftForSale>;
+    getgems?: Array<NftForSale>;
     /**
      *
      * @type {Array<NftForSale>}
      * @memberof NftSalesResponse
      */
-    getgems?: Array<NftForSale>;
+    disintar?: Array<NftForSale>;
     /**
      *
      * @type {Array<NftForSale>}
@@ -35,10 +35,6 @@ export interface NftSalesResponse {
      */
     other?: Array<NftForSale>;
 }
-/**
- * Check if a given object implements the NftSalesResponse interface.
- */
-export declare function instanceOfNftSalesResponse(value: object): boolean;
 export declare function NftSalesResponseFromJSON(json: any): NftSalesResponse;
 export declare function NftSalesResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftSalesResponse;
 export declare function NftSalesResponseToJSON(value?: NftSalesResponse | null): any;

@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { AccountAddress } from './AccountAddress';
+import { AccountAddress } from './AccountAddress';
 /**
  *
  * @export
@@ -18,22 +18,10 @@ import type { AccountAddress } from './AccountAddress';
 export interface NftItemTransferAction {
     /**
      *
-     * @type {string}
+     * @type {AccountAddress}
      * @memberof NftItemTransferAction
      */
-    comment?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof NftItemTransferAction
-     */
-    nft: string;
-    /**
-     * raw hex encoded payload
-     * @type {string}
-     * @memberof NftItemTransferAction
-     */
-    payload?: string;
+    sender?: AccountAddress;
     /**
      *
      * @type {AccountAddress}
@@ -42,15 +30,23 @@ export interface NftItemTransferAction {
     recipient?: AccountAddress;
     /**
      *
-     * @type {AccountAddress}
+     * @type {string}
      * @memberof NftItemTransferAction
      */
-    sender?: AccountAddress;
+    nft: string;
+    /**
+     *
+     * @type {string}
+     * @memberof NftItemTransferAction
+     */
+    comment?: string;
+    /**
+     * raw hex encoded payload
+     * @type {string}
+     * @memberof NftItemTransferAction
+     */
+    payload?: string;
 }
-/**
- * Check if a given object implements the NftItemTransferAction interface.
- */
-export declare function instanceOfNftItemTransferAction(value: object): boolean;
 export declare function NftItemTransferActionFromJSON(json: any): NftItemTransferAction;
 export declare function NftItemTransferActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftItemTransferAction;
 export declare function NftItemTransferActionToJSON(value?: NftItemTransferAction | null): any;

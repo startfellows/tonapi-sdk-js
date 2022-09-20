@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { AccountRepr } from './AccountRepr';
+import { AccountRepr } from './AccountRepr';
 /**
  *
  * @export
@@ -23,10 +23,6 @@ export interface AccountReprs {
      */
     accounts: Array<AccountRepr>;
 }
-/**
- * Check if a given object implements the AccountReprs interface.
- */
-export declare function instanceOfAccountReprs(value: object): boolean;
 export declare function AccountReprsFromJSON(json: any): AccountReprs;
 export declare function AccountReprsFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountReprs;
 export declare function AccountReprsToJSON(value?: AccountReprs | null): any;

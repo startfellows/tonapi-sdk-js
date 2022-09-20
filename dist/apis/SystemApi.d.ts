@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { CurrentTime200Response } from '../models';
+import { CurrentTime200Response } from '../models';
 /**
  * SystemApi - interface
  *
@@ -24,11 +24,11 @@ export interface SystemApiInterface {
      * @throws {RequiredError}
      * @memberof SystemApiInterface
      */
-    currentTimeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CurrentTime200Response>>;
+    currentTimeRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<CurrentTime200Response>>;
     /**
      * Get current time
      */
-    currentTime(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CurrentTime200Response>;
+    currentTime(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<CurrentTime200Response>;
 }
 /**
  *
@@ -37,9 +37,9 @@ export declare class SystemApi extends runtime.BaseAPI implements SystemApiInter
     /**
      * Get current time
      */
-    currentTimeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CurrentTime200Response>>;
+    currentTimeRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<CurrentTime200Response>>;
     /**
      * Get current time
      */
-    currentTime(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CurrentTime200Response>;
+    currentTime(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<CurrentTime200Response>;
 }

@@ -13,16 +13,7 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SendBocRequestToJSON = exports.SendBocRequestFromJSONTyped = exports.SendBocRequestFromJSON = exports.instanceOfSendBocRequest = void 0;
-/**
- * Check if a given object implements the SendBocRequest interface.
- */
-function instanceOfSendBocRequest(value) {
-    let isInstance = true;
-    isInstance = isInstance && "boc" in value;
-    return isInstance;
-}
-exports.instanceOfSendBocRequest = instanceOfSendBocRequest;
+exports.SendBocRequestToJSON = exports.SendBocRequestFromJSONTyped = exports.SendBocRequestFromJSON = void 0;
 function SendBocRequestFromJSON(json) {
     return SendBocRequestFromJSONTyped(json, false);
 }

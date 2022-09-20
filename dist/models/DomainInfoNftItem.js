@@ -13,18 +13,9 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DomainInfoNftItemToJSON = exports.DomainInfoNftItemFromJSONTyped = exports.DomainInfoNftItemFromJSON = exports.instanceOfDomainInfoNftItem = void 0;
+exports.DomainInfoNftItemToJSON = exports.DomainInfoNftItemFromJSONTyped = exports.DomainInfoNftItemFromJSON = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
-/**
- * Check if a given object implements the DomainInfoNftItem interface.
- */
-function instanceOfDomainInfoNftItem(value) {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    return isInstance;
-}
-exports.instanceOfDomainInfoNftItem = instanceOfDomainInfoNftItem;
 function DomainInfoNftItemFromJSON(json) {
     return DomainInfoNftItemFromJSONTyped(json, false);
 }

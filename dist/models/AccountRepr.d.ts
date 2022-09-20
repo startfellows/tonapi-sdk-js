@@ -9,19 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { AccountReprAddress } from './AccountReprAddress';
+import { AccountReprAddress } from './AccountReprAddress';
 /**
  *
  * @export
  * @interface AccountRepr
  */
 export interface AccountRepr {
-    /**
-     *
-     * @type {AccountReprAddress}
-     * @memberof AccountRepr
-     */
-    address: AccountReprAddress;
     /**
      *
      * @type {number}
@@ -33,7 +27,7 @@ export interface AccountRepr {
      * @type {string}
      * @memberof AccountRepr
      */
-    icon?: string;
+    status: string;
     /**
      *
      * @type {Array<string>}
@@ -42,22 +36,10 @@ export interface AccountRepr {
     interfaces: Array<string>;
     /**
      *
-     * @type {boolean}
+     * @type {AccountReprAddress}
      * @memberof AccountRepr
      */
-    isScam: boolean;
-    /**
-     *
-     * @type {number}
-     * @memberof AccountRepr
-     */
-    lastUpdate: number;
-    /**
-     *
-     * @type {boolean}
-     * @memberof AccountRepr
-     */
-    memoRequired: boolean;
+    address: AccountReprAddress;
     /**
      *
      * @type {string}
@@ -66,15 +48,29 @@ export interface AccountRepr {
     name?: string;
     /**
      *
+     * @type {boolean}
+     * @memberof AccountRepr
+     */
+    isScam: boolean;
+    /**
+     *
      * @type {string}
      * @memberof AccountRepr
      */
-    status: string;
+    icon?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof AccountRepr
+     */
+    memoRequired: boolean;
+    /**
+     *
+     * @type {number}
+     * @memberof AccountRepr
+     */
+    lastUpdate: number;
 }
-/**
- * Check if a given object implements the AccountRepr interface.
- */
-export declare function instanceOfAccountRepr(value: object): boolean;
 export declare function AccountReprFromJSON(json: any): AccountRepr;
 export declare function AccountReprFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountRepr;
 export declare function AccountReprToJSON(value?: AccountRepr | null): any;

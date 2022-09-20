@@ -13,18 +13,9 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DnsRecordToJSON = exports.DnsRecordFromJSONTyped = exports.DnsRecordFromJSON = exports.instanceOfDnsRecord = void 0;
+exports.DnsRecordToJSON = exports.DnsRecordFromJSONTyped = exports.DnsRecordFromJSON = void 0;
 const runtime_1 = require("../runtime");
 const WalletDNS_1 = require("./WalletDNS");
-/**
- * Check if a given object implements the DnsRecord interface.
- */
-function instanceOfDnsRecord(value) {
-    let isInstance = true;
-    isInstance = isInstance && "site" in value;
-    return isInstance;
-}
-exports.instanceOfDnsRecord = instanceOfDnsRecord;
 function DnsRecordFromJSON(json) {
     return DnsRecordFromJSONTyped(json, false);
 }
@@ -34,9 +25,9 @@ function DnsRecordFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
+        'wallet': !(0, runtime_1.exists)(json, 'wallet') ? undefined : (0, WalletDNS_1.WalletDNSFromJSON)(json['wallet']),
         'nextResolver': !(0, runtime_1.exists)(json, 'next_resolver') ? undefined : json['next_resolver'],
         'site': json['site'],
-        'wallet': !(0, runtime_1.exists)(json, 'wallet') ? undefined : (0, WalletDNS_1.WalletDNSFromJSON)(json['wallet']),
     };
 }
 exports.DnsRecordFromJSONTyped = DnsRecordFromJSONTyped;
@@ -48,9 +39,9 @@ function DnsRecordToJSON(value) {
         return null;
     }
     return {
+        'wallet': (0, WalletDNS_1.WalletDNSToJSON)(value.wallet),
         'next_resolver': value.nextResolver,
         'site': value.site,
-        'wallet': (0, WalletDNS_1.WalletDNSToJSON)(value.wallet),
     };
 }
 exports.DnsRecordToJSON = DnsRecordToJSON;

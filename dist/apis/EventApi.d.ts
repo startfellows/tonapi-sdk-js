@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { AccountEvents200Response, Event } from '../models';
+import { AccountEvents200Response, Event } from '../models';
 export interface AccountEventsRequest {
     account: string;
     limit: number;
@@ -35,11 +35,11 @@ export interface EventApiInterface {
      * @throws {RequiredError}
      * @memberof EventApiInterface
      */
-    accountEventsRaw(requestParameters: AccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents200Response>>;
+    accountEventsRaw(requestParameters: AccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<AccountEvents200Response>>;
     /**
      * Get events for account
      */
-    accountEvents(requestParameters: AccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents200Response>;
+    accountEvents(requestParameters: AccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<AccountEvents200Response>;
     /**
      * Get the event by event ID or hash of any transaction in trace
      * @param {string} eventId event ID or transaction hash in hex (without 0x) or base64url format
@@ -47,11 +47,11 @@ export interface EventApiInterface {
      * @throws {RequiredError}
      * @memberof EventApiInterface
      */
-    getEventRaw(requestParameters: GetEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Event>>;
+    getEventRaw(requestParameters: GetEventRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Event>>;
     /**
      * Get the event by event ID or hash of any transaction in trace
      */
-    getEvent(requestParameters: GetEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Event>;
+    getEvent(requestParameters: GetEventRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Event>;
 }
 /**
  *
@@ -60,17 +60,17 @@ export declare class EventApi extends runtime.BaseAPI implements EventApiInterfa
     /**
      * Get events for account
      */
-    accountEventsRaw(requestParameters: AccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents200Response>>;
+    accountEventsRaw(requestParameters: AccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<AccountEvents200Response>>;
     /**
      * Get events for account
      */
-    accountEvents(requestParameters: AccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents200Response>;
+    accountEvents(requestParameters: AccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<AccountEvents200Response>;
     /**
      * Get the event by event ID or hash of any transaction in trace
      */
-    getEventRaw(requestParameters: GetEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Event>>;
+    getEventRaw(requestParameters: GetEventRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Event>>;
     /**
      * Get the event by event ID or hash of any transaction in trace
      */
-    getEvent(requestParameters: GetEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Event>;
+    getEvent(requestParameters: GetEventRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Event>;
 }

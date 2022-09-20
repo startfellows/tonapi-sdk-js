@@ -9,38 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { AccountAddress } from './AccountAddress';
-import type { TxAnnotation } from './TxAnnotation';
+import { AccountAddress } from './AccountAddress';
+import { TxAnnotation } from './TxAnnotation';
 /**
  *
  * @export
  * @interface AnnotatedTrace
  */
 export interface AnnotatedTrace {
-    /**
-     *
-     * @type {AccountAddress}
-     * @memberof AnnotatedTrace
-     */
-    account: AccountAddress;
-    /**
-     *
-     * @type {Array<TxAnnotation>}
-     * @memberof AnnotatedTrace
-     */
-    annotations: Array<TxAnnotation>;
-    /**
-     *
-     * @type {Array<AnnotatedTrace>}
-     * @memberof AnnotatedTrace
-     */
-    children: Array<AnnotatedTrace>;
-    /**
-     *
-     * @type {number}
-     * @memberof AnnotatedTrace
-     */
-    fee: number;
     /**
      *
      * @type {string}
@@ -52,19 +28,25 @@ export interface AnnotatedTrace {
      * @type {number}
      * @memberof AnnotatedTrace
      */
-    inputValue: number;
+    lt: number;
     /**
      *
-     * @type {Array<string>}
+     * @type {AccountAddress}
      * @memberof AnnotatedTrace
      */
-    interfaces: Array<string>;
+    account: AccountAddress;
+    /**
+     *
+     * @type {boolean}
+     * @memberof AnnotatedTrace
+     */
+    success: boolean;
     /**
      *
      * @type {number}
      * @memberof AnnotatedTrace
      */
-    lt: number;
+    fee: number;
     /**
      *
      * @type {number}
@@ -79,15 +61,29 @@ export interface AnnotatedTrace {
     storageFee: number;
     /**
      *
-     * @type {boolean}
+     * @type {number}
      * @memberof AnnotatedTrace
      */
-    success: boolean;
+    inputValue: number;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof AnnotatedTrace
+     */
+    interfaces: Array<string>;
+    /**
+     *
+     * @type {Array<TxAnnotation>}
+     * @memberof AnnotatedTrace
+     */
+    annotations: Array<TxAnnotation>;
+    /**
+     *
+     * @type {Array<AnnotatedTrace>}
+     * @memberof AnnotatedTrace
+     */
+    children: Array<AnnotatedTrace>;
 }
-/**
- * Check if a given object implements the AnnotatedTrace interface.
- */
-export declare function instanceOfAnnotatedTrace(value: object): boolean;
 export declare function AnnotatedTraceFromJSON(json: any): AnnotatedTrace;
 export declare function AnnotatedTraceFromJSONTyped(json: any, ignoreDiscriminator: boolean): AnnotatedTrace;
 export declare function AnnotatedTraceToJSON(value?: AnnotatedTrace | null): any;

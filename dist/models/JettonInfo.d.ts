@@ -9,19 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { JettonMetadata } from './JettonMetadata';
+import { JettonMetadata } from './JettonMetadata';
 /**
  *
  * @export
  * @interface JettonInfo
  */
 export interface JettonInfo {
-    /**
-     *
-     * @type {JettonMetadata}
-     * @memberof JettonInfo
-     */
-    metadata: JettonMetadata;
     /**
      *
      * @type {boolean}
@@ -34,11 +28,13 @@ export interface JettonInfo {
      * @memberof JettonInfo
      */
     totalSupply: string;
+    /**
+     *
+     * @type {JettonMetadata}
+     * @memberof JettonInfo
+     */
+    metadata: JettonMetadata;
 }
-/**
- * Check if a given object implements the JettonInfo interface.
- */
-export declare function instanceOfJettonInfo(value: object): boolean;
 export declare function JettonInfoFromJSON(json: any): JettonInfo;
 export declare function JettonInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): JettonInfo;
 export declare function JettonInfoToJSON(value?: JettonInfo | null): any;

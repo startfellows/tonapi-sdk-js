@@ -22,10 +22,6 @@ export interface SendBocRequest {
      */
     boc: string;
 }
-/**
- * Check if a given object implements the SendBocRequest interface.
- */
-export declare function instanceOfSendBocRequest(value: object): boolean;
 export declare function SendBocRequestFromJSON(json: any): SendBocRequest;
 export declare function SendBocRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): SendBocRequest;
 export declare function SendBocRequestToJSON(value?: SendBocRequest | null): any;

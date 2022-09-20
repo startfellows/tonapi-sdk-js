@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { Wallets } from '../models';
+import { Wallets } from '../models';
 export interface FindWalletsByPubKeyRequest {
     publicKey: string;
 }
@@ -28,11 +28,11 @@ export interface WalletApiInterface {
      * @throws {RequiredError}
      * @memberof WalletApiInterface
      */
-    findWalletsByPubKeyRaw(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Wallets>>;
+    findWalletsByPubKeyRaw(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Wallets>>;
     /**
      * Find all wallets by public key
      */
-    findWalletsByPubKey(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Wallets>;
+    findWalletsByPubKey(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Wallets>;
 }
 /**
  *
@@ -41,9 +41,9 @@ export declare class WalletApi extends runtime.BaseAPI implements WalletApiInter
     /**
      * Find all wallets by public key
      */
-    findWalletsByPubKeyRaw(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Wallets>>;
+    findWalletsByPubKeyRaw(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Wallets>>;
     /**
      * Find all wallets by public key
      */
-    findWalletsByPubKey(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Wallets>;
+    findWalletsByPubKey(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Wallets>;
 }

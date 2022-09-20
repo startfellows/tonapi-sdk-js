@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { AccountAddress } from './AccountAddress';
+import { AccountAddress } from './AccountAddress';
 /**
  *
  * @export
@@ -24,34 +24,28 @@ export interface NftItem {
     address: string;
     /**
      *
-     * @type {string}
-     * @memberof NftItem
-     */
-    collectionAddress?: string;
-    /**
-     *
      * @type {number}
      * @memberof NftItem
      */
     index: number;
     /**
      *
-     * @type {boolean}
-     * @memberof NftItem
-     */
-    init: boolean;
-    /**
-     *
-     * @type {any}
-     * @memberof NftItem
-     */
-    metadata?: any | null;
-    /**
-     *
      * @type {AccountAddress}
      * @memberof NftItem
      */
     owner?: AccountAddress;
+    /**
+     *
+     * @type {string}
+     * @memberof NftItem
+     */
+    collectionAddress?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof NftItem
+     */
+    init: boolean;
     /**
      *
      * @type {string}
@@ -64,11 +58,13 @@ export interface NftItem {
      * @memberof NftItem
      */
     verified: boolean;
+    /**
+     *
+     * @type {any}
+     * @memberof NftItem
+     */
+    metadata?: any | null;
 }
-/**
- * Check if a given object implements the NftItem interface.
- */
-export declare function instanceOfNftItem(value: object): boolean;
 export declare function NftItemFromJSON(json: any): NftItem;
 export declare function NftItemFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftItem;
 export declare function NftItemToJSON(value?: NftItem | null): any;

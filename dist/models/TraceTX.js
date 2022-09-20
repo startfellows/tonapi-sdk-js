@@ -13,26 +13,9 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TraceTXToJSON = exports.TraceTXFromJSONTyped = exports.TraceTXFromJSON = exports.instanceOfTraceTX = void 0;
+exports.TraceTXToJSON = exports.TraceTXFromJSONTyped = exports.TraceTXFromJSON = void 0;
 const TraceMsg_1 = require("./TraceMsg");
 const TxAnnotation_1 = require("./TxAnnotation");
-/**
- * Check if a given object implements the TraceTX interface.
- */
-function instanceOfTraceTX(value) {
-    let isInstance = true;
-    isInstance = isInstance && "annotations" in value;
-    isInstance = isInstance && "blockId" in value;
-    isInstance = isInstance && "fee" in value;
-    isInstance = isInstance && "hash" in value;
-    isInstance = isInstance && "lt" in value;
-    isInstance = isInstance && "otherFee" in value;
-    isInstance = isInstance && "outMsgs" in value;
-    isInstance = isInstance && "storageFee" in value;
-    isInstance = isInstance && "utime" in value;
-    return isInstance;
-}
-exports.instanceOfTraceTX = instanceOfTraceTX;
 function TraceTXFromJSON(json) {
     return TraceTXFromJSONTyped(json, false);
 }
@@ -42,15 +25,15 @@ function TraceTXFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'annotations': (json['annotations'].map(TxAnnotation_1.TxAnnotationFromJSON)),
-        'blockId': json['block_id'],
-        'fee': json['fee'],
-        'hash': json['hash'],
-        'lt': json['lt'],
-        'otherFee': json['other_fee'],
         'outMsgs': (json['out_msgs'].map(TraceMsg_1.TraceMsgFromJSON)),
+        'hash': json['hash'],
+        'fee': json['fee'],
         'storageFee': json['storage_fee'],
+        'otherFee': json['other_fee'],
+        'lt': json['lt'],
         'utime': json['utime'],
+        'blockId': json['block_id'],
+        'annotations': (json['annotations'].map(TxAnnotation_1.TxAnnotationFromJSON)),
     };
 }
 exports.TraceTXFromJSONTyped = TraceTXFromJSONTyped;
@@ -62,15 +45,15 @@ function TraceTXToJSON(value) {
         return null;
     }
     return {
-        'annotations': (value.annotations.map(TxAnnotation_1.TxAnnotationToJSON)),
-        'block_id': value.blockId,
-        'fee': value.fee,
-        'hash': value.hash,
-        'lt': value.lt,
-        'other_fee': value.otherFee,
         'out_msgs': (value.outMsgs.map(TraceMsg_1.TraceMsgToJSON)),
+        'hash': value.hash,
+        'fee': value.fee,
         'storage_fee': value.storageFee,
+        'other_fee': value.otherFee,
+        'lt': value.lt,
         'utime': value.utime,
+        'block_id': value.blockId,
+        'annotations': (value.annotations.map(TxAnnotation_1.TxAnnotationToJSON)),
     };
 }
 exports.TraceTXToJSON = TraceTXToJSON;

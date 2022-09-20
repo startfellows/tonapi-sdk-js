@@ -13,21 +13,10 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SaleToJSON = exports.SaleFromJSONTyped = exports.SaleFromJSON = exports.instanceOfSale = void 0;
+exports.SaleToJSON = exports.SaleFromJSONTyped = exports.SaleFromJSON = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
 const Price_1 = require("./Price");
-/**
- * Check if a given object implements the Sale interface.
- */
-function instanceOfSale(value) {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "market" in value;
-    isInstance = isInstance && "price" in value;
-    return isInstance;
-}
-exports.instanceOfSale = instanceOfSale;
 function SaleFromJSON(json) {
     return SaleFromJSONTyped(json, false);
 }

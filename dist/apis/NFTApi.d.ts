@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { NftCollection, NftCollections, NftItem, NftItems, NftItemsRepr, NftSalesResponse } from '../models';
+import { NftCollection, NftCollections, NftItem, NftItems, NftItemsRepr, NftSalesResponse } from '../models';
 export interface GetNFTItemsRequest {
     addresses: Array<string>;
 }
@@ -50,11 +50,11 @@ export interface NFTApiInterface {
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
-    getNFTItemsRaw(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItemsRepr>>;
+    getNFTItemsRaw(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftItemsRepr>>;
     /**
      * Get NFT items by addresses
      */
-    getNFTItems(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItemsRepr>;
+    getNFTItems(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftItemsRepr>;
     /**
      * Get NFT collection by collection address
      * @param {string} account address in raw (hex without 0x) or base64url format
@@ -62,22 +62,22 @@ export interface NFTApiInterface {
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
-    getNftCollectionRaw(requestParameters: GetNftCollectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftCollection>>;
+    getNftCollectionRaw(requestParameters: GetNftCollectionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftCollection>>;
     /**
      * Get NFT collection by collection address
      */
-    getNftCollection(requestParameters: GetNftCollectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollection>;
+    getNftCollection(requestParameters: GetNftCollectionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftCollection>;
     /**
      * Get all NFT collections
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
-    getNftCollectionsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftCollections>>;
+    getNftCollectionsRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftCollections>>;
     /**
      * Get all NFT collections
      */
-    getNftCollections(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollections>;
+    getNftCollections(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftCollections>;
     /**
      * Get NFT items for sale
      * @param {string} account address in raw (hex without 0x) or base64url format
@@ -86,11 +86,11 @@ export interface NFTApiInterface {
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
-    getNftForSaleRaw(requestParameters: GetNftForSaleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftSalesResponse>>;
+    getNftForSaleRaw(requestParameters: GetNftForSaleRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftSalesResponse>>;
     /**
      * Get NFT items for sale
      */
-    getNftForSale(requestParameters: GetNftForSaleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftSalesResponse>;
+    getNftForSale(requestParameters: GetNftForSaleRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftSalesResponse>;
     /**
      * Get NFT item by its address
      * @param {string} account address in raw (hex without 0x) or base64url format
@@ -99,11 +99,11 @@ export interface NFTApiInterface {
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
-    getNftItemByAddressRaw(requestParameters: GetNftItemByAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItem>>;
+    getNftItemByAddressRaw(requestParameters: GetNftItemByAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftItem>>;
     /**
      * Get NFT item by its address
      */
-    getNftItemByAddress(requestParameters: GetNftItemByAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItem>;
+    getNftItemByAddress(requestParameters: GetNftItemByAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftItem>;
     /**
      * Get all NFT items from collection by collection address
      * @param {string} account address in raw (hex without 0x) or base64url format
@@ -112,11 +112,11 @@ export interface NFTApiInterface {
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
-    getNftItemsByCollectionAddressRaw(requestParameters: GetNftItemsByCollectionAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>>;
+    getNftItemsByCollectionAddressRaw(requestParameters: GetNftItemsByCollectionAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftItems>>;
     /**
      * Get all NFT items from collection by collection address
      */
-    getNftItemsByCollectionAddress(requestParameters: GetNftItemsByCollectionAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems>;
+    getNftItemsByCollectionAddress(requestParameters: GetNftItemsByCollectionAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftItems>;
     /**
      * Get all NFT items by owner address
      * @param {string} account address in raw (hex without 0x) or base64url format
@@ -125,11 +125,11 @@ export interface NFTApiInterface {
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
-    getNftItemsByOwnerAddressRaw(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>>;
+    getNftItemsByOwnerAddressRaw(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftItems>>;
     /**
      * Get all NFT items by owner address
      */
-    getNftItemsByOwnerAddress(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems>;
+    getNftItemsByOwnerAddress(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftItems>;
     /**
      * Search NFT items using filters
      * @param {number} limit maximum qty of items
@@ -141,11 +141,11 @@ export interface NFTApiInterface {
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
-    searchNFTItemsRaw(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItemsRepr>>;
+    searchNFTItemsRaw(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftItemsRepr>>;
     /**
      * Search NFT items using filters
      */
-    searchNFTItems(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItemsRepr>;
+    searchNFTItems(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftItemsRepr>;
 }
 /**
  *
@@ -154,65 +154,65 @@ export declare class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
      * Get NFT items by addresses
      */
-    getNFTItemsRaw(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItemsRepr>>;
+    getNFTItemsRaw(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftItemsRepr>>;
     /**
      * Get NFT items by addresses
      */
-    getNFTItems(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItemsRepr>;
+    getNFTItems(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftItemsRepr>;
     /**
      * Get NFT collection by collection address
      */
-    getNftCollectionRaw(requestParameters: GetNftCollectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftCollection>>;
+    getNftCollectionRaw(requestParameters: GetNftCollectionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftCollection>>;
     /**
      * Get NFT collection by collection address
      */
-    getNftCollection(requestParameters: GetNftCollectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollection>;
+    getNftCollection(requestParameters: GetNftCollectionRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftCollection>;
     /**
      * Get all NFT collections
      */
-    getNftCollectionsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftCollections>>;
+    getNftCollectionsRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftCollections>>;
     /**
      * Get all NFT collections
      */
-    getNftCollections(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollections>;
+    getNftCollections(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftCollections>;
     /**
      * Get NFT items for sale
      */
-    getNftForSaleRaw(requestParameters: GetNftForSaleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftSalesResponse>>;
+    getNftForSaleRaw(requestParameters: GetNftForSaleRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftSalesResponse>>;
     /**
      * Get NFT items for sale
      */
-    getNftForSale(requestParameters: GetNftForSaleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftSalesResponse>;
+    getNftForSale(requestParameters: GetNftForSaleRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftSalesResponse>;
     /**
      * Get NFT item by its address
      */
-    getNftItemByAddressRaw(requestParameters: GetNftItemByAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItem>>;
+    getNftItemByAddressRaw(requestParameters: GetNftItemByAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftItem>>;
     /**
      * Get NFT item by its address
      */
-    getNftItemByAddress(requestParameters: GetNftItemByAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItem>;
+    getNftItemByAddress(requestParameters: GetNftItemByAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftItem>;
     /**
      * Get all NFT items from collection by collection address
      */
-    getNftItemsByCollectionAddressRaw(requestParameters: GetNftItemsByCollectionAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>>;
+    getNftItemsByCollectionAddressRaw(requestParameters: GetNftItemsByCollectionAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftItems>>;
     /**
      * Get all NFT items from collection by collection address
      */
-    getNftItemsByCollectionAddress(requestParameters: GetNftItemsByCollectionAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems>;
+    getNftItemsByCollectionAddress(requestParameters: GetNftItemsByCollectionAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftItems>;
     /**
      * Get all NFT items by owner address
      */
-    getNftItemsByOwnerAddressRaw(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>>;
+    getNftItemsByOwnerAddressRaw(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftItems>>;
     /**
      * Get all NFT items by owner address
      */
-    getNftItemsByOwnerAddress(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems>;
+    getNftItemsByOwnerAddress(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftItems>;
     /**
      * Search NFT items using filters
      */
-    searchNFTItemsRaw(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItemsRepr>>;
+    searchNFTItemsRaw(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<NftItemsRepr>>;
     /**
      * Search NFT items using filters
      */
-    searchNFTItems(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItemsRepr>;
+    searchNFTItems(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<NftItemsRepr>;
 }

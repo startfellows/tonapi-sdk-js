@@ -13,18 +13,9 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NftItemTransferActionToJSON = exports.NftItemTransferActionFromJSONTyped = exports.NftItemTransferActionFromJSON = exports.instanceOfNftItemTransferAction = void 0;
+exports.NftItemTransferActionToJSON = exports.NftItemTransferActionFromJSONTyped = exports.NftItemTransferActionFromJSON = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
-/**
- * Check if a given object implements the NftItemTransferAction interface.
- */
-function instanceOfNftItemTransferAction(value) {
-    let isInstance = true;
-    isInstance = isInstance && "nft" in value;
-    return isInstance;
-}
-exports.instanceOfNftItemTransferAction = instanceOfNftItemTransferAction;
 function NftItemTransferActionFromJSON(json) {
     return NftItemTransferActionFromJSONTyped(json, false);
 }
@@ -34,11 +25,11 @@ function NftItemTransferActionFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'comment': !(0, runtime_1.exists)(json, 'comment') ? undefined : json['comment'],
-        'nft': json['nft'],
-        'payload': !(0, runtime_1.exists)(json, 'payload') ? undefined : json['payload'],
-        'recipient': !(0, runtime_1.exists)(json, 'recipient') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
         'sender': !(0, runtime_1.exists)(json, 'sender') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['sender']),
+        'recipient': !(0, runtime_1.exists)(json, 'recipient') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
+        'nft': json['nft'],
+        'comment': !(0, runtime_1.exists)(json, 'comment') ? undefined : json['comment'],
+        'payload': !(0, runtime_1.exists)(json, 'payload') ? undefined : json['payload'],
     };
 }
 exports.NftItemTransferActionFromJSONTyped = NftItemTransferActionFromJSONTyped;
@@ -50,11 +41,11 @@ function NftItemTransferActionToJSON(value) {
         return null;
     }
     return {
-        'comment': value.comment,
-        'nft': value.nft,
-        'payload': value.payload,
-        'recipient': (0, AccountAddress_1.AccountAddressToJSON)(value.recipient),
         'sender': (0, AccountAddress_1.AccountAddressToJSON)(value.sender),
+        'recipient': (0, AccountAddress_1.AccountAddressToJSON)(value.recipient),
+        'nft': value.nft,
+        'comment': value.comment,
+        'payload': value.payload,
     };
 }
 exports.NftItemTransferActionToJSON = NftItemTransferActionToJSON;

@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { Transaction } from './Transaction';
+import { Transaction } from './Transaction';
 /**
  *
  * @export
@@ -23,10 +23,6 @@ export interface Transactions {
      */
     transactions: Array<Transaction>;
 }
-/**
- * Check if a given object implements the Transactions interface.
- */
-export declare function instanceOfTransactions(value: object): boolean;
 export declare function TransactionsFromJSON(json: any): Transactions;
 export declare function TransactionsFromJSONTyped(json: any, ignoreDiscriminator: boolean): Transactions;
 export declare function TransactionsToJSON(value?: Transactions | null): any;

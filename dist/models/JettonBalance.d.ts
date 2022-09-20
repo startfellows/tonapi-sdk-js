@@ -9,8 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { AccountAddress } from './AccountAddress';
-import type { Jetton } from './Jetton';
+import { AccountAddress } from './AccountAddress';
+import { Jetton } from './Jetton';
 /**
  *
  * @export
@@ -31,21 +31,17 @@ export interface JettonBalance {
     jettonAddress: string;
     /**
      *
-     * @type {Jetton}
-     * @memberof JettonBalance
-     */
-    metadata?: Jetton;
-    /**
-     *
      * @type {AccountAddress}
      * @memberof JettonBalance
      */
     walletAddress: AccountAddress;
+    /**
+     *
+     * @type {Jetton}
+     * @memberof JettonBalance
+     */
+    metadata?: Jetton;
 }
-/**
- * Check if a given object implements the JettonBalance interface.
- */
-export declare function instanceOfJettonBalance(value: object): boolean;
 export declare function JettonBalanceFromJSON(json: any): JettonBalance;
 export declare function JettonBalanceFromJSONTyped(json: any, ignoreDiscriminator: boolean): JettonBalance;
 export declare function JettonBalanceToJSON(value?: JettonBalance | null): any;

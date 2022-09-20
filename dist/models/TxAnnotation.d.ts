@@ -16,22 +16,18 @@
  */
 export interface TxAnnotation {
     /**
-     * annotation data struct
-     * @type {any}
-     * @memberof TxAnnotation
-     */
-    data: any | null;
-    /**
      *
      * @type {string}
      * @memberof TxAnnotation
      */
     name: string;
+    /**
+     * annotation data struct
+     * @type {any}
+     * @memberof TxAnnotation
+     */
+    data: any | null;
 }
-/**
- * Check if a given object implements the TxAnnotation interface.
- */
-export declare function instanceOfTxAnnotation(value: object): boolean;
 export declare function TxAnnotationFromJSON(json: any): TxAnnotation;
 export declare function TxAnnotationFromJSONTyped(json: any, ignoreDiscriminator: boolean): TxAnnotation;
 export declare function TxAnnotationToJSON(value?: TxAnnotation | null): any;

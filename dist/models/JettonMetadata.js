@@ -13,20 +13,8 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JettonMetadataToJSON = exports.JettonMetadataFromJSONTyped = exports.JettonMetadataFromJSON = exports.instanceOfJettonMetadata = void 0;
+exports.JettonMetadataToJSON = exports.JettonMetadataFromJSONTyped = exports.JettonMetadataFromJSON = void 0;
 const runtime_1 = require("../runtime");
-/**
- * Check if a given object implements the JettonMetadata interface.
- */
-function instanceOfJettonMetadata(value) {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "decimal" in value;
-    isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "symbol" in value;
-    return isInstance;
-}
-exports.instanceOfJettonMetadata = instanceOfJettonMetadata;
 function JettonMetadataFromJSON(json) {
     return JettonMetadataFromJSONTyped(json, false);
 }
@@ -37,11 +25,11 @@ function JettonMetadataFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'address': json['address'],
-        'decimal': json['decimal'],
-        'description': !(0, runtime_1.exists)(json, 'description') ? undefined : json['description'],
-        'image': !(0, runtime_1.exists)(json, 'image') ? undefined : json['image'],
         'name': json['name'],
         'symbol': json['symbol'],
+        'decimals': json['decimals'],
+        'image': !(0, runtime_1.exists)(json, 'image') ? undefined : json['image'],
+        'description': !(0, runtime_1.exists)(json, 'description') ? undefined : json['description'],
     };
 }
 exports.JettonMetadataFromJSONTyped = JettonMetadataFromJSONTyped;
@@ -54,11 +42,11 @@ function JettonMetadataToJSON(value) {
     }
     return {
         'address': value.address,
-        'decimal': value.decimal,
-        'description': value.description,
-        'image': value.image,
         'name': value.name,
         'symbol': value.symbol,
+        'decimals': value.decimals,
+        'image': value.image,
+        'description': value.description,
     };
 }
 exports.JettonMetadataToJSON = JettonMetadataToJSON;

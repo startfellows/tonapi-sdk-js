@@ -23,6 +23,12 @@ export interface Wallet {
     address: string;
     /**
      *
+     * @type {string}
+     * @memberof Wallet
+     */
+    status: string;
+    /**
+     *
      * @type {number}
      * @memberof Wallet
      */
@@ -33,17 +39,7 @@ export interface Wallet {
      * @memberof Wallet
      */
     interfaces: Array<string>;
-    /**
-     *
-     * @type {string}
-     * @memberof Wallet
-     */
-    status: string;
 }
-/**
- * Check if a given object implements the Wallet interface.
- */
-export declare function instanceOfWallet(value: object): boolean;
 export declare function WalletFromJSON(json: any): Wallet;
 export declare function WalletFromJSONTyped(json: any, ignoreDiscriminator: boolean): Wallet;
 export declare function WalletToJSON(value?: Wallet | null): any;

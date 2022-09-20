@@ -13,17 +13,7 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PriceToJSON = exports.PriceFromJSONTyped = exports.PriceFromJSON = exports.instanceOfPrice = void 0;
-/**
- * Check if a given object implements the Price interface.
- */
-function instanceOfPrice(value) {
-    let isInstance = true;
-    isInstance = isInstance && "tokenName" in value;
-    isInstance = isInstance && "value" in value;
-    return isInstance;
-}
-exports.instanceOfPrice = instanceOfPrice;
+exports.PriceToJSON = exports.PriceFromJSONTyped = exports.PriceFromJSON = void 0;
 function PriceFromJSON(json) {
     return PriceFromJSONTyped(json, false);
 }
@@ -33,8 +23,8 @@ function PriceFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'tokenName': json['token_name'],
         'value': json['value'],
+        'tokenName': json['token_name'],
     };
 }
 exports.PriceFromJSONTyped = PriceFromJSONTyped;
@@ -46,8 +36,8 @@ function PriceToJSON(value) {
         return null;
     }
     return {
-        'token_name': value.tokenName,
         'value': value.value,
+        'token_name': value.tokenName,
     };
 }
 exports.PriceToJSON = PriceToJSON;

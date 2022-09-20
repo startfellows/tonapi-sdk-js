@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { AccountAddress } from './AccountAddress';
+import { AccountAddress } from './AccountAddress';
 /**
  *
  * @export
@@ -29,10 +29,6 @@ export interface DomainInfoNftItem {
      */
     owner?: AccountAddress;
 }
-/**
- * Check if a given object implements the DomainInfoNftItem interface.
- */
-export declare function instanceOfDomainInfoNftItem(value: object): boolean;
 export declare function DomainInfoNftItemFromJSON(json: any): DomainInfoNftItem;
 export declare function DomainInfoNftItemFromJSONTyped(json: any, ignoreDiscriminator: boolean): DomainInfoNftItem;
 export declare function DomainInfoNftItemToJSON(value?: DomainInfoNftItem | null): any;

@@ -13,17 +13,8 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AccountEvents200ResponseToJSON = exports.AccountEvents200ResponseFromJSONTyped = exports.AccountEvents200ResponseFromJSON = exports.instanceOfAccountEvents200Response = void 0;
+exports.AccountEvents200ResponseToJSON = exports.AccountEvents200ResponseFromJSONTyped = exports.AccountEvents200ResponseFromJSON = void 0;
 const AccountEvent_1 = require("./AccountEvent");
-/**
- * Check if a given object implements the AccountEvents200Response interface.
- */
-function instanceOfAccountEvents200Response(value) {
-    let isInstance = true;
-    isInstance = isInstance && "events" in value;
-    return isInstance;
-}
-exports.instanceOfAccountEvents200Response = instanceOfAccountEvents200Response;
 function AccountEvents200ResponseFromJSON(json) {
     return AccountEvents200ResponseFromJSONTyped(json, false);
 }

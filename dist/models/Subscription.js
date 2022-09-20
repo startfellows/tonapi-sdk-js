@@ -13,26 +13,7 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SubscriptionToJSON = exports.SubscriptionFromJSONTyped = exports.SubscriptionFromJSON = exports.instanceOfSubscription = void 0;
-/**
- * Check if a given object implements the Subscription interface.
- */
-function instanceOfSubscription(value) {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "beneficiaryAddress" in value;
-    isInstance = isInstance && "failedAttempts" in value;
-    isInstance = isInstance && "lastPaymentTime" in value;
-    isInstance = isInstance && "lastRequestTime" in value;
-    isInstance = isInstance && "period" in value;
-    isInstance = isInstance && "startTime" in value;
-    isInstance = isInstance && "subscriptionId" in value;
-    isInstance = isInstance && "timeout" in value;
-    isInstance = isInstance && "walletAddress" in value;
-    return isInstance;
-}
-exports.instanceOfSubscription = instanceOfSubscription;
+exports.SubscriptionToJSON = exports.SubscriptionFromJSONTyped = exports.SubscriptionFromJSON = void 0;
 function SubscriptionFromJSON(json) {
     return SubscriptionFromJSONTyped(json, false);
 }
@@ -43,16 +24,16 @@ function SubscriptionFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'address': json['address'],
-        'amount': json['amount'],
+        'walletAddress': json['wallet_address'],
         'beneficiaryAddress': json['beneficiary_address'],
-        'failedAttempts': json['failed_attempts'],
-        'lastPaymentTime': json['last_payment_time'],
-        'lastRequestTime': json['last_request_time'],
+        'amount': json['amount'],
         'period': json['period'],
         'startTime': json['start_time'],
-        'subscriptionId': json['subscription_id'],
         'timeout': json['timeout'],
-        'walletAddress': json['wallet_address'],
+        'lastPaymentTime': json['last_payment_time'],
+        'lastRequestTime': json['last_request_time'],
+        'subscriptionId': json['subscription_id'],
+        'failedAttempts': json['failed_attempts'],
     };
 }
 exports.SubscriptionFromJSONTyped = SubscriptionFromJSONTyped;
@@ -65,16 +46,16 @@ function SubscriptionToJSON(value) {
     }
     return {
         'address': value.address,
-        'amount': value.amount,
+        'wallet_address': value.walletAddress,
         'beneficiary_address': value.beneficiaryAddress,
-        'failed_attempts': value.failedAttempts,
-        'last_payment_time': value.lastPaymentTime,
-        'last_request_time': value.lastRequestTime,
+        'amount': value.amount,
         'period': value.period,
         'start_time': value.startTime,
-        'subscription_id': value.subscriptionId,
         'timeout': value.timeout,
-        'wallet_address': value.walletAddress,
+        'last_payment_time': value.lastPaymentTime,
+        'last_request_time': value.lastRequestTime,
+        'subscription_id': value.subscriptionId,
+        'failed_attempts': value.failedAttempts,
     };
 }
 exports.SubscriptionToJSON = SubscriptionToJSON;

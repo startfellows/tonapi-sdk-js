@@ -13,17 +13,7 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NftItemReprCollectionToJSON = exports.NftItemReprCollectionFromJSONTyped = exports.NftItemReprCollectionFromJSON = exports.instanceOfNftItemReprCollection = void 0;
-/**
- * Check if a given object implements the NftItemReprCollection interface.
- */
-function instanceOfNftItemReprCollection(value) {
-    let isInstance = true;
-    isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "name" in value;
-    return isInstance;
-}
-exports.instanceOfNftItemReprCollection = instanceOfNftItemReprCollection;
+exports.NftItemReprCollectionToJSON = exports.NftItemReprCollectionFromJSONTyped = exports.NftItemReprCollectionFromJSON = void 0;
 function NftItemReprCollectionFromJSON(json) {
     return NftItemReprCollectionFromJSONTyped(json, false);
 }

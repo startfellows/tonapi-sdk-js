@@ -13,20 +13,9 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TonTransferActionToJSON = exports.TonTransferActionFromJSONTyped = exports.TonTransferActionFromJSON = exports.instanceOfTonTransferAction = void 0;
+exports.TonTransferActionToJSON = exports.TonTransferActionFromJSONTyped = exports.TonTransferActionFromJSON = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
-/**
- * Check if a given object implements the TonTransferAction interface.
- */
-function instanceOfTonTransferAction(value) {
-    let isInstance = true;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "recipient" in value;
-    isInstance = isInstance && "sender" in value;
-    return isInstance;
-}
-exports.instanceOfTonTransferAction = instanceOfTonTransferAction;
 function TonTransferActionFromJSON(json) {
     return TonTransferActionFromJSONTyped(json, false);
 }
@@ -36,11 +25,11 @@ function TonTransferActionFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
+        'sender': (0, AccountAddress_1.AccountAddressFromJSON)(json['sender']),
+        'recipient': (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
         'amount': json['amount'],
         'comment': !(0, runtime_1.exists)(json, 'comment') ? undefined : json['comment'],
         'payload': !(0, runtime_1.exists)(json, 'payload') ? undefined : json['payload'],
-        'recipient': (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
-        'sender': (0, AccountAddress_1.AccountAddressFromJSON)(json['sender']),
     };
 }
 exports.TonTransferActionFromJSONTyped = TonTransferActionFromJSONTyped;
@@ -52,11 +41,11 @@ function TonTransferActionToJSON(value) {
         return null;
     }
     return {
+        'sender': (0, AccountAddress_1.AccountAddressToJSON)(value.sender),
+        'recipient': (0, AccountAddress_1.AccountAddressToJSON)(value.recipient),
         'amount': value.amount,
         'comment': value.comment,
         'payload': value.payload,
-        'recipient': (0, AccountAddress_1.AccountAddressToJSON)(value.recipient),
-        'sender': (0, AccountAddress_1.AccountAddressToJSON)(value.sender),
     };
 }
 exports.TonTransferActionToJSON = TonTransferActionToJSON;

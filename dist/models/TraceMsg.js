@@ -13,24 +13,10 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TraceMsgToJSON = exports.TraceMsgFromJSONTyped = exports.TraceMsgFromJSON = exports.instanceOfTraceMsg = void 0;
+exports.TraceMsgToJSON = exports.TraceMsgFromJSONTyped = exports.TraceMsgFromJSON = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
 const TraceTX_1 = require("./TraceTX");
-/**
- * Check if a given object implements the TraceMsg interface.
- */
-function instanceOfTraceMsg(value) {
-    let isInstance = true;
-    isInstance = isInstance && "createdLt" in value;
-    isInstance = isInstance && "destination" in value;
-    isInstance = isInstance && "fwdFee" in value;
-    isInstance = isInstance && "ihrFee" in value;
-    isInstance = isInstance && "source" in value;
-    isInstance = isInstance && "value" in value;
-    return isInstance;
-}
-exports.instanceOfTraceMsg = instanceOfTraceMsg;
 function TraceMsgFromJSON(json) {
     return TraceMsgFromJSONTyped(json, false);
 }
@@ -40,14 +26,14 @@ function TraceMsgFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'comment': !(0, runtime_1.exists)(json, 'comment') ? undefined : json['comment'],
-        'createdLt': json['created_lt'],
-        'destination': (0, AccountAddress_1.AccountAddressFromJSON)(json['destination']),
         'fwdFee': json['fwd_fee'],
         'ihrFee': json['ihr_fee'],
-        'source': (0, AccountAddress_1.AccountAddressFromJSON)(json['source']),
-        'tx': !(0, runtime_1.exists)(json, 'tx') ? undefined : (0, TraceTX_1.TraceTXFromJSON)(json['tx']),
+        'createdLt': json['created_lt'],
         'value': json['value'],
+        'destination': (0, AccountAddress_1.AccountAddressFromJSON)(json['destination']),
+        'source': (0, AccountAddress_1.AccountAddressFromJSON)(json['source']),
+        'comment': !(0, runtime_1.exists)(json, 'comment') ? undefined : json['comment'],
+        'tx': !(0, runtime_1.exists)(json, 'tx') ? undefined : (0, TraceTX_1.TraceTXFromJSON)(json['tx']),
     };
 }
 exports.TraceMsgFromJSONTyped = TraceMsgFromJSONTyped;
@@ -59,14 +45,14 @@ function TraceMsgToJSON(value) {
         return null;
     }
     return {
-        'comment': value.comment,
-        'created_lt': value.createdLt,
-        'destination': (0, AccountAddress_1.AccountAddressToJSON)(value.destination),
         'fwd_fee': value.fwdFee,
         'ihr_fee': value.ihrFee,
-        'source': (0, AccountAddress_1.AccountAddressToJSON)(value.source),
-        'tx': (0, TraceTX_1.TraceTXToJSON)(value.tx),
+        'created_lt': value.createdLt,
         'value': value.value,
+        'destination': (0, AccountAddress_1.AccountAddressToJSON)(value.destination),
+        'source': (0, AccountAddress_1.AccountAddressToJSON)(value.source),
+        'comment': value.comment,
+        'tx': (0, TraceTX_1.TraceTXToJSON)(value.tx),
     };
 }
 exports.TraceMsgToJSON = TraceMsgToJSON;

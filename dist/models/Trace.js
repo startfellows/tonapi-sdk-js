@@ -13,17 +13,7 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TraceToJSON = exports.TraceFromJSONTyped = exports.TraceFromJSON = exports.instanceOfTrace = void 0;
-/**
- * Check if a given object implements the Trace interface.
- */
-function instanceOfTrace(value) {
-    let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "utime" in value;
-    return isInstance;
-}
-exports.instanceOfTrace = instanceOfTrace;
+exports.TraceToJSON = exports.TraceFromJSONTyped = exports.TraceFromJSON = void 0;
 function TraceFromJSON(json) {
     return TraceFromJSONTyped(json, false);
 }
