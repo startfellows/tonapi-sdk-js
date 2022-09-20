@@ -17,6 +17,7 @@ yarn add tonapi-sdk-js
 ```js
 import {
     JettonApi,
+    DNSApi,
     NFTApi,
     RawBlockchainApi,
     SubscriptionApi,
