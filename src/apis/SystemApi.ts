@@ -14,8 +14,10 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  CurrentTime200Response,
+} from '../models';
 import {
-    CurrentTime200Response,
     CurrentTime200ResponseFromJSON,
     CurrentTime200ResponseToJSON,
 } from '../models';
@@ -33,12 +35,12 @@ export interface SystemApiInterface {
      * @throws {RequiredError}
      * @memberof SystemApiInterface
      */
-    currentTimeRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<CurrentTime200Response>>;
+    currentTimeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CurrentTime200Response>>;
 
     /**
      * Get current time
      */
-    currentTime(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<CurrentTime200Response>;
+    currentTime(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CurrentTime200Response>;
 
 }
 
@@ -50,7 +52,7 @@ export class SystemApi extends runtime.BaseAPI implements SystemApiInterface {
     /**
      * Get current time
      */
-    async currentTimeRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<CurrentTime200Response>> {
+    async currentTimeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CurrentTime200Response>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -76,7 +78,7 @@ export class SystemApi extends runtime.BaseAPI implements SystemApiInterface {
     /**
      * Get current time
      */
-    async currentTime(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<CurrentTime200Response> {
+    async currentTime(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CurrentTime200Response> {
         const response = await this.currentTimeRaw(initOverrides);
         return await response.value();
     }

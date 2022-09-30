@@ -13,14 +13,14 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { TraceMsg } from './TraceMsg';
 import {
-    TraceMsg,
     TraceMsgFromJSON,
     TraceMsgFromJSONTyped,
     TraceMsgToJSON,
 } from './TraceMsg';
+import type { TxAnnotation } from './TxAnnotation';
 import {
-    TxAnnotation,
     TxAnnotationFromJSON,
     TxAnnotationFromJSONTyped,
     TxAnnotationToJSON,
@@ -34,10 +34,22 @@ import {
 export interface TraceTX {
     /**
      * 
-     * @type {Array<TraceMsg>}
+     * @type {Array<TxAnnotation>}
      * @memberof TraceTX
      */
-    outMsgs: Array<TraceMsg>;
+    annotations: Array<TxAnnotation>;
+    /**
+     * 
+     * @type {string}
+     * @memberof TraceTX
+     */
+    blockId: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof TraceTX
+     */
+    fee: number;
     /**
      * 
      * @type {string}
@@ -49,7 +61,19 @@ export interface TraceTX {
      * @type {number}
      * @memberof TraceTX
      */
-    fee: number;
+    lt: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TraceTX
+     */
+    otherFee: number;
+    /**
+     * 
+     * @type {Array<TraceMsg>}
+     * @memberof TraceTX
+     */
+    outMsgs: Array<TraceMsg>;
     /**
      * 
      * @type {number}
@@ -61,31 +85,25 @@ export interface TraceTX {
      * @type {number}
      * @memberof TraceTX
      */
-    otherFee: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TraceTX
-     */
-    lt: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TraceTX
-     */
     utime: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof TraceTX
-     */
-    blockId: string;
-    /**
-     * 
-     * @type {Array<TxAnnotation>}
-     * @memberof TraceTX
-     */
-    annotations: Array<TxAnnotation>;
+}
+
+/**
+ * Check if a given object implements the TraceTX interface.
+ */
+export function instanceOfTraceTX(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "annotations" in value;
+    isInstance = isInstance && "blockId" in value;
+    isInstance = isInstance && "fee" in value;
+    isInstance = isInstance && "hash" in value;
+    isInstance = isInstance && "lt" in value;
+    isInstance = isInstance && "otherFee" in value;
+    isInstance = isInstance && "outMsgs" in value;
+    isInstance = isInstance && "storageFee" in value;
+    isInstance = isInstance && "utime" in value;
+
+    return isInstance;
 }
 
 export function TraceTXFromJSON(json: any): TraceTX {
@@ -98,15 +116,15 @@ export function TraceTXFromJSONTyped(json: any, ignoreDiscriminator: boolean): T
     }
     return {
         
-        'outMsgs': ((json['out_msgs'] as Array<any>).map(TraceMsgFromJSON)),
-        'hash': json['hash'],
-        'fee': json['fee'],
-        'storageFee': json['storage_fee'],
-        'otherFee': json['other_fee'],
-        'lt': json['lt'],
-        'utime': json['utime'],
-        'blockId': json['block_id'],
         'annotations': ((json['annotations'] as Array<any>).map(TxAnnotationFromJSON)),
+        'blockId': json['block_id'],
+        'fee': json['fee'],
+        'hash': json['hash'],
+        'lt': json['lt'],
+        'otherFee': json['other_fee'],
+        'outMsgs': ((json['out_msgs'] as Array<any>).map(TraceMsgFromJSON)),
+        'storageFee': json['storage_fee'],
+        'utime': json['utime'],
     };
 }
 
@@ -119,15 +137,15 @@ export function TraceTXToJSON(value?: TraceTX | null): any {
     }
     return {
         
-        'out_msgs': ((value.outMsgs as Array<any>).map(TraceMsgToJSON)),
-        'hash': value.hash,
-        'fee': value.fee,
-        'storage_fee': value.storageFee,
-        'other_fee': value.otherFee,
-        'lt': value.lt,
-        'utime': value.utime,
-        'block_id': value.blockId,
         'annotations': ((value.annotations as Array<any>).map(TxAnnotationToJSON)),
+        'block_id': value.blockId,
+        'fee': value.fee,
+        'hash': value.hash,
+        'lt': value.lt,
+        'other_fee': value.otherFee,
+        'out_msgs': ((value.outMsgs as Array<any>).map(TraceMsgToJSON)),
+        'storage_fee': value.storageFee,
+        'utime': value.utime,
     };
 }
 

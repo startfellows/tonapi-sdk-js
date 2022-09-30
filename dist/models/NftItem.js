@@ -13,9 +13,22 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NftItemToJSON = exports.NftItemFromJSONTyped = exports.NftItemFromJSON = void 0;
+exports.NftItemToJSON = exports.NftItemFromJSONTyped = exports.NftItemFromJSON = exports.instanceOfNftItem = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
+/**
+ * Check if a given object implements the NftItem interface.
+ */
+function instanceOfNftItem(value) {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "index" in value;
+    isInstance = isInstance && "init" in value;
+    isInstance = isInstance && "rawIndividualContent" in value;
+    isInstance = isInstance && "verified" in value;
+    return isInstance;
+}
+exports.instanceOfNftItem = instanceOfNftItem;
 function NftItemFromJSON(json) {
     return NftItemFromJSONTyped(json, false);
 }
@@ -26,13 +39,13 @@ function NftItemFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'address': json['address'],
-        'index': json['index'],
-        'owner': !(0, runtime_1.exists)(json, 'owner') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['owner']),
         'collectionAddress': !(0, runtime_1.exists)(json, 'collection_address') ? undefined : json['collection_address'],
+        'index': json['index'],
         'init': json['init'],
+        'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
+        'owner': !(0, runtime_1.exists)(json, 'owner') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['owner']),
         'rawIndividualContent': json['raw_individual_content'],
         'verified': json['verified'],
-        'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
     };
 }
 exports.NftItemFromJSONTyped = NftItemFromJSONTyped;
@@ -45,13 +58,13 @@ function NftItemToJSON(value) {
     }
     return {
         'address': value.address,
-        'index': value.index,
-        'owner': (0, AccountAddress_1.AccountAddressToJSON)(value.owner),
         'collection_address': value.collectionAddress,
+        'index': value.index,
         'init': value.init,
+        'metadata': value.metadata,
+        'owner': (0, AccountAddress_1.AccountAddressToJSON)(value.owner),
         'raw_individual_content': value.rawIndividualContent,
         'verified': value.verified,
-        'metadata': value.metadata,
     };
 }
 exports.NftItemToJSON = NftItemToJSON;

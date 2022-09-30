@@ -9,25 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AccountAddress } from './AccountAddress';
+import type { AccountAddress } from './AccountAddress';
 /**
  *
  * @export
  * @interface TonTransferAction
  */
 export interface TonTransferAction {
-    /**
-     *
-     * @type {AccountAddress}
-     * @memberof TonTransferAction
-     */
-    sender: AccountAddress;
-    /**
-     *
-     * @type {AccountAddress}
-     * @memberof TonTransferAction
-     */
-    recipient: AccountAddress;
     /**
      * amount in nanotons
      * @type {number}
@@ -46,7 +34,23 @@ export interface TonTransferAction {
      * @memberof TonTransferAction
      */
     payload?: string;
+    /**
+     *
+     * @type {AccountAddress}
+     * @memberof TonTransferAction
+     */
+    recipient: AccountAddress;
+    /**
+     *
+     * @type {AccountAddress}
+     * @memberof TonTransferAction
+     */
+    sender: AccountAddress;
 }
+/**
+ * Check if a given object implements the TonTransferAction interface.
+ */
+export declare function instanceOfTonTransferAction(value: object): boolean;
 export declare function TonTransferActionFromJSON(json: any): TonTransferAction;
 export declare function TonTransferActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): TonTransferAction;
 export declare function TonTransferActionToJSON(value?: TonTransferAction | null): any;

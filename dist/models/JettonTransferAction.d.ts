@@ -9,38 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AccountAddress } from './AccountAddress';
-import { Jetton } from './Jetton';
+import type { AccountAddress } from './AccountAddress';
+import type { Jetton } from './Jetton';
 /**
  *
  * @export
  * @interface JettonTransferAction
  */
 export interface JettonTransferAction {
-    /**
-     *
-     * @type {AccountAddress}
-     * @memberof JettonTransferAction
-     */
-    sender?: AccountAddress;
-    /**
-     *
-     * @type {AccountAddress}
-     * @memberof JettonTransferAction
-     */
-    recipient?: AccountAddress;
-    /**
-     *
-     * @type {string}
-     * @memberof JettonTransferAction
-     */
-    sendersWallet: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JettonTransferAction
-     */
-    recipientsWallet: string;
     /**
      * amount in quanta of tokens
      * @type {string}
@@ -59,7 +35,35 @@ export interface JettonTransferAction {
      * @memberof JettonTransferAction
      */
     jetton: Jetton;
+    /**
+     *
+     * @type {AccountAddress}
+     * @memberof JettonTransferAction
+     */
+    recipient?: AccountAddress;
+    /**
+     *
+     * @type {string}
+     * @memberof JettonTransferAction
+     */
+    recipientsWallet: string;
+    /**
+     *
+     * @type {AccountAddress}
+     * @memberof JettonTransferAction
+     */
+    sender?: AccountAddress;
+    /**
+     *
+     * @type {string}
+     * @memberof JettonTransferAction
+     */
+    sendersWallet: string;
 }
+/**
+ * Check if a given object implements the JettonTransferAction interface.
+ */
+export declare function instanceOfJettonTransferAction(value: object): boolean;
 export declare function JettonTransferActionFromJSON(json: any): JettonTransferAction;
 export declare function JettonTransferActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): JettonTransferAction;
 export declare function JettonTransferActionToJSON(value?: JettonTransferAction | null): any;

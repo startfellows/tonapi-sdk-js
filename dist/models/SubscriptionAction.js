@@ -13,8 +13,21 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SubscriptionActionToJSON = exports.SubscriptionActionFromJSONTyped = exports.SubscriptionActionFromJSON = void 0;
+exports.SubscriptionActionToJSON = exports.SubscriptionActionFromJSONTyped = exports.SubscriptionActionFromJSON = exports.instanceOfSubscriptionAction = void 0;
 const AccountAddress_1 = require("./AccountAddress");
+/**
+ * Check if a given object implements the SubscriptionAction interface.
+ */
+function instanceOfSubscriptionAction(value) {
+    let isInstance = true;
+    isInstance = isInstance && "amount" in value;
+    isInstance = isInstance && "beneficiary" in value;
+    isInstance = isInstance && "initial" in value;
+    isInstance = isInstance && "subscriber" in value;
+    isInstance = isInstance && "subscription" in value;
+    return isInstance;
+}
+exports.instanceOfSubscriptionAction = instanceOfSubscriptionAction;
 function SubscriptionActionFromJSON(json) {
     return SubscriptionActionFromJSONTyped(json, false);
 }
@@ -24,11 +37,11 @@ function SubscriptionActionFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
+        'amount': json['amount'],
+        'beneficiary': (0, AccountAddress_1.AccountAddressFromJSON)(json['beneficiary']),
+        'initial': json['initial'],
         'subscriber': (0, AccountAddress_1.AccountAddressFromJSON)(json['subscriber']),
         'subscription': json['subscription'],
-        'beneficiary': (0, AccountAddress_1.AccountAddressFromJSON)(json['beneficiary']),
-        'amount': json['amount'],
-        'initial': json['initial'],
     };
 }
 exports.SubscriptionActionFromJSONTyped = SubscriptionActionFromJSONTyped;
@@ -40,11 +53,11 @@ function SubscriptionActionToJSON(value) {
         return null;
     }
     return {
+        'amount': value.amount,
+        'beneficiary': (0, AccountAddress_1.AccountAddressToJSON)(value.beneficiary),
+        'initial': value.initial,
         'subscriber': (0, AccountAddress_1.AccountAddressToJSON)(value.subscriber),
         'subscription': value.subscription,
-        'beneficiary': (0, AccountAddress_1.AccountAddressToJSON)(value.beneficiary),
-        'amount': value.amount,
-        'initial': value.initial,
     };
 }
 exports.SubscriptionActionToJSON = SubscriptionActionToJSON;

@@ -13,7 +13,16 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DomainNamesToJSON = exports.DomainNamesFromJSONTyped = exports.DomainNamesFromJSON = void 0;
+exports.DomainNamesToJSON = exports.DomainNamesFromJSONTyped = exports.DomainNamesFromJSON = exports.instanceOfDomainNames = void 0;
+/**
+ * Check if a given object implements the DomainNames interface.
+ */
+function instanceOfDomainNames(value) {
+    let isInstance = true;
+    isInstance = isInstance && "domains" in value;
+    return isInstance;
+}
+exports.instanceOfDomainNames = instanceOfDomainNames;
 function DomainNamesFromJSON(json) {
     return DomainNamesFromJSONTyped(json, false);
 }

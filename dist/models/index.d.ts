@@ -8,6 +8,7 @@ export * from './AccountReprs';
 export * from './Action';
 export * from './AnnotatedTrace';
 export * from './Auction';
+export * from './AuctionBidAction';
 export * from './Auctions';
 export * from './Block';
 export * from './ContractDeployAction';

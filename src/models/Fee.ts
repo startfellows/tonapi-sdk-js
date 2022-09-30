@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AccountAddress } from './AccountAddress';
 import {
-    AccountAddress,
     AccountAddressFromJSON,
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
@@ -33,11 +33,11 @@ export interface Fee {
      */
     account: AccountAddress;
     /**
-     * gas + rent + deposit - refund
+     * 
      * @type {number}
      * @memberof Fee
      */
-    total: number;
+    deposit: number;
     /**
      * 
      * @type {number}
@@ -49,19 +49,34 @@ export interface Fee {
      * @type {number}
      * @memberof Fee
      */
+    refund: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Fee
+     */
     rent: number;
     /**
-     * 
+     * gas + rent + deposit - refund
      * @type {number}
      * @memberof Fee
      */
-    deposit: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Fee
-     */
-    refund: number;
+    total: number;
+}
+
+/**
+ * Check if a given object implements the Fee interface.
+ */
+export function instanceOfFee(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "account" in value;
+    isInstance = isInstance && "deposit" in value;
+    isInstance = isInstance && "gas" in value;
+    isInstance = isInstance && "refund" in value;
+    isInstance = isInstance && "rent" in value;
+    isInstance = isInstance && "total" in value;
+
+    return isInstance;
 }
 
 export function FeeFromJSON(json: any): Fee {
@@ -75,11 +90,11 @@ export function FeeFromJSONTyped(json: any, ignoreDiscriminator: boolean): Fee {
     return {
         
         'account': AccountAddressFromJSON(json['account']),
-        'total': json['total'],
-        'gas': json['gas'],
-        'rent': json['rent'],
         'deposit': json['deposit'],
+        'gas': json['gas'],
         'refund': json['refund'],
+        'rent': json['rent'],
+        'total': json['total'],
     };
 }
 
@@ -93,11 +108,11 @@ export function FeeToJSON(value?: Fee | null): any {
     return {
         
         'account': AccountAddressToJSON(value.account),
-        'total': value.total,
-        'gas': value.gas,
-        'rent': value.rent,
         'deposit': value.deposit,
+        'gas': value.gas,
         'refund': value.refund,
+        'rent': value.rent,
+        'total': value.total,
     };
 }
 

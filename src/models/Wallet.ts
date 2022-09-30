@@ -27,12 +27,6 @@ export interface Wallet {
     address: string;
     /**
      * 
-     * @type {string}
-     * @memberof Wallet
-     */
-    status: string;
-    /**
-     * 
      * @type {number}
      * @memberof Wallet
      */
@@ -43,6 +37,25 @@ export interface Wallet {
      * @memberof Wallet
      */
     interfaces: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Wallet
+     */
+    status: string;
+}
+
+/**
+ * Check if a given object implements the Wallet interface.
+ */
+export function instanceOfWallet(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "balance" in value;
+    isInstance = isInstance && "interfaces" in value;
+    isInstance = isInstance && "status" in value;
+
+    return isInstance;
 }
 
 export function WalletFromJSON(json: any): Wallet {
@@ -56,9 +69,9 @@ export function WalletFromJSONTyped(json: any, ignoreDiscriminator: boolean): Wa
     return {
         
         'address': json['address'],
-        'status': json['status'],
         'balance': json['balance'],
         'interfaces': json['interfaces'],
+        'status': json['status'],
     };
 }
 
@@ -72,9 +85,9 @@ export function WalletToJSON(value?: Wallet | null): any {
     return {
         
         'address': value.address,
-        'status': value.status,
         'balance': value.balance,
         'interfaces': value.interfaces,
+        'status': value.status,
     };
 }
 

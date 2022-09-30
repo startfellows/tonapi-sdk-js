@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AccountAddress } from './AccountAddress';
+import type { AccountAddress } from './AccountAddress';
 /**
  *
  * @export
@@ -22,6 +22,12 @@ export interface NftCollection {
      * @memberof NftCollection
      */
     address: string;
+    /**
+     *
+     * @type {any}
+     * @memberof NftCollection
+     */
+    metadata?: any | null;
     /**
      *
      * @type {number}
@@ -40,13 +46,11 @@ export interface NftCollection {
      * @memberof NftCollection
      */
     rawCollectionContent: string;
-    /**
-     *
-     * @type {any}
-     * @memberof NftCollection
-     */
-    metadata?: any | null;
 }
+/**
+ * Check if a given object implements the NftCollection interface.
+ */
+export declare function instanceOfNftCollection(value: object): boolean;
 export declare function NftCollectionFromJSON(json: any): NftCollection;
 export declare function NftCollectionFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftCollection;
 export declare function NftCollectionToJSON(value?: NftCollection | null): any;

@@ -13,10 +13,27 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TransactionToJSON = exports.TransactionFromJSONTyped = exports.TransactionFromJSON = void 0;
+exports.TransactionToJSON = exports.TransactionFromJSONTyped = exports.TransactionFromJSON = exports.instanceOfTransaction = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
 const Message_1 = require("./Message");
+/**
+ * Check if a given object implements the Transaction interface.
+ */
+function instanceOfTransaction(value) {
+    let isInstance = true;
+    isInstance = isInstance && "account" in value;
+    isInstance = isInstance && "data" in value;
+    isInstance = isInstance && "fee" in value;
+    isInstance = isInstance && "hash" in value;
+    isInstance = isInstance && "lt" in value;
+    isInstance = isInstance && "otherFee" in value;
+    isInstance = isInstance && "outMsgs" in value;
+    isInstance = isInstance && "storageFee" in value;
+    isInstance = isInstance && "utime" in value;
+    return isInstance;
+}
+exports.instanceOfTransaction = instanceOfTransaction;
 function TransactionFromJSON(json) {
     return TransactionFromJSONTyped(json, false);
 }
@@ -26,16 +43,16 @@ function TransactionFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'hash': json['hash'],
-        'fee': json['fee'],
-        'storageFee': json['storage_fee'],
-        'otherFee': json['other_fee'],
-        'lt': json['lt'],
-        'utime': json['utime'],
         'account': (0, AccountAddress_1.AccountAddressFromJSON)(json['account']),
         'data': json['data'],
+        'fee': json['fee'],
+        'hash': json['hash'],
         'inMsg': !(0, runtime_1.exists)(json, 'in_msg') ? undefined : (0, Message_1.MessageFromJSON)(json['in_msg']),
+        'lt': json['lt'],
+        'otherFee': json['other_fee'],
         'outMsgs': (json['out_msgs'].map(Message_1.MessageFromJSON)),
+        'storageFee': json['storage_fee'],
+        'utime': json['utime'],
     };
 }
 exports.TransactionFromJSONTyped = TransactionFromJSONTyped;
@@ -47,16 +64,16 @@ function TransactionToJSON(value) {
         return null;
     }
     return {
-        'hash': value.hash,
-        'fee': value.fee,
-        'storage_fee': value.storageFee,
-        'other_fee': value.otherFee,
-        'lt': value.lt,
-        'utime': value.utime,
         'account': (0, AccountAddress_1.AccountAddressToJSON)(value.account),
         'data': value.data,
+        'fee': value.fee,
+        'hash': value.hash,
         'in_msg': (0, Message_1.MessageToJSON)(value.inMsg),
+        'lt': value.lt,
+        'other_fee': value.otherFee,
         'out_msgs': (value.outMsgs.map(Message_1.MessageToJSON)),
+        'storage_fee': value.storageFee,
+        'utime': value.utime,
     };
 }
 exports.TransactionToJSON = TransactionToJSON;

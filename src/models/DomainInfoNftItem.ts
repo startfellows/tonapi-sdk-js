@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AccountAddress } from './AccountAddress';
 import {
-    AccountAddress,
     AccountAddressFromJSON,
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
@@ -38,6 +38,16 @@ export interface DomainInfoNftItem {
      * @memberof DomainInfoNftItem
      */
     owner?: AccountAddress;
+}
+
+/**
+ * Check if a given object implements the DomainInfoNftItem interface.
+ */
+export function instanceOfDomainInfoNftItem(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+
+    return isInstance;
 }
 
 export function DomainInfoNftItemFromJSON(json: any): DomainInfoNftItem {

@@ -13,9 +13,28 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AnnotatedTraceToJSON = exports.AnnotatedTraceFromJSONTyped = exports.AnnotatedTraceFromJSON = void 0;
+exports.AnnotatedTraceToJSON = exports.AnnotatedTraceFromJSONTyped = exports.AnnotatedTraceFromJSON = exports.instanceOfAnnotatedTrace = void 0;
 const AccountAddress_1 = require("./AccountAddress");
 const TxAnnotation_1 = require("./TxAnnotation");
+/**
+ * Check if a given object implements the AnnotatedTrace interface.
+ */
+function instanceOfAnnotatedTrace(value) {
+    let isInstance = true;
+    isInstance = isInstance && "account" in value;
+    isInstance = isInstance && "annotations" in value;
+    isInstance = isInstance && "children" in value;
+    isInstance = isInstance && "fee" in value;
+    isInstance = isInstance && "hash" in value;
+    isInstance = isInstance && "inputValue" in value;
+    isInstance = isInstance && "interfaces" in value;
+    isInstance = isInstance && "lt" in value;
+    isInstance = isInstance && "otherFee" in value;
+    isInstance = isInstance && "storageFee" in value;
+    isInstance = isInstance && "success" in value;
+    return isInstance;
+}
+exports.instanceOfAnnotatedTrace = instanceOfAnnotatedTrace;
 function AnnotatedTraceFromJSON(json) {
     return AnnotatedTraceFromJSONTyped(json, false);
 }
@@ -25,17 +44,17 @@ function AnnotatedTraceFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'hash': json['hash'],
-        'lt': json['lt'],
         'account': (0, AccountAddress_1.AccountAddressFromJSON)(json['account']),
-        'success': json['success'],
-        'fee': json['fee'],
-        'otherFee': json['other_fee'],
-        'storageFee': json['storage_fee'],
-        'inputValue': json['input_value'],
-        'interfaces': json['interfaces'],
         'annotations': (json['annotations'].map(TxAnnotation_1.TxAnnotationFromJSON)),
         'children': (json['children'].map(AnnotatedTraceFromJSON)),
+        'fee': json['fee'],
+        'hash': json['hash'],
+        'inputValue': json['input_value'],
+        'interfaces': json['interfaces'],
+        'lt': json['lt'],
+        'otherFee': json['other_fee'],
+        'storageFee': json['storage_fee'],
+        'success': json['success'],
     };
 }
 exports.AnnotatedTraceFromJSONTyped = AnnotatedTraceFromJSONTyped;
@@ -47,17 +66,17 @@ function AnnotatedTraceToJSON(value) {
         return null;
     }
     return {
-        'hash': value.hash,
-        'lt': value.lt,
         'account': (0, AccountAddress_1.AccountAddressToJSON)(value.account),
-        'success': value.success,
-        'fee': value.fee,
-        'other_fee': value.otherFee,
-        'storage_fee': value.storageFee,
-        'input_value': value.inputValue,
-        'interfaces': value.interfaces,
         'annotations': (value.annotations.map(TxAnnotation_1.TxAnnotationToJSON)),
         'children': (value.children.map(AnnotatedTraceToJSON)),
+        'fee': value.fee,
+        'hash': value.hash,
+        'input_value': value.inputValue,
+        'interfaces': value.interfaces,
+        'lt': value.lt,
+        'other_fee': value.otherFee,
+        'storage_fee': value.storageFee,
+        'success': value.success,
     };
 }
 exports.AnnotatedTraceToJSON = AnnotatedTraceToJSON;

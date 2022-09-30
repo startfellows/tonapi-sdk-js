@@ -28,6 +28,10 @@ export interface NftItemReprCollection {
      */
     name: string;
 }
+/**
+ * Check if a given object implements the NftItemReprCollection interface.
+ */
+export declare function instanceOfNftItemReprCollection(value: object): boolean;
 export declare function NftItemReprCollectionFromJSON(json: any): NftItemReprCollection;
 export declare function NftItemReprCollectionFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftItemReprCollection;
 export declare function NftItemReprCollectionToJSON(value?: NftItemReprCollection | null): any;

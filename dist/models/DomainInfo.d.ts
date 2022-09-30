@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { DomainInfoNftItem } from './DomainInfoNftItem';
+import type { DomainInfoNftItem } from './DomainInfoNftItem';
 /**
  *
  * @export
@@ -18,17 +18,21 @@ import { DomainInfoNftItem } from './DomainInfoNftItem';
 export interface DomainInfo {
     /**
      *
-     * @type {DomainInfoNftItem}
-     * @memberof DomainInfo
-     */
-    nftItem?: DomainInfoNftItem;
-    /**
-     *
      * @type {number}
      * @memberof DomainInfo
      */
     expiration: number;
+    /**
+     *
+     * @type {DomainInfoNftItem}
+     * @memberof DomainInfo
+     */
+    nftItem?: DomainInfoNftItem;
 }
+/**
+ * Check if a given object implements the DomainInfo interface.
+ */
+export declare function instanceOfDomainInfo(value: object): boolean;
 export declare function DomainInfoFromJSON(json: any): DomainInfo;
 export declare function DomainInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): DomainInfo;
 export declare function DomainInfoToJSON(value?: DomainInfo | null): any;

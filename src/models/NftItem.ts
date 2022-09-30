@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AccountAddress } from './AccountAddress';
 import {
-    AccountAddress,
     AccountAddressFromJSON,
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
@@ -34,28 +34,34 @@ export interface NftItem {
     address: string;
     /**
      * 
-     * @type {number}
-     * @memberof NftItem
-     */
-    index: number;
-    /**
-     * 
-     * @type {AccountAddress}
-     * @memberof NftItem
-     */
-    owner?: AccountAddress;
-    /**
-     * 
      * @type {string}
      * @memberof NftItem
      */
     collectionAddress?: string;
     /**
      * 
+     * @type {number}
+     * @memberof NftItem
+     */
+    index: number;
+    /**
+     * 
      * @type {boolean}
      * @memberof NftItem
      */
     init: boolean;
+    /**
+     * 
+     * @type {any}
+     * @memberof NftItem
+     */
+    metadata?: any | null;
+    /**
+     * 
+     * @type {AccountAddress}
+     * @memberof NftItem
+     */
+    owner?: AccountAddress;
     /**
      * 
      * @type {string}
@@ -68,12 +74,20 @@ export interface NftItem {
      * @memberof NftItem
      */
     verified: boolean;
-    /**
-     * 
-     * @type {any}
-     * @memberof NftItem
-     */
-    metadata?: any | null;
+}
+
+/**
+ * Check if a given object implements the NftItem interface.
+ */
+export function instanceOfNftItem(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "index" in value;
+    isInstance = isInstance && "init" in value;
+    isInstance = isInstance && "rawIndividualContent" in value;
+    isInstance = isInstance && "verified" in value;
+
+    return isInstance;
 }
 
 export function NftItemFromJSON(json: any): NftItem {
@@ -87,13 +101,13 @@ export function NftItemFromJSONTyped(json: any, ignoreDiscriminator: boolean): N
     return {
         
         'address': json['address'],
-        'index': json['index'],
-        'owner': !exists(json, 'owner') ? undefined : AccountAddressFromJSON(json['owner']),
         'collectionAddress': !exists(json, 'collection_address') ? undefined : json['collection_address'],
+        'index': json['index'],
         'init': json['init'],
+        'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
+        'owner': !exists(json, 'owner') ? undefined : AccountAddressFromJSON(json['owner']),
         'rawIndividualContent': json['raw_individual_content'],
         'verified': json['verified'],
-        'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
     };
 }
 
@@ -107,13 +121,13 @@ export function NftItemToJSON(value?: NftItem | null): any {
     return {
         
         'address': value.address,
-        'index': value.index,
-        'owner': AccountAddressToJSON(value.owner),
         'collection_address': value.collectionAddress,
+        'index': value.index,
         'init': value.init,
+        'metadata': value.metadata,
+        'owner': AccountAddressToJSON(value.owner),
         'raw_individual_content': value.rawIndividualContent,
         'verified': value.verified,
-        'metadata': value.metadata,
     };
 }
 

@@ -23,10 +23,10 @@ export interface Subscription {
     address: string;
     /**
      *
-     * @type {string}
+     * @type {number}
      * @memberof Subscription
      */
-    walletAddress: string;
+    amount: number;
     /**
      *
      * @type {string}
@@ -38,25 +38,7 @@ export interface Subscription {
      * @type {number}
      * @memberof Subscription
      */
-    amount: number;
-    /**
-     *
-     * @type {number}
-     * @memberof Subscription
-     */
-    period: number;
-    /**
-     *
-     * @type {number}
-     * @memberof Subscription
-     */
-    startTime: number;
-    /**
-     *
-     * @type {number}
-     * @memberof Subscription
-     */
-    timeout: number;
+    failedAttempts: number;
     /**
      *
      * @type {number}
@@ -74,14 +56,36 @@ export interface Subscription {
      * @type {number}
      * @memberof Subscription
      */
+    period: number;
+    /**
+     *
+     * @type {number}
+     * @memberof Subscription
+     */
+    startTime: number;
+    /**
+     *
+     * @type {number}
+     * @memberof Subscription
+     */
     subscriptionId: number;
     /**
      *
      * @type {number}
      * @memberof Subscription
      */
-    failedAttempts: number;
+    timeout: number;
+    /**
+     *
+     * @type {string}
+     * @memberof Subscription
+     */
+    walletAddress: string;
 }
+/**
+ * Check if a given object implements the Subscription interface.
+ */
+export declare function instanceOfSubscription(value: object): boolean;
 export declare function SubscriptionFromJSON(json: any): Subscription;
 export declare function SubscriptionFromJSONTyped(json: any, ignoreDiscriminator: boolean): Subscription;
 export declare function SubscriptionToJSON(value?: Subscription | null): any;

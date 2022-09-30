@@ -28,6 +28,10 @@ export interface Trace {
      */
     utime: number;
 }
+/**
+ * Check if a given object implements the Trace interface.
+ */
+export declare function instanceOfTrace(value: object): boolean;
 export declare function TraceFromJSON(json: any): Trace;
 export declare function TraceFromJSONTyped(json: any, ignoreDiscriminator: boolean): Trace;
 export declare function TraceToJSON(value?: Trace | null): any;

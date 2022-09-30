@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AccountAddress } from './AccountAddress';
 import {
-    AccountAddress,
     AccountAddressFromJSON,
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
@@ -28,10 +28,22 @@ import {
 export interface NftItemTransferAction {
     /**
      * 
-     * @type {AccountAddress}
+     * @type {string}
      * @memberof NftItemTransferAction
      */
-    sender?: AccountAddress;
+    comment?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftItemTransferAction
+     */
+    nft: string;
+    /**
+     * raw hex encoded payload
+     * @type {string}
+     * @memberof NftItemTransferAction
+     */
+    payload?: string;
     /**
      * 
      * @type {AccountAddress}
@@ -40,22 +52,20 @@ export interface NftItemTransferAction {
     recipient?: AccountAddress;
     /**
      * 
-     * @type {string}
+     * @type {AccountAddress}
      * @memberof NftItemTransferAction
      */
-    nft: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NftItemTransferAction
-     */
-    comment?: string;
-    /**
-     * raw hex encoded payload
-     * @type {string}
-     * @memberof NftItemTransferAction
-     */
-    payload?: string;
+    sender?: AccountAddress;
+}
+
+/**
+ * Check if a given object implements the NftItemTransferAction interface.
+ */
+export function instanceOfNftItemTransferAction(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "nft" in value;
+
+    return isInstance;
 }
 
 export function NftItemTransferActionFromJSON(json: any): NftItemTransferAction {
@@ -68,11 +78,11 @@ export function NftItemTransferActionFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'sender': !exists(json, 'sender') ? undefined : AccountAddressFromJSON(json['sender']),
-        'recipient': !exists(json, 'recipient') ? undefined : AccountAddressFromJSON(json['recipient']),
-        'nft': json['nft'],
         'comment': !exists(json, 'comment') ? undefined : json['comment'],
+        'nft': json['nft'],
         'payload': !exists(json, 'payload') ? undefined : json['payload'],
+        'recipient': !exists(json, 'recipient') ? undefined : AccountAddressFromJSON(json['recipient']),
+        'sender': !exists(json, 'sender') ? undefined : AccountAddressFromJSON(json['sender']),
     };
 }
 
@@ -85,11 +95,11 @@ export function NftItemTransferActionToJSON(value?: NftItemTransferAction | null
     }
     return {
         
-        'sender': AccountAddressToJSON(value.sender),
-        'recipient': AccountAddressToJSON(value.recipient),
-        'nft': value.nft,
         'comment': value.comment,
+        'nft': value.nft,
         'payload': value.payload,
+        'recipient': AccountAddressToJSON(value.recipient),
+        'sender': AccountAddressToJSON(value.sender),
     };
 }
 

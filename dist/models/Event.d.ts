@@ -9,8 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Action } from './Action';
-import { Fee } from './Fee';
+import type { Action } from './Action';
+import type { Fee } from './Fee';
 /**
  *
  * @export
@@ -19,28 +19,28 @@ import { Fee } from './Fee';
 export interface Event {
     /**
      *
-     * @type {string}
-     * @memberof Event
-     */
-    eventId: string;
-    /**
-     *
-     * @type {number}
-     * @memberof Event
-     */
-    timestamp: number;
-    /**
-     *
      * @type {Array<Action>}
      * @memberof Event
      */
     actions: Array<Action>;
     /**
      *
+     * @type {string}
+     * @memberof Event
+     */
+    eventId: string;
+    /**
+     *
      * @type {Array<Fee>}
      * @memberof Event
      */
     fees: Array<Fee>;
+    /**
+     * Event is not finished yet. Transactions still happening
+     * @type {boolean}
+     * @memberof Event
+     */
+    inProgress: boolean;
     /**
      * scam
      * @type {boolean}
@@ -54,12 +54,16 @@ export interface Event {
      */
     lt: number;
     /**
-     * Event is not finished yet. Transactions still happening
-     * @type {boolean}
+     *
+     * @type {number}
      * @memberof Event
      */
-    inProgress: boolean;
+    timestamp: number;
 }
+/**
+ * Check if a given object implements the Event interface.
+ */
+export declare function instanceOfEvent(value: object): boolean;
 export declare function EventFromJSON(json: any): Event;
 export declare function EventFromJSONTyped(json: any, ignoreDiscriminator: boolean): Event;
 export declare function EventToJSON(value?: Event | null): any;

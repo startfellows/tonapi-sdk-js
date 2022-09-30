@@ -23,22 +23,16 @@ export interface JettonMetadata {
     address: string;
     /**
      *
-     * @type {string}
-     * @memberof JettonMetadata
-     */
-    name: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JettonMetadata
-     */
-    symbol: string;
-    /**
-     *
      * @type {number}
      * @memberof JettonMetadata
      */
     decimals: number;
+    /**
+     *
+     * @type {string}
+     * @memberof JettonMetadata
+     */
+    description?: string;
     /**
      *
      * @type {string}
@@ -50,8 +44,18 @@ export interface JettonMetadata {
      * @type {string}
      * @memberof JettonMetadata
      */
-    description?: string;
+    name: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JettonMetadata
+     */
+    symbol: string;
 }
+/**
+ * Check if a given object implements the JettonMetadata interface.
+ */
+export declare function instanceOfJettonMetadata(value: object): boolean;
 export declare function JettonMetadataFromJSON(json: any): JettonMetadata;
 export declare function JettonMetadataFromJSONTyped(json: any, ignoreDiscriminator: boolean): JettonMetadata;
 export declare function JettonMetadataToJSON(value?: JettonMetadata | null): any;

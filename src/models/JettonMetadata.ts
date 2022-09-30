@@ -27,22 +27,16 @@ export interface JettonMetadata {
     address: string;
     /**
      * 
-     * @type {string}
-     * @memberof JettonMetadata
-     */
-    name: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof JettonMetadata
-     */
-    symbol: string;
-    /**
-     * 
      * @type {number}
      * @memberof JettonMetadata
      */
     decimals: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof JettonMetadata
+     */
+    description?: string;
     /**
      * 
      * @type {string}
@@ -54,7 +48,26 @@ export interface JettonMetadata {
      * @type {string}
      * @memberof JettonMetadata
      */
-    description?: string;
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JettonMetadata
+     */
+    symbol: string;
+}
+
+/**
+ * Check if a given object implements the JettonMetadata interface.
+ */
+export function instanceOfJettonMetadata(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "decimals" in value;
+    isInstance = isInstance && "name" in value;
+    isInstance = isInstance && "symbol" in value;
+
+    return isInstance;
 }
 
 export function JettonMetadataFromJSON(json: any): JettonMetadata {
@@ -68,11 +81,11 @@ export function JettonMetadataFromJSONTyped(json: any, ignoreDiscriminator: bool
     return {
         
         'address': json['address'],
+        'decimals': json['decimals'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'image': !exists(json, 'image') ? undefined : json['image'],
         'name': json['name'],
         'symbol': json['symbol'],
-        'decimals': json['decimals'],
-        'image': !exists(json, 'image') ? undefined : json['image'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
     };
 }
 
@@ -86,11 +99,11 @@ export function JettonMetadataToJSON(value?: JettonMetadata | null): any {
     return {
         
         'address': value.address,
+        'decimals': value.decimals,
+        'description': value.description,
+        'image': value.image,
         'name': value.name,
         'symbol': value.symbol,
-        'decimals': value.decimals,
-        'image': value.image,
-        'description': value.description,
     };
 }
 

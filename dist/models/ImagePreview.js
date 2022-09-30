@@ -13,7 +13,17 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ImagePreviewToJSON = exports.ImagePreviewFromJSONTyped = exports.ImagePreviewFromJSON = void 0;
+exports.ImagePreviewToJSON = exports.ImagePreviewFromJSONTyped = exports.ImagePreviewFromJSON = exports.instanceOfImagePreview = void 0;
+/**
+ * Check if a given object implements the ImagePreview interface.
+ */
+function instanceOfImagePreview(value) {
+    let isInstance = true;
+    isInstance = isInstance && "resolution" in value;
+    isInstance = isInstance && "url" in value;
+    return isInstance;
+}
+exports.instanceOfImagePreview = instanceOfImagePreview;
 function ImagePreviewFromJSON(json) {
     return ImagePreviewFromJSONTyped(json, false);
 }

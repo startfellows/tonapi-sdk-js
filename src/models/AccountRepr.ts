@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AccountReprAddress } from './AccountReprAddress';
 import {
-    AccountReprAddress,
     AccountReprAddressFromJSON,
     AccountReprAddressFromJSONTyped,
     AccountReprAddressToJSON,
@@ -28,6 +28,12 @@ import {
 export interface AccountRepr {
     /**
      * 
+     * @type {AccountReprAddress}
+     * @memberof AccountRepr
+     */
+    address: AccountReprAddress;
+    /**
+     * 
      * @type {number}
      * @memberof AccountRepr
      */
@@ -37,7 +43,7 @@ export interface AccountRepr {
      * @type {string}
      * @memberof AccountRepr
      */
-    status: string;
+    icon?: string;
     /**
      * 
      * @type {Array<string>}
@@ -46,28 +52,16 @@ export interface AccountRepr {
     interfaces: Array<string>;
     /**
      * 
-     * @type {AccountReprAddress}
-     * @memberof AccountRepr
-     */
-    address: AccountReprAddress;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountRepr
-     */
-    name?: string;
-    /**
-     * 
      * @type {boolean}
      * @memberof AccountRepr
      */
     isScam: boolean;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof AccountRepr
      */
-    icon?: string;
+    lastUpdate: number;
     /**
      * 
      * @type {boolean}
@@ -76,10 +70,32 @@ export interface AccountRepr {
     memoRequired: boolean;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof AccountRepr
      */
-    lastUpdate: number;
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AccountRepr
+     */
+    status: string;
+}
+
+/**
+ * Check if a given object implements the AccountRepr interface.
+ */
+export function instanceOfAccountRepr(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "balance" in value;
+    isInstance = isInstance && "interfaces" in value;
+    isInstance = isInstance && "isScam" in value;
+    isInstance = isInstance && "lastUpdate" in value;
+    isInstance = isInstance && "memoRequired" in value;
+    isInstance = isInstance && "status" in value;
+
+    return isInstance;
 }
 
 export function AccountReprFromJSON(json: any): AccountRepr {
@@ -92,15 +108,15 @@ export function AccountReprFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
         
-        'balance': json['balance'],
-        'status': json['status'],
-        'interfaces': json['interfaces'],
         'address': AccountReprAddressFromJSON(json['address']),
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'isScam': json['is_scam'],
+        'balance': json['balance'],
         'icon': !exists(json, 'icon') ? undefined : json['icon'],
-        'memoRequired': json['memo_required'],
+        'interfaces': json['interfaces'],
+        'isScam': json['is_scam'],
         'lastUpdate': json['last_update'],
+        'memoRequired': json['memo_required'],
+        'name': !exists(json, 'name') ? undefined : json['name'],
+        'status': json['status'],
     };
 }
 
@@ -113,15 +129,15 @@ export function AccountReprToJSON(value?: AccountRepr | null): any {
     }
     return {
         
-        'balance': value.balance,
-        'status': value.status,
-        'interfaces': value.interfaces,
         'address': AccountReprAddressToJSON(value.address),
-        'name': value.name,
-        'is_scam': value.isScam,
+        'balance': value.balance,
         'icon': value.icon,
-        'memo_required': value.memoRequired,
+        'interfaces': value.interfaces,
+        'is_scam': value.isScam,
         'last_update': value.lastUpdate,
+        'memo_required': value.memoRequired,
+        'name': value.name,
+        'status': value.status,
     };
 }
 

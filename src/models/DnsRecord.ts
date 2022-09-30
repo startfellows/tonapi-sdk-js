@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { WalletDNS } from './WalletDNS';
 import {
-    WalletDNS,
     WalletDNSFromJSON,
     WalletDNSFromJSONTyped,
     WalletDNSToJSON,
@@ -28,12 +28,6 @@ import {
 export interface DnsRecord {
     /**
      * 
-     * @type {WalletDNS}
-     * @memberof DnsRecord
-     */
-    wallet?: WalletDNS;
-    /**
-     * 
      * @type {string}
      * @memberof DnsRecord
      */
@@ -44,6 +38,22 @@ export interface DnsRecord {
      * @memberof DnsRecord
      */
     site: Array<string>;
+    /**
+     * 
+     * @type {WalletDNS}
+     * @memberof DnsRecord
+     */
+    wallet?: WalletDNS;
+}
+
+/**
+ * Check if a given object implements the DnsRecord interface.
+ */
+export function instanceOfDnsRecord(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "site" in value;
+
+    return isInstance;
 }
 
 export function DnsRecordFromJSON(json: any): DnsRecord {
@@ -56,9 +66,9 @@ export function DnsRecordFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     }
     return {
         
-        'wallet': !exists(json, 'wallet') ? undefined : WalletDNSFromJSON(json['wallet']),
         'nextResolver': !exists(json, 'next_resolver') ? undefined : json['next_resolver'],
         'site': json['site'],
+        'wallet': !exists(json, 'wallet') ? undefined : WalletDNSFromJSON(json['wallet']),
     };
 }
 
@@ -71,9 +81,9 @@ export function DnsRecordToJSON(value?: DnsRecord | null): any {
     }
     return {
         
-        'wallet': WalletDNSToJSON(value.wallet),
         'next_resolver': value.nextResolver,
         'site': value.site,
+        'wallet': WalletDNSToJSON(value.wallet),
     };
 }
 

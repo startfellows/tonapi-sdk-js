@@ -13,12 +13,23 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NftItemReprToJSON = exports.NftItemReprFromJSONTyped = exports.NftItemReprFromJSON = void 0;
+exports.NftItemReprToJSON = exports.NftItemReprFromJSONTyped = exports.NftItemReprFromJSON = exports.instanceOfNftItemRepr = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
 const ImagePreview_1 = require("./ImagePreview");
 const NftItemReprCollection_1 = require("./NftItemReprCollection");
 const Sale_1 = require("./Sale");
+/**
+ * Check if a given object implements the NftItemRepr interface.
+ */
+function instanceOfNftItemRepr(value) {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "index" in value;
+    isInstance = isInstance && "verified" in value;
+    return isInstance;
+}
+exports.instanceOfNftItemRepr = instanceOfNftItemRepr;
 function NftItemReprFromJSON(json) {
     return NftItemReprFromJSONTyped(json, false);
 }
@@ -29,15 +40,15 @@ function NftItemReprFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'address': json['address'],
-        'index': json['index'],
-        'owner': !(0, runtime_1.exists)(json, 'owner') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['owner']),
-        'collectionAddress': !(0, runtime_1.exists)(json, 'collection_address') ? undefined : json['collection_address'],
         'collection': !(0, runtime_1.exists)(json, 'collection') ? undefined : (0, NftItemReprCollection_1.NftItemReprCollectionFromJSON)(json['collection']),
-        'verified': json['verified'],
-        'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
-        'sale': !(0, runtime_1.exists)(json, 'sale') ? undefined : (0, Sale_1.SaleFromJSON)(json['sale']),
-        'previews': !(0, runtime_1.exists)(json, 'previews') ? undefined : (json['previews'].map(ImagePreview_1.ImagePreviewFromJSON)),
+        'collectionAddress': !(0, runtime_1.exists)(json, 'collection_address') ? undefined : json['collection_address'],
         'dns': !(0, runtime_1.exists)(json, 'dns') ? undefined : json['dns'],
+        'index': json['index'],
+        'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
+        'owner': !(0, runtime_1.exists)(json, 'owner') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['owner']),
+        'previews': !(0, runtime_1.exists)(json, 'previews') ? undefined : (json['previews'].map(ImagePreview_1.ImagePreviewFromJSON)),
+        'sale': !(0, runtime_1.exists)(json, 'sale') ? undefined : (0, Sale_1.SaleFromJSON)(json['sale']),
+        'verified': json['verified'],
     };
 }
 exports.NftItemReprFromJSONTyped = NftItemReprFromJSONTyped;
@@ -50,15 +61,15 @@ function NftItemReprToJSON(value) {
     }
     return {
         'address': value.address,
-        'index': value.index,
-        'owner': (0, AccountAddress_1.AccountAddressToJSON)(value.owner),
-        'collection_address': value.collectionAddress,
         'collection': (0, NftItemReprCollection_1.NftItemReprCollectionToJSON)(value.collection),
-        'verified': value.verified,
-        'metadata': value.metadata,
-        'sale': (0, Sale_1.SaleToJSON)(value.sale),
-        'previews': value.previews === undefined ? undefined : (value.previews.map(ImagePreview_1.ImagePreviewToJSON)),
+        'collection_address': value.collectionAddress,
         'dns': value.dns,
+        'index': value.index,
+        'metadata': value.metadata,
+        'owner': (0, AccountAddress_1.AccountAddressToJSON)(value.owner),
+        'previews': value.previews === undefined ? undefined : (value.previews.map(ImagePreview_1.ImagePreviewToJSON)),
+        'sale': (0, Sale_1.SaleToJSON)(value.sale),
+        'verified': value.verified,
     };
 }
 exports.NftItemReprToJSON = NftItemReprToJSON;

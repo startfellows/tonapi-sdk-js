@@ -9,14 +9,32 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AccountAddress } from './AccountAddress';
-import { TraceTX } from './TraceTX';
+import type { AccountAddress } from './AccountAddress';
+import type { TraceTX } from './TraceTX';
 /**
  *
  * @export
  * @interface TraceMsg
  */
 export interface TraceMsg {
+    /**
+     *
+     * @type {string}
+     * @memberof TraceMsg
+     */
+    comment?: string;
+    /**
+     *
+     * @type {number}
+     * @memberof TraceMsg
+     */
+    createdLt: number;
+    /**
+     *
+     * @type {AccountAddress}
+     * @memberof TraceMsg
+     */
+    destination: AccountAddress;
     /**
      *
      * @type {number}
@@ -31,41 +49,27 @@ export interface TraceMsg {
     ihrFee: number;
     /**
      *
-     * @type {number}
-     * @memberof TraceMsg
-     */
-    createdLt: number;
-    /**
-     *
-     * @type {number}
-     * @memberof TraceMsg
-     */
-    value: number;
-    /**
-     *
-     * @type {AccountAddress}
-     * @memberof TraceMsg
-     */
-    destination: AccountAddress;
-    /**
-     *
      * @type {AccountAddress}
      * @memberof TraceMsg
      */
     source: AccountAddress;
     /**
      *
-     * @type {string}
-     * @memberof TraceMsg
-     */
-    comment?: string;
-    /**
-     *
      * @type {TraceTX}
      * @memberof TraceMsg
      */
     tx?: TraceTX;
+    /**
+     *
+     * @type {number}
+     * @memberof TraceMsg
+     */
+    value: number;
 }
+/**
+ * Check if a given object implements the TraceMsg interface.
+ */
+export declare function instanceOfTraceMsg(value: object): boolean;
 export declare function TraceMsgFromJSON(json: any): TraceMsg;
 export declare function TraceMsgFromJSONTyped(json: any, ignoreDiscriminator: boolean): TraceMsg;
 export declare function TraceMsgToJSON(value?: TraceMsg | null): any;

@@ -9,19 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { WalletDNS } from './WalletDNS';
+import type { WalletDNS } from './WalletDNS';
 /**
  *
  * @export
  * @interface DnsRecord
  */
 export interface DnsRecord {
-    /**
-     *
-     * @type {WalletDNS}
-     * @memberof DnsRecord
-     */
-    wallet?: WalletDNS;
     /**
      *
      * @type {string}
@@ -34,7 +28,17 @@ export interface DnsRecord {
      * @memberof DnsRecord
      */
     site: Array<string>;
+    /**
+     *
+     * @type {WalletDNS}
+     * @memberof DnsRecord
+     */
+    wallet?: WalletDNS;
 }
+/**
+ * Check if a given object implements the DnsRecord interface.
+ */
+export declare function instanceOfDnsRecord(value: object): boolean;
 export declare function DnsRecordFromJSON(json: any): DnsRecord;
 export declare function DnsRecordFromJSONTyped(json: any, ignoreDiscriminator: boolean): DnsRecord;
 export declare function DnsRecordToJSON(value?: DnsRecord | null): any;

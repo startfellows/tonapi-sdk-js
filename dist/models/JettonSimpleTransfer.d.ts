@@ -9,19 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Jetton } from './Jetton';
+import type { Jetton } from './Jetton';
 /**
  *
  * @export
  * @interface JettonSimpleTransfer
  */
 export interface JettonSimpleTransfer {
-    /**
-     *
-     * @type {string}
-     * @memberof JettonSimpleTransfer
-     */
-    type: JettonSimpleTransferTypeEnum;
     /**
      *
      * @type {string}
@@ -34,6 +28,12 @@ export interface JettonSimpleTransfer {
      * @memberof JettonSimpleTransfer
      */
     jetton: Jetton;
+    /**
+     *
+     * @type {string}
+     * @memberof JettonSimpleTransfer
+     */
+    type: JettonSimpleTransferTypeEnum;
 }
 /**
  * @export
@@ -43,6 +43,10 @@ export declare const JettonSimpleTransferTypeEnum: {
     readonly Outcome: "outcome";
 };
 export declare type JettonSimpleTransferTypeEnum = typeof JettonSimpleTransferTypeEnum[keyof typeof JettonSimpleTransferTypeEnum];
+/**
+ * Check if a given object implements the JettonSimpleTransfer interface.
+ */
+export declare function instanceOfJettonSimpleTransfer(value: object): boolean;
 export declare function JettonSimpleTransferFromJSON(json: any): JettonSimpleTransfer;
 export declare function JettonSimpleTransferFromJSONTyped(json: any, ignoreDiscriminator: boolean): JettonSimpleTransfer;
 export declare function JettonSimpleTransferToJSON(value?: JettonSimpleTransfer | null): any;

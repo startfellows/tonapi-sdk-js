@@ -13,7 +13,20 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuctionToJSON = exports.AuctionFromJSONTyped = exports.AuctionFromJSON = void 0;
+exports.AuctionToJSON = exports.AuctionFromJSONTyped = exports.AuctionFromJSON = exports.instanceOfAuction = void 0;
+/**
+ * Check if a given object implements the Auction interface.
+ */
+function instanceOfAuction(value) {
+    let isInstance = true;
+    isInstance = isInstance && "bids" in value;
+    isInstance = isInstance && "date" in value;
+    isInstance = isInstance && "domain" in value;
+    isInstance = isInstance && "owner" in value;
+    isInstance = isInstance && "price" in value;
+    return isInstance;
+}
+exports.instanceOfAuction = instanceOfAuction;
 function AuctionFromJSON(json) {
     return AuctionFromJSONTyped(json, false);
 }
@@ -23,11 +36,11 @@ function AuctionFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
+        'bids': json['bids'],
+        'date': json['date'],
         'domain': json['domain'],
         'owner': json['owner'],
         'price': json['price'],
-        'bids': json['bids'],
-        'date': json['date'],
     };
 }
 exports.AuctionFromJSONTyped = AuctionFromJSONTyped;
@@ -39,11 +52,11 @@ function AuctionToJSON(value) {
         return null;
     }
     return {
+        'bids': value.bids,
+        'date': value.date,
         'domain': value.domain,
         'owner': value.owner,
         'price': value.price,
-        'bids': value.bids,
-        'date': value.date,
     };
 }
 exports.AuctionToJSON = AuctionToJSON;

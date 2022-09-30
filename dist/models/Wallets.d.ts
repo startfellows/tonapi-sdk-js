@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Wallet } from './Wallet';
+import type { Wallet } from './Wallet';
 /**
  *
  * @export
@@ -23,6 +23,10 @@ export interface Wallets {
      */
     wallets: Array<Wallet>;
 }
+/**
+ * Check if a given object implements the Wallets interface.
+ */
+export declare function instanceOfWallets(value: object): boolean;
 export declare function WalletsFromJSON(json: any): Wallets;
 export declare function WalletsFromJSONTyped(json: any, ignoreDiscriminator: boolean): Wallets;
 export declare function WalletsToJSON(value?: Wallets | null): any;

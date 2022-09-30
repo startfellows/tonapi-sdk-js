@@ -26,6 +26,7 @@ __exportStar(require("./AccountReprs"), exports);
 __exportStar(require("./Action"), exports);
 __exportStar(require("./AnnotatedTrace"), exports);
 __exportStar(require("./Auction"), exports);
+__exportStar(require("./AuctionBidAction"), exports);
 __exportStar(require("./Auctions"), exports);
 __exportStar(require("./Block"), exports);
 __exportStar(require("./ContractDeployAction"), exports);

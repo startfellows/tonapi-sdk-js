@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AccountAddress } from './AccountAddress';
+import type { AccountAddress } from './AccountAddress';
 /**
  *
  * @export
@@ -35,6 +35,10 @@ export interface ContractDeployAction {
      */
     interfaces: Array<string>;
 }
+/**
+ * Check if a given object implements the ContractDeployAction interface.
+ */
+export declare function instanceOfContractDeployAction(value: object): boolean;
 export declare function ContractDeployActionFromJSON(json: any): ContractDeployAction;
 export declare function ContractDeployActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): ContractDeployAction;
 export declare function ContractDeployActionToJSON(value?: ContractDeployAction | null): any;

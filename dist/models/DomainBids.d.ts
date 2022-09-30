@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { DomainBid } from './DomainBid';
+import type { DomainBid } from './DomainBid';
 /**
  *
  * @export
@@ -23,6 +23,10 @@ export interface DomainBids {
      */
     data: Array<DomainBid>;
 }
+/**
+ * Check if a given object implements the DomainBids interface.
+ */
+export declare function instanceOfDomainBids(value: object): boolean;
 export declare function DomainBidsFromJSON(json: any): DomainBids;
 export declare function DomainBidsFromJSONTyped(json: any, ignoreDiscriminator: boolean): DomainBids;
 export declare function DomainBidsToJSON(value?: DomainBids | null): any;

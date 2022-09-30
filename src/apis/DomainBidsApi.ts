@@ -14,8 +14,10 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  DomainBids,
+} from '../models';
 import {
-    DomainBids,
     DomainBidsFromJSON,
     DomainBidsToJSON,
 } from '../models';
@@ -38,12 +40,12 @@ export interface DomainBidsApiInterface {
      * @throws {RequiredError}
      * @memberof DomainBidsApiInterface
      */
-    getDomainBidsRaw(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<DomainBids>>;
+    getDomainBidsRaw(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainBids>>;
 
     /**
      * Get domain bids
      */
-    getDomainBids(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<DomainBids>;
+    getDomainBids(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainBids>;
 
 }
 
@@ -55,7 +57,7 @@ export class DomainBidsApi extends runtime.BaseAPI implements DomainBidsApiInter
     /**
      * Get domain bids
      */
-    async getDomainBidsRaw(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<DomainBids>> {
+    async getDomainBidsRaw(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainBids>> {
         if (requestParameters.domain === null || requestParameters.domain === undefined) {
             throw new runtime.RequiredError('domain','Required parameter requestParameters.domain was null or undefined when calling getDomainBids.');
         }
@@ -89,7 +91,7 @@ export class DomainBidsApi extends runtime.BaseAPI implements DomainBidsApiInter
     /**
      * Get domain bids
      */
-    async getDomainBids(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<DomainBids> {
+    async getDomainBids(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainBids> {
         const response = await this.getDomainBidsRaw(requestParameters, initOverrides);
         return await response.value();
     }

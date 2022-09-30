@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { AccountRepr, AccountReprs } from '../models';
+import type { AccountRepr, AccountReprs } from '../models';
 export interface GetAccountInfoRequest {
     account: string;
 }
@@ -31,11 +31,11 @@ export interface AccountApiInterface {
      * @throws {RequiredError}
      * @memberof AccountApiInterface
      */
-    getAccountInfoRaw(requestParameters: GetAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<AccountRepr>>;
+    getAccountInfoRaw(requestParameters: GetAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountRepr>>;
     /**
      * Get info about account
      */
-    getAccountInfo(requestParameters: GetAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<AccountRepr>;
+    getAccountInfo(requestParameters: GetAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountRepr>;
     /**
      * Get info about few accounts account by one request
      * @param {Array<string>} addresses accounts addresses in raw (hex without 0x) or base64url format
@@ -43,11 +43,11 @@ export interface AccountApiInterface {
      * @throws {RequiredError}
      * @memberof AccountApiInterface
      */
-    getBulkAccountInfoRaw(requestParameters: GetBulkAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<AccountReprs>>;
+    getBulkAccountInfoRaw(requestParameters: GetBulkAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountReprs>>;
     /**
      * Get info about few accounts account by one request
      */
-    getBulkAccountInfo(requestParameters: GetBulkAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<AccountReprs>;
+    getBulkAccountInfo(requestParameters: GetBulkAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountReprs>;
 }
 /**
  *
@@ -56,17 +56,17 @@ export declare class AccountApi extends runtime.BaseAPI implements AccountApiInt
     /**
      * Get info about account
      */
-    getAccountInfoRaw(requestParameters: GetAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<AccountRepr>>;
+    getAccountInfoRaw(requestParameters: GetAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountRepr>>;
     /**
      * Get info about account
      */
-    getAccountInfo(requestParameters: GetAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<AccountRepr>;
+    getAccountInfo(requestParameters: GetAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountRepr>;
     /**
      * Get info about few accounts account by one request
      */
-    getBulkAccountInfoRaw(requestParameters: GetBulkAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<AccountReprs>>;
+    getBulkAccountInfoRaw(requestParameters: GetBulkAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountReprs>>;
     /**
      * Get info about few accounts account by one request
      */
-    getBulkAccountInfo(requestParameters: GetBulkAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<AccountReprs>;
+    getBulkAccountInfo(requestParameters: GetBulkAccountInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountReprs>;
 }

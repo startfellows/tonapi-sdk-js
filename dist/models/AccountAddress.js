@@ -13,8 +13,18 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AccountAddressToJSON = exports.AccountAddressFromJSONTyped = exports.AccountAddressFromJSON = void 0;
+exports.AccountAddressToJSON = exports.AccountAddressFromJSONTyped = exports.AccountAddressFromJSON = exports.instanceOfAccountAddress = void 0;
 const runtime_1 = require("../runtime");
+/**
+ * Check if a given object implements the AccountAddress interface.
+ */
+function instanceOfAccountAddress(value) {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "isScam" in value;
+    return isInstance;
+}
+exports.instanceOfAccountAddress = instanceOfAccountAddress;
 function AccountAddressFromJSON(json) {
     return AccountAddressFromJSONTyped(json, false);
 }
@@ -25,9 +35,9 @@ function AccountAddressFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'address': json['address'],
-        'name': !(0, runtime_1.exists)(json, 'name') ? undefined : json['name'],
-        'isScam': json['is_scam'],
         'icon': !(0, runtime_1.exists)(json, 'icon') ? undefined : json['icon'],
+        'isScam': json['is_scam'],
+        'name': !(0, runtime_1.exists)(json, 'name') ? undefined : json['name'],
     };
 }
 exports.AccountAddressFromJSONTyped = AccountAddressFromJSONTyped;
@@ -40,9 +50,9 @@ function AccountAddressToJSON(value) {
     }
     return {
         'address': value.address,
-        'name': value.name,
-        'is_scam': value.isScam,
         'icon': value.icon,
+        'is_scam': value.isScam,
+        'name': value.name,
     };
 }
 exports.AccountAddressToJSON = AccountAddressToJSON;

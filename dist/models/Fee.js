@@ -13,8 +13,22 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FeeToJSON = exports.FeeFromJSONTyped = exports.FeeFromJSON = void 0;
+exports.FeeToJSON = exports.FeeFromJSONTyped = exports.FeeFromJSON = exports.instanceOfFee = void 0;
 const AccountAddress_1 = require("./AccountAddress");
+/**
+ * Check if a given object implements the Fee interface.
+ */
+function instanceOfFee(value) {
+    let isInstance = true;
+    isInstance = isInstance && "account" in value;
+    isInstance = isInstance && "deposit" in value;
+    isInstance = isInstance && "gas" in value;
+    isInstance = isInstance && "refund" in value;
+    isInstance = isInstance && "rent" in value;
+    isInstance = isInstance && "total" in value;
+    return isInstance;
+}
+exports.instanceOfFee = instanceOfFee;
 function FeeFromJSON(json) {
     return FeeFromJSONTyped(json, false);
 }
@@ -25,11 +39,11 @@ function FeeFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'account': (0, AccountAddress_1.AccountAddressFromJSON)(json['account']),
-        'total': json['total'],
-        'gas': json['gas'],
-        'rent': json['rent'],
         'deposit': json['deposit'],
+        'gas': json['gas'],
         'refund': json['refund'],
+        'rent': json['rent'],
+        'total': json['total'],
     };
 }
 exports.FeeFromJSONTyped = FeeFromJSONTyped;
@@ -42,11 +56,11 @@ function FeeToJSON(value) {
     }
     return {
         'account': (0, AccountAddress_1.AccountAddressToJSON)(value.account),
-        'total': value.total,
-        'gas': value.gas,
-        'rent': value.rent,
         'deposit': value.deposit,
+        'gas': value.gas,
         'refund': value.refund,
+        'rent': value.rent,
+        'total': value.total,
     };
 }
 exports.FeeToJSON = FeeToJSON;

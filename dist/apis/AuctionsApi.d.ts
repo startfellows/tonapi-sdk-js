@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { Auctions } from '../models';
+import type { Auctions } from '../models';
 /**
  * AuctionsApi - interface
  *
@@ -24,11 +24,11 @@ export interface AuctionsApiInterface {
      * @throws {RequiredError}
      * @memberof AuctionsApiInterface
      */
-    getAllAuctionsRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Auctions>>;
+    getAllAuctionsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Auctions>>;
     /**
      * Get all auctions
      */
-    getAllAuctions(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Auctions>;
+    getAllAuctions(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Auctions>;
 }
 /**
  *
@@ -37,9 +37,9 @@ export declare class AuctionsApi extends runtime.BaseAPI implements AuctionsApiI
     /**
      * Get all auctions
      */
-    getAllAuctionsRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Auctions>>;
+    getAllAuctionsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Auctions>>;
     /**
      * Get all auctions
      */
-    getAllAuctions(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Auctions>;
+    getAllAuctions(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Auctions>;
 }

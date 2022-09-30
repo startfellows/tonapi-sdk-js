@@ -13,9 +13,24 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AccountReprToJSON = exports.AccountReprFromJSONTyped = exports.AccountReprFromJSON = void 0;
+exports.AccountReprToJSON = exports.AccountReprFromJSONTyped = exports.AccountReprFromJSON = exports.instanceOfAccountRepr = void 0;
 const runtime_1 = require("../runtime");
 const AccountReprAddress_1 = require("./AccountReprAddress");
+/**
+ * Check if a given object implements the AccountRepr interface.
+ */
+function instanceOfAccountRepr(value) {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "balance" in value;
+    isInstance = isInstance && "interfaces" in value;
+    isInstance = isInstance && "isScam" in value;
+    isInstance = isInstance && "lastUpdate" in value;
+    isInstance = isInstance && "memoRequired" in value;
+    isInstance = isInstance && "status" in value;
+    return isInstance;
+}
+exports.instanceOfAccountRepr = instanceOfAccountRepr;
 function AccountReprFromJSON(json) {
     return AccountReprFromJSONTyped(json, false);
 }
@@ -25,15 +40,15 @@ function AccountReprFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'balance': json['balance'],
-        'status': json['status'],
-        'interfaces': json['interfaces'],
         'address': (0, AccountReprAddress_1.AccountReprAddressFromJSON)(json['address']),
-        'name': !(0, runtime_1.exists)(json, 'name') ? undefined : json['name'],
-        'isScam': json['is_scam'],
+        'balance': json['balance'],
         'icon': !(0, runtime_1.exists)(json, 'icon') ? undefined : json['icon'],
-        'memoRequired': json['memo_required'],
+        'interfaces': json['interfaces'],
+        'isScam': json['is_scam'],
         'lastUpdate': json['last_update'],
+        'memoRequired': json['memo_required'],
+        'name': !(0, runtime_1.exists)(json, 'name') ? undefined : json['name'],
+        'status': json['status'],
     };
 }
 exports.AccountReprFromJSONTyped = AccountReprFromJSONTyped;
@@ -45,15 +60,15 @@ function AccountReprToJSON(value) {
         return null;
     }
     return {
-        'balance': value.balance,
-        'status': value.status,
-        'interfaces': value.interfaces,
         'address': (0, AccountReprAddress_1.AccountReprAddressToJSON)(value.address),
-        'name': value.name,
-        'is_scam': value.isScam,
+        'balance': value.balance,
         'icon': value.icon,
-        'memo_required': value.memoRequired,
+        'interfaces': value.interfaces,
+        'is_scam': value.isScam,
         'last_update': value.lastUpdate,
+        'memo_required': value.memoRequired,
+        'name': value.name,
+        'status': value.status,
     };
 }
 exports.AccountReprToJSON = AccountReprToJSON;

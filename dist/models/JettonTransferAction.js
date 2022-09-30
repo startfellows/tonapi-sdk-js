@@ -13,10 +13,22 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JettonTransferActionToJSON = exports.JettonTransferActionFromJSONTyped = exports.JettonTransferActionFromJSON = void 0;
+exports.JettonTransferActionToJSON = exports.JettonTransferActionFromJSONTyped = exports.JettonTransferActionFromJSON = exports.instanceOfJettonTransferAction = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
 const Jetton_1 = require("./Jetton");
+/**
+ * Check if a given object implements the JettonTransferAction interface.
+ */
+function instanceOfJettonTransferAction(value) {
+    let isInstance = true;
+    isInstance = isInstance && "amount" in value;
+    isInstance = isInstance && "jetton" in value;
+    isInstance = isInstance && "recipientsWallet" in value;
+    isInstance = isInstance && "sendersWallet" in value;
+    return isInstance;
+}
+exports.instanceOfJettonTransferAction = instanceOfJettonTransferAction;
 function JettonTransferActionFromJSON(json) {
     return JettonTransferActionFromJSONTyped(json, false);
 }
@@ -26,13 +38,13 @@ function JettonTransferActionFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'sender': !(0, runtime_1.exists)(json, 'sender') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['sender']),
-        'recipient': !(0, runtime_1.exists)(json, 'recipient') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
-        'sendersWallet': json['senders_wallet'],
-        'recipientsWallet': json['recipients_wallet'],
         'amount': json['amount'],
         'comment': !(0, runtime_1.exists)(json, 'comment') ? undefined : json['comment'],
         'jetton': (0, Jetton_1.JettonFromJSON)(json['jetton']),
+        'recipient': !(0, runtime_1.exists)(json, 'recipient') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
+        'recipientsWallet': json['recipients_wallet'],
+        'sender': !(0, runtime_1.exists)(json, 'sender') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['sender']),
+        'sendersWallet': json['senders_wallet'],
     };
 }
 exports.JettonTransferActionFromJSONTyped = JettonTransferActionFromJSONTyped;
@@ -44,13 +56,13 @@ function JettonTransferActionToJSON(value) {
         return null;
     }
     return {
-        'sender': (0, AccountAddress_1.AccountAddressToJSON)(value.sender),
-        'recipient': (0, AccountAddress_1.AccountAddressToJSON)(value.recipient),
-        'senders_wallet': value.sendersWallet,
-        'recipients_wallet': value.recipientsWallet,
         'amount': value.amount,
         'comment': value.comment,
         'jetton': (0, Jetton_1.JettonToJSON)(value.jetton),
+        'recipient': (0, AccountAddress_1.AccountAddressToJSON)(value.recipient),
+        'recipients_wallet': value.recipientsWallet,
+        'sender': (0, AccountAddress_1.AccountAddressToJSON)(value.sender),
+        'senders_wallet': value.sendersWallet,
     };
 }
 exports.JettonTransferActionToJSON = JettonTransferActionToJSON;

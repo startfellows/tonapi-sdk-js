@@ -13,14 +13,14 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { Action } from './Action';
 import {
-    Action,
     ActionFromJSON,
     ActionFromJSONTyped,
     ActionToJSON,
 } from './Action';
+import type { Fee } from './Fee';
 import {
-    Fee,
     FeeFromJSON,
     FeeFromJSONTyped,
     FeeToJSON,
@@ -34,28 +34,28 @@ import {
 export interface Event {
     /**
      * 
-     * @type {string}
-     * @memberof Event
-     */
-    eventId: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Event
-     */
-    timestamp: number;
-    /**
-     * 
      * @type {Array<Action>}
      * @memberof Event
      */
     actions: Array<Action>;
     /**
      * 
+     * @type {string}
+     * @memberof Event
+     */
+    eventId: string;
+    /**
+     * 
      * @type {Array<Fee>}
      * @memberof Event
      */
     fees: Array<Fee>;
+    /**
+     * Event is not finished yet. Transactions still happening
+     * @type {boolean}
+     * @memberof Event
+     */
+    inProgress: boolean;
     /**
      * scam
      * @type {boolean}
@@ -69,11 +69,27 @@ export interface Event {
      */
     lt: number;
     /**
-     * Event is not finished yet. Transactions still happening
-     * @type {boolean}
+     * 
+     * @type {number}
      * @memberof Event
      */
-    inProgress: boolean;
+    timestamp: number;
+}
+
+/**
+ * Check if a given object implements the Event interface.
+ */
+export function instanceOfEvent(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "actions" in value;
+    isInstance = isInstance && "eventId" in value;
+    isInstance = isInstance && "fees" in value;
+    isInstance = isInstance && "inProgress" in value;
+    isInstance = isInstance && "isScam" in value;
+    isInstance = isInstance && "lt" in value;
+    isInstance = isInstance && "timestamp" in value;
+
+    return isInstance;
 }
 
 export function EventFromJSON(json: any): Event {
@@ -86,13 +102,13 @@ export function EventFromJSONTyped(json: any, ignoreDiscriminator: boolean): Eve
     }
     return {
         
-        'eventId': json['event_id'],
-        'timestamp': json['timestamp'],
         'actions': ((json['actions'] as Array<any>).map(ActionFromJSON)),
+        'eventId': json['event_id'],
         'fees': ((json['fees'] as Array<any>).map(FeeFromJSON)),
+        'inProgress': json['in_progress'],
         'isScam': json['is_scam'],
         'lt': json['lt'],
-        'inProgress': json['in_progress'],
+        'timestamp': json['timestamp'],
     };
 }
 
@@ -105,13 +121,13 @@ export function EventToJSON(value?: Event | null): any {
     }
     return {
         
-        'event_id': value.eventId,
-        'timestamp': value.timestamp,
         'actions': ((value.actions as Array<any>).map(ActionToJSON)),
+        'event_id': value.eventId,
         'fees': ((value.fees as Array<any>).map(FeeToJSON)),
+        'in_progress': value.inProgress,
         'is_scam': value.isScam,
         'lt': value.lt,
-        'in_progress': value.inProgress,
+        'timestamp': value.timestamp,
     };
 }
 

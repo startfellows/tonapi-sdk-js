@@ -14,14 +14,16 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  JettonHistory,
+  JettonInfo,
+  JettonsBalances,
+} from '../models';
 import {
-    JettonHistory,
     JettonHistoryFromJSON,
     JettonHistoryToJSON,
-    JettonInfo,
     JettonInfoFromJSON,
     JettonInfoToJSON,
-    JettonsBalances,
     JettonsBalancesFromJSON,
     JettonsBalancesToJSON,
 } from '../models';
@@ -52,12 +54,12 @@ export interface JettonApiInterface {
      * @throws {RequiredError}
      * @memberof JettonApiInterface
      */
-    getJettonHistoryRaw(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<JettonHistory>>;
+    getJettonHistoryRaw(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonHistory>>;
 
     /**
      * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
      */
-    getJettonHistory(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<JettonHistory>;
+    getJettonHistory(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonHistory>;
 
     /**
      * Get jetton metadata by jetton master address
@@ -66,12 +68,12 @@ export interface JettonApiInterface {
      * @throws {RequiredError}
      * @memberof JettonApiInterface
      */
-    getJettonInfoRaw(requestParameters: GetJettonInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<JettonInfo>>;
+    getJettonInfoRaw(requestParameters: GetJettonInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonInfo>>;
 
     /**
      * Get jetton metadata by jetton master address
      */
-    getJettonInfo(requestParameters: GetJettonInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<JettonInfo>;
+    getJettonInfo(requestParameters: GetJettonInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonInfo>;
 
     /**
      * Get all Jettons balances by owner address
@@ -80,12 +82,12 @@ export interface JettonApiInterface {
      * @throws {RequiredError}
      * @memberof JettonApiInterface
      */
-    getJettonsBalancesRaw(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<JettonsBalances>>;
+    getJettonsBalancesRaw(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonsBalances>>;
 
     /**
      * Get all Jettons balances by owner address
      */
-    getJettonsBalances(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<JettonsBalances>;
+    getJettonsBalances(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonsBalances>;
 
 }
 
@@ -97,7 +99,7 @@ export class JettonApi extends runtime.BaseAPI implements JettonApiInterface {
     /**
      * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
      */
-    async getJettonHistoryRaw(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<JettonHistory>> {
+    async getJettonHistoryRaw(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonHistory>> {
         if (requestParameters.account === null || requestParameters.account === undefined) {
             throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getJettonHistory.');
         }
@@ -131,7 +133,7 @@ export class JettonApi extends runtime.BaseAPI implements JettonApiInterface {
     /**
      * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
      */
-    async getJettonHistory(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<JettonHistory> {
+    async getJettonHistory(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonHistory> {
         const response = await this.getJettonHistoryRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -139,7 +141,7 @@ export class JettonApi extends runtime.BaseAPI implements JettonApiInterface {
     /**
      * Get jetton metadata by jetton master address
      */
-    async getJettonInfoRaw(requestParameters: GetJettonInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<JettonInfo>> {
+    async getJettonInfoRaw(requestParameters: GetJettonInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonInfo>> {
         if (requestParameters.account === null || requestParameters.account === undefined) {
             throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getJettonInfo.');
         }
@@ -173,7 +175,7 @@ export class JettonApi extends runtime.BaseAPI implements JettonApiInterface {
     /**
      * Get jetton metadata by jetton master address
      */
-    async getJettonInfo(requestParameters: GetJettonInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<JettonInfo> {
+    async getJettonInfo(requestParameters: GetJettonInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonInfo> {
         const response = await this.getJettonInfoRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -181,7 +183,7 @@ export class JettonApi extends runtime.BaseAPI implements JettonApiInterface {
     /**
      * Get all Jettons balances by owner address
      */
-    async getJettonsBalancesRaw(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<JettonsBalances>> {
+    async getJettonsBalancesRaw(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonsBalances>> {
         if (requestParameters.account === null || requestParameters.account === undefined) {
             throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getJettonsBalances.');
         }
@@ -215,7 +217,7 @@ export class JettonApi extends runtime.BaseAPI implements JettonApiInterface {
     /**
      * Get all Jettons balances by owner address
      */
-    async getJettonsBalances(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<JettonsBalances> {
+    async getJettonsBalances(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonsBalances> {
         const response = await this.getJettonsBalancesRaw(requestParameters, initOverrides);
         return await response.value();
     }

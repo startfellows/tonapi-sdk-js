@@ -13,9 +13,20 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NftForSaleToJSON = exports.NftForSaleFromJSONTyped = exports.NftForSaleFromJSON = void 0;
+exports.NftForSaleToJSON = exports.NftForSaleFromJSONTyped = exports.NftForSaleFromJSON = exports.instanceOfNftForSale = void 0;
 const NftItem_1 = require("./NftItem");
 const Sale_1 = require("./Sale");
+/**
+ * Check if a given object implements the NftForSale interface.
+ */
+function instanceOfNftForSale(value) {
+    let isInstance = true;
+    isInstance = isInstance && "nft" in value;
+    isInstance = isInstance && "sale" in value;
+    isInstance = isInstance && "saleContract" in value;
+    return isInstance;
+}
+exports.instanceOfNftForSale = instanceOfNftForSale;
 function NftForSaleFromJSON(json) {
     return NftForSaleFromJSONTyped(json, false);
 }
@@ -25,9 +36,9 @@ function NftForSaleFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
+        'nft': (0, NftItem_1.NftItemFromJSON)(json['nft']),
         'sale': (0, Sale_1.SaleFromJSON)(json['sale']),
         'saleContract': json['sale_contract'],
-        'nft': (0, NftItem_1.NftItemFromJSON)(json['nft']),
     };
 }
 exports.NftForSaleFromJSONTyped = NftForSaleFromJSONTyped;
@@ -39,9 +50,9 @@ function NftForSaleToJSON(value) {
         return null;
     }
     return {
+        'nft': (0, NftItem_1.NftItemToJSON)(value.nft),
         'sale': (0, Sale_1.SaleToJSON)(value.sale),
         'sale_contract': value.saleContract,
-        'nft': (0, NftItem_1.NftItemToJSON)(value.nft),
     };
 }
 exports.NftForSaleToJSON = NftForSaleToJSON;

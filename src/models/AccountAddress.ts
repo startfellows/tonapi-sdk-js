@@ -30,7 +30,7 @@ export interface AccountAddress {
      * @type {string}
      * @memberof AccountAddress
      */
-    name?: string;
+    icon?: string;
     /**
      * 
      * @type {boolean}
@@ -42,7 +42,18 @@ export interface AccountAddress {
      * @type {string}
      * @memberof AccountAddress
      */
-    icon?: string;
+    name?: string;
+}
+
+/**
+ * Check if a given object implements the AccountAddress interface.
+ */
+export function instanceOfAccountAddress(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "isScam" in value;
+
+    return isInstance;
 }
 
 export function AccountAddressFromJSON(json: any): AccountAddress {
@@ -56,9 +67,9 @@ export function AccountAddressFromJSONTyped(json: any, ignoreDiscriminator: bool
     return {
         
         'address': json['address'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'isScam': json['is_scam'],
         'icon': !exists(json, 'icon') ? undefined : json['icon'],
+        'isScam': json['is_scam'],
+        'name': !exists(json, 'name') ? undefined : json['name'],
     };
 }
 
@@ -72,9 +83,9 @@ export function AccountAddressToJSON(value?: AccountAddress | null): any {
     return {
         
         'address': value.address,
-        'name': value.name,
-        'is_scam': value.isScam,
         'icon': value.icon,
+        'is_scam': value.isScam,
+        'name': value.name,
     };
 }
 

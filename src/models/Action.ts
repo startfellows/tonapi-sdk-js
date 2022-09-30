@@ -13,38 +13,44 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AuctionBidAction } from './AuctionBidAction';
 import {
-    ContractDeployAction,
+    AuctionBidActionFromJSON,
+    AuctionBidActionFromJSONTyped,
+    AuctionBidActionToJSON,
+} from './AuctionBidAction';
+import type { ContractDeployAction } from './ContractDeployAction';
+import {
     ContractDeployActionFromJSON,
     ContractDeployActionFromJSONTyped,
     ContractDeployActionToJSON,
 } from './ContractDeployAction';
+import type { JettonTransferAction } from './JettonTransferAction';
 import {
-    JettonTransferAction,
     JettonTransferActionFromJSON,
     JettonTransferActionFromJSONTyped,
     JettonTransferActionToJSON,
 } from './JettonTransferAction';
+import type { NftItemTransferAction } from './NftItemTransferAction';
 import {
-    NftItemTransferAction,
     NftItemTransferActionFromJSON,
     NftItemTransferActionFromJSONTyped,
     NftItemTransferActionToJSON,
 } from './NftItemTransferAction';
+import type { SubscriptionAction } from './SubscriptionAction';
 import {
-    SubscriptionAction,
     SubscriptionActionFromJSON,
     SubscriptionActionFromJSONTyped,
     SubscriptionActionToJSON,
 } from './SubscriptionAction';
+import type { TonTransferAction } from './TonTransferAction';
 import {
-    TonTransferAction,
     TonTransferActionFromJSON,
     TonTransferActionFromJSONTyped,
     TonTransferActionToJSON,
 } from './TonTransferAction';
+import type { UnSubscriptionAction } from './UnSubscriptionAction';
 import {
-    UnSubscriptionAction,
     UnSubscriptionActionFromJSON,
     UnSubscriptionActionFromJSONTyped,
     UnSubscriptionActionToJSON,
@@ -58,22 +64,10 @@ import {
 export interface Action {
     /**
      * 
-     * @type {string}
+     * @type {AuctionBidAction}
      * @memberof Action
      */
-    type: ActionTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof Action
-     */
-    status: ActionStatusEnum;
-    /**
-     * 
-     * @type {TonTransferAction}
-     * @memberof Action
-     */
-    tonTransfer?: TonTransferAction;
+    auctionBid?: AuctionBidAction;
     /**
      * 
      * @type {ContractDeployAction}
@@ -100,26 +94,30 @@ export interface Action {
     subscribe?: SubscriptionAction;
     /**
      * 
+     * @type {TonTransferAction}
+     * @memberof Action
+     */
+    tonTransfer?: TonTransferAction;
+    /**
+     * 
      * @type {UnSubscriptionAction}
      * @memberof Action
      */
     unSubscribe?: UnSubscriptionAction;
+    /**
+     * 
+     * @type {string}
+     * @memberof Action
+     */
+    status: ActionStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof Action
+     */
+    type: ActionTypeEnum;
 }
 
-
-/**
- * @export
- */
-export const ActionTypeEnum = {
-    TonTransfer: 'TonTransfer',
-    JettonTransfer: 'JettonTransfer',
-    NftItemTransfer: 'NftItemTransfer',
-    ContractDeploy: 'ContractDeploy',
-    Subscribe: 'Subscribe',
-    UnSubscribe: 'UnSubscribe',
-    Unknown: 'Unknown'
-} as const;
-export type ActionTypeEnum = typeof ActionTypeEnum[keyof typeof ActionTypeEnum];
 
 /**
  * @export
@@ -131,6 +129,32 @@ export const ActionStatusEnum = {
 } as const;
 export type ActionStatusEnum = typeof ActionStatusEnum[keyof typeof ActionStatusEnum];
 
+/**
+ * @export
+ */
+export const ActionTypeEnum = {
+    TonTransfer: 'TonTransfer',
+    JettonTransfer: 'JettonTransfer',
+    NftItemTransfer: 'NftItemTransfer',
+    ContractDeploy: 'ContractDeploy',
+    Subscribe: 'Subscribe',
+    UnSubscribe: 'UnSubscribe',
+    AuctionBid: 'AuctionBid',
+    Unknown: 'Unknown'
+} as const;
+export type ActionTypeEnum = typeof ActionTypeEnum[keyof typeof ActionTypeEnum];
+
+
+/**
+ * Check if a given object implements the Action interface.
+ */
+export function instanceOfAction(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "status" in value;
+    isInstance = isInstance && "type" in value;
+
+    return isInstance;
+}
 
 export function ActionFromJSON(json: any): Action {
     return ActionFromJSONTyped(json, false);
@@ -142,14 +166,15 @@ export function ActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): Ac
     }
     return {
         
-        'type': json['type'],
-        'status': json['status'],
-        'tonTransfer': !exists(json, 'TonTransfer') ? undefined : TonTransferActionFromJSON(json['TonTransfer']),
+        'auctionBid': !exists(json, 'AuctionBid') ? undefined : AuctionBidActionFromJSON(json['AuctionBid']),
         'contractDeploy': !exists(json, 'ContractDeploy') ? undefined : ContractDeployActionFromJSON(json['ContractDeploy']),
         'jettonTransfer': !exists(json, 'JettonTransfer') ? undefined : JettonTransferActionFromJSON(json['JettonTransfer']),
         'nftItemTransfer': !exists(json, 'NftItemTransfer') ? undefined : NftItemTransferActionFromJSON(json['NftItemTransfer']),
         'subscribe': !exists(json, 'Subscribe') ? undefined : SubscriptionActionFromJSON(json['Subscribe']),
+        'tonTransfer': !exists(json, 'TonTransfer') ? undefined : TonTransferActionFromJSON(json['TonTransfer']),
         'unSubscribe': !exists(json, 'UnSubscribe') ? undefined : UnSubscriptionActionFromJSON(json['UnSubscribe']),
+        'status': json['status'],
+        'type': json['type'],
     };
 }
 
@@ -162,14 +187,15 @@ export function ActionToJSON(value?: Action | null): any {
     }
     return {
         
-        'type': value.type,
-        'status': value.status,
-        'TonTransfer': TonTransferActionToJSON(value.tonTransfer),
+        'AuctionBid': AuctionBidActionToJSON(value.auctionBid),
         'ContractDeploy': ContractDeployActionToJSON(value.contractDeploy),
         'JettonTransfer': JettonTransferActionToJSON(value.jettonTransfer),
         'NftItemTransfer': NftItemTransferActionToJSON(value.nftItemTransfer),
         'Subscribe': SubscriptionActionToJSON(value.subscribe),
+        'TonTransfer': TonTransferActionToJSON(value.tonTransfer),
         'UnSubscribe': UnSubscriptionActionToJSON(value.unSubscribe),
+        'status': value.status,
+        'type': value.type,
     };
 }
 

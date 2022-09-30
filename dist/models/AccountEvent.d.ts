@@ -9,9 +9,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AccountAddress } from './AccountAddress';
-import { Action } from './Action';
-import { Fee } from './Fee';
+import type { AccountAddress } from './AccountAddress';
+import type { Action } from './Action';
+import type { Fee } from './Fee';
 /**
  *
  * @export
@@ -20,22 +20,10 @@ import { Fee } from './Fee';
 export interface AccountEvent {
     /**
      *
-     * @type {string}
-     * @memberof AccountEvent
-     */
-    eventId: string;
-    /**
-     *
      * @type {AccountAddress}
      * @memberof AccountEvent
      */
     account: AccountAddress;
-    /**
-     *
-     * @type {number}
-     * @memberof AccountEvent
-     */
-    timestamp: number;
     /**
      *
      * @type {Array<Action>}
@@ -44,10 +32,22 @@ export interface AccountEvent {
     actions: Array<Action>;
     /**
      *
+     * @type {string}
+     * @memberof AccountEvent
+     */
+    eventId: string;
+    /**
+     *
      * @type {Fee}
      * @memberof AccountEvent
      */
     fee: Fee;
+    /**
+     * Event is not finished yet. Transactions still happening
+     * @type {boolean}
+     * @memberof AccountEvent
+     */
+    inProgress: boolean;
     /**
      * scam
      * @type {boolean}
@@ -61,12 +61,16 @@ export interface AccountEvent {
      */
     lt: number;
     /**
-     * Event is not finished yet. Transactions still happening
-     * @type {boolean}
+     *
+     * @type {number}
      * @memberof AccountEvent
      */
-    inProgress: boolean;
+    timestamp: number;
 }
+/**
+ * Check if a given object implements the AccountEvent interface.
+ */
+export declare function instanceOfAccountEvent(value: object): boolean;
 export declare function AccountEventFromJSON(json: any): AccountEvent;
 export declare function AccountEventFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountEvent;
 export declare function AccountEventToJSON(value?: AccountEvent | null): any;

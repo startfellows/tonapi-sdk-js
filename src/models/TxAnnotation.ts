@@ -20,17 +20,28 @@ import { exists, mapValues } from '../runtime';
  */
 export interface TxAnnotation {
     /**
-     * 
-     * @type {string}
-     * @memberof TxAnnotation
-     */
-    name: string;
-    /**
      * annotation data struct
      * @type {any}
      * @memberof TxAnnotation
      */
     data: any | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TxAnnotation
+     */
+    name: string;
+}
+
+/**
+ * Check if a given object implements the TxAnnotation interface.
+ */
+export function instanceOfTxAnnotation(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "data" in value;
+    isInstance = isInstance && "name" in value;
+
+    return isInstance;
 }
 
 export function TxAnnotationFromJSON(json: any): TxAnnotation {
@@ -43,8 +54,8 @@ export function TxAnnotationFromJSONTyped(json: any, ignoreDiscriminator: boolea
     }
     return {
         
-        'name': json['name'],
         'data': json['data'],
+        'name': json['name'],
     };
 }
 
@@ -57,8 +68,8 @@ export function TxAnnotationToJSON(value?: TxAnnotation | null): any {
     }
     return {
         
-        'name': value.name,
         'data': value.data,
+        'name': value.name,
     };
 }
 

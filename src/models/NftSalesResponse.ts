@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { NftForSale } from './NftForSale';
 import {
-    NftForSale,
     NftForSaleFromJSON,
     NftForSaleFromJSONTyped,
     NftForSaleToJSON,
@@ -31,19 +31,28 @@ export interface NftSalesResponse {
      * @type {Array<NftForSale>}
      * @memberof NftSalesResponse
      */
-    getgems?: Array<NftForSale>;
-    /**
-     * 
-     * @type {Array<NftForSale>}
-     * @memberof NftSalesResponse
-     */
     disintar?: Array<NftForSale>;
     /**
      * 
      * @type {Array<NftForSale>}
      * @memberof NftSalesResponse
      */
+    getgems?: Array<NftForSale>;
+    /**
+     * 
+     * @type {Array<NftForSale>}
+     * @memberof NftSalesResponse
+     */
     other?: Array<NftForSale>;
+}
+
+/**
+ * Check if a given object implements the NftSalesResponse interface.
+ */
+export function instanceOfNftSalesResponse(value: object): boolean {
+    let isInstance = true;
+
+    return isInstance;
 }
 
 export function NftSalesResponseFromJSON(json: any): NftSalesResponse {
@@ -56,8 +65,8 @@ export function NftSalesResponseFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
-        'getgems': !exists(json, 'getgems') ? undefined : ((json['getgems'] as Array<any>).map(NftForSaleFromJSON)),
         'disintar': !exists(json, 'disintar') ? undefined : ((json['disintar'] as Array<any>).map(NftForSaleFromJSON)),
+        'getgems': !exists(json, 'getgems') ? undefined : ((json['getgems'] as Array<any>).map(NftForSaleFromJSON)),
         'other': !exists(json, 'other') ? undefined : ((json['other'] as Array<any>).map(NftForSaleFromJSON)),
     };
 }
@@ -71,8 +80,8 @@ export function NftSalesResponseToJSON(value?: NftSalesResponse | null): any {
     }
     return {
         
-        'getgems': value.getgems === undefined ? undefined : ((value.getgems as Array<any>).map(NftForSaleToJSON)),
         'disintar': value.disintar === undefined ? undefined : ((value.disintar as Array<any>).map(NftForSaleToJSON)),
+        'getgems': value.getgems === undefined ? undefined : ((value.getgems as Array<any>).map(NftForSaleToJSON)),
         'other': value.other === undefined ? undefined : ((value.other as Array<any>).map(NftForSaleToJSON)),
     };
 }

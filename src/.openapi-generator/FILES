@@ -24,6 +24,7 @@ models/AccountReprs.ts
 models/Action.ts
 models/AnnotatedTrace.ts
 models/Auction.ts
+models/AuctionBidAction.ts
 models/Auctions.ts
 models/Block.ts
 models/ContractDeployAction.ts

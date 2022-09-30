@@ -21,6 +21,12 @@ import { exists, mapValues } from '../runtime';
 export interface DomainBid {
     /**
      * 
+     * @type {string}
+     * @memberof DomainBid
+     */
+    bidderA: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof DomainBid
      */
@@ -30,19 +36,26 @@ export interface DomainBid {
      * @type {number}
      * @memberof DomainBid
      */
-    value: number;
+    txTime: number;
     /**
      * 
      * @type {number}
      * @memberof DomainBid
      */
-    txTime: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof DomainBid
-     */
-    bidderA: string;
+    value: number;
+}
+
+/**
+ * Check if a given object implements the DomainBid interface.
+ */
+export function instanceOfDomainBid(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "bidderA" in value;
+    isInstance = isInstance && "success" in value;
+    isInstance = isInstance && "txTime" in value;
+    isInstance = isInstance && "value" in value;
+
+    return isInstance;
 }
 
 export function DomainBidFromJSON(json: any): DomainBid {
@@ -55,10 +68,10 @@ export function DomainBidFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     }
     return {
         
-        'success': json['success'],
-        'value': json['value'],
-        'txTime': json['txTime'],
         'bidderA': json['bidderA'],
+        'success': json['success'],
+        'txTime': json['txTime'],
+        'value': json['value'],
     };
 }
 
@@ -71,10 +84,10 @@ export function DomainBidToJSON(value?: DomainBid | null): any {
     }
     return {
         
-        'success': value.success,
-        'value': value.value,
-        'txTime': value.txTime,
         'bidderA': value.bidderA,
+        'success': value.success,
+        'txTime': value.txTime,
+        'value': value.value,
     };
 }
 

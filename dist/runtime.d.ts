@@ -48,7 +48,7 @@ export declare class BaseAPI {
     withMiddleware<T extends BaseAPI>(this: T, ...middlewares: Middleware[]): T;
     withPreMiddleware<T extends BaseAPI>(this: T, ...preMiddlewares: Array<Middleware['pre']>): T;
     withPostMiddleware<T extends BaseAPI>(this: T, ...postMiddlewares: Array<Middleware['post']>): T;
-    protected request(context: RequestOpts, initOverrides?: RequestInit | InitOverideFunction): Promise<Response>;
+    protected request(context: RequestOpts, initOverrides?: RequestInit | InitOverrideFunction): Promise<Response>;
     private createFetchParams;
     private fetchApi;
     /**
@@ -61,6 +61,11 @@ export declare class ResponseError extends Error {
     response: Response;
     name: "ResponseError";
     constructor(response: Response, msg?: string);
+}
+export declare class FetchError extends Error {
+    cause: Error;
+    name: "FetchError";
+    constructor(cause: Error, msg?: string);
 }
 export declare class RequiredError extends Error {
     field: string;
@@ -90,7 +95,7 @@ export declare type HTTPRequestInit = {
     body?: HTTPBody;
 };
 export declare type ModelPropertyNaming = 'camelCase' | 'snake_case' | 'PascalCase' | 'original';
-export declare type InitOverideFunction = (requestContext: {
+export declare type InitOverrideFunction = (requestContext: {
     init: HTTPRequestInit;
     context: RequestOpts;
 }) => Promise<RequestInit>;
@@ -123,9 +128,17 @@ export interface ResponseContext {
     init: RequestInit;
     response: Response;
 }
+export interface ErrorContext {
+    fetch: FetchAPI;
+    url: string;
+    init: RequestInit;
+    error: unknown;
+    response?: Response;
+}
 export interface Middleware {
     pre?(context: RequestContext): Promise<FetchParams | void>;
     post?(context: ResponseContext): Promise<Response | void>;
+    onError?(context: ErrorContext): Promise<Response | void>;
 }
 export interface ApiResponse<T> {
     raw: Response;

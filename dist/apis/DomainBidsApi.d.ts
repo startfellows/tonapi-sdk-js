@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { DomainBids } from '../models';
+import type { DomainBids } from '../models';
 export interface GetDomainBidsRequest {
     domain: string;
 }
@@ -28,11 +28,11 @@ export interface DomainBidsApiInterface {
      * @throws {RequiredError}
      * @memberof DomainBidsApiInterface
      */
-    getDomainBidsRaw(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<DomainBids>>;
+    getDomainBidsRaw(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainBids>>;
     /**
      * Get domain bids
      */
-    getDomainBids(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<DomainBids>;
+    getDomainBids(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainBids>;
 }
 /**
  *
@@ -41,9 +41,9 @@ export declare class DomainBidsApi extends runtime.BaseAPI implements DomainBids
     /**
      * Get domain bids
      */
-    getDomainBidsRaw(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<DomainBids>>;
+    getDomainBidsRaw(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainBids>>;
     /**
      * Get domain bids
      */
-    getDomainBids(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<DomainBids>;
+    getDomainBids(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainBids>;
 }

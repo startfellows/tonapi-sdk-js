@@ -13,7 +13,18 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AccountReprAddressToJSON = exports.AccountReprAddressFromJSONTyped = exports.AccountReprAddressFromJSON = void 0;
+exports.AccountReprAddressToJSON = exports.AccountReprAddressFromJSONTyped = exports.AccountReprAddressFromJSON = exports.instanceOfAccountReprAddress = void 0;
+/**
+ * Check if a given object implements the AccountReprAddress interface.
+ */
+function instanceOfAccountReprAddress(value) {
+    let isInstance = true;
+    isInstance = isInstance && "bounceable" in value;
+    isInstance = isInstance && "nonBounceable" in value;
+    isInstance = isInstance && "raw" in value;
+    return isInstance;
+}
+exports.instanceOfAccountReprAddress = instanceOfAccountReprAddress;
 function AccountReprAddressFromJSON(json) {
     return AccountReprAddressFromJSONTyped(json, false);
 }
@@ -23,9 +34,9 @@ function AccountReprAddressFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'raw': json['raw'],
         'bounceable': json['bounceable'],
         'nonBounceable': json['non_bounceable'],
+        'raw': json['raw'],
     };
 }
 exports.AccountReprAddressFromJSONTyped = AccountReprAddressFromJSONTyped;
@@ -37,9 +48,9 @@ function AccountReprAddressToJSON(value) {
         return null;
     }
     return {
-        'raw': value.raw,
         'bounceable': value.bounceable,
         'non_bounceable': value.nonBounceable,
+        'raw': value.raw,
     };
 }
 exports.AccountReprAddressToJSON = AccountReprAddressToJSON;

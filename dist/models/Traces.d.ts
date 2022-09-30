@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Trace } from './Trace';
+import type { Trace } from './Trace';
 /**
  *
  * @export
@@ -23,6 +23,10 @@ export interface Traces {
      */
     traces: Array<Trace>;
 }
+/**
+ * Check if a given object implements the Traces interface.
+ */
+export declare function instanceOfTraces(value: object): boolean;
 export declare function TracesFromJSON(json: any): Traces;
 export declare function TracesFromJSONTyped(json: any, ignoreDiscriminator: boolean): Traces;
 export declare function TracesToJSON(value?: Traces | null): any;

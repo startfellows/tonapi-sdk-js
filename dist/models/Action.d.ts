@@ -9,12 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ContractDeployAction } from './ContractDeployAction';
-import { JettonTransferAction } from './JettonTransferAction';
-import { NftItemTransferAction } from './NftItemTransferAction';
-import { SubscriptionAction } from './SubscriptionAction';
-import { TonTransferAction } from './TonTransferAction';
-import { UnSubscriptionAction } from './UnSubscriptionAction';
+import type { AuctionBidAction } from './AuctionBidAction';
+import type { ContractDeployAction } from './ContractDeployAction';
+import type { JettonTransferAction } from './JettonTransferAction';
+import type { NftItemTransferAction } from './NftItemTransferAction';
+import type { SubscriptionAction } from './SubscriptionAction';
+import type { TonTransferAction } from './TonTransferAction';
+import type { UnSubscriptionAction } from './UnSubscriptionAction';
 /**
  *
  * @export
@@ -23,22 +24,10 @@ import { UnSubscriptionAction } from './UnSubscriptionAction';
 export interface Action {
     /**
      *
-     * @type {string}
+     * @type {AuctionBidAction}
      * @memberof Action
      */
-    type: ActionTypeEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof Action
-     */
-    status: ActionStatusEnum;
-    /**
-     *
-     * @type {TonTransferAction}
-     * @memberof Action
-     */
-    tonTransfer?: TonTransferAction;
+    auctionBid?: AuctionBidAction;
     /**
      *
      * @type {ContractDeployAction}
@@ -65,11 +54,38 @@ export interface Action {
     subscribe?: SubscriptionAction;
     /**
      *
+     * @type {TonTransferAction}
+     * @memberof Action
+     */
+    tonTransfer?: TonTransferAction;
+    /**
+     *
      * @type {UnSubscriptionAction}
      * @memberof Action
      */
     unSubscribe?: UnSubscriptionAction;
+    /**
+     *
+     * @type {string}
+     * @memberof Action
+     */
+    status: ActionStatusEnum;
+    /**
+     *
+     * @type {string}
+     * @memberof Action
+     */
+    type: ActionTypeEnum;
 }
+/**
+ * @export
+ */
+export declare const ActionStatusEnum: {
+    readonly Ok: "ok";
+    readonly Failed: "failed";
+    readonly Pending: "pending";
+};
+export declare type ActionStatusEnum = typeof ActionStatusEnum[keyof typeof ActionStatusEnum];
 /**
  * @export
  */
@@ -80,18 +96,14 @@ export declare const ActionTypeEnum: {
     readonly ContractDeploy: "ContractDeploy";
     readonly Subscribe: "Subscribe";
     readonly UnSubscribe: "UnSubscribe";
+    readonly AuctionBid: "AuctionBid";
     readonly Unknown: "Unknown";
 };
 export declare type ActionTypeEnum = typeof ActionTypeEnum[keyof typeof ActionTypeEnum];
 /**
- * @export
+ * Check if a given object implements the Action interface.
  */
-export declare const ActionStatusEnum: {
-    readonly Ok: "ok";
-    readonly Failed: "failed";
-    readonly Pending: "pending";
-};
-export declare type ActionStatusEnum = typeof ActionStatusEnum[keyof typeof ActionStatusEnum];
+export declare function instanceOfAction(value: object): boolean;
 export declare function ActionFromJSON(json: any): Action;
 export declare function ActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): Action;
 export declare function ActionToJSON(value?: Action | null): any;

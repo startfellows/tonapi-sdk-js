@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { Trace } from './Trace';
 import {
-    Trace,
     TraceFromJSON,
     TraceFromJSONTyped,
     TraceToJSON,
@@ -32,6 +32,16 @@ export interface Traces {
      * @memberof Traces
      */
     traces: Array<Trace>;
+}
+
+/**
+ * Check if a given object implements the Traces interface.
+ */
+export function instanceOfTraces(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "traces" in value;
+
+    return isInstance;
 }
 
 export function TracesFromJSON(json: any): Traces {

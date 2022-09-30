@@ -13,8 +13,17 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DomainBidsToJSON = exports.DomainBidsFromJSONTyped = exports.DomainBidsFromJSON = void 0;
+exports.DomainBidsToJSON = exports.DomainBidsFromJSONTyped = exports.DomainBidsFromJSON = exports.instanceOfDomainBids = void 0;
 const DomainBid_1 = require("./DomainBid");
+/**
+ * Check if a given object implements the DomainBids interface.
+ */
+function instanceOfDomainBids(value) {
+    let isInstance = true;
+    isInstance = isInstance && "data" in value;
+    return isInstance;
+}
+exports.instanceOfDomainBids = instanceOfDomainBids;
 function DomainBidsFromJSON(json) {
     return DomainBidsFromJSONTyped(json, false);
 }

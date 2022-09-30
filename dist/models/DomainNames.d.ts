@@ -22,6 +22,10 @@ export interface DomainNames {
      */
     domains: Array<string>;
 }
+/**
+ * Check if a given object implements the DomainNames interface.
+ */
+export declare function instanceOfDomainNames(value: object): boolean;
 export declare function DomainNamesFromJSON(json: any): DomainNames;
 export declare function DomainNamesFromJSONTyped(json: any, ignoreDiscriminator: boolean): DomainNames;
 export declare function DomainNamesToJSON(value?: DomainNames | null): any;

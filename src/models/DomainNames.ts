@@ -27,6 +27,16 @@ export interface DomainNames {
     domains: Array<string>;
 }
 
+/**
+ * Check if a given object implements the DomainNames interface.
+ */
+export function instanceOfDomainNames(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "domains" in value;
+
+    return isInstance;
+}
+
 export function DomainNamesFromJSON(json: any): DomainNames {
     return DomainNamesFromJSONTyped(json, false);
 }

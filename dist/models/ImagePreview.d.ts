@@ -28,6 +28,10 @@ export interface ImagePreview {
      */
     url: string;
 }
+/**
+ * Check if a given object implements the ImagePreview interface.
+ */
+export declare function instanceOfImagePreview(value: object): boolean;
 export declare function ImagePreviewFromJSON(json: any): ImagePreview;
 export declare function ImagePreviewFromJSONTyped(json: any, ignoreDiscriminator: boolean): ImagePreview;
 export declare function ImagePreviewToJSON(value?: ImagePreview | null): any;

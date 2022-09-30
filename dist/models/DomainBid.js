@@ -13,7 +13,19 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DomainBidToJSON = exports.DomainBidFromJSONTyped = exports.DomainBidFromJSON = void 0;
+exports.DomainBidToJSON = exports.DomainBidFromJSONTyped = exports.DomainBidFromJSON = exports.instanceOfDomainBid = void 0;
+/**
+ * Check if a given object implements the DomainBid interface.
+ */
+function instanceOfDomainBid(value) {
+    let isInstance = true;
+    isInstance = isInstance && "bidderA" in value;
+    isInstance = isInstance && "success" in value;
+    isInstance = isInstance && "txTime" in value;
+    isInstance = isInstance && "value" in value;
+    return isInstance;
+}
+exports.instanceOfDomainBid = instanceOfDomainBid;
 function DomainBidFromJSON(json) {
     return DomainBidFromJSONTyped(json, false);
 }
@@ -23,10 +35,10 @@ function DomainBidFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'success': json['success'],
-        'value': json['value'],
-        'txTime': json['txTime'],
         'bidderA': json['bidderA'],
+        'success': json['success'],
+        'txTime': json['txTime'],
+        'value': json['value'],
     };
 }
 exports.DomainBidFromJSONTyped = DomainBidFromJSONTyped;
@@ -38,10 +50,10 @@ function DomainBidToJSON(value) {
         return null;
     }
     return {
-        'success': value.success,
-        'value': value.value,
-        'txTime': value.txTime,
         'bidderA': value.bidderA,
+        'success': value.success,
+        'txTime': value.txTime,
+        'value': value.value,
     };
 }
 exports.DomainBidToJSON = DomainBidToJSON;

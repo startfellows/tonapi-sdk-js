@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { NftItem } from './NftItem';
+import type { NftItem } from './NftItem';
 /**
  *
  * @export
@@ -23,6 +23,10 @@ export interface NftItems {
      */
     nftItems: Array<NftItem>;
 }
+/**
+ * Check if a given object implements the NftItems interface.
+ */
+export declare function instanceOfNftItems(value: object): boolean;
 export declare function NftItemsFromJSON(json: any): NftItems;
 export declare function NftItemsFromJSONTyped(json: any, ignoreDiscriminator: boolean): NftItems;
 export declare function NftItemsToJSON(value?: NftItems | null): any;

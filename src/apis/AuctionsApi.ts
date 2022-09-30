@@ -14,8 +14,10 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  Auctions,
+} from '../models';
 import {
-    Auctions,
     AuctionsFromJSON,
     AuctionsToJSON,
 } from '../models';
@@ -33,12 +35,12 @@ export interface AuctionsApiInterface {
      * @throws {RequiredError}
      * @memberof AuctionsApiInterface
      */
-    getAllAuctionsRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Auctions>>;
+    getAllAuctionsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Auctions>>;
 
     /**
      * Get all auctions
      */
-    getAllAuctions(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Auctions>;
+    getAllAuctions(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Auctions>;
 
 }
 
@@ -50,7 +52,7 @@ export class AuctionsApi extends runtime.BaseAPI implements AuctionsApiInterface
     /**
      * Get all auctions
      */
-    async getAllAuctionsRaw(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Auctions>> {
+    async getAllAuctionsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Auctions>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -76,7 +78,7 @@ export class AuctionsApi extends runtime.BaseAPI implements AuctionsApiInterface
     /**
      * Get all auctions
      */
-    async getAllAuctions(initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Auctions> {
+    async getAllAuctions(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Auctions> {
         const response = await this.getAllAuctionsRaw(initOverrides);
         return await response.value();
     }

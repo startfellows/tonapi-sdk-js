@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { Auction } from './Auction';
 import {
-    Auction,
     AuctionFromJSON,
     AuctionFromJSONTyped,
     AuctionToJSON,
@@ -32,6 +32,16 @@ export interface Auctions {
      * @memberof Auctions
      */
     data: Array<Auction>;
+}
+
+/**
+ * Check if a given object implements the Auctions interface.
+ */
+export function instanceOfAuctions(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "data" in value;
+
+    return isInstance;
 }
 
 export function AuctionsFromJSON(json: any): Auctions {

@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { JettonMetadata } from './JettonMetadata';
 import {
-    JettonMetadata,
     JettonMetadataFromJSON,
     JettonMetadataFromJSONTyped,
     JettonMetadataToJSON,
@@ -28,6 +28,12 @@ import {
 export interface JettonInfo {
     /**
      * 
+     * @type {JettonMetadata}
+     * @memberof JettonInfo
+     */
+    metadata: JettonMetadata;
+    /**
+     * 
      * @type {boolean}
      * @memberof JettonInfo
      */
@@ -38,12 +44,18 @@ export interface JettonInfo {
      * @memberof JettonInfo
      */
     totalSupply: string;
-    /**
-     * 
-     * @type {JettonMetadata}
-     * @memberof JettonInfo
-     */
-    metadata: JettonMetadata;
+}
+
+/**
+ * Check if a given object implements the JettonInfo interface.
+ */
+export function instanceOfJettonInfo(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "metadata" in value;
+    isInstance = isInstance && "mintable" in value;
+    isInstance = isInstance && "totalSupply" in value;
+
+    return isInstance;
 }
 
 export function JettonInfoFromJSON(json: any): JettonInfo {
@@ -56,9 +68,9 @@ export function JettonInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     }
     return {
         
+        'metadata': JettonMetadataFromJSON(json['metadata']),
         'mintable': json['mintable'],
         'totalSupply': json['total_supply'],
-        'metadata': JettonMetadataFromJSON(json['metadata']),
     };
 }
 
@@ -71,9 +83,9 @@ export function JettonInfoToJSON(value?: JettonInfo | null): any {
     }
     return {
         
+        'metadata': JettonMetadataToJSON(value.metadata),
         'mintable': value.mintable,
         'total_supply': value.totalSupply,
-        'metadata': JettonMetadataToJSON(value.metadata),
     };
 }
 

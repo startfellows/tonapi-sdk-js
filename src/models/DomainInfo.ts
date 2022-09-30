@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { DomainInfoNftItem } from './DomainInfoNftItem';
 import {
-    DomainInfoNftItem,
     DomainInfoNftItemFromJSON,
     DomainInfoNftItemFromJSONTyped,
     DomainInfoNftItemToJSON,
@@ -28,16 +28,26 @@ import {
 export interface DomainInfo {
     /**
      * 
-     * @type {DomainInfoNftItem}
-     * @memberof DomainInfo
-     */
-    nftItem?: DomainInfoNftItem;
-    /**
-     * 
      * @type {number}
      * @memberof DomainInfo
      */
     expiration: number;
+    /**
+     * 
+     * @type {DomainInfoNftItem}
+     * @memberof DomainInfo
+     */
+    nftItem?: DomainInfoNftItem;
+}
+
+/**
+ * Check if a given object implements the DomainInfo interface.
+ */
+export function instanceOfDomainInfo(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "expiration" in value;
+
+    return isInstance;
 }
 
 export function DomainInfoFromJSON(json: any): DomainInfo {
@@ -50,8 +60,8 @@ export function DomainInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     }
     return {
         
-        'nftItem': !exists(json, 'nft_item') ? undefined : DomainInfoNftItemFromJSON(json['nft_item']),
         'expiration': json['expiration'],
+        'nftItem': !exists(json, 'nft_item') ? undefined : DomainInfoNftItemFromJSON(json['nft_item']),
     };
 }
 
@@ -64,8 +74,8 @@ export function DomainInfoToJSON(value?: DomainInfo | null): any {
     }
     return {
         
-        'nft_item': DomainInfoNftItemToJSON(value.nftItem),
         'expiration': value.expiration,
+        'nft_item': DomainInfoNftItemToJSON(value.nftItem),
     };
 }
 

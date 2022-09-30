@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AccountEvent } from './AccountEvent';
+import type { AccountEvent } from './AccountEvent';
 /**
  *
  * @export
@@ -23,6 +23,10 @@ export interface AccountEvents200Response {
      */
     events: Array<AccountEvent>;
 }
+/**
+ * Check if a given object implements the AccountEvents200Response interface.
+ */
+export declare function instanceOfAccountEvents200Response(value: object): boolean;
 export declare function AccountEvents200ResponseFromJSON(json: any): AccountEvents200Response;
 export declare function AccountEvents200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountEvents200Response;
 export declare function AccountEvents200ResponseToJSON(value?: AccountEvents200Response | null): any;

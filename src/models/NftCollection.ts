@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AccountAddress } from './AccountAddress';
 import {
-    AccountAddress,
     AccountAddressFromJSON,
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
@@ -34,6 +34,12 @@ export interface NftCollection {
     address: string;
     /**
      * 
+     * @type {any}
+     * @memberof NftCollection
+     */
+    metadata?: any | null;
+    /**
+     * 
      * @type {number}
      * @memberof NftCollection
      */
@@ -50,12 +56,18 @@ export interface NftCollection {
      * @memberof NftCollection
      */
     rawCollectionContent: string;
-    /**
-     * 
-     * @type {any}
-     * @memberof NftCollection
-     */
-    metadata?: any | null;
+}
+
+/**
+ * Check if a given object implements the NftCollection interface.
+ */
+export function instanceOfNftCollection(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "nextItemIndex" in value;
+    isInstance = isInstance && "rawCollectionContent" in value;
+
+    return isInstance;
 }
 
 export function NftCollectionFromJSON(json: any): NftCollection {
@@ -69,10 +81,10 @@ export function NftCollectionFromJSONTyped(json: any, ignoreDiscriminator: boole
     return {
         
         'address': json['address'],
+        'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
         'nextItemIndex': json['next_item_index'],
         'owner': !exists(json, 'owner') ? undefined : AccountAddressFromJSON(json['owner']),
         'rawCollectionContent': json['raw_collection_content'],
-        'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
     };
 }
 
@@ -86,10 +98,10 @@ export function NftCollectionToJSON(value?: NftCollection | null): any {
     return {
         
         'address': value.address,
+        'metadata': value.metadata,
         'next_item_index': value.nextItemIndex,
         'owner': AccountAddressToJSON(value.owner),
         'raw_collection_content': value.rawCollectionContent,
-        'metadata': value.metadata,
     };
 }
 

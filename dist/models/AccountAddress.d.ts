@@ -26,7 +26,7 @@ export interface AccountAddress {
      * @type {string}
      * @memberof AccountAddress
      */
-    name?: string;
+    icon?: string;
     /**
      *
      * @type {boolean}
@@ -38,8 +38,12 @@ export interface AccountAddress {
      * @type {string}
      * @memberof AccountAddress
      */
-    icon?: string;
+    name?: string;
 }
+/**
+ * Check if a given object implements the AccountAddress interface.
+ */
+export declare function instanceOfAccountAddress(value: object): boolean;
 export declare function AccountAddressFromJSON(json: any): AccountAddress;
 export declare function AccountAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountAddress;
 export declare function AccountAddressToJSON(value?: AccountAddress | null): any;

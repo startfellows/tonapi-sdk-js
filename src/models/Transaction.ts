@@ -13,14 +13,14 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AccountAddress } from './AccountAddress';
 import {
-    AccountAddress,
     AccountAddressFromJSON,
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
+import type { Message } from './Message';
 import {
-    Message,
     MessageFromJSON,
     MessageFromJSONTyped,
     MessageToJSON,
@@ -32,42 +32,6 @@ import {
  * @interface Transaction
  */
 export interface Transaction {
-    /**
-     * 
-     * @type {string}
-     * @memberof Transaction
-     */
-    hash: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Transaction
-     */
-    fee: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Transaction
-     */
-    storageFee: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Transaction
-     */
-    otherFee: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Transaction
-     */
-    lt: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Transaction
-     */
-    utime: number;
     /**
      * 
      * @type {AccountAddress}
@@ -82,16 +46,70 @@ export interface Transaction {
     data: string;
     /**
      * 
+     * @type {number}
+     * @memberof Transaction
+     */
+    fee: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Transaction
+     */
+    hash: string;
+    /**
+     * 
      * @type {Message}
      * @memberof Transaction
      */
     inMsg?: Message;
     /**
      * 
+     * @type {number}
+     * @memberof Transaction
+     */
+    lt: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Transaction
+     */
+    otherFee: number;
+    /**
+     * 
      * @type {Array<Message>}
      * @memberof Transaction
      */
     outMsgs: Array<Message>;
+    /**
+     * 
+     * @type {number}
+     * @memberof Transaction
+     */
+    storageFee: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Transaction
+     */
+    utime: number;
+}
+
+/**
+ * Check if a given object implements the Transaction interface.
+ */
+export function instanceOfTransaction(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "account" in value;
+    isInstance = isInstance && "data" in value;
+    isInstance = isInstance && "fee" in value;
+    isInstance = isInstance && "hash" in value;
+    isInstance = isInstance && "lt" in value;
+    isInstance = isInstance && "otherFee" in value;
+    isInstance = isInstance && "outMsgs" in value;
+    isInstance = isInstance && "storageFee" in value;
+    isInstance = isInstance && "utime" in value;
+
+    return isInstance;
 }
 
 export function TransactionFromJSON(json: any): Transaction {
@@ -104,16 +122,16 @@ export function TransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
         
-        'hash': json['hash'],
-        'fee': json['fee'],
-        'storageFee': json['storage_fee'],
-        'otherFee': json['other_fee'],
-        'lt': json['lt'],
-        'utime': json['utime'],
         'account': AccountAddressFromJSON(json['account']),
         'data': json['data'],
+        'fee': json['fee'],
+        'hash': json['hash'],
         'inMsg': !exists(json, 'in_msg') ? undefined : MessageFromJSON(json['in_msg']),
+        'lt': json['lt'],
+        'otherFee': json['other_fee'],
         'outMsgs': ((json['out_msgs'] as Array<any>).map(MessageFromJSON)),
+        'storageFee': json['storage_fee'],
+        'utime': json['utime'],
     };
 }
 
@@ -126,16 +144,16 @@ export function TransactionToJSON(value?: Transaction | null): any {
     }
     return {
         
-        'hash': value.hash,
-        'fee': value.fee,
-        'storage_fee': value.storageFee,
-        'other_fee': value.otherFee,
-        'lt': value.lt,
-        'utime': value.utime,
         'account': AccountAddressToJSON(value.account),
         'data': value.data,
+        'fee': value.fee,
+        'hash': value.hash,
         'in_msg': MessageToJSON(value.inMsg),
+        'lt': value.lt,
+        'other_fee': value.otherFee,
         'out_msgs': ((value.outMsgs as Array<any>).map(MessageToJSON)),
+        'storage_fee': value.storageFee,
+        'utime': value.utime,
     };
 }
 

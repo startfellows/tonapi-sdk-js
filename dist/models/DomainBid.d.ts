@@ -17,6 +17,12 @@
 export interface DomainBid {
     /**
      *
+     * @type {string}
+     * @memberof DomainBid
+     */
+    bidderA: string;
+    /**
+     *
      * @type {boolean}
      * @memberof DomainBid
      */
@@ -26,20 +32,18 @@ export interface DomainBid {
      * @type {number}
      * @memberof DomainBid
      */
-    value: number;
+    txTime: number;
     /**
      *
      * @type {number}
      * @memberof DomainBid
      */
-    txTime: number;
-    /**
-     *
-     * @type {string}
-     * @memberof DomainBid
-     */
-    bidderA: string;
+    value: number;
 }
+/**
+ * Check if a given object implements the DomainBid interface.
+ */
+export declare function instanceOfDomainBid(value: object): boolean;
 export declare function DomainBidFromJSON(json: any): DomainBid;
 export declare function DomainBidFromJSONTyped(json: any, ignoreDiscriminator: boolean): DomainBid;
 export declare function DomainBidToJSON(value?: DomainBid | null): any;

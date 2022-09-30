@@ -20,12 +20,6 @@ export interface AccountReprAddress {
      * @type {string}
      * @memberof AccountReprAddress
      */
-    raw: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AccountReprAddress
-     */
     bounceable: string;
     /**
      *
@@ -33,7 +27,17 @@ export interface AccountReprAddress {
      * @memberof AccountReprAddress
      */
     nonBounceable: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AccountReprAddress
+     */
+    raw: string;
 }
+/**
+ * Check if a given object implements the AccountReprAddress interface.
+ */
+export declare function instanceOfAccountReprAddress(value: object): boolean;
 export declare function AccountReprAddressFromJSON(json: any): AccountReprAddress;
 export declare function AccountReprAddressFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountReprAddress;
 export declare function AccountReprAddressToJSON(value?: AccountReprAddress | null): any;

@@ -13,7 +13,17 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TxAnnotationToJSON = exports.TxAnnotationFromJSONTyped = exports.TxAnnotationFromJSON = void 0;
+exports.TxAnnotationToJSON = exports.TxAnnotationFromJSONTyped = exports.TxAnnotationFromJSON = exports.instanceOfTxAnnotation = void 0;
+/**
+ * Check if a given object implements the TxAnnotation interface.
+ */
+function instanceOfTxAnnotation(value) {
+    let isInstance = true;
+    isInstance = isInstance && "data" in value;
+    isInstance = isInstance && "name" in value;
+    return isInstance;
+}
+exports.instanceOfTxAnnotation = instanceOfTxAnnotation;
 function TxAnnotationFromJSON(json) {
     return TxAnnotationFromJSONTyped(json, false);
 }
@@ -23,8 +33,8 @@ function TxAnnotationFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'name': json['name'],
         'data': json['data'],
+        'name': json['name'],
     };
 }
 exports.TxAnnotationFromJSONTyped = TxAnnotationFromJSONTyped;
@@ -36,8 +46,8 @@ function TxAnnotationToJSON(value) {
         return null;
     }
     return {
-        'name': value.name,
         'data': value.data,
+        'name': value.name,
     };
 }
 exports.TxAnnotationToJSON = TxAnnotationToJSON;

@@ -13,26 +13,26 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AccountAddress } from './AccountAddress';
 import {
-    AccountAddress,
     AccountAddressFromJSON,
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
+import type { ImagePreview } from './ImagePreview';
 import {
-    ImagePreview,
     ImagePreviewFromJSON,
     ImagePreviewFromJSONTyped,
     ImagePreviewToJSON,
 } from './ImagePreview';
+import type { NftItemReprCollection } from './NftItemReprCollection';
 import {
-    NftItemReprCollection,
     NftItemReprCollectionFromJSON,
     NftItemReprCollectionFromJSONTyped,
     NftItemReprCollectionToJSON,
 } from './NftItemReprCollection';
+import type { Sale } from './Sale';
 import {
-    Sale,
     SaleFromJSON,
     SaleFromJSONTyped,
     SaleToJSON,
@@ -52,16 +52,10 @@ export interface NftItemRepr {
     address: string;
     /**
      * 
-     * @type {number}
+     * @type {NftItemReprCollection}
      * @memberof NftItemRepr
      */
-    index: number;
-    /**
-     * 
-     * @type {AccountAddress}
-     * @memberof NftItemRepr
-     */
-    owner?: AccountAddress;
+    collection?: NftItemReprCollection;
     /**
      * deprecated
      * @type {string}
@@ -71,16 +65,16 @@ export interface NftItemRepr {
     collectionAddress?: string;
     /**
      * 
-     * @type {NftItemReprCollection}
+     * @type {string}
      * @memberof NftItemRepr
      */
-    collection?: NftItemReprCollection;
+    dns?: string;
     /**
      * 
-     * @type {boolean}
+     * @type {number}
      * @memberof NftItemRepr
      */
-    verified: boolean;
+    index: number;
     /**
      * 
      * @type {any}
@@ -89,10 +83,10 @@ export interface NftItemRepr {
     metadata?: any | null;
     /**
      * 
-     * @type {Sale}
+     * @type {AccountAddress}
      * @memberof NftItemRepr
      */
-    sale?: Sale;
+    owner?: AccountAddress;
     /**
      * 
      * @type {Array<ImagePreview>}
@@ -101,10 +95,28 @@ export interface NftItemRepr {
     previews?: Array<ImagePreview>;
     /**
      * 
-     * @type {string}
+     * @type {Sale}
      * @memberof NftItemRepr
      */
-    dns?: string;
+    sale?: Sale;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof NftItemRepr
+     */
+    verified: boolean;
+}
+
+/**
+ * Check if a given object implements the NftItemRepr interface.
+ */
+export function instanceOfNftItemRepr(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "index" in value;
+    isInstance = isInstance && "verified" in value;
+
+    return isInstance;
 }
 
 export function NftItemReprFromJSON(json: any): NftItemRepr {
@@ -118,15 +130,15 @@ export function NftItemReprFromJSONTyped(json: any, ignoreDiscriminator: boolean
     return {
         
         'address': json['address'],
-        'index': json['index'],
-        'owner': !exists(json, 'owner') ? undefined : AccountAddressFromJSON(json['owner']),
-        'collectionAddress': !exists(json, 'collection_address') ? undefined : json['collection_address'],
         'collection': !exists(json, 'collection') ? undefined : NftItemReprCollectionFromJSON(json['collection']),
-        'verified': json['verified'],
-        'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
-        'sale': !exists(json, 'sale') ? undefined : SaleFromJSON(json['sale']),
-        'previews': !exists(json, 'previews') ? undefined : ((json['previews'] as Array<any>).map(ImagePreviewFromJSON)),
+        'collectionAddress': !exists(json, 'collection_address') ? undefined : json['collection_address'],
         'dns': !exists(json, 'dns') ? undefined : json['dns'],
+        'index': json['index'],
+        'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
+        'owner': !exists(json, 'owner') ? undefined : AccountAddressFromJSON(json['owner']),
+        'previews': !exists(json, 'previews') ? undefined : ((json['previews'] as Array<any>).map(ImagePreviewFromJSON)),
+        'sale': !exists(json, 'sale') ? undefined : SaleFromJSON(json['sale']),
+        'verified': json['verified'],
     };
 }
 
@@ -140,15 +152,15 @@ export function NftItemReprToJSON(value?: NftItemRepr | null): any {
     return {
         
         'address': value.address,
-        'index': value.index,
-        'owner': AccountAddressToJSON(value.owner),
-        'collection_address': value.collectionAddress,
         'collection': NftItemReprCollectionToJSON(value.collection),
-        'verified': value.verified,
-        'metadata': value.metadata,
-        'sale': SaleToJSON(value.sale),
-        'previews': value.previews === undefined ? undefined : ((value.previews as Array<any>).map(ImagePreviewToJSON)),
+        'collection_address': value.collectionAddress,
         'dns': value.dns,
+        'index': value.index,
+        'metadata': value.metadata,
+        'owner': AccountAddressToJSON(value.owner),
+        'previews': value.previews === undefined ? undefined : ((value.previews as Array<any>).map(ImagePreviewToJSON)),
+        'sale': SaleToJSON(value.sale),
+        'verified': value.verified,
     };
 }
 

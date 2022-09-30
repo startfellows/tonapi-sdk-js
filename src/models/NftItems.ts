@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { NftItem } from './NftItem';
 import {
-    NftItem,
     NftItemFromJSON,
     NftItemFromJSONTyped,
     NftItemToJSON,
@@ -32,6 +32,16 @@ export interface NftItems {
      * @memberof NftItems
      */
     nftItems: Array<NftItem>;
+}
+
+/**
+ * Check if a given object implements the NftItems interface.
+ */
+export function instanceOfNftItems(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "nftItems" in value;
+
+    return isInstance;
 }
 
 export function NftItemsFromJSON(json: any): NftItems {

@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AccountRepr } from './AccountRepr';
 import {
-    AccountRepr,
     AccountReprFromJSON,
     AccountReprFromJSONTyped,
     AccountReprToJSON,
@@ -32,6 +32,16 @@ export interface AccountReprs {
      * @memberof AccountReprs
      */
     accounts: Array<AccountRepr>;
+}
+
+/**
+ * Check if a given object implements the AccountReprs interface.
+ */
+export function instanceOfAccountReprs(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "accounts" in value;
+
+    return isInstance;
 }
 
 export function AccountReprsFromJSON(json: any): AccountReprs {

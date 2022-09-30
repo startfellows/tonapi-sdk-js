@@ -9,13 +9,19 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AccountReprAddress } from './AccountReprAddress';
+import type { AccountReprAddress } from './AccountReprAddress';
 /**
  *
  * @export
  * @interface AccountRepr
  */
 export interface AccountRepr {
+    /**
+     *
+     * @type {AccountReprAddress}
+     * @memberof AccountRepr
+     */
+    address: AccountReprAddress;
     /**
      *
      * @type {number}
@@ -27,7 +33,7 @@ export interface AccountRepr {
      * @type {string}
      * @memberof AccountRepr
      */
-    status: string;
+    icon?: string;
     /**
      *
      * @type {Array<string>}
@@ -36,28 +42,16 @@ export interface AccountRepr {
     interfaces: Array<string>;
     /**
      *
-     * @type {AccountReprAddress}
-     * @memberof AccountRepr
-     */
-    address: AccountReprAddress;
-    /**
-     *
-     * @type {string}
-     * @memberof AccountRepr
-     */
-    name?: string;
-    /**
-     *
      * @type {boolean}
      * @memberof AccountRepr
      */
     isScam: boolean;
     /**
      *
-     * @type {string}
+     * @type {number}
      * @memberof AccountRepr
      */
-    icon?: string;
+    lastUpdate: number;
     /**
      *
      * @type {boolean}
@@ -66,11 +60,21 @@ export interface AccountRepr {
     memoRequired: boolean;
     /**
      *
-     * @type {number}
+     * @type {string}
      * @memberof AccountRepr
      */
-    lastUpdate: number;
+    name?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AccountRepr
+     */
+    status: string;
 }
+/**
+ * Check if a given object implements the AccountRepr interface.
+ */
+export declare function instanceOfAccountRepr(value: object): boolean;
 export declare function AccountReprFromJSON(json: any): AccountRepr;
 export declare function AccountReprFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountRepr;
 export declare function AccountReprToJSON(value?: AccountRepr | null): any;

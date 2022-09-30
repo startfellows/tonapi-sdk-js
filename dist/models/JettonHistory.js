@@ -13,8 +13,17 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JettonHistoryToJSON = exports.JettonHistoryFromJSONTyped = exports.JettonHistoryFromJSON = void 0;
+exports.JettonHistoryToJSON = exports.JettonHistoryFromJSONTyped = exports.JettonHistoryFromJSON = exports.instanceOfJettonHistory = void 0;
 const JettonSimpleTransfer_1 = require("./JettonSimpleTransfer");
+/**
+ * Check if a given object implements the JettonHistory interface.
+ */
+function instanceOfJettonHistory(value) {
+    let isInstance = true;
+    isInstance = isInstance && "history" in value;
+    return isInstance;
+}
+exports.instanceOfJettonHistory = instanceOfJettonHistory;
 function JettonHistoryFromJSON(json) {
     return JettonHistoryFromJSONTyped(json, false);
 }

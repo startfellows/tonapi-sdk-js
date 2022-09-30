@@ -33,6 +33,17 @@ export interface NftItemReprCollection {
     name: string;
 }
 
+/**
+ * Check if a given object implements the NftItemReprCollection interface.
+ */
+export function instanceOfNftItemReprCollection(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "name" in value;
+
+    return isInstance;
+}
+
 export function NftItemReprCollectionFromJSON(json: any): NftItemReprCollection {
     return NftItemReprCollectionFromJSONTyped(json, false);
 }

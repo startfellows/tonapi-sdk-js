@@ -14,11 +14,13 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  AccountEvent,
+  SendBocRequest,
+} from '../models';
 import {
-    AccountEvent,
     AccountEventFromJSON,
     AccountEventToJSON,
-    SendBocRequest,
     SendBocRequestFromJSON,
     SendBocRequestToJSON,
 } from '../models';
@@ -45,12 +47,12 @@ export interface SendApiInterface {
      * @throws {RequiredError}
      * @memberof SendApiInterface
      */
-    estimateTxRaw(requestParameters: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<AccountEvent>>;
+    estimateTxRaw(requestParameters: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvent>>;
 
     /**
      * Estimate fees for message
      */
-    estimateTx(requestParameters: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<AccountEvent>;
+    estimateTx(requestParameters: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvent>;
 
     /**
      * Send message to blockchain
@@ -59,12 +61,12 @@ export interface SendApiInterface {
      * @throws {RequiredError}
      * @memberof SendApiInterface
      */
-    sendBocRaw(requestParameters: SendBocOperationRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<void>>;
+    sendBocRaw(requestParameters: SendBocOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
 
     /**
      * Send message to blockchain
      */
-    sendBoc(requestParameters: SendBocOperationRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<void>;
+    sendBoc(requestParameters: SendBocOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
 }
 
@@ -76,7 +78,7 @@ export class SendApi extends runtime.BaseAPI implements SendApiInterface {
     /**
      * Estimate fees for message
      */
-    async estimateTxRaw(requestParameters: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<AccountEvent>> {
+    async estimateTxRaw(requestParameters: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvent>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -105,7 +107,7 @@ export class SendApi extends runtime.BaseAPI implements SendApiInterface {
     /**
      * Estimate fees for message
      */
-    async estimateTx(requestParameters: EstimateTxRequest = {}, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<AccountEvent> {
+    async estimateTx(requestParameters: EstimateTxRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvent> {
         const response = await this.estimateTxRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -113,7 +115,7 @@ export class SendApi extends runtime.BaseAPI implements SendApiInterface {
     /**
      * Send message to blockchain
      */
-    async sendBocRaw(requestParameters: SendBocOperationRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<void>> {
+    async sendBocRaw(requestParameters: SendBocOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -142,7 +144,7 @@ export class SendApi extends runtime.BaseAPI implements SendApiInterface {
     /**
      * Send message to blockchain
      */
-    async sendBoc(requestParameters: SendBocOperationRequest = {}, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<void> {
+    async sendBoc(requestParameters: SendBocOperationRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.sendBocRaw(requestParameters, initOverrides);
     }
 

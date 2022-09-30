@@ -27,6 +27,16 @@ export interface SendBocRequest {
     boc: string;
 }
 
+/**
+ * Check if a given object implements the SendBocRequest interface.
+ */
+export function instanceOfSendBocRequest(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "boc" in value;
+
+    return isInstance;
+}
+
 export function SendBocRequestFromJSON(json: any): SendBocRequest {
     return SendBocRequestFromJSONTyped(json, false);
 }

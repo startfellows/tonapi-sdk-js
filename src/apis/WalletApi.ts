@@ -14,8 +14,10 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  Wallets,
+} from '../models';
 import {
-    Wallets,
     WalletsFromJSON,
     WalletsToJSON,
 } from '../models';
@@ -38,12 +40,12 @@ export interface WalletApiInterface {
      * @throws {RequiredError}
      * @memberof WalletApiInterface
      */
-    findWalletsByPubKeyRaw(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Wallets>>;
+    findWalletsByPubKeyRaw(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Wallets>>;
 
     /**
      * Find all wallets by public key
      */
-    findWalletsByPubKey(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Wallets>;
+    findWalletsByPubKey(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Wallets>;
 
 }
 
@@ -55,7 +57,7 @@ export class WalletApi extends runtime.BaseAPI implements WalletApiInterface {
     /**
      * Find all wallets by public key
      */
-    async findWalletsByPubKeyRaw(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Wallets>> {
+    async findWalletsByPubKeyRaw(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Wallets>> {
         if (requestParameters.publicKey === null || requestParameters.publicKey === undefined) {
             throw new runtime.RequiredError('publicKey','Required parameter requestParameters.publicKey was null or undefined when calling findWalletsByPubKey.');
         }
@@ -89,7 +91,7 @@ export class WalletApi extends runtime.BaseAPI implements WalletApiInterface {
     /**
      * Find all wallets by public key
      */
-    async findWalletsByPubKey(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Wallets> {
+    async findWalletsByPubKey(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Wallets> {
         const response = await this.findWalletsByPubKeyRaw(requestParameters, initOverrides);
         return await response.value();
     }

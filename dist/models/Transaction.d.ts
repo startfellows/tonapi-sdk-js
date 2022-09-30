@@ -9,50 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AccountAddress } from './AccountAddress';
-import { Message } from './Message';
+import type { AccountAddress } from './AccountAddress';
+import type { Message } from './Message';
 /**
  *
  * @export
  * @interface Transaction
  */
 export interface Transaction {
-    /**
-     *
-     * @type {string}
-     * @memberof Transaction
-     */
-    hash: string;
-    /**
-     *
-     * @type {number}
-     * @memberof Transaction
-     */
-    fee: number;
-    /**
-     *
-     * @type {number}
-     * @memberof Transaction
-     */
-    storageFee: number;
-    /**
-     *
-     * @type {number}
-     * @memberof Transaction
-     */
-    otherFee: number;
-    /**
-     *
-     * @type {number}
-     * @memberof Transaction
-     */
-    lt: number;
-    /**
-     *
-     * @type {number}
-     * @memberof Transaction
-     */
-    utime: number;
     /**
      *
      * @type {AccountAddress}
@@ -67,17 +31,57 @@ export interface Transaction {
     data: string;
     /**
      *
+     * @type {number}
+     * @memberof Transaction
+     */
+    fee: number;
+    /**
+     *
+     * @type {string}
+     * @memberof Transaction
+     */
+    hash: string;
+    /**
+     *
      * @type {Message}
      * @memberof Transaction
      */
     inMsg?: Message;
     /**
      *
+     * @type {number}
+     * @memberof Transaction
+     */
+    lt: number;
+    /**
+     *
+     * @type {number}
+     * @memberof Transaction
+     */
+    otherFee: number;
+    /**
+     *
      * @type {Array<Message>}
      * @memberof Transaction
      */
     outMsgs: Array<Message>;
+    /**
+     *
+     * @type {number}
+     * @memberof Transaction
+     */
+    storageFee: number;
+    /**
+     *
+     * @type {number}
+     * @memberof Transaction
+     */
+    utime: number;
 }
+/**
+ * Check if a given object implements the Transaction interface.
+ */
+export declare function instanceOfTransaction(value: object): boolean;
 export declare function TransactionFromJSON(json: any): Transaction;
 export declare function TransactionFromJSONTyped(json: any, ignoreDiscriminator: boolean): Transaction;
 export declare function TransactionToJSON(value?: Transaction | null): any;

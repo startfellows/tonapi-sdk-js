@@ -13,14 +13,14 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AccountAddress } from './AccountAddress';
 import {
-    AccountAddress,
     AccountAddressFromJSON,
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
+import type { Price } from './Price';
 import {
-    Price,
     PriceFromJSON,
     PriceFromJSONTyped,
     PriceToJSON,
@@ -56,6 +56,18 @@ export interface Sale {
      * @memberof Sale
      */
     price: Price;
+}
+
+/**
+ * Check if a given object implements the Sale interface.
+ */
+export function instanceOfSale(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "market" in value;
+    isInstance = isInstance && "price" in value;
+
+    return isInstance;
 }
 
 export function SaleFromJSON(json: any): Sale {

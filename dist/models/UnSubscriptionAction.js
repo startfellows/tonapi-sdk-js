@@ -13,8 +13,19 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UnSubscriptionActionToJSON = exports.UnSubscriptionActionFromJSONTyped = exports.UnSubscriptionActionFromJSON = void 0;
+exports.UnSubscriptionActionToJSON = exports.UnSubscriptionActionFromJSONTyped = exports.UnSubscriptionActionFromJSON = exports.instanceOfUnSubscriptionAction = void 0;
 const AccountAddress_1 = require("./AccountAddress");
+/**
+ * Check if a given object implements the UnSubscriptionAction interface.
+ */
+function instanceOfUnSubscriptionAction(value) {
+    let isInstance = true;
+    isInstance = isInstance && "beneficiary" in value;
+    isInstance = isInstance && "subscriber" in value;
+    isInstance = isInstance && "subscription" in value;
+    return isInstance;
+}
+exports.instanceOfUnSubscriptionAction = instanceOfUnSubscriptionAction;
 function UnSubscriptionActionFromJSON(json) {
     return UnSubscriptionActionFromJSONTyped(json, false);
 }
@@ -24,9 +35,9 @@ function UnSubscriptionActionFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
+        'beneficiary': (0, AccountAddress_1.AccountAddressFromJSON)(json['beneficiary']),
         'subscriber': (0, AccountAddress_1.AccountAddressFromJSON)(json['subscriber']),
         'subscription': json['subscription'],
-        'beneficiary': (0, AccountAddress_1.AccountAddressFromJSON)(json['beneficiary']),
     };
 }
 exports.UnSubscriptionActionFromJSONTyped = UnSubscriptionActionFromJSONTyped;
@@ -38,9 +49,9 @@ function UnSubscriptionActionToJSON(value) {
         return null;
     }
     return {
+        'beneficiary': (0, AccountAddress_1.AccountAddressToJSON)(value.beneficiary),
         'subscriber': (0, AccountAddress_1.AccountAddressToJSON)(value.subscriber),
         'subscription': value.subscription,
-        'beneficiary': (0, AccountAddress_1.AccountAddressToJSON)(value.beneficiary),
     };
 }
 exports.UnSubscriptionActionToJSON = UnSubscriptionActionToJSON;

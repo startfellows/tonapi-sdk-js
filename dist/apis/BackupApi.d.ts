@@ -33,11 +33,11 @@ export interface BackupApiInterface {
      * @throws {RequiredError}
      * @memberof BackupApiInterface
      */
-    deleteWalletConfigRaw(requestParameters: DeleteWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<void>>;
+    deleteWalletConfigRaw(requestParameters: DeleteWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
     /**
      * Delete backup from storage
      */
-    deleteWalletConfig(requestParameters: DeleteWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<void>;
+    deleteWalletConfig(requestParameters: DeleteWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
     /**
      * Get backup from storage
      * @param {Blob} body
@@ -45,11 +45,11 @@ export interface BackupApiInterface {
      * @throws {RequiredError}
      * @memberof BackupApiInterface
      */
-    getWalletConfigRaw(requestParameters: GetWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Blob>>;
+    getWalletConfigRaw(requestParameters: GetWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>>;
     /**
      * Get backup from storage
      */
-    getWalletConfig(requestParameters: GetWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Blob>;
+    getWalletConfig(requestParameters: GetWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob>;
     /**
      * Send backup file to storage
      * @param {Blob} body
@@ -57,11 +57,11 @@ export interface BackupApiInterface {
      * @throws {RequiredError}
      * @memberof BackupApiInterface
      */
-    putWalletConfigRaw(requestParameters: PutWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<void>>;
+    putWalletConfigRaw(requestParameters: PutWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
     /**
      * Send backup file to storage
      */
-    putWalletConfig(requestParameters: PutWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<void>;
+    putWalletConfig(requestParameters: PutWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 }
 /**
  *
@@ -70,25 +70,25 @@ export declare class BackupApi extends runtime.BaseAPI implements BackupApiInter
     /**
      * Delete backup from storage
      */
-    deleteWalletConfigRaw(requestParameters: DeleteWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<void>>;
+    deleteWalletConfigRaw(requestParameters: DeleteWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
     /**
      * Delete backup from storage
      */
-    deleteWalletConfig(requestParameters: DeleteWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<void>;
+    deleteWalletConfig(requestParameters: DeleteWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
     /**
      * Get backup from storage
      */
-    getWalletConfigRaw(requestParameters: GetWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Blob>>;
+    getWalletConfigRaw(requestParameters: GetWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Blob>>;
     /**
      * Get backup from storage
      */
-    getWalletConfig(requestParameters: GetWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Blob>;
+    getWalletConfig(requestParameters: GetWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Blob>;
     /**
      * Send backup file to storage
      */
-    putWalletConfigRaw(requestParameters: PutWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<void>>;
+    putWalletConfigRaw(requestParameters: PutWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
     /**
      * Send backup file to storage
      */
-    putWalletConfig(requestParameters: PutWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<void>;
+    putWalletConfig(requestParameters: PutWalletConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 }

@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Auction } from './Auction';
+import type { Auction } from './Auction';
 /**
  *
  * @export
@@ -23,6 +23,10 @@ export interface Auctions {
      */
     data: Array<Auction>;
 }
+/**
+ * Check if a given object implements the Auctions interface.
+ */
+export declare function instanceOfAuctions(value: object): boolean;
 export declare function AuctionsFromJSON(json: any): Auctions;
 export declare function AuctionsFromJSONTyped(json: any, ignoreDiscriminator: boolean): Auctions;
 export declare function AuctionsToJSON(value?: Auctions | null): any;

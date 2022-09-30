@@ -9,8 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AccountAddress } from './AccountAddress';
-import { Price } from './Price';
+import type { AccountAddress } from './AccountAddress';
+import type { Price } from './Price';
 /**
  *
  * @export
@@ -42,6 +42,10 @@ export interface Sale {
      */
     price: Price;
 }
+/**
+ * Check if a given object implements the Sale interface.
+ */
+export declare function instanceOfSale(value: object): boolean;
 export declare function SaleFromJSON(json: any): Sale;
 export declare function SaleFromJSONTyped(json: any, ignoreDiscriminator: boolean): Sale;
 export declare function SaleToJSON(value?: Sale | null): any;

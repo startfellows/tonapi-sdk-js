@@ -13,9 +13,22 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MessageToJSON = exports.MessageFromJSONTyped = exports.MessageFromJSON = void 0;
+exports.MessageToJSON = exports.MessageFromJSONTyped = exports.MessageFromJSON = exports.instanceOfMessage = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
+/**
+ * Check if a given object implements the Message interface.
+ */
+function instanceOfMessage(value) {
+    let isInstance = true;
+    isInstance = isInstance && "createdLt" in value;
+    isInstance = isInstance && "fwdFee" in value;
+    isInstance = isInstance && "ihrFee" in value;
+    isInstance = isInstance && "msgData" in value;
+    isInstance = isInstance && "value" in value;
+    return isInstance;
+}
+exports.instanceOfMessage = instanceOfMessage;
 function MessageFromJSON(json) {
     return MessageFromJSONTyped(json, false);
 }
@@ -25,13 +38,13 @@ function MessageFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
+        'createdLt': json['created_lt'],
+        'destination': !(0, runtime_1.exists)(json, 'destination') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['destination']),
         'fwdFee': json['fwd_fee'],
         'ihrFee': json['ihr_fee'],
-        'createdLt': json['created_lt'],
-        'value': json['value'],
-        'destination': !(0, runtime_1.exists)(json, 'destination') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['destination']),
-        'source': !(0, runtime_1.exists)(json, 'source') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['source']),
         'msgData': json['msg_data'],
+        'source': !(0, runtime_1.exists)(json, 'source') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['source']),
+        'value': json['value'],
     };
 }
 exports.MessageFromJSONTyped = MessageFromJSONTyped;
@@ -43,13 +56,13 @@ function MessageToJSON(value) {
         return null;
     }
     return {
+        'created_lt': value.createdLt,
+        'destination': (0, AccountAddress_1.AccountAddressToJSON)(value.destination),
         'fwd_fee': value.fwdFee,
         'ihr_fee': value.ihrFee,
-        'created_lt': value.createdLt,
-        'value': value.value,
-        'destination': (0, AccountAddress_1.AccountAddressToJSON)(value.destination),
-        'source': (0, AccountAddress_1.AccountAddressToJSON)(value.source),
         'msg_data': value.msgData,
+        'source': (0, AccountAddress_1.AccountAddressToJSON)(value.source),
+        'value': value.value,
     };
 }
 exports.MessageToJSON = MessageToJSON;

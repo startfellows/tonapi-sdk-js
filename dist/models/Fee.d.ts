@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AccountAddress } from './AccountAddress';
+import type { AccountAddress } from './AccountAddress';
 /**
  *
  * @export
@@ -23,11 +23,11 @@ export interface Fee {
      */
     account: AccountAddress;
     /**
-     * gas + rent + deposit - refund
+     *
      * @type {number}
      * @memberof Fee
      */
-    total: number;
+    deposit: number;
     /**
      *
      * @type {number}
@@ -39,20 +39,24 @@ export interface Fee {
      * @type {number}
      * @memberof Fee
      */
+    refund: number;
+    /**
+     *
+     * @type {number}
+     * @memberof Fee
+     */
     rent: number;
     /**
-     *
+     * gas + rent + deposit - refund
      * @type {number}
      * @memberof Fee
      */
-    deposit: number;
-    /**
-     *
-     * @type {number}
-     * @memberof Fee
-     */
-    refund: number;
+    total: number;
 }
+/**
+ * Check if a given object implements the Fee interface.
+ */
+export declare function instanceOfFee(value: object): boolean;
 export declare function FeeFromJSON(json: any): Fee;
 export declare function FeeFromJSONTyped(json: any, ignoreDiscriminator: boolean): Fee;
 export declare function FeeToJSON(value?: Fee | null): any;

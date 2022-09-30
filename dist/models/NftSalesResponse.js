@@ -13,9 +13,17 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NftSalesResponseToJSON = exports.NftSalesResponseFromJSONTyped = exports.NftSalesResponseFromJSON = void 0;
+exports.NftSalesResponseToJSON = exports.NftSalesResponseFromJSONTyped = exports.NftSalesResponseFromJSON = exports.instanceOfNftSalesResponse = void 0;
 const runtime_1 = require("../runtime");
 const NftForSale_1 = require("./NftForSale");
+/**
+ * Check if a given object implements the NftSalesResponse interface.
+ */
+function instanceOfNftSalesResponse(value) {
+    let isInstance = true;
+    return isInstance;
+}
+exports.instanceOfNftSalesResponse = instanceOfNftSalesResponse;
 function NftSalesResponseFromJSON(json) {
     return NftSalesResponseFromJSONTyped(json, false);
 }
@@ -25,8 +33,8 @@ function NftSalesResponseFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'getgems': !(0, runtime_1.exists)(json, 'getgems') ? undefined : (json['getgems'].map(NftForSale_1.NftForSaleFromJSON)),
         'disintar': !(0, runtime_1.exists)(json, 'disintar') ? undefined : (json['disintar'].map(NftForSale_1.NftForSaleFromJSON)),
+        'getgems': !(0, runtime_1.exists)(json, 'getgems') ? undefined : (json['getgems'].map(NftForSale_1.NftForSaleFromJSON)),
         'other': !(0, runtime_1.exists)(json, 'other') ? undefined : (json['other'].map(NftForSale_1.NftForSaleFromJSON)),
     };
 }
@@ -39,8 +47,8 @@ function NftSalesResponseToJSON(value) {
         return null;
     }
     return {
-        'getgems': value.getgems === undefined ? undefined : (value.getgems.map(NftForSale_1.NftForSaleToJSON)),
         'disintar': value.disintar === undefined ? undefined : (value.disintar.map(NftForSale_1.NftForSaleToJSON)),
+        'getgems': value.getgems === undefined ? undefined : (value.getgems.map(NftForSale_1.NftForSaleToJSON)),
         'other': value.other === undefined ? undefined : (value.other.map(NftForSale_1.NftForSaleToJSON)),
     };
 }

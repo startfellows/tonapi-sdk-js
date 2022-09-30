@@ -13,8 +13,8 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { DomainBid } from './DomainBid';
 import {
-    DomainBid,
     DomainBidFromJSON,
     DomainBidFromJSONTyped,
     DomainBidToJSON,
@@ -32,6 +32,16 @@ export interface DomainBids {
      * @memberof DomainBids
      */
     data: Array<DomainBid>;
+}
+
+/**
+ * Check if a given object implements the DomainBids interface.
+ */
+export function instanceOfDomainBids(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "data" in value;
+
+    return isInstance;
 }
 
 export function DomainBidsFromJSON(json: any): DomainBids {

@@ -9,13 +9,19 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AccountAddress } from './AccountAddress';
+import type { AccountAddress } from './AccountAddress';
 /**
  *
  * @export
  * @interface UnSubscriptionAction
  */
 export interface UnSubscriptionAction {
+    /**
+     *
+     * @type {AccountAddress}
+     * @memberof UnSubscriptionAction
+     */
+    beneficiary: AccountAddress;
     /**
      *
      * @type {AccountAddress}
@@ -28,13 +34,11 @@ export interface UnSubscriptionAction {
      * @memberof UnSubscriptionAction
      */
     subscription: string;
-    /**
-     *
-     * @type {AccountAddress}
-     * @memberof UnSubscriptionAction
-     */
-    beneficiary: AccountAddress;
 }
+/**
+ * Check if a given object implements the UnSubscriptionAction interface.
+ */
+export declare function instanceOfUnSubscriptionAction(value: object): boolean;
 export declare function UnSubscriptionActionFromJSON(json: any): UnSubscriptionAction;
 export declare function UnSubscriptionActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): UnSubscriptionAction;
 export declare function UnSubscriptionActionToJSON(value?: UnSubscriptionAction | null): any;

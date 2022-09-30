@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { DnsRecord, DomainInfo, DomainNames } from '../models';
+import type { DnsRecord, DomainInfo, DomainNames } from '../models';
 export interface DnsBackResolveRequest {
     account: string;
 }
@@ -34,11 +34,11 @@ export interface DNSApiInterface {
      * @throws {RequiredError}
      * @memberof DNSApiInterface
      */
-    dnsBackResolveRaw(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<DomainNames>>;
+    dnsBackResolveRaw(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>>;
     /**
      * DNS back resolve for wallet address
      */
-    dnsBackResolve(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<DomainNames>;
+    dnsBackResolve(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames>;
     /**
      * DNS resolve for domain name
      * @param {string} name domain name with .ton
@@ -46,11 +46,11 @@ export interface DNSApiInterface {
      * @throws {RequiredError}
      * @memberof DNSApiInterface
      */
-    dnsResolveRaw(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<DnsRecord>>;
+    dnsResolveRaw(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DnsRecord>>;
     /**
      * DNS resolve for domain name
      */
-    dnsResolve(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<DnsRecord>;
+    dnsResolve(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DnsRecord>;
     /**
      * domain info
      * @param {string} name domain name with .ton
@@ -58,11 +58,11 @@ export interface DNSApiInterface {
      * @throws {RequiredError}
      * @memberof DNSApiInterface
      */
-    getDomainInfoRaw(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<DomainInfo>>;
+    getDomainInfoRaw(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainInfo>>;
     /**
      * domain info
      */
-    getDomainInfo(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<DomainInfo>;
+    getDomainInfo(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainInfo>;
 }
 /**
  *
@@ -71,25 +71,25 @@ export declare class DNSApi extends runtime.BaseAPI implements DNSApiInterface {
     /**
      * DNS back resolve for wallet address
      */
-    dnsBackResolveRaw(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<DomainNames>>;
+    dnsBackResolveRaw(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>>;
     /**
      * DNS back resolve for wallet address
      */
-    dnsBackResolve(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<DomainNames>;
+    dnsBackResolve(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames>;
     /**
      * DNS resolve for domain name
      */
-    dnsResolveRaw(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<DnsRecord>>;
+    dnsResolveRaw(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DnsRecord>>;
     /**
      * DNS resolve for domain name
      */
-    dnsResolve(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<DnsRecord>;
+    dnsResolve(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DnsRecord>;
     /**
      * domain info
      */
-    getDomainInfoRaw(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<DomainInfo>>;
+    getDomainInfoRaw(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainInfo>>;
     /**
      * domain info
      */
-    getDomainInfo(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<DomainInfo>;
+    getDomainInfo(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainInfo>;
 }

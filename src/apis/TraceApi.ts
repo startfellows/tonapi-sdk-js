@@ -14,11 +14,13 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  TraceMsg,
+  Traces,
+} from '../models';
 import {
-    TraceMsg,
     TraceMsgFromJSON,
     TraceMsgToJSON,
-    Traces,
     TracesFromJSON,
     TracesToJSON,
 } from '../models';
@@ -50,12 +52,12 @@ export interface TraceApiInterface {
      * @throws {RequiredError}
      * @memberof TraceApiInterface
      */
-    getAnnotatedTraceRaw(requestParameters: GetAnnotatedTraceRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<object>>;
+    getAnnotatedTraceRaw(requestParameters: GetAnnotatedTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>>;
 
     /**
      * Get the annotated trace by trace ID or hash of any transaction in trace
      */
-    getAnnotatedTrace(requestParameters: GetAnnotatedTraceRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<object>;
+    getAnnotatedTrace(requestParameters: GetAnnotatedTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object>;
 
     /**
      * Get the trace by trace ID or hash of any transaction in trace
@@ -64,12 +66,12 @@ export interface TraceApiInterface {
      * @throws {RequiredError}
      * @memberof TraceApiInterface
      */
-    getTraceRaw(requestParameters: GetTraceRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<TraceMsg>>;
+    getTraceRaw(requestParameters: GetTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TraceMsg>>;
 
     /**
      * Get the trace by trace ID or hash of any transaction in trace
      */
-    getTrace(requestParameters: GetTraceRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<TraceMsg>;
+    getTrace(requestParameters: GetTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TraceMsg>;
 
     /**
      * Get traces for account
@@ -80,12 +82,12 @@ export interface TraceApiInterface {
      * @throws {RequiredError}
      * @memberof TraceApiInterface
      */
-    getTracesByAccountRaw(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Traces>>;
+    getTracesByAccountRaw(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Traces>>;
 
     /**
      * Get traces for account
      */
-    getTracesByAccount(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Traces>;
+    getTracesByAccount(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Traces>;
 
 }
 
@@ -97,7 +99,7 @@ export class TraceApi extends runtime.BaseAPI implements TraceApiInterface {
     /**
      * Get the annotated trace by trace ID or hash of any transaction in trace
      */
-    async getAnnotatedTraceRaw(requestParameters: GetAnnotatedTraceRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<object>> {
+    async getAnnotatedTraceRaw(requestParameters: GetAnnotatedTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
         if (requestParameters.hash === null || requestParameters.hash === undefined) {
             throw new runtime.RequiredError('hash','Required parameter requestParameters.hash was null or undefined when calling getAnnotatedTrace.');
         }
@@ -131,7 +133,7 @@ export class TraceApi extends runtime.BaseAPI implements TraceApiInterface {
     /**
      * Get the annotated trace by trace ID or hash of any transaction in trace
      */
-    async getAnnotatedTrace(requestParameters: GetAnnotatedTraceRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<object> {
+    async getAnnotatedTrace(requestParameters: GetAnnotatedTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
         const response = await this.getAnnotatedTraceRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -139,7 +141,7 @@ export class TraceApi extends runtime.BaseAPI implements TraceApiInterface {
     /**
      * Get the trace by trace ID or hash of any transaction in trace
      */
-    async getTraceRaw(requestParameters: GetTraceRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<TraceMsg>> {
+    async getTraceRaw(requestParameters: GetTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TraceMsg>> {
         if (requestParameters.hash === null || requestParameters.hash === undefined) {
             throw new runtime.RequiredError('hash','Required parameter requestParameters.hash was null or undefined when calling getTrace.');
         }
@@ -173,7 +175,7 @@ export class TraceApi extends runtime.BaseAPI implements TraceApiInterface {
     /**
      * Get the trace by trace ID or hash of any transaction in trace
      */
-    async getTrace(requestParameters: GetTraceRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<TraceMsg> {
+    async getTrace(requestParameters: GetTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TraceMsg> {
         const response = await this.getTraceRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -181,7 +183,7 @@ export class TraceApi extends runtime.BaseAPI implements TraceApiInterface {
     /**
      * Get traces for account
      */
-    async getTracesByAccountRaw(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<Traces>> {
+    async getTracesByAccountRaw(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Traces>> {
         if (requestParameters.account === null || requestParameters.account === undefined) {
             throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getTracesByAccount.');
         }
@@ -219,7 +221,7 @@ export class TraceApi extends runtime.BaseAPI implements TraceApiInterface {
     /**
      * Get traces for account
      */
-    async getTracesByAccount(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<Traces> {
+    async getTracesByAccount(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Traces> {
         const response = await this.getTracesByAccountRaw(requestParameters, initOverrides);
         return await response.value();
     }

@@ -33,6 +33,17 @@ export interface Trace {
     utime: number;
 }
 
+/**
+ * Check if a given object implements the Trace interface.
+ */
+export function instanceOfTrace(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "id" in value;
+    isInstance = isInstance && "utime" in value;
+
+    return isInstance;
+}
+
 export function TraceFromJSON(json: any): Trace {
     return TraceFromJSONTyped(json, false);
 }

@@ -24,13 +24,24 @@ export interface Price {
      * @type {string}
      * @memberof Price
      */
-    value: string;
+    tokenName: string;
     /**
      * 
      * @type {string}
      * @memberof Price
      */
-    tokenName: string;
+    value: string;
+}
+
+/**
+ * Check if a given object implements the Price interface.
+ */
+export function instanceOfPrice(value: object): boolean {
+    let isInstance = true;
+    isInstance = isInstance && "tokenName" in value;
+    isInstance = isInstance && "value" in value;
+
+    return isInstance;
 }
 
 export function PriceFromJSON(json: any): Price {
@@ -43,8 +54,8 @@ export function PriceFromJSONTyped(json: any, ignoreDiscriminator: boolean): Pri
     }
     return {
         
-        'value': json['value'],
         'tokenName': json['token_name'],
+        'value': json['value'],
     };
 }
 
@@ -57,8 +68,8 @@ export function PriceToJSON(value?: Price | null): any {
     }
     return {
         
-        'value': value.value,
         'token_name': value.tokenName,
+        'value': value.value,
     };
 }
 

@@ -13,9 +13,18 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DomainInfoToJSON = exports.DomainInfoFromJSONTyped = exports.DomainInfoFromJSON = void 0;
+exports.DomainInfoToJSON = exports.DomainInfoFromJSONTyped = exports.DomainInfoFromJSON = exports.instanceOfDomainInfo = void 0;
 const runtime_1 = require("../runtime");
 const DomainInfoNftItem_1 = require("./DomainInfoNftItem");
+/**
+ * Check if a given object implements the DomainInfo interface.
+ */
+function instanceOfDomainInfo(value) {
+    let isInstance = true;
+    isInstance = isInstance && "expiration" in value;
+    return isInstance;
+}
+exports.instanceOfDomainInfo = instanceOfDomainInfo;
 function DomainInfoFromJSON(json) {
     return DomainInfoFromJSONTyped(json, false);
 }
@@ -25,8 +34,8 @@ function DomainInfoFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'nftItem': !(0, runtime_1.exists)(json, 'nft_item') ? undefined : (0, DomainInfoNftItem_1.DomainInfoNftItemFromJSON)(json['nft_item']),
         'expiration': json['expiration'],
+        'nftItem': !(0, runtime_1.exists)(json, 'nft_item') ? undefined : (0, DomainInfoNftItem_1.DomainInfoNftItemFromJSON)(json['nft_item']),
     };
 }
 exports.DomainInfoFromJSONTyped = DomainInfoFromJSONTyped;
@@ -38,8 +47,8 @@ function DomainInfoToJSON(value) {
         return null;
     }
     return {
-        'nft_item': (0, DomainInfoNftItem_1.DomainInfoNftItemToJSON)(value.nftItem),
         'expiration': value.expiration,
+        'nft_item': (0, DomainInfoNftItem_1.DomainInfoNftItemToJSON)(value.nftItem),
     };
 }
 exports.DomainInfoToJSON = DomainInfoToJSON;

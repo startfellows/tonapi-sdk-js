@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { AccountEvent, SendBocRequest } from '../models';
+import type { AccountEvent, SendBocRequest } from '../models';
 export interface EstimateTxRequest {
     sendBocRequest?: SendBocRequest;
 }
@@ -31,11 +31,11 @@ export interface SendApiInterface {
      * @throws {RequiredError}
      * @memberof SendApiInterface
      */
-    estimateTxRaw(requestParameters: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<AccountEvent>>;
+    estimateTxRaw(requestParameters: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvent>>;
     /**
      * Estimate fees for message
      */
-    estimateTx(requestParameters: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<AccountEvent>;
+    estimateTx(requestParameters: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvent>;
     /**
      * Send message to blockchain
      * @param {SendBocRequest} [sendBocRequest] bag-of-cells serialized to base64
@@ -43,11 +43,11 @@ export interface SendApiInterface {
      * @throws {RequiredError}
      * @memberof SendApiInterface
      */
-    sendBocRaw(requestParameters: SendBocOperationRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<void>>;
+    sendBocRaw(requestParameters: SendBocOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
     /**
      * Send message to blockchain
      */
-    sendBoc(requestParameters: SendBocOperationRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<void>;
+    sendBoc(requestParameters: SendBocOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 }
 /**
  *
@@ -56,17 +56,17 @@ export declare class SendApi extends runtime.BaseAPI implements SendApiInterface
     /**
      * Estimate fees for message
      */
-    estimateTxRaw(requestParameters: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<AccountEvent>>;
+    estimateTxRaw(requestParameters: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvent>>;
     /**
      * Estimate fees for message
      */
-    estimateTx(requestParameters?: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<AccountEvent>;
+    estimateTx(requestParameters?: EstimateTxRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvent>;
     /**
      * Send message to blockchain
      */
-    sendBocRaw(requestParameters: SendBocOperationRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<runtime.ApiResponse<void>>;
+    sendBocRaw(requestParameters: SendBocOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
     /**
      * Send message to blockchain
      */
-    sendBoc(requestParameters?: SendBocOperationRequest, initOverrides?: RequestInit | runtime.InitOverideFunction): Promise<void>;
+    sendBoc(requestParameters?: SendBocOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 }

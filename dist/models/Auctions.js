@@ -13,8 +13,17 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuctionsToJSON = exports.AuctionsFromJSONTyped = exports.AuctionsFromJSON = void 0;
+exports.AuctionsToJSON = exports.AuctionsFromJSONTyped = exports.AuctionsFromJSON = exports.instanceOfAuctions = void 0;
 const Auction_1 = require("./Auction");
+/**
+ * Check if a given object implements the Auctions interface.
+ */
+function instanceOfAuctions(value) {
+    let isInstance = true;
+    isInstance = isInstance && "data" in value;
+    return isInstance;
+}
+exports.instanceOfAuctions = instanceOfAuctions;
 function AuctionsFromJSON(json) {
     return AuctionsFromJSONTyped(json, false);
 }
