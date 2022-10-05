@@ -34,6 +34,12 @@ export interface NftItemTransferAction {
     comment?: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof NftItemTransferAction
+     */
+    isRefund: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof NftItemTransferAction
      */
@@ -63,6 +69,7 @@ export interface NftItemTransferAction {
  */
 export function instanceOfNftItemTransferAction(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "isRefund" in value;
     isInstance = isInstance && "nft" in value;
 
     return isInstance;
@@ -79,6 +86,7 @@ export function NftItemTransferActionFromJSONTyped(json: any, ignoreDiscriminato
     return {
         
         'comment': !exists(json, 'comment') ? undefined : json['comment'],
+        'isRefund': json['is_refund'],
         'nft': json['nft'],
         'payload': !exists(json, 'payload') ? undefined : json['payload'],
         'recipient': !exists(json, 'recipient') ? undefined : AccountAddressFromJSON(json['recipient']),
@@ -96,6 +104,7 @@ export function NftItemTransferActionToJSON(value?: NftItemTransferAction | null
     return {
         
         'comment': value.comment,
+        'is_refund': value.isRefund,
         'nft': value.nft,
         'payload': value.payload,
         'recipient': AccountAddressToJSON(value.recipient),

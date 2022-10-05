@@ -29,6 +29,12 @@ export interface TonTransferAction {
      */
     comment?: string;
     /**
+     *
+     * @type {boolean}
+     * @memberof TonTransferAction
+     */
+    isRefund: boolean;
+    /**
      * raw hex encoded payload
      * @type {string}
      * @memberof TonTransferAction

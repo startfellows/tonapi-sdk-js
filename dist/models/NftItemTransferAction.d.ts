@@ -24,6 +24,12 @@ export interface NftItemTransferAction {
     comment?: string;
     /**
      *
+     * @type {boolean}
+     * @memberof NftItemTransferAction
+     */
+    isRefund: boolean;
+    /**
+     *
      * @type {string}
      * @memberof NftItemTransferAction
      */

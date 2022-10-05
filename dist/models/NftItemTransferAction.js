@@ -21,6 +21,7 @@ const AccountAddress_1 = require("./AccountAddress");
  */
 function instanceOfNftItemTransferAction(value) {
     let isInstance = true;
+    isInstance = isInstance && "isRefund" in value;
     isInstance = isInstance && "nft" in value;
     return isInstance;
 }
@@ -35,6 +36,7 @@ function NftItemTransferActionFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'comment': !(0, runtime_1.exists)(json, 'comment') ? undefined : json['comment'],
+        'isRefund': json['is_refund'],
         'nft': json['nft'],
         'payload': !(0, runtime_1.exists)(json, 'payload') ? undefined : json['payload'],
         'recipient': !(0, runtime_1.exists)(json, 'recipient') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
@@ -51,6 +53,7 @@ function NftItemTransferActionToJSON(value) {
     }
     return {
         'comment': value.comment,
+        'is_refund': value.isRefund,
         'nft': value.nft,
         'payload': value.payload,
         'recipient': (0, AccountAddress_1.AccountAddressToJSON)(value.recipient),

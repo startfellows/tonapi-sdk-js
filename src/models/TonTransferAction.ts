@@ -39,6 +39,12 @@ export interface TonTransferAction {
      */
     comment?: string;
     /**
+     * 
+     * @type {boolean}
+     * @memberof TonTransferAction
+     */
+    isRefund: boolean;
+    /**
      * raw hex encoded payload
      * @type {string}
      * @memberof TonTransferAction
@@ -64,6 +70,7 @@ export interface TonTransferAction {
 export function instanceOfTonTransferAction(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "amount" in value;
+    isInstance = isInstance && "isRefund" in value;
     isInstance = isInstance && "recipient" in value;
     isInstance = isInstance && "sender" in value;
 
@@ -82,6 +89,7 @@ export function TonTransferActionFromJSONTyped(json: any, ignoreDiscriminator: b
         
         'amount': json['amount'],
         'comment': !exists(json, 'comment') ? undefined : json['comment'],
+        'isRefund': json['is_refund'],
         'payload': !exists(json, 'payload') ? undefined : json['payload'],
         'recipient': AccountAddressFromJSON(json['recipient']),
         'sender': AccountAddressFromJSON(json['sender']),
@@ -99,6 +107,7 @@ export function TonTransferActionToJSON(value?: TonTransferAction | null): any {
         
         'amount': value.amount,
         'comment': value.comment,
+        'is_refund': value.isRefund,
         'payload': value.payload,
         'recipient': AccountAddressToJSON(value.recipient),
         'sender': AccountAddressToJSON(value.sender),

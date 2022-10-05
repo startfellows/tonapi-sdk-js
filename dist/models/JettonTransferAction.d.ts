@@ -31,6 +31,12 @@ export interface JettonTransferAction {
     comment?: string;
     /**
      *
+     * @type {boolean}
+     * @memberof JettonTransferAction
+     */
+    isRefund: boolean;
+    /**
+     *
      * @type {Jetton}
      * @memberof JettonTransferAction
      */

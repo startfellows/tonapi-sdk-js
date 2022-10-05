@@ -46,6 +46,12 @@ export interface JettonTransferAction {
     comment?: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof JettonTransferAction
+     */
+    isRefund: boolean;
+    /**
+     * 
      * @type {Jetton}
      * @memberof JettonTransferAction
      */
@@ -82,6 +88,7 @@ export interface JettonTransferAction {
 export function instanceOfJettonTransferAction(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "amount" in value;
+    isInstance = isInstance && "isRefund" in value;
     isInstance = isInstance && "jetton" in value;
     isInstance = isInstance && "recipientsWallet" in value;
     isInstance = isInstance && "sendersWallet" in value;
@@ -101,6 +108,7 @@ export function JettonTransferActionFromJSONTyped(json: any, ignoreDiscriminator
         
         'amount': json['amount'],
         'comment': !exists(json, 'comment') ? undefined : json['comment'],
+        'isRefund': json['is_refund'],
         'jetton': JettonFromJSON(json['jetton']),
         'recipient': !exists(json, 'recipient') ? undefined : AccountAddressFromJSON(json['recipient']),
         'recipientsWallet': json['recipients_wallet'],
@@ -120,6 +128,7 @@ export function JettonTransferActionToJSON(value?: JettonTransferAction | null):
         
         'amount': value.amount,
         'comment': value.comment,
+        'is_refund': value.isRefund,
         'jetton': JettonToJSON(value.jetton),
         'recipient': AccountAddressToJSON(value.recipient),
         'recipients_wallet': value.recipientsWallet,

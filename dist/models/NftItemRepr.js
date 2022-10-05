@@ -26,6 +26,7 @@ function instanceOfNftItemRepr(value) {
     let isInstance = true;
     isInstance = isInstance && "address" in value;
     isInstance = isInstance && "index" in value;
+    isInstance = isInstance && "metadata" in value;
     isInstance = isInstance && "verified" in value;
     return isInstance;
 }
@@ -44,7 +45,7 @@ function NftItemReprFromJSONTyped(json, ignoreDiscriminator) {
         'collectionAddress': !(0, runtime_1.exists)(json, 'collection_address') ? undefined : json['collection_address'],
         'dns': !(0, runtime_1.exists)(json, 'dns') ? undefined : json['dns'],
         'index': json['index'],
-        'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
+        'metadata': json['metadata'],
         'owner': !(0, runtime_1.exists)(json, 'owner') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['owner']),
         'previews': !(0, runtime_1.exists)(json, 'previews') ? undefined : (json['previews'].map(ImagePreview_1.ImagePreviewFromJSON)),
         'sale': !(0, runtime_1.exists)(json, 'sale') ? undefined : (0, Sale_1.SaleFromJSON)(json['sale']),

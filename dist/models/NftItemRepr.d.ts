@@ -55,7 +55,7 @@ export interface NftItemRepr {
      * @type {any}
      * @memberof NftItemRepr
      */
-    metadata?: any | null;
+    metadata: any | null;
     /**
      *
      * @type {AccountAddress}

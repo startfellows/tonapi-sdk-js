@@ -23,6 +23,7 @@ const Jetton_1 = require("./Jetton");
 function instanceOfJettonTransferAction(value) {
     let isInstance = true;
     isInstance = isInstance && "amount" in value;
+    isInstance = isInstance && "isRefund" in value;
     isInstance = isInstance && "jetton" in value;
     isInstance = isInstance && "recipientsWallet" in value;
     isInstance = isInstance && "sendersWallet" in value;
@@ -40,6 +41,7 @@ function JettonTransferActionFromJSONTyped(json, ignoreDiscriminator) {
     return {
         'amount': json['amount'],
         'comment': !(0, runtime_1.exists)(json, 'comment') ? undefined : json['comment'],
+        'isRefund': json['is_refund'],
         'jetton': (0, Jetton_1.JettonFromJSON)(json['jetton']),
         'recipient': !(0, runtime_1.exists)(json, 'recipient') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
         'recipientsWallet': json['recipients_wallet'],
@@ -58,6 +60,7 @@ function JettonTransferActionToJSON(value) {
     return {
         'amount': value.amount,
         'comment': value.comment,
+        'is_refund': value.isRefund,
         'jetton': (0, Jetton_1.JettonToJSON)(value.jetton),
         'recipient': (0, AccountAddress_1.AccountAddressToJSON)(value.recipient),
         'recipients_wallet': value.recipientsWallet,

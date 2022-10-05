@@ -80,7 +80,7 @@ export interface NftItemRepr {
      * @type {any}
      * @memberof NftItemRepr
      */
-    metadata?: any | null;
+    metadata: any | null;
     /**
      * 
      * @type {AccountAddress}
@@ -114,6 +114,7 @@ export function instanceOfNftItemRepr(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "address" in value;
     isInstance = isInstance && "index" in value;
+    isInstance = isInstance && "metadata" in value;
     isInstance = isInstance && "verified" in value;
 
     return isInstance;
@@ -134,7 +135,7 @@ export function NftItemReprFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'collectionAddress': !exists(json, 'collection_address') ? undefined : json['collection_address'],
         'dns': !exists(json, 'dns') ? undefined : json['dns'],
         'index': json['index'],
-        'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
+        'metadata': json['metadata'],
         'owner': !exists(json, 'owner') ? undefined : AccountAddressFromJSON(json['owner']),
         'previews': !exists(json, 'previews') ? undefined : ((json['previews'] as Array<any>).map(ImagePreviewFromJSON)),
         'sale': !exists(json, 'sale') ? undefined : SaleFromJSON(json['sale']),
