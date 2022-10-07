@@ -67,5 +67,43 @@ class WalletApi extends runtime.BaseAPI {
             return yield response.value();
         });
     }
+    /**
+     * Get last seqno for wallet
+     */
+    getWalletSeqnoRaw(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (requestParameters.account === null || requestParameters.account === undefined) {
+                throw new runtime.RequiredError('account', 'Required parameter requestParameters.account was null or undefined when calling getWalletSeqno.');
+            }
+            const queryParameters = {};
+            if (requestParameters.account !== undefined) {
+                queryParameters['account'] = requestParameters.account;
+            }
+            const headerParameters = {};
+            if (this.configuration && this.configuration.accessToken) {
+                const token = this.configuration.accessToken;
+                const tokenString = yield token("JWTAuth", []);
+                if (tokenString) {
+                    headerParameters["Authorization"] = `Bearer ${tokenString}`;
+                }
+            }
+            const response = yield this.request({
+                path: `/v1/wallet/getSeqno`,
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, models_1.SeqnoFromJSON)(jsonValue));
+        });
+    }
+    /**
+     * Get last seqno for wallet
+     */
+    getWalletSeqno(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.getWalletSeqnoRaw(requestParameters, initOverrides);
+            return yield response.value();
+        });
+    }
 }
 exports.WalletApi = WalletApi;

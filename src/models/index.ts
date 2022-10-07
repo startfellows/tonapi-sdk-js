@@ -47,6 +47,7 @@ export * from './NftSalesResponse';
 export * from './Price';
 export * from './Sale';
 export * from './SendBocRequest';
+export * from './Seqno';
 export * from './Subscription';
 export * from './SubscriptionAction';
 export * from './Subscriptions';

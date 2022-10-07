@@ -10,9 +10,12 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { Wallets } from '../models';
+import type { Seqno, Wallets } from '../models';
 export interface FindWalletsByPubKeyRequest {
     publicKey: string;
+}
+export interface GetWalletSeqnoRequest {
+    account: string;
 }
 /**
  * WalletApi - interface
@@ -33,6 +36,18 @@ export interface WalletApiInterface {
      * Find all wallets by public key
      */
     findWalletsByPubKey(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Wallets>;
+    /**
+     * Get last seqno for wallet
+     * @param {string} account address in raw (hex without 0x) or base64url format
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WalletApiInterface
+     */
+    getWalletSeqnoRaw(requestParameters: GetWalletSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Seqno>>;
+    /**
+     * Get last seqno for wallet
+     */
+    getWalletSeqno(requestParameters: GetWalletSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Seqno>;
 }
 /**
  *
@@ -46,4 +61,12 @@ export declare class WalletApi extends runtime.BaseAPI implements WalletApiInter
      * Find all wallets by public key
      */
     findWalletsByPubKey(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Wallets>;
+    /**
+     * Get last seqno for wallet
+     */
+    getWalletSeqnoRaw(requestParameters: GetWalletSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Seqno>>;
+    /**
+     * Get last seqno for wallet
+     */
+    getWalletSeqno(requestParameters: GetWalletSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Seqno>;
 }

@@ -61,6 +61,7 @@ models/NftSalesResponse.ts
 models/Price.ts
 models/Sale.ts
 models/SendBocRequest.ts
+models/Seqno.ts
 models/Subscription.ts
 models/SubscriptionAction.ts
 models/Subscriptions.ts

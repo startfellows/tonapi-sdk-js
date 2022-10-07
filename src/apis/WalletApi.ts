@@ -15,15 +15,22 @@
 
 import * as runtime from '../runtime';
 import type {
+  Seqno,
   Wallets,
 } from '../models';
 import {
+    SeqnoFromJSON,
+    SeqnoToJSON,
     WalletsFromJSON,
     WalletsToJSON,
 } from '../models';
 
 export interface FindWalletsByPubKeyRequest {
     publicKey: string;
+}
+
+export interface GetWalletSeqnoRequest {
+    account: string;
 }
 
 /**
@@ -46,6 +53,20 @@ export interface WalletApiInterface {
      * Find all wallets by public key
      */
     findWalletsByPubKey(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Wallets>;
+
+    /**
+     * Get last seqno for wallet
+     * @param {string} account address in raw (hex without 0x) or base64url format
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WalletApiInterface
+     */
+    getWalletSeqnoRaw(requestParameters: GetWalletSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Seqno>>;
+
+    /**
+     * Get last seqno for wallet
+     */
+    getWalletSeqno(requestParameters: GetWalletSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Seqno>;
 
 }
 
@@ -93,6 +114,48 @@ export class WalletApi extends runtime.BaseAPI implements WalletApiInterface {
      */
     async findWalletsByPubKey(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Wallets> {
         const response = await this.findWalletsByPubKeyRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get last seqno for wallet
+     */
+    async getWalletSeqnoRaw(requestParameters: GetWalletSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Seqno>> {
+        if (requestParameters.account === null || requestParameters.account === undefined) {
+            throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getWalletSeqno.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.account !== undefined) {
+            queryParameters['account'] = requestParameters.account;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("JWTAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/v1/wallet/getSeqno`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => SeqnoFromJSON(jsonValue));
+    }
+
+    /**
+     * Get last seqno for wallet
+     */
+    async getWalletSeqno(requestParameters: GetWalletSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Seqno> {
+        const response = await this.getWalletSeqnoRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
