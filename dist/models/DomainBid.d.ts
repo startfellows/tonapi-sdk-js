@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import type { AccountAddress } from './AccountAddress';
 /**
  *
  * @export
@@ -17,10 +18,10 @@
 export interface DomainBid {
     /**
      *
-     * @type {string}
+     * @type {AccountAddress}
      * @memberof DomainBid
      */
-    bidderA: string;
+    bidder: AccountAddress;
     /**
      *
      * @type {boolean}

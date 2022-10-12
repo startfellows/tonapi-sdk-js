@@ -14,12 +14,13 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DomainBidToJSON = exports.DomainBidFromJSONTyped = exports.DomainBidFromJSON = exports.instanceOfDomainBid = void 0;
+const AccountAddress_1 = require("./AccountAddress");
 /**
  * Check if a given object implements the DomainBid interface.
  */
 function instanceOfDomainBid(value) {
     let isInstance = true;
-    isInstance = isInstance && "bidderA" in value;
+    isInstance = isInstance && "bidder" in value;
     isInstance = isInstance && "success" in value;
     isInstance = isInstance && "txTime" in value;
     isInstance = isInstance && "value" in value;
@@ -35,7 +36,7 @@ function DomainBidFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'bidderA': json['bidderA'],
+        'bidder': (0, AccountAddress_1.AccountAddressFromJSON)(json['bidder']),
         'success': json['success'],
         'txTime': json['txTime'],
         'value': json['value'],
@@ -50,7 +51,7 @@ function DomainBidToJSON(value) {
         return null;
     }
     return {
-        'bidderA': value.bidderA,
+        'bidder': (0, AccountAddress_1.AccountAddressToJSON)(value.bidder),
         'success': value.success,
         'txTime': value.txTime,
         'value': value.value,

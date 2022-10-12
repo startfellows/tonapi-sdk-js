@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AccountAddress } from './AccountAddress';
+import {
+    AccountAddressFromJSON,
+    AccountAddressFromJSONTyped,
+    AccountAddressToJSON,
+} from './AccountAddress';
+
 /**
  * 
  * @export
@@ -21,10 +28,10 @@ import { exists, mapValues } from '../runtime';
 export interface DomainBid {
     /**
      * 
-     * @type {string}
+     * @type {AccountAddress}
      * @memberof DomainBid
      */
-    bidderA: string;
+    bidder: AccountAddress;
     /**
      * 
      * @type {boolean}
@@ -50,7 +57,7 @@ export interface DomainBid {
  */
 export function instanceOfDomainBid(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "bidderA" in value;
+    isInstance = isInstance && "bidder" in value;
     isInstance = isInstance && "success" in value;
     isInstance = isInstance && "txTime" in value;
     isInstance = isInstance && "value" in value;
@@ -68,7 +75,7 @@ export function DomainBidFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     }
     return {
         
-        'bidderA': json['bidderA'],
+        'bidder': AccountAddressFromJSON(json['bidder']),
         'success': json['success'],
         'txTime': json['txTime'],
         'value': json['value'],
@@ -84,7 +91,7 @@ export function DomainBidToJSON(value?: DomainBid | null): any {
     }
     return {
         
-        'bidderA': value.bidderA,
+        'bidder': AccountAddressToJSON(value.bidder),
         'success': value.success,
         'txTime': value.txTime,
         'value': value.value,

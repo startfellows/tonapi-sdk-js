@@ -1,8 +1,7 @@
 apis/AccountApi.ts
-apis/AuctionsApi.ts
 apis/BackupApi.ts
 apis/DNSApi.ts
-apis/DomainBidsApi.ts
+apis/DomainAuctionsApi.ts
 apis/EventApi.ts
 apis/JettonApi.ts
 apis/NFTApi.ts
