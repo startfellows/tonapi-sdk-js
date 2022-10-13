@@ -19,6 +19,12 @@ import {
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
+import type { Refund } from './Refund';
+import {
+    RefundFromJSON,
+    RefundFromJSONTyped,
+    RefundToJSON,
+} from './Refund';
 
 /**
  * 
@@ -39,12 +45,6 @@ export interface TonTransferAction {
      */
     comment?: string;
     /**
-     * 
-     * @type {boolean}
-     * @memberof TonTransferAction
-     */
-    isRefund: boolean;
-    /**
      * raw hex encoded payload
      * @type {string}
      * @memberof TonTransferAction
@@ -56,6 +56,12 @@ export interface TonTransferAction {
      * @memberof TonTransferAction
      */
     recipient: AccountAddress;
+    /**
+     * 
+     * @type {Refund}
+     * @memberof TonTransferAction
+     */
+    refund?: Refund;
     /**
      * 
      * @type {AccountAddress}
@@ -70,7 +76,6 @@ export interface TonTransferAction {
 export function instanceOfTonTransferAction(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "isRefund" in value;
     isInstance = isInstance && "recipient" in value;
     isInstance = isInstance && "sender" in value;
 
@@ -89,9 +94,9 @@ export function TonTransferActionFromJSONTyped(json: any, ignoreDiscriminator: b
         
         'amount': json['amount'],
         'comment': !exists(json, 'comment') ? undefined : json['comment'],
-        'isRefund': json['is_refund'],
         'payload': !exists(json, 'payload') ? undefined : json['payload'],
         'recipient': AccountAddressFromJSON(json['recipient']),
+        'refund': !exists(json, 'refund') ? undefined : RefundFromJSON(json['refund']),
         'sender': AccountAddressFromJSON(json['sender']),
     };
 }
@@ -107,9 +112,9 @@ export function TonTransferActionToJSON(value?: TonTransferAction | null): any {
         
         'amount': value.amount,
         'comment': value.comment,
-        'is_refund': value.isRefund,
         'payload': value.payload,
         'recipient': AccountAddressToJSON(value.recipient),
+        'refund': RefundToJSON(value.refund),
         'sender': AccountAddressToJSON(value.sender),
     };
 }

@@ -32,6 +32,12 @@ export interface Auctions {
      * @memberof Auctions
      */
     data: Array<Auction>;
+    /**
+     * 
+     * @type {number}
+     * @memberof Auctions
+     */
+    total: number;
 }
 
 /**
@@ -40,6 +46,7 @@ export interface Auctions {
 export function instanceOfAuctions(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "data" in value;
+    isInstance = isInstance && "total" in value;
 
     return isInstance;
 }
@@ -55,6 +62,7 @@ export function AuctionsFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     return {
         
         'data': ((json['data'] as Array<any>).map(AuctionFromJSON)),
+        'total': json['total'],
     };
 }
 
@@ -68,6 +76,7 @@ export function AuctionsToJSON(value?: Auctions | null): any {
     return {
         
         'data': ((value.data as Array<any>).map(AuctionToJSON)),
+        'total': value.total,
     };
 }
 

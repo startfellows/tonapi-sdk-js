@@ -58,6 +58,7 @@ models/NftItems.ts
 models/NftItemsRepr.ts
 models/NftSalesResponse.ts
 models/Price.ts
+models/Refund.ts
 models/Sale.ts
 models/SendBocRequest.ts
 models/Seqno.ts

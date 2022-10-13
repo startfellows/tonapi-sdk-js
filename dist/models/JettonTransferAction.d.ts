@@ -11,6 +11,7 @@
  */
 import type { AccountAddress } from './AccountAddress';
 import type { Jetton } from './Jetton';
+import type { Refund } from './Refund';
 /**
  *
  * @export
@@ -31,12 +32,6 @@ export interface JettonTransferAction {
     comment?: string;
     /**
      *
-     * @type {boolean}
-     * @memberof JettonTransferAction
-     */
-    isRefund: boolean;
-    /**
-     *
      * @type {Jetton}
      * @memberof JettonTransferAction
      */
@@ -53,6 +48,12 @@ export interface JettonTransferAction {
      * @memberof JettonTransferAction
      */
     recipientsWallet: string;
+    /**
+     *
+     * @type {Refund}
+     * @memberof JettonTransferAction
+     */
+    refund?: Refund;
     /**
      *
      * @type {AccountAddress}

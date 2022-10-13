@@ -16,12 +16,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NftItemTransferActionToJSON = exports.NftItemTransferActionFromJSONTyped = exports.NftItemTransferActionFromJSON = exports.instanceOfNftItemTransferAction = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
+const Refund_1 = require("./Refund");
 /**
  * Check if a given object implements the NftItemTransferAction interface.
  */
 function instanceOfNftItemTransferAction(value) {
     let isInstance = true;
-    isInstance = isInstance && "isRefund" in value;
     isInstance = isInstance && "nft" in value;
     return isInstance;
 }
@@ -36,10 +36,10 @@ function NftItemTransferActionFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'comment': !(0, runtime_1.exists)(json, 'comment') ? undefined : json['comment'],
-        'isRefund': json['is_refund'],
         'nft': json['nft'],
         'payload': !(0, runtime_1.exists)(json, 'payload') ? undefined : json['payload'],
         'recipient': !(0, runtime_1.exists)(json, 'recipient') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
+        'refund': !(0, runtime_1.exists)(json, 'refund') ? undefined : (0, Refund_1.RefundFromJSON)(json['refund']),
         'sender': !(0, runtime_1.exists)(json, 'sender') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['sender']),
     };
 }
@@ -53,10 +53,10 @@ function NftItemTransferActionToJSON(value) {
     }
     return {
         'comment': value.comment,
-        'is_refund': value.isRefund,
         'nft': value.nft,
         'payload': value.payload,
         'recipient': (0, AccountAddress_1.AccountAddressToJSON)(value.recipient),
+        'refund': (0, Refund_1.RefundToJSON)(value.refund),
         'sender': (0, AccountAddress_1.AccountAddressToJSON)(value.sender),
     };
 }

@@ -19,6 +19,12 @@ import {
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
+import type { Refund } from './Refund';
+import {
+    RefundFromJSON,
+    RefundFromJSONTyped,
+    RefundToJSON,
+} from './Refund';
 
 /**
  * 
@@ -32,12 +38,6 @@ export interface NftItemTransferAction {
      * @memberof NftItemTransferAction
      */
     comment?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof NftItemTransferAction
-     */
-    isRefund: boolean;
     /**
      * 
      * @type {string}
@@ -58,6 +58,12 @@ export interface NftItemTransferAction {
     recipient?: AccountAddress;
     /**
      * 
+     * @type {Refund}
+     * @memberof NftItemTransferAction
+     */
+    refund?: Refund;
+    /**
+     * 
      * @type {AccountAddress}
      * @memberof NftItemTransferAction
      */
@@ -69,7 +75,6 @@ export interface NftItemTransferAction {
  */
 export function instanceOfNftItemTransferAction(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "isRefund" in value;
     isInstance = isInstance && "nft" in value;
 
     return isInstance;
@@ -86,10 +91,10 @@ export function NftItemTransferActionFromJSONTyped(json: any, ignoreDiscriminato
     return {
         
         'comment': !exists(json, 'comment') ? undefined : json['comment'],
-        'isRefund': json['is_refund'],
         'nft': json['nft'],
         'payload': !exists(json, 'payload') ? undefined : json['payload'],
         'recipient': !exists(json, 'recipient') ? undefined : AccountAddressFromJSON(json['recipient']),
+        'refund': !exists(json, 'refund') ? undefined : RefundFromJSON(json['refund']),
         'sender': !exists(json, 'sender') ? undefined : AccountAddressFromJSON(json['sender']),
     };
 }
@@ -104,10 +109,10 @@ export function NftItemTransferActionToJSON(value?: NftItemTransferAction | null
     return {
         
         'comment': value.comment,
-        'is_refund': value.isRefund,
         'nft': value.nft,
         'payload': value.payload,
         'recipient': AccountAddressToJSON(value.recipient),
+        'refund': RefundToJSON(value.refund),
         'sender': AccountAddressToJSON(value.sender),
     };
 }

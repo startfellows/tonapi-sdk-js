@@ -61,6 +61,7 @@ __exportStar(require("./NftItems"), exports);
 __exportStar(require("./NftItemsRepr"), exports);
 __exportStar(require("./NftSalesResponse"), exports);
 __exportStar(require("./Price"), exports);
+__exportStar(require("./Refund"), exports);
 __exportStar(require("./Sale"), exports);
 __exportStar(require("./SendBocRequest"), exports);
 __exportStar(require("./Seqno"), exports);

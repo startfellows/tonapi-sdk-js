@@ -45,6 +45,7 @@ export * from './NftItems';
 export * from './NftItemsRepr';
 export * from './NftSalesResponse';
 export * from './Price';
+export * from './Refund';
 export * from './Sale';
 export * from './SendBocRequest';
 export * from './Seqno';

@@ -32,9 +32,12 @@ class DomainAuctionsApi extends runtime.BaseAPI {
     /**
      * Get all auctions
      */
-    getAllAuctionsRaw(initOverrides) {
+    getAllAuctionsRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             const queryParameters = {};
+            if (requestParameters.tld !== undefined) {
+                queryParameters['tld'] = requestParameters.tld;
+            }
             const headerParameters = {};
             if (this.configuration && this.configuration.accessToken) {
                 const token = this.configuration.accessToken;
@@ -55,9 +58,9 @@ class DomainAuctionsApi extends runtime.BaseAPI {
     /**
      * Get all auctions
      */
-    getAllAuctions(initOverrides) {
+    getAllAuctions(requestParameters = {}, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getAllAuctionsRaw(initOverrides);
+            const response = yield this.getAllAuctionsRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }

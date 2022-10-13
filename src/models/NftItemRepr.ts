@@ -52,6 +52,12 @@ export interface NftItemRepr {
     address: string;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof NftItemRepr
+     */
+    approvedBy: Array<string>;
+    /**
+     * 
      * @type {NftItemReprCollection}
      * @memberof NftItemRepr
      */
@@ -113,6 +119,7 @@ export interface NftItemRepr {
 export function instanceOfNftItemRepr(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "approvedBy" in value;
     isInstance = isInstance && "index" in value;
     isInstance = isInstance && "metadata" in value;
     isInstance = isInstance && "verified" in value;
@@ -131,6 +138,7 @@ export function NftItemReprFromJSONTyped(json: any, ignoreDiscriminator: boolean
     return {
         
         'address': json['address'],
+        'approvedBy': json['approved_by'],
         'collection': !exists(json, 'collection') ? undefined : NftItemReprCollectionFromJSON(json['collection']),
         'collectionAddress': !exists(json, 'collection_address') ? undefined : json['collection_address'],
         'dns': !exists(json, 'dns') ? undefined : json['dns'],
@@ -153,6 +161,7 @@ export function NftItemReprToJSON(value?: NftItemRepr | null): any {
     return {
         
         'address': value.address,
+        'approved_by': value.approvedBy,
         'collection': NftItemReprCollectionToJSON(value.collection),
         'collection_address': value.collectionAddress,
         'dns': value.dns,

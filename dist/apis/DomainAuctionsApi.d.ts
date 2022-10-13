@@ -11,6 +11,9 @@
  */
 import * as runtime from '../runtime';
 import type { Auctions, DomainBids } from '../models';
+export interface GetAllAuctionsRequest {
+    tld?: string;
+}
 export interface GetDomainBidsRequest {
     domain: string;
 }
@@ -23,15 +26,16 @@ export interface GetDomainBidsRequest {
 export interface DomainAuctionsApiInterface {
     /**
      * Get all auctions
+     * @param {string} [tld] domain filter for current acutions \&quot;ton\&quot; of \&quot;t.me\&quot;
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DomainAuctionsApiInterface
      */
-    getAllAuctionsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Auctions>>;
+    getAllAuctionsRaw(requestParameters: GetAllAuctionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Auctions>>;
     /**
      * Get all auctions
      */
-    getAllAuctions(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Auctions>;
+    getAllAuctions(requestParameters: GetAllAuctionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Auctions>;
     /**
      * Get domain bids
      * @param {string} domain domain names with .ton
@@ -52,11 +56,11 @@ export declare class DomainAuctionsApi extends runtime.BaseAPI implements Domain
     /**
      * Get all auctions
      */
-    getAllAuctionsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Auctions>>;
+    getAllAuctionsRaw(requestParameters: GetAllAuctionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Auctions>>;
     /**
      * Get all auctions
      */
-    getAllAuctions(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Auctions>;
+    getAllAuctions(requestParameters?: GetAllAuctionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Auctions>;
     /**
      * Get domain bids
      */

@@ -16,13 +16,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TonTransferActionToJSON = exports.TonTransferActionFromJSONTyped = exports.TonTransferActionFromJSON = exports.instanceOfTonTransferAction = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
+const Refund_1 = require("./Refund");
 /**
  * Check if a given object implements the TonTransferAction interface.
  */
 function instanceOfTonTransferAction(value) {
     let isInstance = true;
     isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "isRefund" in value;
     isInstance = isInstance && "recipient" in value;
     isInstance = isInstance && "sender" in value;
     return isInstance;
@@ -39,9 +39,9 @@ function TonTransferActionFromJSONTyped(json, ignoreDiscriminator) {
     return {
         'amount': json['amount'],
         'comment': !(0, runtime_1.exists)(json, 'comment') ? undefined : json['comment'],
-        'isRefund': json['is_refund'],
         'payload': !(0, runtime_1.exists)(json, 'payload') ? undefined : json['payload'],
         'recipient': (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
+        'refund': !(0, runtime_1.exists)(json, 'refund') ? undefined : (0, Refund_1.RefundFromJSON)(json['refund']),
         'sender': (0, AccountAddress_1.AccountAddressFromJSON)(json['sender']),
     };
 }
@@ -56,9 +56,9 @@ function TonTransferActionToJSON(value) {
     return {
         'amount': value.amount,
         'comment': value.comment,
-        'is_refund': value.isRefund,
         'payload': value.payload,
         'recipient': (0, AccountAddress_1.AccountAddressToJSON)(value.recipient),
+        'refund': (0, Refund_1.RefundToJSON)(value.refund),
         'sender': (0, AccountAddress_1.AccountAddressToJSON)(value.sender),
     };
 }

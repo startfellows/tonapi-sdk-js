@@ -25,6 +25,12 @@ import {
     JettonFromJSONTyped,
     JettonToJSON,
 } from './Jetton';
+import type { Refund } from './Refund';
+import {
+    RefundFromJSON,
+    RefundFromJSONTyped,
+    RefundToJSON,
+} from './Refund';
 
 /**
  * 
@@ -46,12 +52,6 @@ export interface JettonTransferAction {
     comment?: string;
     /**
      * 
-     * @type {boolean}
-     * @memberof JettonTransferAction
-     */
-    isRefund: boolean;
-    /**
-     * 
      * @type {Jetton}
      * @memberof JettonTransferAction
      */
@@ -68,6 +68,12 @@ export interface JettonTransferAction {
      * @memberof JettonTransferAction
      */
     recipientsWallet: string;
+    /**
+     * 
+     * @type {Refund}
+     * @memberof JettonTransferAction
+     */
+    refund?: Refund;
     /**
      * 
      * @type {AccountAddress}
@@ -88,7 +94,6 @@ export interface JettonTransferAction {
 export function instanceOfJettonTransferAction(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "isRefund" in value;
     isInstance = isInstance && "jetton" in value;
     isInstance = isInstance && "recipientsWallet" in value;
     isInstance = isInstance && "sendersWallet" in value;
@@ -108,10 +113,10 @@ export function JettonTransferActionFromJSONTyped(json: any, ignoreDiscriminator
         
         'amount': json['amount'],
         'comment': !exists(json, 'comment') ? undefined : json['comment'],
-        'isRefund': json['is_refund'],
         'jetton': JettonFromJSON(json['jetton']),
         'recipient': !exists(json, 'recipient') ? undefined : AccountAddressFromJSON(json['recipient']),
         'recipientsWallet': json['recipients_wallet'],
+        'refund': !exists(json, 'refund') ? undefined : RefundFromJSON(json['refund']),
         'sender': !exists(json, 'sender') ? undefined : AccountAddressFromJSON(json['sender']),
         'sendersWallet': json['senders_wallet'],
     };
@@ -128,10 +133,10 @@ export function JettonTransferActionToJSON(value?: JettonTransferAction | null):
         
         'amount': value.amount,
         'comment': value.comment,
-        'is_refund': value.isRefund,
         'jetton': JettonToJSON(value.jetton),
         'recipient': AccountAddressToJSON(value.recipient),
         'recipients_wallet': value.recipientsWallet,
+        'refund': RefundToJSON(value.refund),
         'sender': AccountAddressToJSON(value.sender),
         'senders_wallet': value.sendersWallet,
     };

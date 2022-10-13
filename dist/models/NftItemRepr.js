@@ -25,6 +25,7 @@ const Sale_1 = require("./Sale");
 function instanceOfNftItemRepr(value) {
     let isInstance = true;
     isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "approvedBy" in value;
     isInstance = isInstance && "index" in value;
     isInstance = isInstance && "metadata" in value;
     isInstance = isInstance && "verified" in value;
@@ -41,6 +42,7 @@ function NftItemReprFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'address': json['address'],
+        'approvedBy': json['approved_by'],
         'collection': !(0, runtime_1.exists)(json, 'collection') ? undefined : (0, NftItemReprCollection_1.NftItemReprCollectionFromJSON)(json['collection']),
         'collectionAddress': !(0, runtime_1.exists)(json, 'collection_address') ? undefined : json['collection_address'],
         'dns': !(0, runtime_1.exists)(json, 'dns') ? undefined : json['dns'],
@@ -62,6 +64,7 @@ function NftItemReprToJSON(value) {
     }
     return {
         'address': value.address,
+        'approved_by': value.approvedBy,
         'collection': (0, NftItemReprCollection_1.NftItemReprCollectionToJSON)(value.collection),
         'collection_address': value.collectionAddress,
         'dns': value.dns,

@@ -17,13 +17,13 @@ exports.JettonTransferActionToJSON = exports.JettonTransferActionFromJSONTyped =
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
 const Jetton_1 = require("./Jetton");
+const Refund_1 = require("./Refund");
 /**
  * Check if a given object implements the JettonTransferAction interface.
  */
 function instanceOfJettonTransferAction(value) {
     let isInstance = true;
     isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "isRefund" in value;
     isInstance = isInstance && "jetton" in value;
     isInstance = isInstance && "recipientsWallet" in value;
     isInstance = isInstance && "sendersWallet" in value;
@@ -41,10 +41,10 @@ function JettonTransferActionFromJSONTyped(json, ignoreDiscriminator) {
     return {
         'amount': json['amount'],
         'comment': !(0, runtime_1.exists)(json, 'comment') ? undefined : json['comment'],
-        'isRefund': json['is_refund'],
         'jetton': (0, Jetton_1.JettonFromJSON)(json['jetton']),
         'recipient': !(0, runtime_1.exists)(json, 'recipient') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
         'recipientsWallet': json['recipients_wallet'],
+        'refund': !(0, runtime_1.exists)(json, 'refund') ? undefined : (0, Refund_1.RefundFromJSON)(json['refund']),
         'sender': !(0, runtime_1.exists)(json, 'sender') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['sender']),
         'sendersWallet': json['senders_wallet'],
     };
@@ -60,10 +60,10 @@ function JettonTransferActionToJSON(value) {
     return {
         'amount': value.amount,
         'comment': value.comment,
-        'is_refund': value.isRefund,
         'jetton': (0, Jetton_1.JettonToJSON)(value.jetton),
         'recipient': (0, AccountAddress_1.AccountAddressToJSON)(value.recipient),
         'recipients_wallet': value.recipientsWallet,
+        'refund': (0, Refund_1.RefundToJSON)(value.refund),
         'sender': (0, AccountAddress_1.AccountAddressToJSON)(value.sender),
         'senders_wallet': value.sendersWallet,
     };

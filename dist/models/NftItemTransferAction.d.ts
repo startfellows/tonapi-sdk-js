@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import type { AccountAddress } from './AccountAddress';
+import type { Refund } from './Refund';
 /**
  *
  * @export
@@ -22,12 +23,6 @@ export interface NftItemTransferAction {
      * @memberof NftItemTransferAction
      */
     comment?: string;
-    /**
-     *
-     * @type {boolean}
-     * @memberof NftItemTransferAction
-     */
-    isRefund: boolean;
     /**
      *
      * @type {string}
@@ -46,6 +41,12 @@ export interface NftItemTransferAction {
      * @memberof NftItemTransferAction
      */
     recipient?: AccountAddress;
+    /**
+     *
+     * @type {Refund}
+     * @memberof NftItemTransferAction
+     */
+    refund?: Refund;
     /**
      *
      * @type {AccountAddress}

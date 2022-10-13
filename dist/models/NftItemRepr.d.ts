@@ -27,6 +27,12 @@ export interface NftItemRepr {
     address: string;
     /**
      *
+     * @type {Array<string>}
+     * @memberof NftItemRepr
+     */
+    approvedBy: Array<string>;
+    /**
+     *
      * @type {NftItemReprCollection}
      * @memberof NftItemRepr
      */

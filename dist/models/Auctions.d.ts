@@ -22,6 +22,12 @@ export interface Auctions {
      * @memberof Auctions
      */
     data: Array<Auction>;
+    /**
+     *
+     * @type {number}
+     * @memberof Auctions
+     */
+    total: number;
 }
 /**
  * Check if a given object implements the Auctions interface.

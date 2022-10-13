@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import type { AccountAddress } from './AccountAddress';
+import type { Refund } from './Refund';
 /**
  *
  * @export
@@ -29,12 +30,6 @@ export interface TonTransferAction {
      */
     comment?: string;
     /**
-     *
-     * @type {boolean}
-     * @memberof TonTransferAction
-     */
-    isRefund: boolean;
-    /**
      * raw hex encoded payload
      * @type {string}
      * @memberof TonTransferAction
@@ -46,6 +41,12 @@ export interface TonTransferAction {
      * @memberof TonTransferAction
      */
     recipient: AccountAddress;
+    /**
+     *
+     * @type {Refund}
+     * @memberof TonTransferAction
+     */
+    refund?: Refund;
     /**
      *
      * @type {AccountAddress}

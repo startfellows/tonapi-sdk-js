@@ -21,6 +21,7 @@ const Auction_1 = require("./Auction");
 function instanceOfAuctions(value) {
     let isInstance = true;
     isInstance = isInstance && "data" in value;
+    isInstance = isInstance && "total" in value;
     return isInstance;
 }
 exports.instanceOfAuctions = instanceOfAuctions;
@@ -34,6 +35,7 @@ function AuctionsFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'data': (json['data'].map(Auction_1.AuctionFromJSON)),
+        'total': json['total'],
     };
 }
 exports.AuctionsFromJSONTyped = AuctionsFromJSONTyped;
@@ -46,6 +48,7 @@ function AuctionsToJSON(value) {
     }
     return {
         'data': (value.data.map(Auction_1.AuctionToJSON)),
+        'total': value.total,
     };
 }
 exports.AuctionsToJSON = AuctionsToJSON;
