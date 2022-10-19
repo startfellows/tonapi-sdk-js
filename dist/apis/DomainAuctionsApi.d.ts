@@ -26,7 +26,7 @@ export interface GetDomainBidsRequest {
 export interface DomainAuctionsApiInterface {
     /**
      * Get all auctions
-     * @param {string} [tld] domain filter for current acutions \&quot;ton\&quot; of \&quot;t.me\&quot;
+     * @param {string} [tld] domain filter for current auctions \&quot;ton\&quot; or \&quot;t.me\&quot;
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DomainAuctionsApiInterface

@@ -16,6 +16,7 @@ index.ts
 models/Account.ts
 models/AccountAddress.ts
 models/AccountEvent.ts
+models/AccountEvents.ts
 models/AccountEvents200Response.ts
 models/AccountRepr.ts
 models/AccountReprAddress.ts
@@ -39,10 +40,8 @@ models/Fee.ts
 models/ImagePreview.ts
 models/Jetton.ts
 models/JettonBalance.ts
-models/JettonHistory.ts
 models/JettonInfo.ts
 models/JettonMetadata.ts
-models/JettonSimpleTransfer.ts
 models/JettonTransferAction.ts
 models/JettonsBalances.ts
 models/Message.ts

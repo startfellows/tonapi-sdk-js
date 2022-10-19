@@ -15,13 +15,13 @@
 
 import * as runtime from '../runtime';
 import type {
-  JettonHistory,
+  AccountEvents,
   JettonInfo,
   JettonsBalances,
 } from '../models';
 import {
-    JettonHistoryFromJSON,
-    JettonHistoryToJSON,
+    AccountEventsFromJSON,
+    AccountEventsToJSON,
     JettonInfoFromJSON,
     JettonInfoToJSON,
     JettonsBalancesFromJSON,
@@ -30,6 +30,8 @@ import {
 
 export interface GetJettonHistoryRequest {
     account: string;
+    limit: number;
+    jettonMaster?: string;
 }
 
 export interface GetJettonInfoRequest {
@@ -48,18 +50,20 @@ export interface GetJettonsBalancesRequest {
  */
 export interface JettonApiInterface {
     /**
-     * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
+     * Get all Jetton transfers for account
      * @param {string} account address in raw (hex without 0x) or base64url format
+     * @param {number} limit 
+     * @param {string} [jettonMaster] address in raw (hex without 0x) or base64url format
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof JettonApiInterface
      */
-    getJettonHistoryRaw(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonHistory>>;
+    getJettonHistoryRaw(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
 
     /**
-     * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
+     * Get all Jetton transfers for account
      */
-    getJettonHistory(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonHistory>;
+    getJettonHistory(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
 
     /**
      * Get jetton metadata by jetton master address
@@ -97,17 +101,29 @@ export interface JettonApiInterface {
 export class JettonApi extends runtime.BaseAPI implements JettonApiInterface {
 
     /**
-     * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
+     * Get all Jetton transfers for account
      */
-    async getJettonHistoryRaw(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonHistory>> {
+    async getJettonHistoryRaw(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>> {
         if (requestParameters.account === null || requestParameters.account === undefined) {
             throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getJettonHistory.');
+        }
+
+        if (requestParameters.limit === null || requestParameters.limit === undefined) {
+            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling getJettonHistory.');
         }
 
         const queryParameters: any = {};
 
         if (requestParameters.account !== undefined) {
             queryParameters['account'] = requestParameters.account;
+        }
+
+        if (requestParameters.jettonMaster !== undefined) {
+            queryParameters['jetton_master'] = requestParameters.jettonMaster;
+        }
+
+        if (requestParameters.limit !== undefined) {
+            queryParameters['limit'] = requestParameters.limit;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -127,13 +143,13 @@ export class JettonApi extends runtime.BaseAPI implements JettonApiInterface {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => JettonHistoryFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => AccountEventsFromJSON(jsonValue));
     }
 
     /**
-     * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
+     * Get all Jetton transfers for account
      */
-    async getJettonHistory(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonHistory> {
+    async getJettonHistory(requestParameters: GetJettonHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents> {
         const response = await this.getJettonHistoryRaw(requestParameters, initOverrides);
         return await response.value();
     }

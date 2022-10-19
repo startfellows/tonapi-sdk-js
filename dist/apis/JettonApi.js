@@ -30,16 +30,25 @@ const models_1 = require("../models");
  */
 class JettonApi extends runtime.BaseAPI {
     /**
-     * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
+     * Get all Jetton transfers for account
      */
     getJettonHistoryRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.account === null || requestParameters.account === undefined) {
                 throw new runtime.RequiredError('account', 'Required parameter requestParameters.account was null or undefined when calling getJettonHistory.');
             }
+            if (requestParameters.limit === null || requestParameters.limit === undefined) {
+                throw new runtime.RequiredError('limit', 'Required parameter requestParameters.limit was null or undefined when calling getJettonHistory.');
+            }
             const queryParameters = {};
             if (requestParameters.account !== undefined) {
                 queryParameters['account'] = requestParameters.account;
+            }
+            if (requestParameters.jettonMaster !== undefined) {
+                queryParameters['jetton_master'] = requestParameters.jettonMaster;
+            }
+            if (requestParameters.limit !== undefined) {
+                queryParameters['limit'] = requestParameters.limit;
             }
             const headerParameters = {};
             if (this.configuration && this.configuration.accessToken) {
@@ -55,11 +64,11 @@ class JettonApi extends runtime.BaseAPI {
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, models_1.JettonHistoryFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, models_1.AccountEventsFromJSON)(jsonValue));
         });
     }
     /**
-     * Get all Jetton transfers for account. EXPERIMENTAL METHOD!!!
+     * Get all Jetton transfers for account
      */
     getJettonHistory(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
