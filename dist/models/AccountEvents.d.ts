@@ -22,6 +22,12 @@ export interface AccountEvents {
      * @memberof AccountEvents
      */
     events: Array<AccountEvent>;
+    /**
+     *
+     * @type {number}
+     * @memberof AccountEvents
+     */
+    nextFrom?: number;
 }
 /**
  * Check if a given object implements the AccountEvents interface.

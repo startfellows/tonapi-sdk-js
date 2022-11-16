@@ -23,6 +23,12 @@ export interface JettonMetadata {
     address: string;
     /**
      *
+     * @type {Array<string>}
+     * @memberof JettonMetadata
+     */
+    catalogs?: Array<string>;
+    /**
+     *
      * @type {number}
      * @memberof JettonMetadata
      */
@@ -47,10 +53,22 @@ export interface JettonMetadata {
     name: string;
     /**
      *
+     * @type {Array<string>}
+     * @memberof JettonMetadata
+     */
+    social?: Array<string>;
+    /**
+     *
      * @type {string}
      * @memberof JettonMetadata
      */
     symbol: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JettonMetadata
+     */
+    websites?: Array<string>;
 }
 /**
  * Check if a given object implements the JettonMetadata interface.

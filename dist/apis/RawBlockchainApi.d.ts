@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { Account, Block, Transaction, Transactions } from '../models';
+import type { Account, Block, Transaction, Transactions, Validators } from '../models';
 export interface GetAccountRequest {
     account: string;
 }
@@ -84,6 +84,17 @@ export interface RawBlockchainApiInterface {
      * Get transactions
      */
     getTransactions(requestParameters: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transactions>;
+    /**
+     * Get validators info list
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RawBlockchainApiInterface
+     */
+    getValidatorsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Validators>>;
+    /**
+     * Get validators info list
+     */
+    getValidators(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Validators>;
 }
 /**
  *
@@ -121,4 +132,12 @@ export declare class RawBlockchainApi extends runtime.BaseAPI implements RawBloc
      * Get transactions
      */
     getTransactions(requestParameters?: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transactions>;
+    /**
+     * Get validators info list
+     */
+    getValidatorsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Validators>>;
+    /**
+     * Get validators info list
+     */
+    getValidators(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Validators>;
 }

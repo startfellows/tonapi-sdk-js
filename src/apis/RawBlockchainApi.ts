@@ -19,6 +19,7 @@ import type {
   Block,
   Transaction,
   Transactions,
+  Validators,
 } from '../models';
 import {
     AccountFromJSON,
@@ -29,6 +30,8 @@ import {
     TransactionToJSON,
     TransactionsFromJSON,
     TransactionsToJSON,
+    ValidatorsFromJSON,
+    ValidatorsToJSON,
 } from '../models';
 
 export interface GetAccountRequest {
@@ -115,6 +118,19 @@ export interface RawBlockchainApiInterface {
      * Get transactions
      */
     getTransactions(requestParameters: GetTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transactions>;
+
+    /**
+     * Get validators info list
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RawBlockchainApiInterface
+     */
+    getValidatorsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Validators>>;
+
+    /**
+     * Get validators info list
+     */
+    getValidators(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Validators>;
 
 }
 
@@ -296,6 +312,40 @@ export class RawBlockchainApi extends runtime.BaseAPI implements RawBlockchainAp
      */
     async getTransactions(requestParameters: GetTransactionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transactions> {
         const response = await this.getTransactionsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get validators info list
+     */
+    async getValidatorsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Validators>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("JWTAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/v1/blockchain/validators`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ValidatorsFromJSON(jsonValue));
+    }
+
+    /**
+     * Get validators info list
+     */
+    async getValidators(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Validators> {
+        const response = await this.getValidatorsRaw(initOverrides);
         return await response.value();
     }
 

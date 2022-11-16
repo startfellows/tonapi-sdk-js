@@ -32,6 +32,12 @@ export interface AccountEvents200Response {
      * @memberof AccountEvents200Response
      */
     events: Array<AccountEvent>;
+    /**
+     * 
+     * @type {number}
+     * @memberof AccountEvents200Response
+     */
+    nextFrom?: number;
 }
 
 /**
@@ -55,6 +61,7 @@ export function AccountEvents200ResponseFromJSONTyped(json: any, ignoreDiscrimin
     return {
         
         'events': ((json['events'] as Array<any>).map(AccountEventFromJSON)),
+        'nextFrom': !exists(json, 'next_from') ? undefined : json['next_from'],
     };
 }
 
@@ -68,6 +75,7 @@ export function AccountEvents200ResponseToJSON(value?: AccountEvents200Response 
     return {
         
         'events': ((value.events as Array<any>).map(AccountEventToJSON)),
+        'next_from': value.nextFrom,
     };
 }
 

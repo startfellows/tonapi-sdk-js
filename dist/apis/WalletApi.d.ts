@@ -10,9 +10,12 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { Seqno, Wallets } from '../models';
+import type { PublicKey, Seqno, Wallets } from '../models';
 export interface FindWalletsByPubKeyRequest {
     publicKey: string;
+}
+export interface GetWalletPublicKeyRequest {
+    account: string;
 }
 export interface GetWalletSeqnoRequest {
     account: string;
@@ -36,6 +39,18 @@ export interface WalletApiInterface {
      * Find all wallets by public key
      */
     findWalletsByPubKey(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Wallets>;
+    /**
+     * Get public key by wallet address
+     * @param {string} account address in raw (hex without 0x) or base64url format
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WalletApiInterface
+     */
+    getWalletPublicKeyRaw(requestParameters: GetWalletPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicKey>>;
+    /**
+     * Get public key by wallet address
+     */
+    getWalletPublicKey(requestParameters: GetWalletPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PublicKey>;
     /**
      * Get last seqno for wallet
      * @param {string} account address in raw (hex without 0x) or base64url format
@@ -61,6 +76,14 @@ export declare class WalletApi extends runtime.BaseAPI implements WalletApiInter
      * Find all wallets by public key
      */
     findWalletsByPubKey(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Wallets>;
+    /**
+     * Get public key by wallet address
+     */
+    getWalletPublicKeyRaw(requestParameters: GetWalletPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicKey>>;
+    /**
+     * Get public key by wallet address
+     */
+    getWalletPublicKey(requestParameters: GetWalletPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PublicKey>;
     /**
      * Get last seqno for wallet
      */

@@ -143,5 +143,43 @@ class DNSApi extends runtime.BaseAPI {
             return yield response.value();
         });
     }
+    /**
+     * Search domains by the first letters
+     */
+    searchDomainsRaw(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (requestParameters.domain === null || requestParameters.domain === undefined) {
+                throw new runtime.RequiredError('domain', 'Required parameter requestParameters.domain was null or undefined when calling searchDomains.');
+            }
+            const queryParameters = {};
+            if (requestParameters.domain !== undefined) {
+                queryParameters['domain'] = requestParameters.domain;
+            }
+            const headerParameters = {};
+            if (this.configuration && this.configuration.accessToken) {
+                const token = this.configuration.accessToken;
+                const tokenString = yield token("JWTAuth", []);
+                if (tokenString) {
+                    headerParameters["Authorization"] = `Bearer ${tokenString}`;
+                }
+            }
+            const response = yield this.request({
+                path: `/v1/dns/domains/search`,
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, models_1.DomainNamesFromJSON)(jsonValue));
+        });
+    }
+    /**
+     * Search domains by the first letters
+     */
+    searchDomains(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.searchDomainsRaw(requestParameters, initOverrides);
+            return yield response.value();
+        });
+    }
 }
 exports.DNSApi = DNSApi;

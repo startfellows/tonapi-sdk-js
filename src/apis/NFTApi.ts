@@ -45,6 +45,11 @@ export interface GetNftCollectionRequest {
     account: string;
 }
 
+export interface GetNftCollectionsRequest {
+    limit?: number;
+    offset?: number;
+}
+
 export interface GetNftForSaleRequest {
     account: string;
 }
@@ -106,16 +111,18 @@ export interface NFTApiInterface {
 
     /**
      * Get all NFT collections
+     * @param {number} [limit] 
+     * @param {number} [offset] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
-    getNftCollectionsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftCollections>>;
+    getNftCollectionsRaw(requestParameters: GetNftCollectionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftCollections>>;
 
     /**
      * Get all NFT collections
      */
-    getNftCollections(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollections>;
+    getNftCollections(requestParameters: GetNftCollectionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollections>;
 
     /**
      * Get NFT items for sale
@@ -289,8 +296,16 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
      * Get all NFT collections
      */
-    async getNftCollectionsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftCollections>> {
+    async getNftCollectionsRaw(requestParameters: GetNftCollectionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftCollections>> {
         const queryParameters: any = {};
+
+        if (requestParameters.limit !== undefined) {
+            queryParameters['limit'] = requestParameters.limit;
+        }
+
+        if (requestParameters.offset !== undefined) {
+            queryParameters['offset'] = requestParameters.offset;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -315,8 +330,8 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
      * Get all NFT collections
      */
-    async getNftCollections(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollections> {
-        const response = await this.getNftCollectionsRaw(initOverrides);
+    async getNftCollections(requestParameters: GetNftCollectionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollections> {
+        const response = await this.getNftCollectionsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

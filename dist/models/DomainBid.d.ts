@@ -30,6 +30,12 @@ export interface DomainBid {
     success: boolean;
     /**
      *
+     * @type {string}
+     * @memberof DomainBid
+     */
+    txHash: string;
+    /**
+     *
      * @type {number}
      * @memberof DomainBid
      */

@@ -187,5 +187,37 @@ class RawBlockchainApi extends runtime.BaseAPI {
             return yield response.value();
         });
     }
+    /**
+     * Get validators info list
+     */
+    getValidatorsRaw(initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const queryParameters = {};
+            const headerParameters = {};
+            if (this.configuration && this.configuration.accessToken) {
+                const token = this.configuration.accessToken;
+                const tokenString = yield token("JWTAuth", []);
+                if (tokenString) {
+                    headerParameters["Authorization"] = `Bearer ${tokenString}`;
+                }
+            }
+            const response = yield this.request({
+                path: `/v1/blockchain/validators`,
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, models_1.ValidatorsFromJSON)(jsonValue));
+        });
+    }
+    /**
+     * Get validators info list
+     */
+    getValidators(initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.getValidatorsRaw(initOverrides);
+            return yield response.value();
+        });
+    }
 }
 exports.RawBlockchainApi = RawBlockchainApi;

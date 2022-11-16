@@ -22,6 +22,7 @@ function instanceOfDomainBid(value) {
     let isInstance = true;
     isInstance = isInstance && "bidder" in value;
     isInstance = isInstance && "success" in value;
+    isInstance = isInstance && "txHash" in value;
     isInstance = isInstance && "txTime" in value;
     isInstance = isInstance && "value" in value;
     return isInstance;
@@ -38,6 +39,7 @@ function DomainBidFromJSONTyped(json, ignoreDiscriminator) {
     return {
         'bidder': (0, AccountAddress_1.AccountAddressFromJSON)(json['bidder']),
         'success': json['success'],
+        'txHash': json['txHash'],
         'txTime': json['txTime'],
         'value': json['value'],
     };
@@ -53,6 +55,7 @@ function DomainBidToJSON(value) {
     return {
         'bidder': (0, AccountAddress_1.AccountAddressToJSON)(value.bidder),
         'success': value.success,
+        'txHash': value.txHash,
         'txTime': value.txTime,
         'value': value.value,
     };

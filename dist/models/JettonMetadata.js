@@ -37,11 +37,14 @@ function JettonMetadataFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'address': json['address'],
+        'catalogs': !(0, runtime_1.exists)(json, 'catalogs') ? undefined : json['catalogs'],
         'decimals': json['decimals'],
         'description': !(0, runtime_1.exists)(json, 'description') ? undefined : json['description'],
         'image': !(0, runtime_1.exists)(json, 'image') ? undefined : json['image'],
         'name': json['name'],
+        'social': !(0, runtime_1.exists)(json, 'social') ? undefined : json['social'],
         'symbol': json['symbol'],
+        'websites': !(0, runtime_1.exists)(json, 'websites') ? undefined : json['websites'],
     };
 }
 exports.JettonMetadataFromJSONTyped = JettonMetadataFromJSONTyped;
@@ -54,11 +57,14 @@ function JettonMetadataToJSON(value) {
     }
     return {
         'address': value.address,
+        'catalogs': value.catalogs,
         'decimals': value.decimals,
         'description': value.description,
         'image': value.image,
         'name': value.name,
+        'social': value.social,
         'symbol': value.symbol,
+        'websites': value.websites,
     };
 }
 exports.JettonMetadataToJSON = JettonMetadataToJSON;

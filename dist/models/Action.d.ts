@@ -9,10 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import type { ActionSimplePreview } from './ActionSimplePreview';
 import type { AuctionBidAction } from './AuctionBidAction';
 import type { ContractDeployAction } from './ContractDeployAction';
 import type { JettonTransferAction } from './JettonTransferAction';
 import type { NftItemTransferAction } from './NftItemTransferAction';
+import type { NftPurchase } from './NftPurchase';
 import type { SubscriptionAction } from './SubscriptionAction';
 import type { TonTransferAction } from './TonTransferAction';
 import type { UnSubscriptionAction } from './UnSubscriptionAction';
@@ -48,6 +50,12 @@ export interface Action {
     nftItemTransfer?: NftItemTransferAction;
     /**
      *
+     * @type {NftPurchase}
+     * @memberof Action
+     */
+    nftPurchase?: NftPurchase;
+    /**
+     *
      * @type {SubscriptionAction}
      * @memberof Action
      */
@@ -64,6 +72,12 @@ export interface Action {
      * @memberof Action
      */
     unSubscribe?: UnSubscriptionAction;
+    /**
+     *
+     * @type {ActionSimplePreview}
+     * @memberof Action
+     */
+    simplePreview: ActionSimplePreview;
     /**
      *
      * @type {string}
@@ -97,6 +111,7 @@ export declare const ActionTypeEnum: {
     readonly Subscribe: "Subscribe";
     readonly UnSubscribe: "UnSubscribe";
     readonly AuctionBid: "AuctionBid";
+    readonly NftPurchase: "NftPurchase";
     readonly Unknown: "Unknown";
 };
 export declare type ActionTypeEnum = typeof ActionTypeEnum[keyof typeof ActionTypeEnum];

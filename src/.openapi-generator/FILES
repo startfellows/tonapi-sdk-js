@@ -22,6 +22,7 @@ models/AccountRepr.ts
 models/AccountReprAddress.ts
 models/AccountReprs.ts
 models/Action.ts
+models/ActionSimplePreview.ts
 models/AnnotatedTrace.ts
 models/Auction.ts
 models/AuctionBidAction.ts
@@ -55,8 +56,10 @@ models/NftItemReprCollection.ts
 models/NftItemTransferAction.ts
 models/NftItems.ts
 models/NftItemsRepr.ts
+models/NftPurchase.ts
 models/NftSalesResponse.ts
 models/Price.ts
+models/PublicKey.ts
 models/Refund.ts
 models/Sale.ts
 models/SendBocRequest.ts
@@ -73,6 +76,8 @@ models/Transaction.ts
 models/Transactions.ts
 models/TxAnnotation.ts
 models/UnSubscriptionAction.ts
+models/Validator.ts
+models/Validators.ts
 models/Wallet.ts
 models/WalletDNS.ts
 models/Wallets.ts

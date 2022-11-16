@@ -20,6 +20,9 @@ export interface DnsResolveRequest {
 export interface GetDomainInfoRequest {
     name: string;
 }
+export interface SearchDomainsRequest {
+    domain: string;
+}
 /**
  * DNSApi - interface
  *
@@ -63,6 +66,18 @@ export interface DNSApiInterface {
      * domain info
      */
     getDomainInfo(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainInfo>;
+    /**
+     * Search domains by the first letters
+     * @param {string} domain
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DNSApiInterface
+     */
+    searchDomainsRaw(requestParameters: SearchDomainsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>>;
+    /**
+     * Search domains by the first letters
+     */
+    searchDomains(requestParameters: SearchDomainsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames>;
 }
 /**
  *
@@ -92,4 +107,12 @@ export declare class DNSApi extends runtime.BaseAPI implements DNSApiInterface {
      * domain info
      */
     getDomainInfo(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainInfo>;
+    /**
+     * Search domains by the first letters
+     */
+    searchDomainsRaw(requestParameters: SearchDomainsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>>;
+    /**
+     * Search domains by the first letters
+     */
+    searchDomains(requestParameters: SearchDomainsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames>;
 }

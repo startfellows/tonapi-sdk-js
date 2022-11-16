@@ -29,6 +29,8 @@ export interface AccountEventsRequest {
     account: string;
     limit: number;
     beforeLt?: number;
+    startDate?: number;
+    endDate?: number;
 }
 
 export interface GetEventRequest {
@@ -47,6 +49,8 @@ export interface EventApiInterface {
      * @param {string} account address in raw (hex without 0x) or base64url format
      * @param {number} limit 
      * @param {number} [beforeLt] omit this parameter to get last events
+     * @param {number} [startDate] 
+     * @param {number} [endDate] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EventApiInterface
@@ -103,6 +107,14 @@ export class EventApi extends runtime.BaseAPI implements EventApiInterface {
 
         if (requestParameters.limit !== undefined) {
             queryParameters['limit'] = requestParameters.limit;
+        }
+
+        if (requestParameters.startDate !== undefined) {
+            queryParameters['startDate'] = requestParameters.startDate;
+        }
+
+        if (requestParameters.endDate !== undefined) {
+            queryParameters['endDate'] = requestParameters.endDate;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

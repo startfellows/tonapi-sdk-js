@@ -15,10 +15,13 @@
 
 import * as runtime from '../runtime';
 import type {
+  PublicKey,
   Seqno,
   Wallets,
 } from '../models';
 import {
+    PublicKeyFromJSON,
+    PublicKeyToJSON,
     SeqnoFromJSON,
     SeqnoToJSON,
     WalletsFromJSON,
@@ -27,6 +30,10 @@ import {
 
 export interface FindWalletsByPubKeyRequest {
     publicKey: string;
+}
+
+export interface GetWalletPublicKeyRequest {
+    account: string;
 }
 
 export interface GetWalletSeqnoRequest {
@@ -53,6 +60,20 @@ export interface WalletApiInterface {
      * Find all wallets by public key
      */
     findWalletsByPubKey(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Wallets>;
+
+    /**
+     * Get public key by wallet address
+     * @param {string} account address in raw (hex without 0x) or base64url format
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WalletApiInterface
+     */
+    getWalletPublicKeyRaw(requestParameters: GetWalletPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicKey>>;
+
+    /**
+     * Get public key by wallet address
+     */
+    getWalletPublicKey(requestParameters: GetWalletPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PublicKey>;
 
     /**
      * Get last seqno for wallet
@@ -114,6 +135,48 @@ export class WalletApi extends runtime.BaseAPI implements WalletApiInterface {
      */
     async findWalletsByPubKey(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Wallets> {
         const response = await this.findWalletsByPubKeyRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get public key by wallet address
+     */
+    async getWalletPublicKeyRaw(requestParameters: GetWalletPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicKey>> {
+        if (requestParameters.account === null || requestParameters.account === undefined) {
+            throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getWalletPublicKey.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.account !== undefined) {
+            queryParameters['account'] = requestParameters.account;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("JWTAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/v1/wallet/getWalletPublicKey`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PublicKeyFromJSON(jsonValue));
+    }
+
+    /**
+     * Get public key by wallet address
+     */
+    async getWalletPublicKey(requestParameters: GetWalletPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PublicKey> {
+        const response = await this.getWalletPublicKeyRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

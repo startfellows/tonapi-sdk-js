@@ -15,10 +15,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ActionToJSON = exports.ActionFromJSONTyped = exports.ActionFromJSON = exports.instanceOfAction = exports.ActionTypeEnum = exports.ActionStatusEnum = void 0;
 const runtime_1 = require("../runtime");
+const ActionSimplePreview_1 = require("./ActionSimplePreview");
 const AuctionBidAction_1 = require("./AuctionBidAction");
 const ContractDeployAction_1 = require("./ContractDeployAction");
 const JettonTransferAction_1 = require("./JettonTransferAction");
 const NftItemTransferAction_1 = require("./NftItemTransferAction");
+const NftPurchase_1 = require("./NftPurchase");
 const SubscriptionAction_1 = require("./SubscriptionAction");
 const TonTransferAction_1 = require("./TonTransferAction");
 const UnSubscriptionAction_1 = require("./UnSubscriptionAction");
@@ -41,6 +43,7 @@ exports.ActionTypeEnum = {
     Subscribe: 'Subscribe',
     UnSubscribe: 'UnSubscribe',
     AuctionBid: 'AuctionBid',
+    NftPurchase: 'NftPurchase',
     Unknown: 'Unknown'
 };
 /**
@@ -48,6 +51,7 @@ exports.ActionTypeEnum = {
  */
 function instanceOfAction(value) {
     let isInstance = true;
+    isInstance = isInstance && "simplePreview" in value;
     isInstance = isInstance && "status" in value;
     isInstance = isInstance && "type" in value;
     return isInstance;
@@ -66,9 +70,11 @@ function ActionFromJSONTyped(json, ignoreDiscriminator) {
         'contractDeploy': !(0, runtime_1.exists)(json, 'ContractDeploy') ? undefined : (0, ContractDeployAction_1.ContractDeployActionFromJSON)(json['ContractDeploy']),
         'jettonTransfer': !(0, runtime_1.exists)(json, 'JettonTransfer') ? undefined : (0, JettonTransferAction_1.JettonTransferActionFromJSON)(json['JettonTransfer']),
         'nftItemTransfer': !(0, runtime_1.exists)(json, 'NftItemTransfer') ? undefined : (0, NftItemTransferAction_1.NftItemTransferActionFromJSON)(json['NftItemTransfer']),
+        'nftPurchase': !(0, runtime_1.exists)(json, 'NftPurchase') ? undefined : (0, NftPurchase_1.NftPurchaseFromJSON)(json['NftPurchase']),
         'subscribe': !(0, runtime_1.exists)(json, 'Subscribe') ? undefined : (0, SubscriptionAction_1.SubscriptionActionFromJSON)(json['Subscribe']),
         'tonTransfer': !(0, runtime_1.exists)(json, 'TonTransfer') ? undefined : (0, TonTransferAction_1.TonTransferActionFromJSON)(json['TonTransfer']),
         'unSubscribe': !(0, runtime_1.exists)(json, 'UnSubscribe') ? undefined : (0, UnSubscriptionAction_1.UnSubscriptionActionFromJSON)(json['UnSubscribe']),
+        'simplePreview': (0, ActionSimplePreview_1.ActionSimplePreviewFromJSON)(json['simple_preview']),
         'status': json['status'],
         'type': json['type'],
     };
@@ -86,9 +92,11 @@ function ActionToJSON(value) {
         'ContractDeploy': (0, ContractDeployAction_1.ContractDeployActionToJSON)(value.contractDeploy),
         'JettonTransfer': (0, JettonTransferAction_1.JettonTransferActionToJSON)(value.jettonTransfer),
         'NftItemTransfer': (0, NftItemTransferAction_1.NftItemTransferActionToJSON)(value.nftItemTransfer),
+        'NftPurchase': (0, NftPurchase_1.NftPurchaseToJSON)(value.nftPurchase),
         'Subscribe': (0, SubscriptionAction_1.SubscriptionActionToJSON)(value.subscribe),
         'TonTransfer': (0, TonTransferAction_1.TonTransferActionToJSON)(value.tonTransfer),
         'UnSubscribe': (0, UnSubscriptionAction_1.UnSubscriptionActionToJSON)(value.unSubscribe),
+        'simple_preview': (0, ActionSimplePreview_1.ActionSimplePreviewToJSON)(value.simplePreview),
         'status': value.status,
         'type': value.type,
     };

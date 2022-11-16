@@ -17,6 +17,10 @@ export interface GetNFTItemsRequest {
 export interface GetNftCollectionRequest {
     account: string;
 }
+export interface GetNftCollectionsRequest {
+    limit?: number;
+    offset?: number;
+}
 export interface GetNftForSaleRequest {
     account: string;
 }
@@ -69,15 +73,17 @@ export interface NFTApiInterface {
     getNftCollection(requestParameters: GetNftCollectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollection>;
     /**
      * Get all NFT collections
+     * @param {number} [limit]
+     * @param {number} [offset]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
-    getNftCollectionsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftCollections>>;
+    getNftCollectionsRaw(requestParameters: GetNftCollectionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftCollections>>;
     /**
      * Get all NFT collections
      */
-    getNftCollections(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollections>;
+    getNftCollections(requestParameters: GetNftCollectionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollections>;
     /**
      * Get NFT items for sale
      * @param {string} account address in raw (hex without 0x) or base64url format
@@ -170,11 +176,11 @@ export declare class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
      * Get all NFT collections
      */
-    getNftCollectionsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftCollections>>;
+    getNftCollectionsRaw(requestParameters: GetNftCollectionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftCollections>>;
     /**
      * Get all NFT collections
      */
-    getNftCollections(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollections>;
+    getNftCollections(requestParameters?: GetNftCollectionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollections>;
     /**
      * Get NFT items for sale
      */

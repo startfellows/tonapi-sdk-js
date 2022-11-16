@@ -27,6 +27,12 @@ export interface JettonMetadata {
     address: string;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof JettonMetadata
+     */
+    catalogs?: Array<string>;
+    /**
+     * 
      * @type {number}
      * @memberof JettonMetadata
      */
@@ -51,10 +57,22 @@ export interface JettonMetadata {
     name: string;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof JettonMetadata
+     */
+    social?: Array<string>;
+    /**
+     * 
      * @type {string}
      * @memberof JettonMetadata
      */
     symbol: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof JettonMetadata
+     */
+    websites?: Array<string>;
 }
 
 /**
@@ -81,11 +99,14 @@ export function JettonMetadataFromJSONTyped(json: any, ignoreDiscriminator: bool
     return {
         
         'address': json['address'],
+        'catalogs': !exists(json, 'catalogs') ? undefined : json['catalogs'],
         'decimals': json['decimals'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'image': !exists(json, 'image') ? undefined : json['image'],
         'name': json['name'],
+        'social': !exists(json, 'social') ? undefined : json['social'],
         'symbol': json['symbol'],
+        'websites': !exists(json, 'websites') ? undefined : json['websites'],
     };
 }
 
@@ -99,11 +120,14 @@ export function JettonMetadataToJSON(value?: JettonMetadata | null): any {
     return {
         
         'address': value.address,
+        'catalogs': value.catalogs,
         'decimals': value.decimals,
         'description': value.description,
         'image': value.image,
         'name': value.name,
+        'social': value.social,
         'symbol': value.symbol,
+        'websites': value.websites,
     };
 }
 

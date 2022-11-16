@@ -108,9 +108,15 @@ class NFTApi extends runtime.BaseAPI {
     /**
      * Get all NFT collections
      */
-    getNftCollectionsRaw(initOverrides) {
+    getNftCollectionsRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             const queryParameters = {};
+            if (requestParameters.limit !== undefined) {
+                queryParameters['limit'] = requestParameters.limit;
+            }
+            if (requestParameters.offset !== undefined) {
+                queryParameters['offset'] = requestParameters.offset;
+            }
             const headerParameters = {};
             if (this.configuration && this.configuration.accessToken) {
                 const token = this.configuration.accessToken;
@@ -131,9 +137,9 @@ class NFTApi extends runtime.BaseAPI {
     /**
      * Get all NFT collections
      */
-    getNftCollections(initOverrides) {
+    getNftCollections(requestParameters = {}, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getNftCollectionsRaw(initOverrides);
+            const response = yield this.getNftCollectionsRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }

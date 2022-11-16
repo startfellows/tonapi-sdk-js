@@ -40,6 +40,10 @@ export interface GetDomainInfoRequest {
     name: string;
 }
 
+export interface SearchDomainsRequest {
+    domain: string;
+}
+
 /**
  * DNSApi - interface
  * 
@@ -88,6 +92,20 @@ export interface DNSApiInterface {
      * domain info
      */
     getDomainInfo(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainInfo>;
+
+    /**
+     * Search domains by the first letters
+     * @param {string} domain 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DNSApiInterface
+     */
+    searchDomainsRaw(requestParameters: SearchDomainsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>>;
+
+    /**
+     * Search domains by the first letters
+     */
+    searchDomains(requestParameters: SearchDomainsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames>;
 
 }
 
@@ -219,6 +237,48 @@ export class DNSApi extends runtime.BaseAPI implements DNSApiInterface {
      */
     async getDomainInfo(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainInfo> {
         const response = await this.getDomainInfoRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Search domains by the first letters
+     */
+    async searchDomainsRaw(requestParameters: SearchDomainsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>> {
+        if (requestParameters.domain === null || requestParameters.domain === undefined) {
+            throw new runtime.RequiredError('domain','Required parameter requestParameters.domain was null or undefined when calling searchDomains.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.domain !== undefined) {
+            queryParameters['domain'] = requestParameters.domain;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("JWTAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/v1/dns/domains/search`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DomainNamesFromJSON(jsonValue));
+    }
+
+    /**
+     * Search domains by the first letters
+     */
+    async searchDomains(requestParameters: SearchDomainsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames> {
+        const response = await this.searchDomainsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

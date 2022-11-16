@@ -50,6 +50,12 @@ class EventApi extends runtime.BaseAPI {
             if (requestParameters.limit !== undefined) {
                 queryParameters['limit'] = requestParameters.limit;
             }
+            if (requestParameters.startDate !== undefined) {
+                queryParameters['startDate'] = requestParameters.startDate;
+            }
+            if (requestParameters.endDate !== undefined) {
+                queryParameters['endDate'] = requestParameters.endDate;
+            }
             const headerParameters = {};
             if (this.configuration && this.configuration.accessToken) {
                 const token = this.configuration.accessToken;

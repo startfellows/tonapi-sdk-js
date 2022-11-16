@@ -40,6 +40,12 @@ export interface DomainBid {
     success: boolean;
     /**
      * 
+     * @type {string}
+     * @memberof DomainBid
+     */
+    txHash: string;
+    /**
+     * 
      * @type {number}
      * @memberof DomainBid
      */
@@ -59,6 +65,7 @@ export function instanceOfDomainBid(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "bidder" in value;
     isInstance = isInstance && "success" in value;
+    isInstance = isInstance && "txHash" in value;
     isInstance = isInstance && "txTime" in value;
     isInstance = isInstance && "value" in value;
 
@@ -77,6 +84,7 @@ export function DomainBidFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         
         'bidder': AccountAddressFromJSON(json['bidder']),
         'success': json['success'],
+        'txHash': json['txHash'],
         'txTime': json['txTime'],
         'value': json['value'],
     };
@@ -93,6 +101,7 @@ export function DomainBidToJSON(value?: DomainBid | null): any {
         
         'bidder': AccountAddressToJSON(value.bidder),
         'success': value.success,
+        'txHash': value.txHash,
         'txTime': value.txTime,
         'value': value.value,
     };

@@ -167,15 +167,15 @@ class BaseAPI {
                 body: context.body,
                 credentials: this.configuration.credentials,
             };
-            const overridedInit = Object.assign(Object.assign({}, initParams), (yield initOverrideFn({
+            const overriddenInit = Object.assign(Object.assign({}, initParams), (yield initOverrideFn({
                 init: initParams,
                 context,
             })));
-            const init = Object.assign(Object.assign({}, overridedInit), { body: isFormData(overridedInit.body) ||
-                    overridedInit.body instanceof URLSearchParams ||
-                    isBlob(overridedInit.body)
-                    ? overridedInit.body
-                    : JSON.stringify(overridedInit.body) });
+            const init = Object.assign(Object.assign({}, overriddenInit), { body: isFormData(overriddenInit.body) ||
+                    overriddenInit.body instanceof URLSearchParams ||
+                    isBlob(overriddenInit.body)
+                    ? overriddenInit.body
+                    : JSON.stringify(overriddenInit.body) });
             return { url, init };
         });
     }

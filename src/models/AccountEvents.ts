@@ -32,6 +32,12 @@ export interface AccountEvents {
      * @memberof AccountEvents
      */
     events: Array<AccountEvent>;
+    /**
+     * 
+     * @type {number}
+     * @memberof AccountEvents
+     */
+    nextFrom?: number;
 }
 
 /**
@@ -55,6 +61,7 @@ export function AccountEventsFromJSONTyped(json: any, ignoreDiscriminator: boole
     return {
         
         'events': ((json['events'] as Array<any>).map(AccountEventFromJSON)),
+        'nextFrom': !exists(json, 'next_from') ? undefined : json['next_from'],
     };
 }
 
@@ -68,6 +75,7 @@ export function AccountEventsToJSON(value?: AccountEvents | null): any {
     return {
         
         'events': ((value.events as Array<any>).map(AccountEventToJSON)),
+        'next_from': value.nextFrom,
     };
 }
 
