@@ -19,6 +19,24 @@ import {
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
+import type { ImagePreview } from './ImagePreview';
+import {
+    ImagePreviewFromJSON,
+    ImagePreviewFromJSONTyped,
+    ImagePreviewToJSON,
+} from './ImagePreview';
+import type { NftItemCollection } from './NftItemCollection';
+import {
+    NftItemCollectionFromJSON,
+    NftItemCollectionFromJSONTyped,
+    NftItemCollectionToJSON,
+} from './NftItemCollection';
+import type { Sale } from './Sale';
+import {
+    SaleFromJSON,
+    SaleFromJSONTyped,
+    SaleToJSON,
+} from './Sale';
 
 /**
  * 
@@ -34,28 +52,10 @@ export interface NftItem {
     address: string;
     /**
      * 
-     * @type {string}
-     * @memberof NftItem
-     */
-    collectionAddress?: string;
-    /**
-     * 
      * @type {number}
      * @memberof NftItem
      */
     index: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof NftItem
-     */
-    init: boolean;
-    /**
-     * 
-     * @type {any}
-     * @memberof NftItem
-     */
-    metadata?: any | null;
     /**
      * 
      * @type {AccountAddress}
@@ -64,16 +64,46 @@ export interface NftItem {
     owner?: AccountAddress;
     /**
      * 
-     * @type {string}
+     * @type {NftItemCollection}
      * @memberof NftItem
      */
-    rawIndividualContent: string;
+    collection?: NftItemCollection;
     /**
      * 
      * @type {boolean}
      * @memberof NftItem
      */
     verified: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof NftItem
+     */
+    metadata: { [key: string]: any; };
+    /**
+     * 
+     * @type {Sale}
+     * @memberof NftItem
+     */
+    sale?: Sale;
+    /**
+     * 
+     * @type {Array<ImagePreview>}
+     * @memberof NftItem
+     */
+    previews?: Array<ImagePreview>;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftItem
+     */
+    dns?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof NftItem
+     */
+    approvedBy: Array<string>;
 }
 
 /**
@@ -83,9 +113,9 @@ export function instanceOfNftItem(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "address" in value;
     isInstance = isInstance && "index" in value;
-    isInstance = isInstance && "init" in value;
-    isInstance = isInstance && "rawIndividualContent" in value;
     isInstance = isInstance && "verified" in value;
+    isInstance = isInstance && "metadata" in value;
+    isInstance = isInstance && "approvedBy" in value;
 
     return isInstance;
 }
@@ -101,13 +131,15 @@ export function NftItemFromJSONTyped(json: any, ignoreDiscriminator: boolean): N
     return {
         
         'address': json['address'],
-        'collectionAddress': !exists(json, 'collection_address') ? undefined : json['collection_address'],
         'index': json['index'],
-        'init': json['init'],
-        'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
         'owner': !exists(json, 'owner') ? undefined : AccountAddressFromJSON(json['owner']),
-        'rawIndividualContent': json['raw_individual_content'],
+        'collection': !exists(json, 'collection') ? undefined : NftItemCollectionFromJSON(json['collection']),
         'verified': json['verified'],
+        'metadata': json['metadata'],
+        'sale': !exists(json, 'sale') ? undefined : SaleFromJSON(json['sale']),
+        'previews': !exists(json, 'previews') ? undefined : ((json['previews'] as Array<any>).map(ImagePreviewFromJSON)),
+        'dns': !exists(json, 'dns') ? undefined : json['dns'],
+        'approvedBy': json['approved_by'],
     };
 }
 
@@ -121,13 +153,15 @@ export function NftItemToJSON(value?: NftItem | null): any {
     return {
         
         'address': value.address,
-        'collection_address': value.collectionAddress,
         'index': value.index,
-        'init': value.init,
-        'metadata': value.metadata,
         'owner': AccountAddressToJSON(value.owner),
-        'raw_individual_content': value.rawIndividualContent,
+        'collection': NftItemCollectionToJSON(value.collection),
         'verified': value.verified,
+        'metadata': value.metadata,
+        'sale': SaleToJSON(value.sale),
+        'previews': value.previews === undefined ? undefined : ((value.previews as Array<any>).map(ImagePreviewToJSON)),
+        'dns': value.dns,
+        'approved_by': value.approvedBy,
     };
 }
 

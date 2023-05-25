@@ -19,12 +19,12 @@ import {
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
-import type { NftItemRepr } from './NftItemRepr';
+import type { NftItem } from './NftItem';
 import {
-    NftItemReprFromJSON,
-    NftItemReprFromJSONTyped,
-    NftItemReprToJSON,
-} from './NftItemRepr';
+    NftItemFromJSON,
+    NftItemFromJSONTyped,
+    NftItemToJSON,
+} from './NftItem';
 import type { Price } from './Price';
 import {
     PriceFromJSON,
@@ -40,16 +40,22 @@ import {
 export interface AuctionBidAction {
     /**
      * 
+     * @type {string}
+     * @memberof AuctionBidAction
+     */
+    auctionType: AuctionBidActionAuctionTypeEnum;
+    /**
+     * 
      * @type {Price}
      * @memberof AuctionBidAction
      */
     amount: Price;
     /**
      * 
-     * @type {string}
+     * @type {NftItem}
      * @memberof AuctionBidAction
      */
-    auctionType: AuctionBidActionAuctionTypeEnum;
+    nft?: NftItem;
     /**
      * 
      * @type {AccountAddress}
@@ -62,12 +68,6 @@ export interface AuctionBidAction {
      * @memberof AuctionBidAction
      */
     bidder: AccountAddress;
-    /**
-     * 
-     * @type {NftItemRepr}
-     * @memberof AuctionBidAction
-     */
-    nft?: NftItemRepr;
 }
 
 
@@ -77,6 +77,7 @@ export interface AuctionBidAction {
 export const AuctionBidActionAuctionTypeEnum = {
     DnsTon: 'DNS.ton',
     DnsTg: 'DNS.tg',
+    NumberTg: 'NUMBER.tg',
     Getgems: 'getgems'
 } as const;
 export type AuctionBidActionAuctionTypeEnum = typeof AuctionBidActionAuctionTypeEnum[keyof typeof AuctionBidActionAuctionTypeEnum];
@@ -87,8 +88,8 @@ export type AuctionBidActionAuctionTypeEnum = typeof AuctionBidActionAuctionType
  */
 export function instanceOfAuctionBidAction(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "auctionType" in value;
+    isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "beneficiary" in value;
     isInstance = isInstance && "bidder" in value;
 
@@ -105,11 +106,11 @@ export function AuctionBidActionFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
-        'amount': PriceFromJSON(json['amount']),
         'auctionType': json['auction_type'],
+        'amount': PriceFromJSON(json['amount']),
+        'nft': !exists(json, 'nft') ? undefined : NftItemFromJSON(json['nft']),
         'beneficiary': AccountAddressFromJSON(json['beneficiary']),
         'bidder': AccountAddressFromJSON(json['bidder']),
-        'nft': !exists(json, 'nft') ? undefined : NftItemReprFromJSON(json['nft']),
     };
 }
 
@@ -122,11 +123,11 @@ export function AuctionBidActionToJSON(value?: AuctionBidAction | null): any {
     }
     return {
         
-        'amount': PriceToJSON(value.amount),
         'auction_type': value.auctionType,
+        'amount': PriceToJSON(value.amount),
+        'nft': NftItemToJSON(value.nft),
         'beneficiary': AccountAddressToJSON(value.beneficiary),
         'bidder': AccountAddressToJSON(value.bidder),
-        'nft': NftItemReprToJSON(value.nft),
     };
 }
 

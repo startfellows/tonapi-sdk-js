@@ -22,13 +22,13 @@ export interface AccountAddress {
      */
     address: string;
     /**
-     *
+     * Display name. Data collected from different sources like moderation lists, dns, collections names and over.
      * @type {string}
      * @memberof AccountAddress
      */
-    icon?: string;
+    name?: string;
     /**
-     *
+     * Is this account was marked as part of scammers activity
      * @type {boolean}
      * @memberof AccountAddress
      */
@@ -38,7 +38,7 @@ export interface AccountAddress {
      * @type {string}
      * @memberof AccountAddress
      */
-    name?: string;
+    icon?: string;
 }
 /**
  * Check if a given object implements the AccountAddress interface.

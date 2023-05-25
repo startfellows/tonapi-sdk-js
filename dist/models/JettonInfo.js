@@ -15,14 +15,16 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JettonInfoToJSON = exports.JettonInfoFromJSONTyped = exports.JettonInfoFromJSON = exports.instanceOfJettonInfo = void 0;
 const JettonMetadata_1 = require("./JettonMetadata");
+const JettonVerificationType_1 = require("./JettonVerificationType");
 /**
  * Check if a given object implements the JettonInfo interface.
  */
 function instanceOfJettonInfo(value) {
     let isInstance = true;
-    isInstance = isInstance && "metadata" in value;
     isInstance = isInstance && "mintable" in value;
     isInstance = isInstance && "totalSupply" in value;
+    isInstance = isInstance && "metadata" in value;
+    isInstance = isInstance && "verification" in value;
     return isInstance;
 }
 exports.instanceOfJettonInfo = instanceOfJettonInfo;
@@ -35,9 +37,10 @@ function JettonInfoFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'metadata': (0, JettonMetadata_1.JettonMetadataFromJSON)(json['metadata']),
         'mintable': json['mintable'],
         'totalSupply': json['total_supply'],
+        'metadata': (0, JettonMetadata_1.JettonMetadataFromJSON)(json['metadata']),
+        'verification': (0, JettonVerificationType_1.JettonVerificationTypeFromJSON)(json['verification']),
     };
 }
 exports.JettonInfoFromJSONTyped = JettonInfoFromJSONTyped;
@@ -49,9 +52,10 @@ function JettonInfoToJSON(value) {
         return null;
     }
     return {
-        'metadata': (0, JettonMetadata_1.JettonMetadataToJSON)(value.metadata),
         'mintable': value.mintable,
         'total_supply': value.totalSupply,
+        'metadata': (0, JettonMetadata_1.JettonMetadataToJSON)(value.metadata),
+        'verification': (0, JettonVerificationType_1.JettonVerificationTypeToJSON)(value.verification),
     };
 }
 exports.JettonInfoToJSON = JettonInfoToJSON;

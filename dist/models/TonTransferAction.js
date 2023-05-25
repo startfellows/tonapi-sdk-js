@@ -22,9 +22,9 @@ const Refund_1 = require("./Refund");
  */
 function instanceOfTonTransferAction(value) {
     let isInstance = true;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "recipient" in value;
     isInstance = isInstance && "sender" in value;
+    isInstance = isInstance && "recipient" in value;
+    isInstance = isInstance && "amount" in value;
     return isInstance;
 }
 exports.instanceOfTonTransferAction = instanceOfTonTransferAction;
@@ -37,12 +37,11 @@ function TonTransferActionFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
+        'sender': (0, AccountAddress_1.AccountAddressFromJSON)(json['sender']),
+        'recipient': (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
         'amount': json['amount'],
         'comment': !(0, runtime_1.exists)(json, 'comment') ? undefined : json['comment'],
-        'payload': !(0, runtime_1.exists)(json, 'payload') ? undefined : json['payload'],
-        'recipient': (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
         'refund': !(0, runtime_1.exists)(json, 'refund') ? undefined : (0, Refund_1.RefundFromJSON)(json['refund']),
-        'sender': (0, AccountAddress_1.AccountAddressFromJSON)(json['sender']),
     };
 }
 exports.TonTransferActionFromJSONTyped = TonTransferActionFromJSONTyped;
@@ -54,12 +53,11 @@ function TonTransferActionToJSON(value) {
         return null;
     }
     return {
+        'sender': (0, AccountAddress_1.AccountAddressToJSON)(value.sender),
+        'recipient': (0, AccountAddress_1.AccountAddressToJSON)(value.recipient),
         'amount': value.amount,
         'comment': value.comment,
-        'payload': value.payload,
-        'recipient': (0, AccountAddress_1.AccountAddressToJSON)(value.recipient),
         'refund': (0, Refund_1.RefundToJSON)(value.refund),
-        'sender': (0, AccountAddress_1.AccountAddressToJSON)(value.sender),
     };
 }
 exports.TonTransferActionToJSON = TonTransferActionToJSON;

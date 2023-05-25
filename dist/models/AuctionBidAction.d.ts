@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import type { AccountAddress } from './AccountAddress';
-import type { NftItemRepr } from './NftItemRepr';
+import type { NftItem } from './NftItem';
 import type { Price } from './Price';
 /**
  *
@@ -20,16 +20,22 @@ import type { Price } from './Price';
 export interface AuctionBidAction {
     /**
      *
+     * @type {string}
+     * @memberof AuctionBidAction
+     */
+    auctionType: AuctionBidActionAuctionTypeEnum;
+    /**
+     *
      * @type {Price}
      * @memberof AuctionBidAction
      */
     amount: Price;
     /**
      *
-     * @type {string}
+     * @type {NftItem}
      * @memberof AuctionBidAction
      */
-    auctionType: AuctionBidActionAuctionTypeEnum;
+    nft?: NftItem;
     /**
      *
      * @type {AccountAddress}
@@ -42,12 +48,6 @@ export interface AuctionBidAction {
      * @memberof AuctionBidAction
      */
     bidder: AccountAddress;
-    /**
-     *
-     * @type {NftItemRepr}
-     * @memberof AuctionBidAction
-     */
-    nft?: NftItemRepr;
 }
 /**
  * @export
@@ -55,6 +55,7 @@ export interface AuctionBidAction {
 export declare const AuctionBidActionAuctionTypeEnum: {
     readonly DnsTon: "DNS.ton";
     readonly DnsTg: "DNS.tg";
+    readonly NumberTg: "NUMBER.tg";
     readonly Getgems: "getgems";
 };
 export declare type AuctionBidActionAuctionTypeEnum = typeof AuctionBidActionAuctionTypeEnum[keyof typeof AuctionBidActionAuctionTypeEnum];

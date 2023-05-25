@@ -21,12 +21,6 @@ export interface UnSubscriptionAction {
      * @type {AccountAddress}
      * @memberof UnSubscriptionAction
      */
-    beneficiary: AccountAddress;
-    /**
-     *
-     * @type {AccountAddress}
-     * @memberof UnSubscriptionAction
-     */
     subscriber: AccountAddress;
     /**
      *
@@ -34,6 +28,12 @@ export interface UnSubscriptionAction {
      * @memberof UnSubscriptionAction
      */
     subscription: string;
+    /**
+     *
+     * @type {AccountAddress}
+     * @memberof UnSubscriptionAction
+     */
+    beneficiary: AccountAddress;
 }
 /**
  * Check if a given object implements the UnSubscriptionAction interface.

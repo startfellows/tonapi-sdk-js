@@ -10,7 +10,14 @@
  * Do not edit the class manually.
  */
 import type { AccountAddress } from './AccountAddress';
+import type { AccountStatus } from './AccountStatus';
+import type { ActionPhase } from './ActionPhase';
+import type { BouncePhaseType } from './BouncePhaseType';
+import type { ComputePhase } from './ComputePhase';
+import type { CreditPhase } from './CreditPhase';
 import type { Message } from './Message';
+import type { StoragePhase } from './StoragePhase';
+import type { TransactionType } from './TransactionType';
 /**
  *
  * @export
@@ -19,34 +26,10 @@ import type { Message } from './Message';
 export interface Transaction {
     /**
      *
-     * @type {AccountAddress}
-     * @memberof Transaction
-     */
-    account: AccountAddress;
-    /**
-     *
-     * @type {string}
-     * @memberof Transaction
-     */
-    data: string;
-    /**
-     *
-     * @type {number}
-     * @memberof Transaction
-     */
-    fee: number;
-    /**
-     *
      * @type {string}
      * @memberof Transaction
      */
     hash: string;
-    /**
-     *
-     * @type {Message}
-     * @memberof Transaction
-     */
-    inMsg?: Message;
     /**
      *
      * @type {number}
@@ -55,10 +38,64 @@ export interface Transaction {
     lt: number;
     /**
      *
+     * @type {AccountAddress}
+     * @memberof Transaction
+     */
+    account: AccountAddress;
+    /**
+     *
+     * @type {boolean}
+     * @memberof Transaction
+     */
+    success: boolean;
+    /**
+     *
      * @type {number}
      * @memberof Transaction
      */
-    otherFee: number;
+    utime: number;
+    /**
+     *
+     * @type {AccountStatus}
+     * @memberof Transaction
+     */
+    origStatus: AccountStatus;
+    /**
+     *
+     * @type {AccountStatus}
+     * @memberof Transaction
+     */
+    endStatus: AccountStatus;
+    /**
+     *
+     * @type {number}
+     * @memberof Transaction
+     */
+    totalFees: number;
+    /**
+     *
+     * @type {TransactionType}
+     * @memberof Transaction
+     */
+    transactionType: TransactionType;
+    /**
+     *
+     * @type {string}
+     * @memberof Transaction
+     */
+    stateUpdateOld: string;
+    /**
+     *
+     * @type {string}
+     * @memberof Transaction
+     */
+    stateUpdateNew: string;
+    /**
+     *
+     * @type {Message}
+     * @memberof Transaction
+     */
+    inMsg?: Message;
     /**
      *
      * @type {Array<Message>}
@@ -67,16 +104,64 @@ export interface Transaction {
     outMsgs: Array<Message>;
     /**
      *
-     * @type {number}
+     * @type {string}
      * @memberof Transaction
      */
-    storageFee: number;
+    block: string;
+    /**
+     *
+     * @type {string}
+     * @memberof Transaction
+     */
+    prevTransHash?: string;
     /**
      *
      * @type {number}
      * @memberof Transaction
      */
-    utime: number;
+    prevTransLt?: number;
+    /**
+     *
+     * @type {ComputePhase}
+     * @memberof Transaction
+     */
+    computePhase?: ComputePhase;
+    /**
+     *
+     * @type {StoragePhase}
+     * @memberof Transaction
+     */
+    storagePhase?: StoragePhase;
+    /**
+     *
+     * @type {CreditPhase}
+     * @memberof Transaction
+     */
+    creditPhase?: CreditPhase;
+    /**
+     *
+     * @type {ActionPhase}
+     * @memberof Transaction
+     */
+    actionPhase?: ActionPhase;
+    /**
+     *
+     * @type {BouncePhaseType}
+     * @memberof Transaction
+     */
+    bouncePhase?: BouncePhaseType;
+    /**
+     *
+     * @type {boolean}
+     * @memberof Transaction
+     */
+    aborted: boolean;
+    /**
+     *
+     * @type {boolean}
+     * @memberof Transaction
+     */
+    destroyed: boolean;
 }
 /**
  * Check if a given object implements the Transaction interface.

@@ -15,14 +15,18 @@
 
 import * as runtime from '../runtime';
 import type {
+  GetAccountsRequest,
+  GetBlock401Response,
   NftCollection,
   NftCollections,
   NftItem,
   NftItems,
-  NftItemsRepr,
-  NftSalesResponse,
 } from '../models';
 import {
+    GetAccountsRequestFromJSON,
+    GetAccountsRequestToJSON,
+    GetBlock401ResponseFromJSON,
+    GetBlock401ResponseToJSON,
     NftCollectionFromJSON,
     NftCollectionToJSON,
     NftCollectionsFromJSON,
@@ -31,18 +35,16 @@ import {
     NftItemToJSON,
     NftItemsFromJSON,
     NftItemsToJSON,
-    NftItemsReprFromJSON,
-    NftItemsReprToJSON,
-    NftSalesResponseFromJSON,
-    NftSalesResponseToJSON,
 } from '../models';
 
-export interface GetNFTItemsRequest {
-    addresses: Array<string>;
+export interface GetItemsFromCollectionRequest {
+    accountId: string;
+    limit?: number;
+    offset?: number;
 }
 
 export interface GetNftCollectionRequest {
-    account: string;
+    accountId: string;
 }
 
 export interface GetNftCollectionsRequest {
@@ -50,28 +52,12 @@ export interface GetNftCollectionsRequest {
     offset?: number;
 }
 
-export interface GetNftForSaleRequest {
-    account: string;
-}
-
 export interface GetNftItemByAddressRequest {
-    account: string;
+    accountId: string;
 }
 
-export interface GetNftItemsByCollectionAddressRequest {
-    account: string;
-}
-
-export interface GetNftItemsByOwnerAddressRequest {
-    account: string;
-}
-
-export interface SearchNFTItemsRequest {
-    limit: number;
-    offset: number;
-    owner?: string;
-    collection?: string;
-    includeOnSale?: boolean;
+export interface GetNftItemsByAddressesRequest {
+    getAccountsRequest?: GetAccountsRequest;
 }
 
 /**
@@ -82,22 +68,24 @@ export interface SearchNFTItemsRequest {
  */
 export interface NFTApiInterface {
     /**
-     * Get NFT items by addresses
-     * @param {Array<string>} addresses NFT items addresses in raw (hex without 0x) or base64url format
+     * Get NFT items from collection by collection address
+     * @param {string} accountId account ID
+     * @param {number} [limit] 
+     * @param {number} [offset] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
-    getNFTItemsRaw(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItemsRepr>>;
+    getItemsFromCollectionRaw(requestParameters: GetItemsFromCollectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>>;
 
     /**
-     * Get NFT items by addresses
+     * Get NFT items from collection by collection address
      */
-    getNFTItems(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItemsRepr>;
+    getItemsFromCollection(requestParameters: GetItemsFromCollectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems>;
 
     /**
      * Get NFT collection by collection address
-     * @param {string} account address in raw (hex without 0x) or base64url format
+     * @param {string} accountId account ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof NFTApiInterface
@@ -110,7 +98,7 @@ export interface NFTApiInterface {
     getNftCollection(requestParameters: GetNftCollectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollection>;
 
     /**
-     * Get all NFT collections
+     * Get NFT collections
      * @param {number} [limit] 
      * @param {number} [offset] 
      * @param {*} [options] Override http request option.
@@ -120,30 +108,14 @@ export interface NFTApiInterface {
     getNftCollectionsRaw(requestParameters: GetNftCollectionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftCollections>>;
 
     /**
-     * Get all NFT collections
+     * Get NFT collections
      */
     getNftCollections(requestParameters: GetNftCollectionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollections>;
 
     /**
-     * Get NFT items for sale
-     * @param {string} account address in raw (hex without 0x) or base64url format
-     * @param {*} [options] Override http request option.
-     * @deprecated
-     * @throws {RequiredError}
-     * @memberof NFTApiInterface
-     */
-    getNftForSaleRaw(requestParameters: GetNftForSaleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftSalesResponse>>;
-
-    /**
-     * Get NFT items for sale
-     */
-    getNftForSale(requestParameters: GetNftForSaleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftSalesResponse>;
-
-    /**
      * Get NFT item by its address
-     * @param {string} account address in raw (hex without 0x) or base64url format
+     * @param {string} accountId account ID
      * @param {*} [options] Override http request option.
-     * @deprecated
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
@@ -155,52 +127,18 @@ export interface NFTApiInterface {
     getNftItemByAddress(requestParameters: GetNftItemByAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItem>;
 
     /**
-     * Get all NFT items from collection by collection address
-     * @param {string} account address in raw (hex without 0x) or base64url format
-     * @param {*} [options] Override http request option.
-     * @deprecated
-     * @throws {RequiredError}
-     * @memberof NFTApiInterface
-     */
-    getNftItemsByCollectionAddressRaw(requestParameters: GetNftItemsByCollectionAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>>;
-
-    /**
-     * Get all NFT items from collection by collection address
-     */
-    getNftItemsByCollectionAddress(requestParameters: GetNftItemsByCollectionAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems>;
-
-    /**
-     * Get all NFT items by owner address
-     * @param {string} account address in raw (hex without 0x) or base64url format
-     * @param {*} [options] Override http request option.
-     * @deprecated
-     * @throws {RequiredError}
-     * @memberof NFTApiInterface
-     */
-    getNftItemsByOwnerAddressRaw(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>>;
-
-    /**
-     * Get all NFT items by owner address
-     */
-    getNftItemsByOwnerAddress(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems>;
-
-    /**
-     * Search NFT items using filters
-     * @param {number} limit maximum qty of items
-     * @param {number} offset offset for pagination
-     * @param {string} [owner] address in raw (hex without 0x) or base64url format or word \&#39;no\&#39; for items without owner
-     * @param {string} [collection] address in raw (hex without 0x) or base64url format or word \&#39;no\&#39; for items without collection
-     * @param {boolean} [includeOnSale] include nft items which are currently are on market
+     * Get NFT items by their addresses
+     * @param {GetAccountsRequest} [getAccountsRequest] a list of account ids
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof NFTApiInterface
      */
-    searchNFTItemsRaw(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItemsRepr>>;
+    getNftItemsByAddressesRaw(requestParameters: GetNftItemsByAddressesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>>;
 
     /**
-     * Search NFT items using filters
+     * Get NFT items by their addresses
      */
-    searchNFTItems(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItemsRepr>;
+    getNftItemsByAddresses(requestParameters: GetNftItemsByAddressesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems>;
 
 }
 
@@ -210,44 +148,40 @@ export interface NFTApiInterface {
 export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
 
     /**
-     * Get NFT items by addresses
+     * Get NFT items from collection by collection address
      */
-    async getNFTItemsRaw(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItemsRepr>> {
-        if (requestParameters.addresses === null || requestParameters.addresses === undefined) {
-            throw new runtime.RequiredError('addresses','Required parameter requestParameters.addresses was null or undefined when calling getNFTItems.');
+    async getItemsFromCollectionRaw(requestParameters: GetItemsFromCollectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>> {
+        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getItemsFromCollection.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.addresses) {
-            queryParameters['addresses'] = requestParameters.addresses.join(runtime.COLLECTION_FORMATS["csv"]);
+        if (requestParameters.limit !== undefined) {
+            queryParameters['limit'] = requestParameters.limit;
+        }
+
+        if (requestParameters.offset !== undefined) {
+            queryParameters['offset'] = requestParameters.offset;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("JWTAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
         const response = await this.request({
-            path: `/v1/nft/getItems`,
+            path: `/v2/nfts/collections/{account_id}/items`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => NftItemsReprFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => NftItemsFromJSON(jsonValue));
     }
 
     /**
-     * Get NFT items by addresses
+     * Get NFT items from collection by collection address
      */
-    async getNFTItems(requestParameters: GetNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItemsRepr> {
-        const response = await this.getNFTItemsRaw(requestParameters, initOverrides);
+    async getItemsFromCollection(requestParameters: GetItemsFromCollectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems> {
+        const response = await this.getItemsFromCollectionRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -255,28 +189,16 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
      * Get NFT collection by collection address
      */
     async getNftCollectionRaw(requestParameters: GetNftCollectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftCollection>> {
-        if (requestParameters.account === null || requestParameters.account === undefined) {
-            throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getNftCollection.');
+        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getNftCollection.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.account !== undefined) {
-            queryParameters['account'] = requestParameters.account;
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("JWTAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
         const response = await this.request({
-            path: `/v1/nft/getCollection`,
+            path: `/v2/nfts/collections/{account_id}`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -294,7 +216,7 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     }
 
     /**
-     * Get all NFT collections
+     * Get NFT collections
      */
     async getNftCollectionsRaw(requestParameters: GetNftCollectionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftCollections>> {
         const queryParameters: any = {};
@@ -309,16 +231,8 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("JWTAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
         const response = await this.request({
-            path: `/v1/nft/getCollections`,
+            path: `/v2/nfts/collections`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -328,7 +242,7 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     }
 
     /**
-     * Get all NFT collections
+     * Get NFT collections
      */
     async getNftCollections(requestParameters: GetNftCollectionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollections> {
         const response = await this.getNftCollectionsRaw(requestParameters, initOverrides);
@@ -336,73 +250,19 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     }
 
     /**
-     * Get NFT items for sale
-     */
-    async getNftForSaleRaw(requestParameters: GetNftForSaleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftSalesResponse>> {
-        if (requestParameters.account === null || requestParameters.account === undefined) {
-            throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getNftForSale.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.account !== undefined) {
-            queryParameters['account'] = requestParameters.account;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("JWTAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/v1/nft/getNftForSale`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => NftSalesResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Get NFT items for sale
-     */
-    async getNftForSale(requestParameters: GetNftForSaleRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftSalesResponse> {
-        const response = await this.getNftForSaleRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
      * Get NFT item by its address
      */
     async getNftItemByAddressRaw(requestParameters: GetNftItemByAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItem>> {
-        if (requestParameters.account === null || requestParameters.account === undefined) {
-            throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getNftItemByAddress.');
+        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getNftItemByAddress.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.account !== undefined) {
-            queryParameters['account'] = requestParameters.account;
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("JWTAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
         const response = await this.request({
-            path: `/v1/nft/getItem`,
+            path: `/v2/nfts/{account_id}`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -420,148 +280,31 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     }
 
     /**
-     * Get all NFT items from collection by collection address
+     * Get NFT items by their addresses
      */
-    async getNftItemsByCollectionAddressRaw(requestParameters: GetNftItemsByCollectionAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>> {
-        if (requestParameters.account === null || requestParameters.account === undefined) {
-            throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getNftItemsByCollectionAddress.');
-        }
-
+    async getNftItemsByAddressesRaw(requestParameters: GetNftItemsByAddressesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>> {
         const queryParameters: any = {};
-
-        if (requestParameters.account !== undefined) {
-            queryParameters['account'] = requestParameters.account;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("JWTAuth", []);
+        headerParameters['Content-Type'] = 'application/json';
 
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
         const response = await this.request({
-            path: `/v1/nft/getItemsByCollectionAddress`,
-            method: 'GET',
+            path: `/v2/nfts/_bulk`,
+            method: 'POST',
             headers: headerParameters,
             query: queryParameters,
+            body: GetAccountsRequestToJSON(requestParameters.getAccountsRequest),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => NftItemsFromJSON(jsonValue));
     }
 
     /**
-     * Get all NFT items from collection by collection address
+     * Get NFT items by their addresses
      */
-    async getNftItemsByCollectionAddress(requestParameters: GetNftItemsByCollectionAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems> {
-        const response = await this.getNftItemsByCollectionAddressRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Get all NFT items by owner address
-     */
-    async getNftItemsByOwnerAddressRaw(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>> {
-        if (requestParameters.account === null || requestParameters.account === undefined) {
-            throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getNftItemsByOwnerAddress.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.account !== undefined) {
-            queryParameters['account'] = requestParameters.account;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("JWTAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/v1/nft/getItemsByOwnerAddress`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => NftItemsFromJSON(jsonValue));
-    }
-
-    /**
-     * Get all NFT items by owner address
-     */
-    async getNftItemsByOwnerAddress(requestParameters: GetNftItemsByOwnerAddressRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems> {
-        const response = await this.getNftItemsByOwnerAddressRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Search NFT items using filters
-     */
-    async searchNFTItemsRaw(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItemsRepr>> {
-        if (requestParameters.limit === null || requestParameters.limit === undefined) {
-            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling searchNFTItems.');
-        }
-
-        if (requestParameters.offset === null || requestParameters.offset === undefined) {
-            throw new runtime.RequiredError('offset','Required parameter requestParameters.offset was null or undefined when calling searchNFTItems.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.owner !== undefined) {
-            queryParameters['owner'] = requestParameters.owner;
-        }
-
-        if (requestParameters.collection !== undefined) {
-            queryParameters['collection'] = requestParameters.collection;
-        }
-
-        if (requestParameters.includeOnSale !== undefined) {
-            queryParameters['include_on_sale'] = requestParameters.includeOnSale;
-        }
-
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
-        }
-
-        if (requestParameters.offset !== undefined) {
-            queryParameters['offset'] = requestParameters.offset;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("JWTAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/v1/nft/searchItems`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => NftItemsReprFromJSON(jsonValue));
-    }
-
-    /**
-     * Search NFT items using filters
-     */
-    async searchNFTItems(requestParameters: SearchNFTItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItemsRepr> {
-        const response = await this.searchNFTItemsRaw(requestParameters, initOverrides);
+    async getNftItemsByAddresses(requestParameters: GetNftItemsByAddressesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems> {
+        const response = await this.getNftItemsByAddressesRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

@@ -10,18 +10,15 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { DnsRecord, DomainInfo, DomainNames } from '../models';
-export interface DnsBackResolveRequest {
-    account: string;
-}
+import type { Auctions, DnsRecord, DomainBids } from '../models';
 export interface DnsResolveRequest {
-    name: string;
+    domainName: string;
 }
-export interface GetDomainInfoRequest {
-    name: string;
+export interface GetAllAuctionsRequest {
+    tld?: string;
 }
-export interface SearchDomainsRequest {
-    domain: string;
+export interface GetDomainBidsRequest {
+    domainName: string;
 }
 /**
  * DNSApi - interface
@@ -31,20 +28,8 @@ export interface SearchDomainsRequest {
  */
 export interface DNSApiInterface {
     /**
-     * DNS back resolve for wallet address
-     * @param {string} account address in raw (hex without 0x) or base64url format
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DNSApiInterface
-     */
-    dnsBackResolveRaw(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>>;
-    /**
-     * DNS back resolve for wallet address
-     */
-    dnsBackResolve(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames>;
-    /**
      * DNS resolve for domain name
-     * @param {string} name domain name with .ton
+     * @param {string} domainName domain name with .ton or .t.me
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DNSApiInterface
@@ -55,43 +40,35 @@ export interface DNSApiInterface {
      */
     dnsResolve(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DnsRecord>;
     /**
-     * domain info
-     * @param {string} name domain name with .ton
+     * Get all auctions
+     * @param {string} [tld] domain filter for current auctions \&quot;ton\&quot; or \&quot;t.me\&quot;
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DNSApiInterface
      */
-    getDomainInfoRaw(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainInfo>>;
+    getAllAuctionsRaw(requestParameters: GetAllAuctionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Auctions>>;
     /**
-     * domain info
+     * Get all auctions
      */
-    getDomainInfo(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainInfo>;
+    getAllAuctions(requestParameters: GetAllAuctionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Auctions>;
     /**
-     * Search domains by the first letters
-     * @param {string} domain
+     * Get domain bids
+     * @param {string} domainName domain name with .ton or .t.me
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DNSApiInterface
      */
-    searchDomainsRaw(requestParameters: SearchDomainsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>>;
+    getDomainBidsRaw(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainBids>>;
     /**
-     * Search domains by the first letters
+     * Get domain bids
      */
-    searchDomains(requestParameters: SearchDomainsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames>;
+    getDomainBids(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainBids>;
 }
 /**
  *
  */
 export declare class DNSApi extends runtime.BaseAPI implements DNSApiInterface {
     /**
-     * DNS back resolve for wallet address
-     */
-    dnsBackResolveRaw(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>>;
-    /**
-     * DNS back resolve for wallet address
-     */
-    dnsBackResolve(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames>;
-    /**
      * DNS resolve for domain name
      */
     dnsResolveRaw(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DnsRecord>>;
@@ -100,19 +77,19 @@ export declare class DNSApi extends runtime.BaseAPI implements DNSApiInterface {
      */
     dnsResolve(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DnsRecord>;
     /**
-     * domain info
+     * Get all auctions
      */
-    getDomainInfoRaw(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainInfo>>;
+    getAllAuctionsRaw(requestParameters: GetAllAuctionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Auctions>>;
     /**
-     * domain info
+     * Get all auctions
      */
-    getDomainInfo(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainInfo>;
+    getAllAuctions(requestParameters?: GetAllAuctionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Auctions>;
     /**
-     * Search domains by the first letters
+     * Get domain bids
      */
-    searchDomainsRaw(requestParameters: SearchDomainsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>>;
+    getDomainBidsRaw(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainBids>>;
     /**
-     * Search domains by the first letters
+     * Get domain bids
      */
-    searchDomains(requestParameters: SearchDomainsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames>;
+    getDomainBids(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainBids>;
 }

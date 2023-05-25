@@ -18,34 +18,10 @@ import type { Validator } from './Validator';
 export interface Validators {
     /**
      *
-     * @type {number}
-     * @memberof Validators
-     */
-    electAt: number;
-    /**
-     *
-     * @type {number}
-     * @memberof Validators
-     */
-    electClose: number;
-    /**
-     *
-     * @type {number}
-     * @memberof Validators
-     */
-    minStake: number;
-    /**
-     *
-     * @type {number}
-     * @memberof Validators
-     */
-    totalStake: number;
-    /**
-     *
      * @type {Array<Validator>}
      * @memberof Validators
      */
-    validators: Array<Validator>;
+    transactions?: Array<Validator>;
 }
 /**
  * Check if a given object implements the Validators interface.

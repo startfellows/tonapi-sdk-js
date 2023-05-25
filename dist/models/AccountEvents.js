@@ -14,7 +14,6 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccountEventsToJSON = exports.AccountEventsFromJSONTyped = exports.AccountEventsFromJSON = exports.instanceOfAccountEvents = void 0;
-const runtime_1 = require("../runtime");
 const AccountEvent_1 = require("./AccountEvent");
 /**
  * Check if a given object implements the AccountEvents interface.
@@ -22,6 +21,7 @@ const AccountEvent_1 = require("./AccountEvent");
 function instanceOfAccountEvents(value) {
     let isInstance = true;
     isInstance = isInstance && "events" in value;
+    isInstance = isInstance && "nextFrom" in value;
     return isInstance;
 }
 exports.instanceOfAccountEvents = instanceOfAccountEvents;
@@ -35,7 +35,7 @@ function AccountEventsFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'events': (json['events'].map(AccountEvent_1.AccountEventFromJSON)),
-        'nextFrom': !(0, runtime_1.exists)(json, 'next_from') ? undefined : json['next_from'],
+        'nextFrom': json['next_from'],
     };
 }
 exports.AccountEventsFromJSONTyped = AccountEventsFromJSONTyped;

@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import type { AccountAddress } from './AccountAddress';
 /**
  *
  * @export
@@ -20,25 +21,37 @@ export interface ActionSimplePreview {
      * @type {string}
      * @memberof ActionSimplePreview
      */
-    fullDescription: string;
-    /**
-     *
-     * @type {string}
-     * @memberof ActionSimplePreview
-     */
-    image?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof ActionSimplePreview
-     */
     name: string;
     /**
      *
      * @type {string}
      * @memberof ActionSimplePreview
      */
-    shortDescription: string;
+    description: string;
+    /**
+     * a link to an image for this particular action.
+     * @type {string}
+     * @memberof ActionSimplePreview
+     */
+    actionImage?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof ActionSimplePreview
+     */
+    value?: string;
+    /**
+     * a link to an image that depicts this action's asset.
+     * @type {string}
+     * @memberof ActionSimplePreview
+     */
+    valueImage?: string;
+    /**
+     *
+     * @type {Array<AccountAddress>}
+     * @memberof ActionSimplePreview
+     */
+    accounts: Array<AccountAddress>;
 }
 /**
  * Check if a given object implements the ActionSimplePreview interface.

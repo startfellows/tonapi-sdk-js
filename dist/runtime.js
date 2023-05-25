@@ -137,6 +137,22 @@ class BaseAPI {
         const middlewares = postMiddlewares.map((post) => ({ post }));
         return this.withMiddleware(...middlewares);
     }
+    /**
+     * Check if the given MIME is a JSON MIME.
+     * JSON MIME examples:
+     *   application/json
+     *   application/json; charset=UTF8
+     *   APPLICATION/JSON
+     *   application/vnd.company+json
+     * @param mime - MIME (Multipurpose Internet Mail Extensions)
+     * @return True if the given MIME is JSON, false otherwise.
+     */
+    isJsonMime(mime) {
+        if (!mime) {
+            return false;
+        }
+        return BaseAPI.jsonRegex.test(mime);
+    }
     request(context, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             const { url, init } = yield this.createFetchParams(context, initOverrides);
@@ -191,6 +207,7 @@ class BaseAPI {
     }
 }
 exports.BaseAPI = BaseAPI;
+BaseAPI.jsonRegex = new RegExp('^(:?application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(:?;.*)?$', 'i');
 ;
 function isBlob(value) {
     return typeof Blob !== 'undefined' && value instanceof Blob;

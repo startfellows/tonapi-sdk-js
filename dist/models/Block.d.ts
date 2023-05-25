@@ -20,25 +20,7 @@ export interface Block {
      * @type {number}
      * @memberof Block
      */
-    endLt: number;
-    /**
-     *
-     * @type {string}
-     * @memberof Block
-     */
-    fileHash: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Block
-     */
-    rootHash: string;
-    /**
-     *
-     * @type {number}
-     * @memberof Block
-     */
-    seqno: number;
+    workchainId: number;
     /**
      *
      * @type {string}
@@ -50,13 +32,157 @@ export interface Block {
      * @type {number}
      * @memberof Block
      */
+    seqno: number;
+    /**
+     *
+     * @type {string}
+     * @memberof Block
+     */
+    rootHash: string;
+    /**
+     *
+     * @type {string}
+     * @memberof Block
+     */
+    fileHash: string;
+    /**
+     *
+     * @type {number}
+     * @memberof Block
+     */
+    globalId: number;
+    /**
+     *
+     * @type {number}
+     * @memberof Block
+     */
+    version: number;
+    /**
+     *
+     * @type {boolean}
+     * @memberof Block
+     */
+    afterMerge: boolean;
+    /**
+     *
+     * @type {boolean}
+     * @memberof Block
+     */
+    beforeSplit: boolean;
+    /**
+     *
+     * @type {boolean}
+     * @memberof Block
+     */
+    afterSplit: boolean;
+    /**
+     *
+     * @type {boolean}
+     * @memberof Block
+     */
+    wantSplit: boolean;
+    /**
+     *
+     * @type {boolean}
+     * @memberof Block
+     */
+    wantMerge: boolean;
+    /**
+     *
+     * @type {boolean}
+     * @memberof Block
+     */
+    keyBlock: boolean;
+    /**
+     *
+     * @type {number}
+     * @memberof Block
+     */
+    genUtime: number;
+    /**
+     *
+     * @type {number}
+     * @memberof Block
+     */
     startLt: number;
     /**
      *
      * @type {number}
      * @memberof Block
      */
-    workchainId: number;
+    endLt: number;
+    /**
+     *
+     * @type {number}
+     * @memberof Block
+     */
+    vertSeqno: number;
+    /**
+     *
+     * @type {number}
+     * @memberof Block
+     */
+    genCatchainSeqno: number;
+    /**
+     *
+     * @type {number}
+     * @memberof Block
+     */
+    minRefMcSeqno: number;
+    /**
+     *
+     * @type {number}
+     * @memberof Block
+     */
+    prevKeyBlockSeqno: number;
+    /**
+     *
+     * @type {number}
+     * @memberof Block
+     */
+    genSoftwareVersion?: number;
+    /**
+     *
+     * @type {number}
+     * @memberof Block
+     */
+    genSoftwareCapabilities?: number;
+    /**
+     *
+     * @type {string}
+     * @memberof Block
+     */
+    masterRef?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof Block
+     */
+    prevRefs: Array<string>;
+    /**
+     *
+     * @type {number}
+     * @memberof Block
+     */
+    inMsgDescrLength: number;
+    /**
+     *
+     * @type {number}
+     * @memberof Block
+     */
+    outMsgDescrLength: number;
+    /**
+     *
+     * @type {string}
+     * @memberof Block
+     */
+    randSeed: string;
+    /**
+     *
+     * @type {string}
+     * @memberof Block
+     */
+    createdBy: string;
 }
 /**
  * Check if a given object implements the Block interface.

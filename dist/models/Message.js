@@ -16,16 +16,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MessageToJSON = exports.MessageFromJSONTyped = exports.MessageFromJSON = exports.instanceOfMessage = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
+const StateInit_1 = require("./StateInit");
 /**
  * Check if a given object implements the Message interface.
  */
 function instanceOfMessage(value) {
     let isInstance = true;
     isInstance = isInstance && "createdLt" in value;
+    isInstance = isInstance && "ihrDisabled" in value;
+    isInstance = isInstance && "bounce" in value;
+    isInstance = isInstance && "bounced" in value;
+    isInstance = isInstance && "value" in value;
     isInstance = isInstance && "fwdFee" in value;
     isInstance = isInstance && "ihrFee" in value;
-    isInstance = isInstance && "msgData" in value;
-    isInstance = isInstance && "value" in value;
+    isInstance = isInstance && "importFee" in value;
+    isInstance = isInstance && "createdAt" in value;
+    isInstance = isInstance && "decodedBody" in value;
     return isInstance;
 }
 exports.instanceOfMessage = instanceOfMessage;
@@ -39,12 +45,20 @@ function MessageFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'createdLt': json['created_lt'],
-        'destination': !(0, runtime_1.exists)(json, 'destination') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['destination']),
+        'ihrDisabled': json['ihr_disabled'],
+        'bounce': json['bounce'],
+        'bounced': json['bounced'],
+        'value': json['value'],
         'fwdFee': json['fwd_fee'],
         'ihrFee': json['ihr_fee'],
-        'msgData': json['msg_data'],
+        'destination': !(0, runtime_1.exists)(json, 'destination') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['destination']),
         'source': !(0, runtime_1.exists)(json, 'source') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['source']),
-        'value': json['value'],
+        'importFee': json['import_fee'],
+        'createdAt': json['created_at'],
+        'opCode': !(0, runtime_1.exists)(json, 'op_code') ? undefined : json['op_code'],
+        'init': !(0, runtime_1.exists)(json, 'init') ? undefined : (0, StateInit_1.StateInitFromJSON)(json['init']),
+        'decodedOpName': !(0, runtime_1.exists)(json, 'decoded_op_name') ? undefined : json['decoded_op_name'],
+        'decodedBody': json['decoded_body'],
     };
 }
 exports.MessageFromJSONTyped = MessageFromJSONTyped;
@@ -57,12 +71,20 @@ function MessageToJSON(value) {
     }
     return {
         'created_lt': value.createdLt,
-        'destination': (0, AccountAddress_1.AccountAddressToJSON)(value.destination),
+        'ihr_disabled': value.ihrDisabled,
+        'bounce': value.bounce,
+        'bounced': value.bounced,
+        'value': value.value,
         'fwd_fee': value.fwdFee,
         'ihr_fee': value.ihrFee,
-        'msg_data': value.msgData,
+        'destination': (0, AccountAddress_1.AccountAddressToJSON)(value.destination),
         'source': (0, AccountAddress_1.AccountAddressToJSON)(value.source),
-        'value': value.value,
+        'import_fee': value.importFee,
+        'created_at': value.createdAt,
+        'op_code': value.opCode,
+        'init': (0, StateInit_1.StateInitToJSON)(value.init),
+        'decoded_op_name': value.decodedOpName,
+        'decoded_body': value.decodedBody,
     };
 }
 exports.MessageToJSON = MessageToJSON;

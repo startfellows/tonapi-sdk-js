@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import type { Transaction } from './Transaction';
 /**
  *
  * @export
@@ -17,16 +18,22 @@
 export interface Trace {
     /**
      *
-     * @type {string}
+     * @type {Transaction}
      * @memberof Trace
      */
-    id: string;
+    transaction: Transaction;
     /**
      *
-     * @type {number}
+     * @type {Array<string>}
      * @memberof Trace
      */
-    utime: number;
+    interfaces: Array<string>;
+    /**
+     *
+     * @type {Array<Trace>}
+     * @memberof Trace
+     */
+    children?: Array<Trace>;
 }
 /**
  * Check if a given object implements the Trace interface.

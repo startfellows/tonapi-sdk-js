@@ -24,13 +24,13 @@ export interface Refund {
      * @type {string}
      * @memberof Refund
      */
-    origin: string;
+    type: RefundTypeEnum;
     /**
      * 
      * @type {string}
      * @memberof Refund
      */
-    type: RefundTypeEnum;
+    origin: string;
 }
 
 
@@ -50,8 +50,8 @@ export type RefundTypeEnum = typeof RefundTypeEnum[keyof typeof RefundTypeEnum];
  */
 export function instanceOfRefund(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "origin" in value;
     isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "origin" in value;
 
     return isInstance;
 }
@@ -66,8 +66,8 @@ export function RefundFromJSONTyped(json: any, ignoreDiscriminator: boolean): Re
     }
     return {
         
-        'origin': json['origin'],
         'type': json['type'],
+        'origin': json['origin'],
     };
 }
 
@@ -80,8 +80,8 @@ export function RefundToJSON(value?: Refund | null): any {
     }
     return {
         
-        'origin': value.origin,
         'type': value.type,
+        'origin': value.origin,
     };
 }
 

@@ -30,117 +30,69 @@ const models_1 = require("../models");
  */
 class WalletApi extends runtime.BaseAPI {
     /**
-     * Find all wallets by public key
+     * Get backup info
      */
-    findWalletsByPubKeyRaw(requestParameters, initOverrides) {
+    getWalletBackupRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (requestParameters.publicKey === null || requestParameters.publicKey === undefined) {
-                throw new runtime.RequiredError('publicKey', 'Required parameter requestParameters.publicKey was null or undefined when calling findWalletsByPubKey.');
+            if (requestParameters.xTonConnectAuth === null || requestParameters.xTonConnectAuth === undefined) {
+                throw new runtime.RequiredError('xTonConnectAuth', 'Required parameter requestParameters.xTonConnectAuth was null or undefined when calling getWalletBackup.');
             }
             const queryParameters = {};
-            if (requestParameters.publicKey !== undefined) {
-                queryParameters['public_key'] = requestParameters.publicKey;
-            }
             const headerParameters = {};
-            if (this.configuration && this.configuration.accessToken) {
-                const token = this.configuration.accessToken;
-                const tokenString = yield token("JWTAuth", []);
-                if (tokenString) {
-                    headerParameters["Authorization"] = `Bearer ${tokenString}`;
-                }
+            if (requestParameters.xTonConnectAuth !== undefined && requestParameters.xTonConnectAuth !== null) {
+                headerParameters['X-TonConnect-Auth'] = String(requestParameters.xTonConnectAuth);
             }
             const response = yield this.request({
-                path: `/v1/wallet/findByPubkey`,
+                path: `/v2/wallet/backup`,
                 method: 'GET',
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, models_1.WalletsFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, models_1.GetWalletBackup200ResponseFromJSON)(jsonValue));
         });
     }
     /**
-     * Find all wallets by public key
+     * Get backup info
      */
-    findWalletsByPubKey(requestParameters, initOverrides) {
+    getWalletBackup(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.findWalletsByPubKeyRaw(requestParameters, initOverrides);
+            const response = yield this.getWalletBackupRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
-     * Get public key by wallet address
+     * Set backup info
      */
-    getWalletPublicKeyRaw(requestParameters, initOverrides) {
+    setWalletBackupRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (requestParameters.account === null || requestParameters.account === undefined) {
-                throw new runtime.RequiredError('account', 'Required parameter requestParameters.account was null or undefined when calling getWalletPublicKey.');
+            if (requestParameters.xTonConnectAuth === null || requestParameters.xTonConnectAuth === undefined) {
+                throw new runtime.RequiredError('xTonConnectAuth', 'Required parameter requestParameters.xTonConnectAuth was null or undefined when calling setWalletBackup.');
+            }
+            if (requestParameters.body === null || requestParameters.body === undefined) {
+                throw new runtime.RequiredError('body', 'Required parameter requestParameters.body was null or undefined when calling setWalletBackup.');
             }
             const queryParameters = {};
-            if (requestParameters.account !== undefined) {
-                queryParameters['account'] = requestParameters.account;
-            }
             const headerParameters = {};
-            if (this.configuration && this.configuration.accessToken) {
-                const token = this.configuration.accessToken;
-                const tokenString = yield token("JWTAuth", []);
-                if (tokenString) {
-                    headerParameters["Authorization"] = `Bearer ${tokenString}`;
-                }
+            headerParameters['Content-Type'] = 'application/octet-stream';
+            if (requestParameters.xTonConnectAuth !== undefined && requestParameters.xTonConnectAuth !== null) {
+                headerParameters['X-TonConnect-Auth'] = String(requestParameters.xTonConnectAuth);
             }
             const response = yield this.request({
-                path: `/v1/wallet/getWalletPublicKey`,
-                method: 'GET',
+                path: `/v2/wallet/backup`,
+                method: 'PUT',
                 headers: headerParameters,
                 query: queryParameters,
+                body: requestParameters.body,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, models_1.PublicKeyFromJSON)(jsonValue));
+            return new runtime.VoidApiResponse(response);
         });
     }
     /**
-     * Get public key by wallet address
+     * Set backup info
      */
-    getWalletPublicKey(requestParameters, initOverrides) {
+    setWalletBackup(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getWalletPublicKeyRaw(requestParameters, initOverrides);
-            return yield response.value();
-        });
-    }
-    /**
-     * Get last seqno for wallet
-     */
-    getWalletSeqnoRaw(requestParameters, initOverrides) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (requestParameters.account === null || requestParameters.account === undefined) {
-                throw new runtime.RequiredError('account', 'Required parameter requestParameters.account was null or undefined when calling getWalletSeqno.');
-            }
-            const queryParameters = {};
-            if (requestParameters.account !== undefined) {
-                queryParameters['account'] = requestParameters.account;
-            }
-            const headerParameters = {};
-            if (this.configuration && this.configuration.accessToken) {
-                const token = this.configuration.accessToken;
-                const tokenString = yield token("JWTAuth", []);
-                if (tokenString) {
-                    headerParameters["Authorization"] = `Bearer ${tokenString}`;
-                }
-            }
-            const response = yield this.request({
-                path: `/v1/wallet/getSeqno`,
-                method: 'GET',
-                headers: headerParameters,
-                query: queryParameters,
-            }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, models_1.SeqnoFromJSON)(jsonValue));
-        });
-    }
-    /**
-     * Get last seqno for wallet
-     */
-    getWalletSeqno(requestParameters, initOverrides) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getWalletSeqnoRaw(requestParameters, initOverrides);
-            return yield response.value();
+            yield this.setWalletBackupRaw(requestParameters, initOverrides);
         });
     }
 }

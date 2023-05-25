@@ -19,12 +19,12 @@ import {
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
-import type { Jetton } from './Jetton';
+import type { JettonPreview } from './JettonPreview';
 import {
-    JettonFromJSON,
-    JettonFromJSONTyped,
-    JettonToJSON,
-} from './Jetton';
+    JettonPreviewFromJSON,
+    JettonPreviewFromJSONTyped,
+    JettonPreviewToJSON,
+} from './JettonPreview';
 
 /**
  * 
@@ -40,22 +40,16 @@ export interface JettonBalance {
     balance: string;
     /**
      * 
-     * @type {string}
-     * @memberof JettonBalance
-     */
-    jettonAddress: string;
-    /**
-     * 
-     * @type {Jetton}
-     * @memberof JettonBalance
-     */
-    metadata?: Jetton;
-    /**
-     * 
      * @type {AccountAddress}
      * @memberof JettonBalance
      */
     walletAddress: AccountAddress;
+    /**
+     * 
+     * @type {JettonPreview}
+     * @memberof JettonBalance
+     */
+    jetton: JettonPreview;
 }
 
 /**
@@ -64,8 +58,8 @@ export interface JettonBalance {
 export function instanceOfJettonBalance(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "balance" in value;
-    isInstance = isInstance && "jettonAddress" in value;
     isInstance = isInstance && "walletAddress" in value;
+    isInstance = isInstance && "jetton" in value;
 
     return isInstance;
 }
@@ -81,9 +75,8 @@ export function JettonBalanceFromJSONTyped(json: any, ignoreDiscriminator: boole
     return {
         
         'balance': json['balance'],
-        'jettonAddress': json['jetton_address'],
-        'metadata': !exists(json, 'metadata') ? undefined : JettonFromJSON(json['metadata']),
         'walletAddress': AccountAddressFromJSON(json['wallet_address']),
+        'jetton': JettonPreviewFromJSON(json['jetton']),
     };
 }
 
@@ -97,9 +90,8 @@ export function JettonBalanceToJSON(value?: JettonBalance | null): any {
     return {
         
         'balance': value.balance,
-        'jetton_address': value.jettonAddress,
-        'metadata': JettonToJSON(value.metadata),
         'wallet_address': AccountAddressToJSON(value.walletAddress),
+        'jetton': JettonPreviewToJSON(value.jetton),
     };
 }
 

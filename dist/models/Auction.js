@@ -19,11 +19,11 @@ exports.AuctionToJSON = exports.AuctionFromJSONTyped = exports.AuctionFromJSON =
  */
 function instanceOfAuction(value) {
     let isInstance = true;
-    isInstance = isInstance && "bids" in value;
-    isInstance = isInstance && "date" in value;
     isInstance = isInstance && "domain" in value;
     isInstance = isInstance && "owner" in value;
     isInstance = isInstance && "price" in value;
+    isInstance = isInstance && "bids" in value;
+    isInstance = isInstance && "date" in value;
     return isInstance;
 }
 exports.instanceOfAuction = instanceOfAuction;
@@ -36,11 +36,11 @@ function AuctionFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'bids': json['bids'],
-        'date': json['date'],
         'domain': json['domain'],
         'owner': json['owner'],
         'price': json['price'],
+        'bids': json['bids'],
+        'date': json['date'],
     };
 }
 exports.AuctionFromJSONTyped = AuctionFromJSONTyped;
@@ -52,11 +52,11 @@ function AuctionToJSON(value) {
         return null;
     }
     return {
-        'bids': value.bids,
-        'date': value.date,
         'domain': value.domain,
         'owner': value.owner,
         'price': value.price,
+        'bids': value.bids,
+        'date': value.date,
     };
 }
 exports.AuctionToJSON = AuctionToJSON;

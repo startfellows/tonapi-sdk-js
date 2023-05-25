@@ -25,6 +25,12 @@ import {
     FeeFromJSONTyped,
     FeeToJSON,
 } from './Fee';
+import type { ValueFlow } from './ValueFlow';
+import {
+    ValueFlowFromJSON,
+    ValueFlowFromJSONTyped,
+    ValueFlowToJSON,
+} from './ValueFlow';
 
 /**
  * 
@@ -34,16 +40,22 @@ import {
 export interface Event {
     /**
      * 
-     * @type {Array<Action>}
-     * @memberof Event
-     */
-    actions: Array<Action>;
-    /**
-     * 
      * @type {string}
      * @memberof Event
      */
     eventId: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Event
+     */
+    timestamp: number;
+    /**
+     * 
+     * @type {Array<Action>}
+     * @memberof Event
+     */
+    actions: Array<Action>;
     /**
      * 
      * @type {Array<Fee>}
@@ -51,11 +63,11 @@ export interface Event {
      */
     fees: Array<Fee>;
     /**
-     * Event is not finished yet. Transactions still happening
-     * @type {boolean}
+     * 
+     * @type {Array<ValueFlow>}
      * @memberof Event
      */
-    inProgress: boolean;
+    valueFlow: Array<ValueFlow>;
     /**
      * scam
      * @type {boolean}
@@ -69,11 +81,11 @@ export interface Event {
      */
     lt: number;
     /**
-     * 
-     * @type {number}
+     * Event is not finished yet. Transactions still happening
+     * @type {boolean}
      * @memberof Event
      */
-    timestamp: number;
+    inProgress: boolean;
 }
 
 /**
@@ -81,13 +93,14 @@ export interface Event {
  */
 export function instanceOfEvent(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "actions" in value;
     isInstance = isInstance && "eventId" in value;
+    isInstance = isInstance && "timestamp" in value;
+    isInstance = isInstance && "actions" in value;
     isInstance = isInstance && "fees" in value;
-    isInstance = isInstance && "inProgress" in value;
+    isInstance = isInstance && "valueFlow" in value;
     isInstance = isInstance && "isScam" in value;
     isInstance = isInstance && "lt" in value;
-    isInstance = isInstance && "timestamp" in value;
+    isInstance = isInstance && "inProgress" in value;
 
     return isInstance;
 }
@@ -102,13 +115,14 @@ export function EventFromJSONTyped(json: any, ignoreDiscriminator: boolean): Eve
     }
     return {
         
-        'actions': ((json['actions'] as Array<any>).map(ActionFromJSON)),
         'eventId': json['event_id'],
+        'timestamp': json['timestamp'],
+        'actions': ((json['actions'] as Array<any>).map(ActionFromJSON)),
         'fees': ((json['fees'] as Array<any>).map(FeeFromJSON)),
-        'inProgress': json['in_progress'],
+        'valueFlow': ((json['value_flow'] as Array<any>).map(ValueFlowFromJSON)),
         'isScam': json['is_scam'],
         'lt': json['lt'],
-        'timestamp': json['timestamp'],
+        'inProgress': json['in_progress'],
     };
 }
 
@@ -121,13 +135,14 @@ export function EventToJSON(value?: Event | null): any {
     }
     return {
         
-        'actions': ((value.actions as Array<any>).map(ActionToJSON)),
         'event_id': value.eventId,
+        'timestamp': value.timestamp,
+        'actions': ((value.actions as Array<any>).map(ActionToJSON)),
         'fees': ((value.fees as Array<any>).map(FeeToJSON)),
-        'in_progress': value.inProgress,
+        'value_flow': ((value.valueFlow as Array<any>).map(ValueFlowToJSON)),
         'is_scam': value.isScam,
         'lt': value.lt,
-        'timestamp': value.timestamp,
+        'in_progress': value.inProgress,
     };
 }
 

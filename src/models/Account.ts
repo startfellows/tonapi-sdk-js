@@ -21,28 +21,64 @@ import { exists, mapValues } from '../runtime';
 export interface Account {
     /**
      * 
+     * @type {string}
+     * @memberof Account
+     */
+    address: string;
+    /**
+     * 
      * @type {number}
      * @memberof Account
      */
     balance: number;
     /**
-     * 
-     * @type {string}
+     * unix timestamp
+     * @type {number}
      * @memberof Account
      */
-    code?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Account
-     */
-    data?: string;
+    lastActivity: number;
     /**
      * 
      * @type {string}
      * @memberof Account
      */
     status: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Account
+     */
+    interfaces?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Account
+     */
+    name?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Account
+     */
+    isScam?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Account
+     */
+    icon?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Account
+     */
+    memoRequired?: boolean;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Account
+     */
+    getMethods: Array<string>;
 }
 
 /**
@@ -50,8 +86,11 @@ export interface Account {
  */
 export function instanceOfAccount(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "address" in value;
     isInstance = isInstance && "balance" in value;
+    isInstance = isInstance && "lastActivity" in value;
     isInstance = isInstance && "status" in value;
+    isInstance = isInstance && "getMethods" in value;
 
     return isInstance;
 }
@@ -66,10 +105,16 @@ export function AccountFromJSONTyped(json: any, ignoreDiscriminator: boolean): A
     }
     return {
         
+        'address': json['address'],
         'balance': json['balance'],
-        'code': !exists(json, 'code') ? undefined : json['code'],
-        'data': !exists(json, 'data') ? undefined : json['data'],
+        'lastActivity': json['last_activity'],
         'status': json['status'],
+        'interfaces': !exists(json, 'interfaces') ? undefined : json['interfaces'],
+        'name': !exists(json, 'name') ? undefined : json['name'],
+        'isScam': !exists(json, 'is_scam') ? undefined : json['is_scam'],
+        'icon': !exists(json, 'icon') ? undefined : json['icon'],
+        'memoRequired': !exists(json, 'memo_required') ? undefined : json['memo_required'],
+        'getMethods': json['get_methods'],
     };
 }
 
@@ -82,10 +127,16 @@ export function AccountToJSON(value?: Account | null): any {
     }
     return {
         
+        'address': value.address,
         'balance': value.balance,
-        'code': value.code,
-        'data': value.data,
+        'last_activity': value.lastActivity,
         'status': value.status,
+        'interfaces': value.interfaces,
+        'name': value.name,
+        'is_scam': value.isScam,
+        'icon': value.icon,
+        'memo_required': value.memoRequired,
+        'get_methods': value.getMethods,
     };
 }
 

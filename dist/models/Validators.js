@@ -14,17 +14,13 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ValidatorsToJSON = exports.ValidatorsFromJSONTyped = exports.ValidatorsFromJSON = exports.instanceOfValidators = void 0;
+const runtime_1 = require("../runtime");
 const Validator_1 = require("./Validator");
 /**
  * Check if a given object implements the Validators interface.
  */
 function instanceOfValidators(value) {
     let isInstance = true;
-    isInstance = isInstance && "electAt" in value;
-    isInstance = isInstance && "electClose" in value;
-    isInstance = isInstance && "minStake" in value;
-    isInstance = isInstance && "totalStake" in value;
-    isInstance = isInstance && "validators" in value;
     return isInstance;
 }
 exports.instanceOfValidators = instanceOfValidators;
@@ -37,11 +33,7 @@ function ValidatorsFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'electAt': json['electAt'],
-        'electClose': json['electClose'],
-        'minStake': json['minStake'],
-        'totalStake': json['totalStake'],
-        'validators': (json['validators'].map(Validator_1.ValidatorFromJSON)),
+        'transactions': !(0, runtime_1.exists)(json, 'transactions') ? undefined : (json['transactions'].map(Validator_1.ValidatorFromJSON)),
     };
 }
 exports.ValidatorsFromJSONTyped = ValidatorsFromJSONTyped;
@@ -53,11 +45,7 @@ function ValidatorsToJSON(value) {
         return null;
     }
     return {
-        'electAt': value.electAt,
-        'electClose': value.electClose,
-        'minStake': value.minStake,
-        'totalStake': value.totalStake,
-        'validators': (value.validators.map(Validator_1.ValidatorToJSON)),
+        'transactions': value.transactions === undefined ? undefined : (value.transactions.map(Validator_1.ValidatorToJSON)),
     };
 }
 exports.ValidatorsToJSON = ValidatorsToJSON;

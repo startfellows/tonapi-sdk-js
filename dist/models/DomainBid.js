@@ -20,11 +20,11 @@ const AccountAddress_1 = require("./AccountAddress");
  */
 function instanceOfDomainBid(value) {
     let isInstance = true;
-    isInstance = isInstance && "bidder" in value;
     isInstance = isInstance && "success" in value;
-    isInstance = isInstance && "txHash" in value;
-    isInstance = isInstance && "txTime" in value;
     isInstance = isInstance && "value" in value;
+    isInstance = isInstance && "txTime" in value;
+    isInstance = isInstance && "txHash" in value;
+    isInstance = isInstance && "bidder" in value;
     return isInstance;
 }
 exports.instanceOfDomainBid = instanceOfDomainBid;
@@ -37,11 +37,11 @@ function DomainBidFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'bidder': (0, AccountAddress_1.AccountAddressFromJSON)(json['bidder']),
         'success': json['success'],
-        'txHash': json['txHash'],
-        'txTime': json['txTime'],
         'value': json['value'],
+        'txTime': json['txTime'],
+        'txHash': json['txHash'],
+        'bidder': (0, AccountAddress_1.AccountAddressFromJSON)(json['bidder']),
     };
 }
 exports.DomainBidFromJSONTyped = DomainBidFromJSONTyped;
@@ -53,11 +53,11 @@ function DomainBidToJSON(value) {
         return null;
     }
     return {
-        'bidder': (0, AccountAddress_1.AccountAddressToJSON)(value.bidder),
         'success': value.success,
-        'txHash': value.txHash,
-        'txTime': value.txTime,
         'value': value.value,
+        'txTime': value.txTime,
+        'txHash': value.txHash,
+        'bidder': (0, AccountAddress_1.AccountAddressToJSON)(value.bidder),
     };
 }
 exports.DomainBidToJSON = DomainBidToJSON;

@@ -15,33 +15,32 @@
 
 import * as runtime from '../runtime';
 import type {
+  Auctions,
   DnsRecord,
-  DomainInfo,
-  DomainNames,
+  DomainBids,
+  GetBlock401Response,
 } from '../models';
 import {
+    AuctionsFromJSON,
+    AuctionsToJSON,
     DnsRecordFromJSON,
     DnsRecordToJSON,
-    DomainInfoFromJSON,
-    DomainInfoToJSON,
-    DomainNamesFromJSON,
-    DomainNamesToJSON,
+    DomainBidsFromJSON,
+    DomainBidsToJSON,
+    GetBlock401ResponseFromJSON,
+    GetBlock401ResponseToJSON,
 } from '../models';
 
-export interface DnsBackResolveRequest {
-    account: string;
-}
-
 export interface DnsResolveRequest {
-    name: string;
+    domainName: string;
 }
 
-export interface GetDomainInfoRequest {
-    name: string;
+export interface GetAllAuctionsRequest {
+    tld?: string;
 }
 
-export interface SearchDomainsRequest {
-    domain: string;
+export interface GetDomainBidsRequest {
+    domainName: string;
 }
 
 /**
@@ -52,22 +51,8 @@ export interface SearchDomainsRequest {
  */
 export interface DNSApiInterface {
     /**
-     * DNS back resolve for wallet address
-     * @param {string} account address in raw (hex without 0x) or base64url format
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DNSApiInterface
-     */
-    dnsBackResolveRaw(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>>;
-
-    /**
-     * DNS back resolve for wallet address
-     */
-    dnsBackResolve(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames>;
-
-    /**
      * DNS resolve for domain name
-     * @param {string} name domain name with .ton
+     * @param {string} domainName domain name with .ton or .t.me
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DNSApiInterface
@@ -80,32 +65,32 @@ export interface DNSApiInterface {
     dnsResolve(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DnsRecord>;
 
     /**
-     * domain info
-     * @param {string} name domain name with .ton
+     * Get all auctions
+     * @param {string} [tld] domain filter for current auctions \&quot;ton\&quot; or \&quot;t.me\&quot;
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DNSApiInterface
      */
-    getDomainInfoRaw(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainInfo>>;
+    getAllAuctionsRaw(requestParameters: GetAllAuctionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Auctions>>;
 
     /**
-     * domain info
+     * Get all auctions
      */
-    getDomainInfo(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainInfo>;
+    getAllAuctions(requestParameters: GetAllAuctionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Auctions>;
 
     /**
-     * Search domains by the first letters
-     * @param {string} domain 
+     * Get domain bids
+     * @param {string} domainName domain name with .ton or .t.me
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DNSApiInterface
      */
-    searchDomainsRaw(requestParameters: SearchDomainsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>>;
+    getDomainBidsRaw(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainBids>>;
 
     /**
-     * Search domains by the first letters
+     * Get domain bids
      */
-    searchDomains(requestParameters: SearchDomainsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames>;
+    getDomainBids(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainBids>;
 
 }
 
@@ -115,73 +100,19 @@ export interface DNSApiInterface {
 export class DNSApi extends runtime.BaseAPI implements DNSApiInterface {
 
     /**
-     * DNS back resolve for wallet address
-     */
-    async dnsBackResolveRaw(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>> {
-        if (requestParameters.account === null || requestParameters.account === undefined) {
-            throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling dnsBackResolve.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.account !== undefined) {
-            queryParameters['account'] = requestParameters.account;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("JWTAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/v1/dns/backresolve`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => DomainNamesFromJSON(jsonValue));
-    }
-
-    /**
-     * DNS back resolve for wallet address
-     */
-    async dnsBackResolve(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames> {
-        const response = await this.dnsBackResolveRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
      * DNS resolve for domain name
      */
     async dnsResolveRaw(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DnsRecord>> {
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling dnsResolve.');
+        if (requestParameters.domainName === null || requestParameters.domainName === undefined) {
+            throw new runtime.RequiredError('domainName','Required parameter requestParameters.domainName was null or undefined when calling dnsResolve.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("JWTAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
         const response = await this.request({
-            path: `/v1/dns/resolve`,
+            path: `/v2/dns/{domain_name}/resolve`.replace(`{${"domain_name"}}`, encodeURIComponent(String(requestParameters.domainName))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -199,86 +130,62 @@ export class DNSApi extends runtime.BaseAPI implements DNSApiInterface {
     }
 
     /**
-     * domain info
+     * Get all auctions
      */
-    async getDomainInfoRaw(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainInfo>> {
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling getDomainInfo.');
-        }
-
+    async getAllAuctionsRaw(requestParameters: GetAllAuctionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Auctions>> {
         const queryParameters: any = {};
 
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
+        if (requestParameters.tld !== undefined) {
+            queryParameters['tld'] = requestParameters.tld;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("JWTAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
         const response = await this.request({
-            path: `/v1/dns/getInfo`,
+            path: `/v2/dns/auctions`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => DomainInfoFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => AuctionsFromJSON(jsonValue));
     }
 
     /**
-     * domain info
+     * Get all auctions
      */
-    async getDomainInfo(requestParameters: GetDomainInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainInfo> {
-        const response = await this.getDomainInfoRaw(requestParameters, initOverrides);
+    async getAllAuctions(requestParameters: GetAllAuctionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Auctions> {
+        const response = await this.getAllAuctionsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Search domains by the first letters
+     * Get domain bids
      */
-    async searchDomainsRaw(requestParameters: SearchDomainsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>> {
-        if (requestParameters.domain === null || requestParameters.domain === undefined) {
-            throw new runtime.RequiredError('domain','Required parameter requestParameters.domain was null or undefined when calling searchDomains.');
+    async getDomainBidsRaw(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainBids>> {
+        if (requestParameters.domainName === null || requestParameters.domainName === undefined) {
+            throw new runtime.RequiredError('domainName','Required parameter requestParameters.domainName was null or undefined when calling getDomainBids.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.domain !== undefined) {
-            queryParameters['domain'] = requestParameters.domain;
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("JWTAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
         const response = await this.request({
-            path: `/v1/dns/domains/search`,
+            path: `/v2/dns/{domain_name}/bids`.replace(`{${"domain_name"}}`, encodeURIComponent(String(requestParameters.domainName))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => DomainNamesFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => DomainBidsFromJSON(jsonValue));
     }
 
     /**
-     * Search domains by the first letters
+     * Get domain bids
      */
-    async searchDomains(requestParameters: SearchDomainsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames> {
-        const response = await this.searchDomainsRaw(requestParameters, initOverrides);
+    async getDomainBids(requestParameters: GetDomainBidsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainBids> {
+        const response = await this.getDomainBidsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

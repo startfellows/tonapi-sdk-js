@@ -18,6 +18,18 @@ import type { Refund } from './Refund';
  */
 export interface TonTransferAction {
     /**
+     *
+     * @type {AccountAddress}
+     * @memberof TonTransferAction
+     */
+    sender: AccountAddress;
+    /**
+     *
+     * @type {AccountAddress}
+     * @memberof TonTransferAction
+     */
+    recipient: AccountAddress;
+    /**
      * amount in nanotons
      * @type {number}
      * @memberof TonTransferAction
@@ -30,29 +42,11 @@ export interface TonTransferAction {
      */
     comment?: string;
     /**
-     * raw hex encoded payload
-     * @type {string}
-     * @memberof TonTransferAction
-     */
-    payload?: string;
-    /**
-     *
-     * @type {AccountAddress}
-     * @memberof TonTransferAction
-     */
-    recipient: AccountAddress;
-    /**
      *
      * @type {Refund}
      * @memberof TonTransferAction
      */
     refund?: Refund;
-    /**
-     *
-     * @type {AccountAddress}
-     * @memberof TonTransferAction
-     */
-    sender: AccountAddress;
 }
 /**
  * Check if a given object implements the TonTransferAction interface.

@@ -35,12 +35,12 @@ function NftItemTransferActionFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'comment': !(0, runtime_1.exists)(json, 'comment') ? undefined : json['comment'],
-        'nft': json['nft'],
-        'payload': !(0, runtime_1.exists)(json, 'payload') ? undefined : json['payload'],
-        'recipient': !(0, runtime_1.exists)(json, 'recipient') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
-        'refund': !(0, runtime_1.exists)(json, 'refund') ? undefined : (0, Refund_1.RefundFromJSON)(json['refund']),
         'sender': !(0, runtime_1.exists)(json, 'sender') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['sender']),
+        'recipient': !(0, runtime_1.exists)(json, 'recipient') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
+        'nft': json['nft'],
+        'comment': !(0, runtime_1.exists)(json, 'comment') ? undefined : json['comment'],
+        'payload': !(0, runtime_1.exists)(json, 'payload') ? undefined : json['payload'],
+        'refund': !(0, runtime_1.exists)(json, 'refund') ? undefined : (0, Refund_1.RefundFromJSON)(json['refund']),
     };
 }
 exports.NftItemTransferActionFromJSONTyped = NftItemTransferActionFromJSONTyped;
@@ -52,12 +52,12 @@ function NftItemTransferActionToJSON(value) {
         return null;
     }
     return {
-        'comment': value.comment,
-        'nft': value.nft,
-        'payload': value.payload,
-        'recipient': (0, AccountAddress_1.AccountAddressToJSON)(value.recipient),
-        'refund': (0, Refund_1.RefundToJSON)(value.refund),
         'sender': (0, AccountAddress_1.AccountAddressToJSON)(value.sender),
+        'recipient': (0, AccountAddress_1.AccountAddressToJSON)(value.recipient),
+        'nft': value.nft,
+        'comment': value.comment,
+        'payload': value.payload,
+        'refund': (0, Refund_1.RefundToJSON)(value.refund),
     };
 }
 exports.NftItemTransferActionToJSON = NftItemTransferActionToJSON;

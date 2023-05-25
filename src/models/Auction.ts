@@ -21,18 +21,6 @@ import { exists, mapValues } from '../runtime';
 export interface Auction {
     /**
      * 
-     * @type {number}
-     * @memberof Auction
-     */
-    bids: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Auction
-     */
-    date: number;
-    /**
-     * 
      * @type {string}
      * @memberof Auction
      */
@@ -49,6 +37,18 @@ export interface Auction {
      * @memberof Auction
      */
     price: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Auction
+     */
+    bids: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Auction
+     */
+    date: number;
 }
 
 /**
@@ -56,11 +56,11 @@ export interface Auction {
  */
 export function instanceOfAuction(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "bids" in value;
-    isInstance = isInstance && "date" in value;
     isInstance = isInstance && "domain" in value;
     isInstance = isInstance && "owner" in value;
     isInstance = isInstance && "price" in value;
+    isInstance = isInstance && "bids" in value;
+    isInstance = isInstance && "date" in value;
 
     return isInstance;
 }
@@ -75,11 +75,11 @@ export function AuctionFromJSONTyped(json: any, ignoreDiscriminator: boolean): A
     }
     return {
         
-        'bids': json['bids'],
-        'date': json['date'],
         'domain': json['domain'],
         'owner': json['owner'],
         'price': json['price'],
+        'bids': json['bids'],
+        'date': json['date'],
     };
 }
 
@@ -92,11 +92,11 @@ export function AuctionToJSON(value?: Auction | null): any {
     }
     return {
         
-        'bids': value.bids,
-        'date': value.date,
         'domain': value.domain,
         'owner': value.owner,
         'price': value.price,
+        'bids': value.bids,
+        'date': value.date,
     };
 }
 

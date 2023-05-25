@@ -18,22 +18,16 @@ import type { AccountAddress } from './AccountAddress';
 export interface DomainBid {
     /**
      *
-     * @type {AccountAddress}
-     * @memberof DomainBid
-     */
-    bidder: AccountAddress;
-    /**
-     *
      * @type {boolean}
      * @memberof DomainBid
      */
     success: boolean;
     /**
      *
-     * @type {string}
+     * @type {number}
      * @memberof DomainBid
      */
-    txHash: string;
+    value: number;
     /**
      *
      * @type {number}
@@ -42,10 +36,16 @@ export interface DomainBid {
     txTime: number;
     /**
      *
-     * @type {number}
+     * @type {string}
      * @memberof DomainBid
      */
-    value: number;
+    txHash: string;
+    /**
+     *
+     * @type {AccountAddress}
+     * @memberof DomainBid
+     */
+    bidder: AccountAddress;
 }
 /**
  * Check if a given object implements the DomainBid interface.

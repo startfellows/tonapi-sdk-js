@@ -16,6 +16,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NftItemToJSON = exports.NftItemFromJSONTyped = exports.NftItemFromJSON = exports.instanceOfNftItem = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
+const ImagePreview_1 = require("./ImagePreview");
+const NftItemCollection_1 = require("./NftItemCollection");
+const Sale_1 = require("./Sale");
 /**
  * Check if a given object implements the NftItem interface.
  */
@@ -23,9 +26,9 @@ function instanceOfNftItem(value) {
     let isInstance = true;
     isInstance = isInstance && "address" in value;
     isInstance = isInstance && "index" in value;
-    isInstance = isInstance && "init" in value;
-    isInstance = isInstance && "rawIndividualContent" in value;
     isInstance = isInstance && "verified" in value;
+    isInstance = isInstance && "metadata" in value;
+    isInstance = isInstance && "approvedBy" in value;
     return isInstance;
 }
 exports.instanceOfNftItem = instanceOfNftItem;
@@ -39,13 +42,15 @@ function NftItemFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'address': json['address'],
-        'collectionAddress': !(0, runtime_1.exists)(json, 'collection_address') ? undefined : json['collection_address'],
         'index': json['index'],
-        'init': json['init'],
-        'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
         'owner': !(0, runtime_1.exists)(json, 'owner') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['owner']),
-        'rawIndividualContent': json['raw_individual_content'],
+        'collection': !(0, runtime_1.exists)(json, 'collection') ? undefined : (0, NftItemCollection_1.NftItemCollectionFromJSON)(json['collection']),
         'verified': json['verified'],
+        'metadata': json['metadata'],
+        'sale': !(0, runtime_1.exists)(json, 'sale') ? undefined : (0, Sale_1.SaleFromJSON)(json['sale']),
+        'previews': !(0, runtime_1.exists)(json, 'previews') ? undefined : (json['previews'].map(ImagePreview_1.ImagePreviewFromJSON)),
+        'dns': !(0, runtime_1.exists)(json, 'dns') ? undefined : json['dns'],
+        'approvedBy': json['approved_by'],
     };
 }
 exports.NftItemFromJSONTyped = NftItemFromJSONTyped;
@@ -58,13 +63,15 @@ function NftItemToJSON(value) {
     }
     return {
         'address': value.address,
-        'collection_address': value.collectionAddress,
         'index': value.index,
-        'init': value.init,
-        'metadata': value.metadata,
         'owner': (0, AccountAddress_1.AccountAddressToJSON)(value.owner),
-        'raw_individual_content': value.rawIndividualContent,
+        'collection': (0, NftItemCollection_1.NftItemCollectionToJSON)(value.collection),
         'verified': value.verified,
+        'metadata': value.metadata,
+        'sale': (0, Sale_1.SaleToJSON)(value.sale),
+        'previews': value.previews === undefined ? undefined : (value.previews.map(ImagePreview_1.ImagePreviewToJSON)),
+        'dns': value.dns,
+        'approved_by': value.approvedBy,
     };
 }
 exports.NftItemToJSON = NftItemToJSON;

@@ -20,13 +20,13 @@ export interface Refund {
      * @type {string}
      * @memberof Refund
      */
-    origin: string;
+    type: RefundTypeEnum;
     /**
      *
      * @type {string}
      * @memberof Refund
      */
-    type: RefundTypeEnum;
+    origin: string;
 }
 /**
  * @export

@@ -43,11 +43,23 @@ export declare const DefaultConfig: Configuration;
  */
 export declare class BaseAPI {
     protected configuration: Configuration;
+    private static readonly jsonRegex;
     private middleware;
     constructor(configuration?: Configuration);
     withMiddleware<T extends BaseAPI>(this: T, ...middlewares: Middleware[]): T;
     withPreMiddleware<T extends BaseAPI>(this: T, ...preMiddlewares: Array<Middleware['pre']>): T;
     withPostMiddleware<T extends BaseAPI>(this: T, ...postMiddlewares: Array<Middleware['post']>): T;
+    /**
+     * Check if the given MIME is a JSON MIME.
+     * JSON MIME examples:
+     *   application/json
+     *   application/json; charset=UTF8
+     *   APPLICATION/JSON
+     *   application/vnd.company+json
+     * @param mime - MIME (Multipurpose Internet Mail Extensions)
+     * @return True if the given MIME is JSON, false otherwise.
+     */
+    protected isJsonMime(mime: string | null | undefined): boolean;
     protected request(context: RequestOpts, initOverrides?: RequestInit | InitOverrideFunction): Promise<Response>;
     private createFetchParams;
     private fetchApi;

@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { Transaction } from './Transaction';
+import {
+    TransactionFromJSON,
+    TransactionFromJSONTyped,
+    TransactionToJSON,
+} from './Transaction';
+
 /**
  * 
  * @export
@@ -21,16 +28,22 @@ import { exists, mapValues } from '../runtime';
 export interface Trace {
     /**
      * 
-     * @type {string}
+     * @type {Transaction}
      * @memberof Trace
      */
-    id: string;
+    transaction: Transaction;
     /**
      * 
-     * @type {number}
+     * @type {Array<string>}
      * @memberof Trace
      */
-    utime: number;
+    interfaces: Array<string>;
+    /**
+     * 
+     * @type {Array<Trace>}
+     * @memberof Trace
+     */
+    children?: Array<Trace>;
 }
 
 /**
@@ -38,8 +51,8 @@ export interface Trace {
  */
 export function instanceOfTrace(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "utime" in value;
+    isInstance = isInstance && "transaction" in value;
+    isInstance = isInstance && "interfaces" in value;
 
     return isInstance;
 }
@@ -54,8 +67,9 @@ export function TraceFromJSONTyped(json: any, ignoreDiscriminator: boolean): Tra
     }
     return {
         
-        'id': json['id'],
-        'utime': json['utime'],
+        'transaction': TransactionFromJSON(json['transaction']),
+        'interfaces': json['interfaces'],
+        'children': !exists(json, 'children') ? undefined : ((json['children'] as Array<any>).map(TraceFromJSON)),
     };
 }
 
@@ -68,8 +82,9 @@ export function TraceToJSON(value?: Trace | null): any {
     }
     return {
         
-        'id': value.id,
-        'utime': value.utime,
+        'transaction': TransactionToJSON(value.transaction),
+        'interfaces': value.interfaces,
+        'children': value.children === undefined ? undefined : ((value.children as Array<any>).map(TraceToJSON)),
     };
 }
 

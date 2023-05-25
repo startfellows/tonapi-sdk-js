@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 import type { AccountAddress } from './AccountAddress';
+import type { ImagePreview } from './ImagePreview';
+import type { NftItemCollection } from './NftItemCollection';
+import type { Sale } from './Sale';
 /**
  *
  * @export
@@ -24,28 +27,10 @@ export interface NftItem {
     address: string;
     /**
      *
-     * @type {string}
-     * @memberof NftItem
-     */
-    collectionAddress?: string;
-    /**
-     *
      * @type {number}
      * @memberof NftItem
      */
     index: number;
-    /**
-     *
-     * @type {boolean}
-     * @memberof NftItem
-     */
-    init: boolean;
-    /**
-     *
-     * @type {any}
-     * @memberof NftItem
-     */
-    metadata?: any | null;
     /**
      *
      * @type {AccountAddress}
@@ -54,16 +39,48 @@ export interface NftItem {
     owner?: AccountAddress;
     /**
      *
-     * @type {string}
+     * @type {NftItemCollection}
      * @memberof NftItem
      */
-    rawIndividualContent: string;
+    collection?: NftItemCollection;
     /**
      *
      * @type {boolean}
      * @memberof NftItem
      */
     verified: boolean;
+    /**
+     *
+     * @type {{ [key: string]: any; }}
+     * @memberof NftItem
+     */
+    metadata: {
+        [key: string]: any;
+    };
+    /**
+     *
+     * @type {Sale}
+     * @memberof NftItem
+     */
+    sale?: Sale;
+    /**
+     *
+     * @type {Array<ImagePreview>}
+     * @memberof NftItem
+     */
+    previews?: Array<ImagePreview>;
+    /**
+     *
+     * @type {string}
+     * @memberof NftItem
+     */
+    dns?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof NftItem
+     */
+    approvedBy: Array<string>;
 }
 /**
  * Check if a given object implements the NftItem interface.

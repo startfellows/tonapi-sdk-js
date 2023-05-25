@@ -16,7 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuctionBidActionToJSON = exports.AuctionBidActionFromJSONTyped = exports.AuctionBidActionFromJSON = exports.instanceOfAuctionBidAction = exports.AuctionBidActionAuctionTypeEnum = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
-const NftItemRepr_1 = require("./NftItemRepr");
+const NftItem_1 = require("./NftItem");
 const Price_1 = require("./Price");
 /**
  * @export
@@ -24,6 +24,7 @@ const Price_1 = require("./Price");
 exports.AuctionBidActionAuctionTypeEnum = {
     DnsTon: 'DNS.ton',
     DnsTg: 'DNS.tg',
+    NumberTg: 'NUMBER.tg',
     Getgems: 'getgems'
 };
 /**
@@ -31,8 +32,8 @@ exports.AuctionBidActionAuctionTypeEnum = {
  */
 function instanceOfAuctionBidAction(value) {
     let isInstance = true;
-    isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "auctionType" in value;
+    isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "beneficiary" in value;
     isInstance = isInstance && "bidder" in value;
     return isInstance;
@@ -47,11 +48,11 @@ function AuctionBidActionFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'amount': (0, Price_1.PriceFromJSON)(json['amount']),
         'auctionType': json['auction_type'],
+        'amount': (0, Price_1.PriceFromJSON)(json['amount']),
+        'nft': !(0, runtime_1.exists)(json, 'nft') ? undefined : (0, NftItem_1.NftItemFromJSON)(json['nft']),
         'beneficiary': (0, AccountAddress_1.AccountAddressFromJSON)(json['beneficiary']),
         'bidder': (0, AccountAddress_1.AccountAddressFromJSON)(json['bidder']),
-        'nft': !(0, runtime_1.exists)(json, 'nft') ? undefined : (0, NftItemRepr_1.NftItemReprFromJSON)(json['nft']),
     };
 }
 exports.AuctionBidActionFromJSONTyped = AuctionBidActionFromJSONTyped;
@@ -63,11 +64,11 @@ function AuctionBidActionToJSON(value) {
         return null;
     }
     return {
-        'amount': (0, Price_1.PriceToJSON)(value.amount),
         'auction_type': value.auctionType,
+        'amount': (0, Price_1.PriceToJSON)(value.amount),
+        'nft': (0, NftItem_1.NftItemToJSON)(value.nft),
         'beneficiary': (0, AccountAddress_1.AccountAddressToJSON)(value.beneficiary),
         'bidder': (0, AccountAddress_1.AccountAddressToJSON)(value.bidder),
-        'nft': (0, NftItemRepr_1.NftItemReprToJSON)(value.nft),
     };
 }
 exports.AuctionBidActionToJSON = AuctionBidActionToJSON;

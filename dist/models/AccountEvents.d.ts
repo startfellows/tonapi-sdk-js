@@ -27,7 +27,7 @@ export interface AccountEvents {
      * @type {number}
      * @memberof AccountEvents
      */
-    nextFrom?: number;
+    nextFrom: number;
 }
 /**
  * Check if a given object implements the AccountEvents interface.

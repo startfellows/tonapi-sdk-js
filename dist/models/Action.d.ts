@@ -14,7 +14,8 @@ import type { AuctionBidAction } from './AuctionBidAction';
 import type { ContractDeployAction } from './ContractDeployAction';
 import type { JettonTransferAction } from './JettonTransferAction';
 import type { NftItemTransferAction } from './NftItemTransferAction';
-import type { NftPurchase } from './NftPurchase';
+import type { NftPurchaseAction } from './NftPurchaseAction';
+import type { SmartContractAction } from './SmartContractAction';
 import type { SubscriptionAction } from './SubscriptionAction';
 import type { TonTransferAction } from './TonTransferAction';
 import type { UnSubscriptionAction } from './UnSubscriptionAction';
@@ -26,10 +27,22 @@ import type { UnSubscriptionAction } from './UnSubscriptionAction';
 export interface Action {
     /**
      *
-     * @type {AuctionBidAction}
+     * @type {string}
      * @memberof Action
      */
-    auctionBid?: AuctionBidAction;
+    type: ActionTypeEnum;
+    /**
+     *
+     * @type {string}
+     * @memberof Action
+     */
+    status: ActionStatusEnum;
+    /**
+     *
+     * @type {TonTransferAction}
+     * @memberof Action
+     */
+    tonTransfer?: TonTransferAction;
     /**
      *
      * @type {ContractDeployAction}
@@ -50,22 +63,10 @@ export interface Action {
     nftItemTransfer?: NftItemTransferAction;
     /**
      *
-     * @type {NftPurchase}
-     * @memberof Action
-     */
-    nftPurchase?: NftPurchase;
-    /**
-     *
      * @type {SubscriptionAction}
      * @memberof Action
      */
     subscribe?: SubscriptionAction;
-    /**
-     *
-     * @type {TonTransferAction}
-     * @memberof Action
-     */
-    tonTransfer?: TonTransferAction;
     /**
      *
      * @type {UnSubscriptionAction}
@@ -74,32 +75,29 @@ export interface Action {
     unSubscribe?: UnSubscriptionAction;
     /**
      *
+     * @type {AuctionBidAction}
+     * @memberof Action
+     */
+    auctionBid?: AuctionBidAction;
+    /**
+     *
+     * @type {NftPurchaseAction}
+     * @memberof Action
+     */
+    nftPurchase?: NftPurchaseAction;
+    /**
+     *
+     * @type {SmartContractAction}
+     * @memberof Action
+     */
+    smartContractExec?: SmartContractAction;
+    /**
+     *
      * @type {ActionSimplePreview}
      * @memberof Action
      */
     simplePreview: ActionSimplePreview;
-    /**
-     *
-     * @type {string}
-     * @memberof Action
-     */
-    status: ActionStatusEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof Action
-     */
-    type: ActionTypeEnum;
 }
-/**
- * @export
- */
-export declare const ActionStatusEnum: {
-    readonly Ok: "ok";
-    readonly Failed: "failed";
-    readonly Pending: "pending";
-};
-export declare type ActionStatusEnum = typeof ActionStatusEnum[keyof typeof ActionStatusEnum];
 /**
  * @export
  */
@@ -112,9 +110,19 @@ export declare const ActionTypeEnum: {
     readonly UnSubscribe: "UnSubscribe";
     readonly AuctionBid: "AuctionBid";
     readonly NftPurchase: "NftPurchase";
+    readonly SmartContractExec: "SmartContractExec";
     readonly Unknown: "Unknown";
 };
 export declare type ActionTypeEnum = typeof ActionTypeEnum[keyof typeof ActionTypeEnum];
+/**
+ * @export
+ */
+export declare const ActionStatusEnum: {
+    readonly Ok: "ok";
+    readonly Failed: "failed";
+    readonly Pending: "pending";
+};
+export declare type ActionStatusEnum = typeof ActionStatusEnum[keyof typeof ActionStatusEnum];
 /**
  * Check if a given object implements the Action interface.
  */

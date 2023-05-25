@@ -43,12 +43,18 @@ import {
     NftItemTransferActionFromJSONTyped,
     NftItemTransferActionToJSON,
 } from './NftItemTransferAction';
-import type { NftPurchase } from './NftPurchase';
+import type { NftPurchaseAction } from './NftPurchaseAction';
 import {
-    NftPurchaseFromJSON,
-    NftPurchaseFromJSONTyped,
-    NftPurchaseToJSON,
-} from './NftPurchase';
+    NftPurchaseActionFromJSON,
+    NftPurchaseActionFromJSONTyped,
+    NftPurchaseActionToJSON,
+} from './NftPurchaseAction';
+import type { SmartContractAction } from './SmartContractAction';
+import {
+    SmartContractActionFromJSON,
+    SmartContractActionFromJSONTyped,
+    SmartContractActionToJSON,
+} from './SmartContractAction';
 import type { SubscriptionAction } from './SubscriptionAction';
 import {
     SubscriptionActionFromJSON,
@@ -76,10 +82,22 @@ import {
 export interface Action {
     /**
      * 
-     * @type {AuctionBidAction}
+     * @type {string}
      * @memberof Action
      */
-    auctionBid?: AuctionBidAction;
+    type: ActionTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof Action
+     */
+    status: ActionStatusEnum;
+    /**
+     * 
+     * @type {TonTransferAction}
+     * @memberof Action
+     */
+    tonTransfer?: TonTransferAction;
     /**
      * 
      * @type {ContractDeployAction}
@@ -100,22 +118,10 @@ export interface Action {
     nftItemTransfer?: NftItemTransferAction;
     /**
      * 
-     * @type {NftPurchase}
-     * @memberof Action
-     */
-    nftPurchase?: NftPurchase;
-    /**
-     * 
      * @type {SubscriptionAction}
      * @memberof Action
      */
     subscribe?: SubscriptionAction;
-    /**
-     * 
-     * @type {TonTransferAction}
-     * @memberof Action
-     */
-    tonTransfer?: TonTransferAction;
     /**
      * 
      * @type {UnSubscriptionAction}
@@ -124,34 +130,30 @@ export interface Action {
     unSubscribe?: UnSubscriptionAction;
     /**
      * 
+     * @type {AuctionBidAction}
+     * @memberof Action
+     */
+    auctionBid?: AuctionBidAction;
+    /**
+     * 
+     * @type {NftPurchaseAction}
+     * @memberof Action
+     */
+    nftPurchase?: NftPurchaseAction;
+    /**
+     * 
+     * @type {SmartContractAction}
+     * @memberof Action
+     */
+    smartContractExec?: SmartContractAction;
+    /**
+     * 
      * @type {ActionSimplePreview}
      * @memberof Action
      */
     simplePreview: ActionSimplePreview;
-    /**
-     * 
-     * @type {string}
-     * @memberof Action
-     */
-    status: ActionStatusEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof Action
-     */
-    type: ActionTypeEnum;
 }
 
-
-/**
- * @export
- */
-export const ActionStatusEnum = {
-    Ok: 'ok',
-    Failed: 'failed',
-    Pending: 'pending'
-} as const;
-export type ActionStatusEnum = typeof ActionStatusEnum[keyof typeof ActionStatusEnum];
 
 /**
  * @export
@@ -165,9 +167,20 @@ export const ActionTypeEnum = {
     UnSubscribe: 'UnSubscribe',
     AuctionBid: 'AuctionBid',
     NftPurchase: 'NftPurchase',
+    SmartContractExec: 'SmartContractExec',
     Unknown: 'Unknown'
 } as const;
 export type ActionTypeEnum = typeof ActionTypeEnum[keyof typeof ActionTypeEnum];
+
+/**
+ * @export
+ */
+export const ActionStatusEnum = {
+    Ok: 'ok',
+    Failed: 'failed',
+    Pending: 'pending'
+} as const;
+export type ActionStatusEnum = typeof ActionStatusEnum[keyof typeof ActionStatusEnum];
 
 
 /**
@@ -175,9 +188,9 @@ export type ActionTypeEnum = typeof ActionTypeEnum[keyof typeof ActionTypeEnum];
  */
 export function instanceOfAction(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "simplePreview" in value;
-    isInstance = isInstance && "status" in value;
     isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "status" in value;
+    isInstance = isInstance && "simplePreview" in value;
 
     return isInstance;
 }
@@ -192,17 +205,18 @@ export function ActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): Ac
     }
     return {
         
-        'auctionBid': !exists(json, 'AuctionBid') ? undefined : AuctionBidActionFromJSON(json['AuctionBid']),
+        'type': json['type'],
+        'status': json['status'],
+        'tonTransfer': !exists(json, 'TonTransfer') ? undefined : TonTransferActionFromJSON(json['TonTransfer']),
         'contractDeploy': !exists(json, 'ContractDeploy') ? undefined : ContractDeployActionFromJSON(json['ContractDeploy']),
         'jettonTransfer': !exists(json, 'JettonTransfer') ? undefined : JettonTransferActionFromJSON(json['JettonTransfer']),
         'nftItemTransfer': !exists(json, 'NftItemTransfer') ? undefined : NftItemTransferActionFromJSON(json['NftItemTransfer']),
-        'nftPurchase': !exists(json, 'NftPurchase') ? undefined : NftPurchaseFromJSON(json['NftPurchase']),
         'subscribe': !exists(json, 'Subscribe') ? undefined : SubscriptionActionFromJSON(json['Subscribe']),
-        'tonTransfer': !exists(json, 'TonTransfer') ? undefined : TonTransferActionFromJSON(json['TonTransfer']),
         'unSubscribe': !exists(json, 'UnSubscribe') ? undefined : UnSubscriptionActionFromJSON(json['UnSubscribe']),
+        'auctionBid': !exists(json, 'AuctionBid') ? undefined : AuctionBidActionFromJSON(json['AuctionBid']),
+        'nftPurchase': !exists(json, 'NftPurchase') ? undefined : NftPurchaseActionFromJSON(json['NftPurchase']),
+        'smartContractExec': !exists(json, 'SmartContractExec') ? undefined : SmartContractActionFromJSON(json['SmartContractExec']),
         'simplePreview': ActionSimplePreviewFromJSON(json['simple_preview']),
-        'status': json['status'],
-        'type': json['type'],
     };
 }
 
@@ -215,17 +229,18 @@ export function ActionToJSON(value?: Action | null): any {
     }
     return {
         
-        'AuctionBid': AuctionBidActionToJSON(value.auctionBid),
+        'type': value.type,
+        'status': value.status,
+        'TonTransfer': TonTransferActionToJSON(value.tonTransfer),
         'ContractDeploy': ContractDeployActionToJSON(value.contractDeploy),
         'JettonTransfer': JettonTransferActionToJSON(value.jettonTransfer),
         'NftItemTransfer': NftItemTransferActionToJSON(value.nftItemTransfer),
-        'NftPurchase': NftPurchaseToJSON(value.nftPurchase),
         'Subscribe': SubscriptionActionToJSON(value.subscribe),
-        'TonTransfer': TonTransferActionToJSON(value.tonTransfer),
         'UnSubscribe': UnSubscriptionActionToJSON(value.unSubscribe),
+        'AuctionBid': AuctionBidActionToJSON(value.auctionBid),
+        'NftPurchase': NftPurchaseActionToJSON(value.nftPurchase),
+        'SmartContractExec': SmartContractActionToJSON(value.smartContractExec),
         'simple_preview': ActionSimplePreviewToJSON(value.simplePreview),
-        'status': value.status,
-        'type': value.type,
     };
 }
 

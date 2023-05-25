@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import type { AccountAddress } from './AccountAddress';
-import type { Jetton } from './Jetton';
+import type { JettonPreview } from './JettonPreview';
 import type { Refund } from './Refund';
 /**
  *
@@ -18,6 +18,30 @@ import type { Refund } from './Refund';
  * @interface JettonTransferAction
  */
 export interface JettonTransferAction {
+    /**
+     *
+     * @type {AccountAddress}
+     * @memberof JettonTransferAction
+     */
+    sender?: AccountAddress;
+    /**
+     *
+     * @type {AccountAddress}
+     * @memberof JettonTransferAction
+     */
+    recipient?: AccountAddress;
+    /**
+     *
+     * @type {string}
+     * @memberof JettonTransferAction
+     */
+    sendersWallet: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JettonTransferAction
+     */
+    recipientsWallet: string;
     /**
      * amount in quanta of tokens
      * @type {string}
@@ -32,40 +56,16 @@ export interface JettonTransferAction {
     comment?: string;
     /**
      *
-     * @type {Jetton}
-     * @memberof JettonTransferAction
-     */
-    jetton: Jetton;
-    /**
-     *
-     * @type {AccountAddress}
-     * @memberof JettonTransferAction
-     */
-    recipient?: AccountAddress;
-    /**
-     *
-     * @type {string}
-     * @memberof JettonTransferAction
-     */
-    recipientsWallet: string;
-    /**
-     *
      * @type {Refund}
      * @memberof JettonTransferAction
      */
     refund?: Refund;
     /**
      *
-     * @type {AccountAddress}
+     * @type {JettonPreview}
      * @memberof JettonTransferAction
      */
-    sender?: AccountAddress;
-    /**
-     *
-     * @type {string}
-     * @memberof JettonTransferAction
-     */
-    sendersWallet: string;
+    jetton: JettonPreview;
 }
 /**
  * Check if a given object implements the JettonTransferAction interface.

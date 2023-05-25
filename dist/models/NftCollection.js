@@ -37,10 +37,10 @@ function NftCollectionFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'address': json['address'],
-        'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
         'nextItemIndex': json['next_item_index'],
         'owner': !(0, runtime_1.exists)(json, 'owner') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['owner']),
         'rawCollectionContent': json['raw_collection_content'],
+        'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
     };
 }
 exports.NftCollectionFromJSONTyped = NftCollectionFromJSONTyped;
@@ -53,10 +53,10 @@ function NftCollectionToJSON(value) {
     }
     return {
         'address': value.address,
-        'metadata': value.metadata,
         'next_item_index': value.nextItemIndex,
         'owner': (0, AccountAddress_1.AccountAddressToJSON)(value.owner),
         'raw_collection_content': value.rawCollectionContent,
+        'metadata': value.metadata,
     };
 }
 exports.NftCollectionToJSON = NftCollectionToJSON;

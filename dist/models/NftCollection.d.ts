@@ -24,12 +24,6 @@ export interface NftCollection {
     address: string;
     /**
      *
-     * @type {any}
-     * @memberof NftCollection
-     */
-    metadata?: any | null;
-    /**
-     *
      * @type {number}
      * @memberof NftCollection
      */
@@ -46,6 +40,14 @@ export interface NftCollection {
      * @memberof NftCollection
      */
     rawCollectionContent: string;
+    /**
+     *
+     * @type {{ [key: string]: any; }}
+     * @memberof NftCollection
+     */
+    metadata?: {
+        [key: string]: any;
+    };
 }
 /**
  * Check if a given object implements the NftCollection interface.

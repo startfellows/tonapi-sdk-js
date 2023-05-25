@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import type { AccountAddress } from './AccountAddress';
+import type { StateInit } from './StateInit';
 /**
  *
  * @export
@@ -24,10 +25,28 @@ export interface Message {
     createdLt: number;
     /**
      *
-     * @type {AccountAddress}
+     * @type {boolean}
      * @memberof Message
      */
-    destination?: AccountAddress;
+    ihrDisabled: boolean;
+    /**
+     *
+     * @type {boolean}
+     * @memberof Message
+     */
+    bounce: boolean;
+    /**
+     *
+     * @type {boolean}
+     * @memberof Message
+     */
+    bounced: boolean;
+    /**
+     *
+     * @type {number}
+     * @memberof Message
+     */
+    value: number;
     /**
      *
      * @type {number}
@@ -42,10 +61,10 @@ export interface Message {
     ihrFee: number;
     /**
      *
-     * @type {any}
+     * @type {AccountAddress}
      * @memberof Message
      */
-    msgData: any | null;
+    destination?: AccountAddress;
     /**
      *
      * @type {AccountAddress}
@@ -57,7 +76,37 @@ export interface Message {
      * @type {number}
      * @memberof Message
      */
-    value: number;
+    importFee: number;
+    /**
+     *
+     * @type {number}
+     * @memberof Message
+     */
+    createdAt: number;
+    /**
+     *
+     * @type {string}
+     * @memberof Message
+     */
+    opCode?: string;
+    /**
+     *
+     * @type {StateInit}
+     * @memberof Message
+     */
+    init?: StateInit;
+    /**
+     *
+     * @type {string}
+     * @memberof Message
+     */
+    decodedOpName?: string;
+    /**
+     *
+     * @type {any}
+     * @memberof Message
+     */
+    decodedBody: any | null;
 }
 /**
  * Check if a given object implements the Message interface.

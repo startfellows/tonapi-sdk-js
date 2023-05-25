@@ -18,24 +18,6 @@ import type { AccountAddress } from './AccountAddress';
 export interface SubscriptionAction {
     /**
      *
-     * @type {number}
-     * @memberof SubscriptionAction
-     */
-    amount: number;
-    /**
-     *
-     * @type {AccountAddress}
-     * @memberof SubscriptionAction
-     */
-    beneficiary: AccountAddress;
-    /**
-     *
-     * @type {boolean}
-     * @memberof SubscriptionAction
-     */
-    initial: boolean;
-    /**
-     *
      * @type {AccountAddress}
      * @memberof SubscriptionAction
      */
@@ -46,6 +28,24 @@ export interface SubscriptionAction {
      * @memberof SubscriptionAction
      */
     subscription: string;
+    /**
+     *
+     * @type {AccountAddress}
+     * @memberof SubscriptionAction
+     */
+    beneficiary: AccountAddress;
+    /**
+     *
+     * @type {number}
+     * @memberof SubscriptionAction
+     */
+    amount: number;
+    /**
+     *
+     * @type {boolean}
+     * @memberof SubscriptionAction
+     */
+    initial: boolean;
 }
 /**
  * Check if a given object implements the SubscriptionAction interface.

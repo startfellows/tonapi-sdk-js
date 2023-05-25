@@ -20,9 +20,6 @@ exports.ValidatorToJSON = exports.ValidatorFromJSONTyped = exports.ValidatorFrom
 function instanceOfValidator(value) {
     let isInstance = true;
     isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "adnlAddress" in value;
-    isInstance = isInstance && "maxFactor" in value;
-    isInstance = isInstance && "stake" in value;
     return isInstance;
 }
 exports.instanceOfValidator = instanceOfValidator;
@@ -36,9 +33,6 @@ function ValidatorFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'address': json['address'],
-        'adnlAddress': json['adnlAddress'],
-        'maxFactor': json['maxFactor'],
-        'stake': json['stake'],
     };
 }
 exports.ValidatorFromJSONTyped = ValidatorFromJSONTyped;
@@ -51,9 +45,6 @@ function ValidatorToJSON(value) {
     }
     return {
         'address': value.address,
-        'adnlAddress': value.adnlAddress,
-        'maxFactor': value.maxFactor,
-        'stake': value.stake,
     };
 }
 exports.ValidatorToJSON = ValidatorToJSON;

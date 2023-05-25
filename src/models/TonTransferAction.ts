@@ -33,6 +33,18 @@ import {
  */
 export interface TonTransferAction {
     /**
+     * 
+     * @type {AccountAddress}
+     * @memberof TonTransferAction
+     */
+    sender: AccountAddress;
+    /**
+     * 
+     * @type {AccountAddress}
+     * @memberof TonTransferAction
+     */
+    recipient: AccountAddress;
+    /**
      * amount in nanotons
      * @type {number}
      * @memberof TonTransferAction
@@ -45,29 +57,11 @@ export interface TonTransferAction {
      */
     comment?: string;
     /**
-     * raw hex encoded payload
-     * @type {string}
-     * @memberof TonTransferAction
-     */
-    payload?: string;
-    /**
-     * 
-     * @type {AccountAddress}
-     * @memberof TonTransferAction
-     */
-    recipient: AccountAddress;
-    /**
      * 
      * @type {Refund}
      * @memberof TonTransferAction
      */
     refund?: Refund;
-    /**
-     * 
-     * @type {AccountAddress}
-     * @memberof TonTransferAction
-     */
-    sender: AccountAddress;
 }
 
 /**
@@ -75,9 +69,9 @@ export interface TonTransferAction {
  */
 export function instanceOfTonTransferAction(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "amount" in value;
-    isInstance = isInstance && "recipient" in value;
     isInstance = isInstance && "sender" in value;
+    isInstance = isInstance && "recipient" in value;
+    isInstance = isInstance && "amount" in value;
 
     return isInstance;
 }
@@ -92,12 +86,11 @@ export function TonTransferActionFromJSONTyped(json: any, ignoreDiscriminator: b
     }
     return {
         
+        'sender': AccountAddressFromJSON(json['sender']),
+        'recipient': AccountAddressFromJSON(json['recipient']),
         'amount': json['amount'],
         'comment': !exists(json, 'comment') ? undefined : json['comment'],
-        'payload': !exists(json, 'payload') ? undefined : json['payload'],
-        'recipient': AccountAddressFromJSON(json['recipient']),
         'refund': !exists(json, 'refund') ? undefined : RefundFromJSON(json['refund']),
-        'sender': AccountAddressFromJSON(json['sender']),
     };
 }
 
@@ -110,12 +103,11 @@ export function TonTransferActionToJSON(value?: TonTransferAction | null): any {
     }
     return {
         
+        'sender': AccountAddressToJSON(value.sender),
+        'recipient': AccountAddressToJSON(value.recipient),
         'amount': value.amount,
         'comment': value.comment,
-        'payload': value.payload,
-        'recipient': AccountAddressToJSON(value.recipient),
         'refund': RefundToJSON(value.refund),
-        'sender': AccountAddressToJSON(value.sender),
     };
 }
 

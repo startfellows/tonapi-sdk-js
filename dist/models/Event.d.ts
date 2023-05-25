@@ -11,6 +11,7 @@
  */
 import type { Action } from './Action';
 import type { Fee } from './Fee';
+import type { ValueFlow } from './ValueFlow';
 /**
  *
  * @export
@@ -19,16 +20,22 @@ import type { Fee } from './Fee';
 export interface Event {
     /**
      *
-     * @type {Array<Action>}
-     * @memberof Event
-     */
-    actions: Array<Action>;
-    /**
-     *
      * @type {string}
      * @memberof Event
      */
     eventId: string;
+    /**
+     *
+     * @type {number}
+     * @memberof Event
+     */
+    timestamp: number;
+    /**
+     *
+     * @type {Array<Action>}
+     * @memberof Event
+     */
+    actions: Array<Action>;
     /**
      *
      * @type {Array<Fee>}
@@ -36,11 +43,11 @@ export interface Event {
      */
     fees: Array<Fee>;
     /**
-     * Event is not finished yet. Transactions still happening
-     * @type {boolean}
+     *
+     * @type {Array<ValueFlow>}
      * @memberof Event
      */
-    inProgress: boolean;
+    valueFlow: Array<ValueFlow>;
     /**
      * scam
      * @type {boolean}
@@ -54,11 +61,11 @@ export interface Event {
      */
     lt: number;
     /**
-     *
-     * @type {number}
+     * Event is not finished yet. Transactions still happening
+     * @type {boolean}
      * @memberof Event
      */
-    timestamp: number;
+    inProgress: boolean;
 }
 /**
  * Check if a given object implements the Event interface.

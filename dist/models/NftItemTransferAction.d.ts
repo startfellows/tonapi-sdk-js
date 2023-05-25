@@ -19,22 +19,10 @@ import type { Refund } from './Refund';
 export interface NftItemTransferAction {
     /**
      *
-     * @type {string}
+     * @type {AccountAddress}
      * @memberof NftItemTransferAction
      */
-    comment?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof NftItemTransferAction
-     */
-    nft: string;
-    /**
-     * raw hex encoded payload
-     * @type {string}
-     * @memberof NftItemTransferAction
-     */
-    payload?: string;
+    sender?: AccountAddress;
     /**
      *
      * @type {AccountAddress}
@@ -43,16 +31,28 @@ export interface NftItemTransferAction {
     recipient?: AccountAddress;
     /**
      *
+     * @type {string}
+     * @memberof NftItemTransferAction
+     */
+    nft: string;
+    /**
+     *
+     * @type {string}
+     * @memberof NftItemTransferAction
+     */
+    comment?: string;
+    /**
+     * raw hex encoded payload
+     * @type {string}
+     * @memberof NftItemTransferAction
+     */
+    payload?: string;
+    /**
+     *
      * @type {Refund}
      * @memberof NftItemTransferAction
      */
     refund?: Refund;
-    /**
-     *
-     * @type {AccountAddress}
-     * @memberof NftItemTransferAction
-     */
-    sender?: AccountAddress;
 }
 /**
  * Check if a given object implements the NftItemTransferAction interface.

@@ -20,13 +20,13 @@ export interface Price {
      * @type {string}
      * @memberof Price
      */
-    tokenName: string;
+    value: string;
     /**
      *
      * @type {string}
      * @memberof Price
      */
-    value: string;
+    tokenName: string;
 }
 /**
  * Check if a given object implements the Price interface.

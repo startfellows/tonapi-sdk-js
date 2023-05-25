@@ -35,9 +35,9 @@ function AccountAddressFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'address': json['address'],
-        'icon': !(0, runtime_1.exists)(json, 'icon') ? undefined : json['icon'],
-        'isScam': json['is_scam'],
         'name': !(0, runtime_1.exists)(json, 'name') ? undefined : json['name'],
+        'isScam': json['is_scam'],
+        'icon': !(0, runtime_1.exists)(json, 'icon') ? undefined : json['icon'],
     };
 }
 exports.AccountAddressFromJSONTyped = AccountAddressFromJSONTyped;
@@ -50,9 +50,9 @@ function AccountAddressToJSON(value) {
     }
     return {
         'address': value.address,
-        'icon': value.icon,
-        'is_scam': value.isScam,
         'name': value.name,
+        'is_scam': value.isScam,
+        'icon': value.icon,
     };
 }
 exports.AccountAddressToJSON = AccountAddressToJSON;

@@ -10,18 +10,13 @@
  * Do not edit the class manually.
  */
 import type { JettonMetadata } from './JettonMetadata';
+import type { JettonVerificationType } from './JettonVerificationType';
 /**
  *
  * @export
  * @interface JettonInfo
  */
 export interface JettonInfo {
-    /**
-     *
-     * @type {JettonMetadata}
-     * @memberof JettonInfo
-     */
-    metadata: JettonMetadata;
     /**
      *
      * @type {boolean}
@@ -34,6 +29,18 @@ export interface JettonInfo {
      * @memberof JettonInfo
      */
     totalSupply: string;
+    /**
+     *
+     * @type {JettonMetadata}
+     * @memberof JettonInfo
+     */
+    metadata: JettonMetadata;
+    /**
+     *
+     * @type {JettonVerificationType}
+     * @memberof JettonInfo
+     */
+    verification: JettonVerificationType;
 }
 /**
  * Check if a given object implements the JettonInfo interface.

@@ -15,29 +15,23 @@
 
 import * as runtime from '../runtime';
 import type {
-  PublicKey,
-  Seqno,
-  Wallets,
+  GetBlock401Response,
+  GetWalletBackup200Response,
 } from '../models';
 import {
-    PublicKeyFromJSON,
-    PublicKeyToJSON,
-    SeqnoFromJSON,
-    SeqnoToJSON,
-    WalletsFromJSON,
-    WalletsToJSON,
+    GetBlock401ResponseFromJSON,
+    GetBlock401ResponseToJSON,
+    GetWalletBackup200ResponseFromJSON,
+    GetWalletBackup200ResponseToJSON,
 } from '../models';
 
-export interface FindWalletsByPubKeyRequest {
-    publicKey: string;
+export interface GetWalletBackupRequest {
+    xTonConnectAuth: string;
 }
 
-export interface GetWalletPublicKeyRequest {
-    account: string;
-}
-
-export interface GetWalletSeqnoRequest {
-    account: string;
+export interface SetWalletBackupRequest {
+    xTonConnectAuth: string;
+    body: Blob;
 }
 
 /**
@@ -48,46 +42,33 @@ export interface GetWalletSeqnoRequest {
  */
 export interface WalletApiInterface {
     /**
-     * Find all wallets by public key
-     * @param {string} publicKey public key in hex (without 0x) format
+     * Get backup info
+     * @param {string} xTonConnectAuth 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WalletApiInterface
      */
-    findWalletsByPubKeyRaw(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Wallets>>;
+    getWalletBackupRaw(requestParameters: GetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetWalletBackup200Response>>;
 
     /**
-     * Find all wallets by public key
+     * Get backup info
      */
-    findWalletsByPubKey(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Wallets>;
+    getWalletBackup(requestParameters: GetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetWalletBackup200Response>;
 
     /**
-     * Get public key by wallet address
-     * @param {string} account address in raw (hex without 0x) or base64url format
+     * Set backup info
+     * @param {string} xTonConnectAuth 
+     * @param {Blob} body Information for saving backup
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WalletApiInterface
      */
-    getWalletPublicKeyRaw(requestParameters: GetWalletPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicKey>>;
+    setWalletBackupRaw(requestParameters: SetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
 
     /**
-     * Get public key by wallet address
+     * Set backup info
      */
-    getWalletPublicKey(requestParameters: GetWalletPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PublicKey>;
-
-    /**
-     * Get last seqno for wallet
-     * @param {string} account address in raw (hex without 0x) or base64url format
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletApiInterface
-     */
-    getWalletSeqnoRaw(requestParameters: GetWalletSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Seqno>>;
-
-    /**
-     * Get last seqno for wallet
-     */
-    getWalletSeqno(requestParameters: GetWalletSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Seqno>;
+    setWalletBackup(requestParameters: SetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
 }
 
@@ -97,129 +78,77 @@ export interface WalletApiInterface {
 export class WalletApi extends runtime.BaseAPI implements WalletApiInterface {
 
     /**
-     * Find all wallets by public key
+     * Get backup info
      */
-    async findWalletsByPubKeyRaw(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Wallets>> {
-        if (requestParameters.publicKey === null || requestParameters.publicKey === undefined) {
-            throw new runtime.RequiredError('publicKey','Required parameter requestParameters.publicKey was null or undefined when calling findWalletsByPubKey.');
+    async getWalletBackupRaw(requestParameters: GetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetWalletBackup200Response>> {
+        if (requestParameters.xTonConnectAuth === null || requestParameters.xTonConnectAuth === undefined) {
+            throw new runtime.RequiredError('xTonConnectAuth','Required parameter requestParameters.xTonConnectAuth was null or undefined when calling getWalletBackup.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.publicKey !== undefined) {
-            queryParameters['public_key'] = requestParameters.publicKey;
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("JWTAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
+        if (requestParameters.xTonConnectAuth !== undefined && requestParameters.xTonConnectAuth !== null) {
+            headerParameters['X-TonConnect-Auth'] = String(requestParameters.xTonConnectAuth);
         }
+
         const response = await this.request({
-            path: `/v1/wallet/findByPubkey`,
+            path: `/v2/wallet/backup`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => WalletsFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetWalletBackup200ResponseFromJSON(jsonValue));
     }
 
     /**
-     * Find all wallets by public key
+     * Get backup info
      */
-    async findWalletsByPubKey(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Wallets> {
-        const response = await this.findWalletsByPubKeyRaw(requestParameters, initOverrides);
+    async getWalletBackup(requestParameters: GetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetWalletBackup200Response> {
+        const response = await this.getWalletBackupRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Get public key by wallet address
+     * Set backup info
      */
-    async getWalletPublicKeyRaw(requestParameters: GetWalletPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicKey>> {
-        if (requestParameters.account === null || requestParameters.account === undefined) {
-            throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getWalletPublicKey.');
+    async setWalletBackupRaw(requestParameters: SetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.xTonConnectAuth === null || requestParameters.xTonConnectAuth === undefined) {
+            throw new runtime.RequiredError('xTonConnectAuth','Required parameter requestParameters.xTonConnectAuth was null or undefined when calling setWalletBackup.');
+        }
+
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setWalletBackup.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.account !== undefined) {
-            queryParameters['account'] = requestParameters.account;
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("JWTAuth", []);
+        headerParameters['Content-Type'] = 'application/octet-stream';
 
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
+        if (requestParameters.xTonConnectAuth !== undefined && requestParameters.xTonConnectAuth !== null) {
+            headerParameters['X-TonConnect-Auth'] = String(requestParameters.xTonConnectAuth);
         }
+
         const response = await this.request({
-            path: `/v1/wallet/getWalletPublicKey`,
-            method: 'GET',
+            path: `/v2/wallet/backup`,
+            method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
+            body: requestParameters.body as any,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PublicKeyFromJSON(jsonValue));
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
-     * Get public key by wallet address
+     * Set backup info
      */
-    async getWalletPublicKey(requestParameters: GetWalletPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PublicKey> {
-        const response = await this.getWalletPublicKeyRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Get last seqno for wallet
-     */
-    async getWalletSeqnoRaw(requestParameters: GetWalletSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Seqno>> {
-        if (requestParameters.account === null || requestParameters.account === undefined) {
-            throw new runtime.RequiredError('account','Required parameter requestParameters.account was null or undefined when calling getWalletSeqno.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.account !== undefined) {
-            queryParameters['account'] = requestParameters.account;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("JWTAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/v1/wallet/getSeqno`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => SeqnoFromJSON(jsonValue));
-    }
-
-    /**
-     * Get last seqno for wallet
-     */
-    async getWalletSeqno(requestParameters: GetWalletSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Seqno> {
-        const response = await this.getWalletSeqnoRaw(requestParameters, initOverrides);
-        return await response.value();
+    async setWalletBackup(requestParameters: SetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.setWalletBackupRaw(requestParameters, initOverrides);
     }
 
 }

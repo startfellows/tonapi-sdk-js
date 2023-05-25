@@ -17,28 +17,64 @@
 export interface Account {
     /**
      *
+     * @type {string}
+     * @memberof Account
+     */
+    address: string;
+    /**
+     *
      * @type {number}
      * @memberof Account
      */
     balance: number;
     /**
-     *
-     * @type {string}
+     * unix timestamp
+     * @type {number}
      * @memberof Account
      */
-    code?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Account
-     */
-    data?: string;
+    lastActivity: number;
     /**
      *
      * @type {string}
      * @memberof Account
      */
     status: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof Account
+     */
+    interfaces?: Array<string>;
+    /**
+     *
+     * @type {string}
+     * @memberof Account
+     */
+    name?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof Account
+     */
+    isScam?: boolean;
+    /**
+     *
+     * @type {string}
+     * @memberof Account
+     */
+    icon?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof Account
+     */
+    memoRequired?: boolean;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof Account
+     */
+    getMethods: Array<string>;
 }
 /**
  * Check if a given object implements the Account interface.

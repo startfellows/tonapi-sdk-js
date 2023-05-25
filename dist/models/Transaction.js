@@ -16,21 +16,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TransactionToJSON = exports.TransactionFromJSONTyped = exports.TransactionFromJSON = exports.instanceOfTransaction = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
+const AccountStatus_1 = require("./AccountStatus");
+const ActionPhase_1 = require("./ActionPhase");
+const BouncePhaseType_1 = require("./BouncePhaseType");
+const ComputePhase_1 = require("./ComputePhase");
+const CreditPhase_1 = require("./CreditPhase");
 const Message_1 = require("./Message");
+const StoragePhase_1 = require("./StoragePhase");
+const TransactionType_1 = require("./TransactionType");
 /**
  * Check if a given object implements the Transaction interface.
  */
 function instanceOfTransaction(value) {
     let isInstance = true;
-    isInstance = isInstance && "account" in value;
-    isInstance = isInstance && "data" in value;
-    isInstance = isInstance && "fee" in value;
     isInstance = isInstance && "hash" in value;
     isInstance = isInstance && "lt" in value;
-    isInstance = isInstance && "otherFee" in value;
-    isInstance = isInstance && "outMsgs" in value;
-    isInstance = isInstance && "storageFee" in value;
+    isInstance = isInstance && "account" in value;
+    isInstance = isInstance && "success" in value;
     isInstance = isInstance && "utime" in value;
+    isInstance = isInstance && "origStatus" in value;
+    isInstance = isInstance && "endStatus" in value;
+    isInstance = isInstance && "totalFees" in value;
+    isInstance = isInstance && "transactionType" in value;
+    isInstance = isInstance && "stateUpdateOld" in value;
+    isInstance = isInstance && "stateUpdateNew" in value;
+    isInstance = isInstance && "outMsgs" in value;
+    isInstance = isInstance && "block" in value;
+    isInstance = isInstance && "aborted" in value;
+    isInstance = isInstance && "destroyed" in value;
     return isInstance;
 }
 exports.instanceOfTransaction = instanceOfTransaction;
@@ -43,16 +56,29 @@ function TransactionFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'account': (0, AccountAddress_1.AccountAddressFromJSON)(json['account']),
-        'data': json['data'],
-        'fee': json['fee'],
         'hash': json['hash'],
-        'inMsg': !(0, runtime_1.exists)(json, 'in_msg') ? undefined : (0, Message_1.MessageFromJSON)(json['in_msg']),
         'lt': json['lt'],
-        'otherFee': json['other_fee'],
-        'outMsgs': (json['out_msgs'].map(Message_1.MessageFromJSON)),
-        'storageFee': json['storage_fee'],
+        'account': (0, AccountAddress_1.AccountAddressFromJSON)(json['account']),
+        'success': json['success'],
         'utime': json['utime'],
+        'origStatus': (0, AccountStatus_1.AccountStatusFromJSON)(json['orig_status']),
+        'endStatus': (0, AccountStatus_1.AccountStatusFromJSON)(json['end_status']),
+        'totalFees': json['total_fees'],
+        'transactionType': (0, TransactionType_1.TransactionTypeFromJSON)(json['transaction_type']),
+        'stateUpdateOld': json['state_update_old'],
+        'stateUpdateNew': json['state_update_new'],
+        'inMsg': !(0, runtime_1.exists)(json, 'in_msg') ? undefined : (0, Message_1.MessageFromJSON)(json['in_msg']),
+        'outMsgs': (json['out_msgs'].map(Message_1.MessageFromJSON)),
+        'block': json['block'],
+        'prevTransHash': !(0, runtime_1.exists)(json, 'prev_trans_hash') ? undefined : json['prev_trans_hash'],
+        'prevTransLt': !(0, runtime_1.exists)(json, 'prev_trans_lt') ? undefined : json['prev_trans_lt'],
+        'computePhase': !(0, runtime_1.exists)(json, 'compute_phase') ? undefined : (0, ComputePhase_1.ComputePhaseFromJSON)(json['compute_phase']),
+        'storagePhase': !(0, runtime_1.exists)(json, 'storage_phase') ? undefined : (0, StoragePhase_1.StoragePhaseFromJSON)(json['storage_phase']),
+        'creditPhase': !(0, runtime_1.exists)(json, 'credit_phase') ? undefined : (0, CreditPhase_1.CreditPhaseFromJSON)(json['credit_phase']),
+        'actionPhase': !(0, runtime_1.exists)(json, 'action_phase') ? undefined : (0, ActionPhase_1.ActionPhaseFromJSON)(json['action_phase']),
+        'bouncePhase': !(0, runtime_1.exists)(json, 'bounce_phase') ? undefined : (0, BouncePhaseType_1.BouncePhaseTypeFromJSON)(json['bounce_phase']),
+        'aborted': json['aborted'],
+        'destroyed': json['destroyed'],
     };
 }
 exports.TransactionFromJSONTyped = TransactionFromJSONTyped;
@@ -64,16 +90,29 @@ function TransactionToJSON(value) {
         return null;
     }
     return {
-        'account': (0, AccountAddress_1.AccountAddressToJSON)(value.account),
-        'data': value.data,
-        'fee': value.fee,
         'hash': value.hash,
-        'in_msg': (0, Message_1.MessageToJSON)(value.inMsg),
         'lt': value.lt,
-        'other_fee': value.otherFee,
-        'out_msgs': (value.outMsgs.map(Message_1.MessageToJSON)),
-        'storage_fee': value.storageFee,
+        'account': (0, AccountAddress_1.AccountAddressToJSON)(value.account),
+        'success': value.success,
         'utime': value.utime,
+        'orig_status': (0, AccountStatus_1.AccountStatusToJSON)(value.origStatus),
+        'end_status': (0, AccountStatus_1.AccountStatusToJSON)(value.endStatus),
+        'total_fees': value.totalFees,
+        'transaction_type': (0, TransactionType_1.TransactionTypeToJSON)(value.transactionType),
+        'state_update_old': value.stateUpdateOld,
+        'state_update_new': value.stateUpdateNew,
+        'in_msg': (0, Message_1.MessageToJSON)(value.inMsg),
+        'out_msgs': (value.outMsgs.map(Message_1.MessageToJSON)),
+        'block': value.block,
+        'prev_trans_hash': value.prevTransHash,
+        'prev_trans_lt': value.prevTransLt,
+        'compute_phase': (0, ComputePhase_1.ComputePhaseToJSON)(value.computePhase),
+        'storage_phase': (0, StoragePhase_1.StoragePhaseToJSON)(value.storagePhase),
+        'credit_phase': (0, CreditPhase_1.CreditPhaseToJSON)(value.creditPhase),
+        'action_phase': (0, ActionPhase_1.ActionPhaseToJSON)(value.actionPhase),
+        'bounce_phase': (0, BouncePhaseType_1.BouncePhaseTypeToJSON)(value.bouncePhase),
+        'aborted': value.aborted,
+        'destroyed': value.destroyed,
     };
 }
 exports.TransactionToJSON = TransactionToJSON;

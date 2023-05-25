@@ -20,8 +20,11 @@ const runtime_1 = require("../runtime");
  */
 function instanceOfAccount(value) {
     let isInstance = true;
+    isInstance = isInstance && "address" in value;
     isInstance = isInstance && "balance" in value;
+    isInstance = isInstance && "lastActivity" in value;
     isInstance = isInstance && "status" in value;
+    isInstance = isInstance && "getMethods" in value;
     return isInstance;
 }
 exports.instanceOfAccount = instanceOfAccount;
@@ -34,10 +37,16 @@ function AccountFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
+        'address': json['address'],
         'balance': json['balance'],
-        'code': !(0, runtime_1.exists)(json, 'code') ? undefined : json['code'],
-        'data': !(0, runtime_1.exists)(json, 'data') ? undefined : json['data'],
+        'lastActivity': json['last_activity'],
         'status': json['status'],
+        'interfaces': !(0, runtime_1.exists)(json, 'interfaces') ? undefined : json['interfaces'],
+        'name': !(0, runtime_1.exists)(json, 'name') ? undefined : json['name'],
+        'isScam': !(0, runtime_1.exists)(json, 'is_scam') ? undefined : json['is_scam'],
+        'icon': !(0, runtime_1.exists)(json, 'icon') ? undefined : json['icon'],
+        'memoRequired': !(0, runtime_1.exists)(json, 'memo_required') ? undefined : json['memo_required'],
+        'getMethods': json['get_methods'],
     };
 }
 exports.AccountFromJSONTyped = AccountFromJSONTyped;
@@ -49,10 +58,16 @@ function AccountToJSON(value) {
         return null;
     }
     return {
+        'address': value.address,
         'balance': value.balance,
-        'code': value.code,
-        'data': value.data,
+        'last_activity': value.lastActivity,
         'status': value.status,
+        'interfaces': value.interfaces,
+        'name': value.name,
+        'is_scam': value.isScam,
+        'icon': value.icon,
+        'memo_required': value.memoRequired,
+        'get_methods': value.getMethods,
     };
 }
 exports.AccountToJSON = AccountToJSON;

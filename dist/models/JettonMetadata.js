@@ -21,9 +21,9 @@ const runtime_1 = require("../runtime");
 function instanceOfJettonMetadata(value) {
     let isInstance = true;
     isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "decimals" in value;
     isInstance = isInstance && "name" in value;
     isInstance = isInstance && "symbol" in value;
+    isInstance = isInstance && "decimals" in value;
     return isInstance;
 }
 exports.instanceOfJettonMetadata = instanceOfJettonMetadata;
@@ -37,14 +37,14 @@ function JettonMetadataFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'address': json['address'],
-        'catalogs': !(0, runtime_1.exists)(json, 'catalogs') ? undefined : json['catalogs'],
-        'decimals': json['decimals'],
-        'description': !(0, runtime_1.exists)(json, 'description') ? undefined : json['description'],
-        'image': !(0, runtime_1.exists)(json, 'image') ? undefined : json['image'],
         'name': json['name'],
-        'social': !(0, runtime_1.exists)(json, 'social') ? undefined : json['social'],
         'symbol': json['symbol'],
+        'decimals': json['decimals'],
+        'image': !(0, runtime_1.exists)(json, 'image') ? undefined : json['image'],
+        'description': !(0, runtime_1.exists)(json, 'description') ? undefined : json['description'],
+        'social': !(0, runtime_1.exists)(json, 'social') ? undefined : json['social'],
         'websites': !(0, runtime_1.exists)(json, 'websites') ? undefined : json['websites'],
+        'catalogs': !(0, runtime_1.exists)(json, 'catalogs') ? undefined : json['catalogs'],
     };
 }
 exports.JettonMetadataFromJSONTyped = JettonMetadataFromJSONTyped;
@@ -57,14 +57,14 @@ function JettonMetadataToJSON(value) {
     }
     return {
         'address': value.address,
-        'catalogs': value.catalogs,
-        'decimals': value.decimals,
-        'description': value.description,
-        'image': value.image,
         'name': value.name,
-        'social': value.social,
         'symbol': value.symbol,
+        'decimals': value.decimals,
+        'image': value.image,
+        'description': value.description,
+        'social': value.social,
         'websites': value.websites,
+        'catalogs': value.catalogs,
     };
 }
 exports.JettonMetadataToJSON = JettonMetadataToJSON;

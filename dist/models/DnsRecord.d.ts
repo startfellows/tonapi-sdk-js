@@ -18,6 +18,12 @@ import type { WalletDNS } from './WalletDNS';
 export interface DnsRecord {
     /**
      *
+     * @type {WalletDNS}
+     * @memberof DnsRecord
+     */
+    wallet?: WalletDNS;
+    /**
+     *
      * @type {string}
      * @memberof DnsRecord
      */
@@ -27,13 +33,13 @@ export interface DnsRecord {
      * @type {Array<string>}
      * @memberof DnsRecord
      */
-    site: Array<string>;
+    sites: Array<string>;
     /**
-     *
-     * @type {WalletDNS}
+     * tonstorage bag id
+     * @type {string}
      * @memberof DnsRecord
      */
-    wallet?: WalletDNS;
+    storage?: string;
 }
 /**
  * Check if a given object implements the DnsRecord interface.

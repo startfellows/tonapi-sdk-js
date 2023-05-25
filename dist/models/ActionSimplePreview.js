@@ -15,14 +15,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ActionSimplePreviewToJSON = exports.ActionSimplePreviewFromJSONTyped = exports.ActionSimplePreviewFromJSON = exports.instanceOfActionSimplePreview = void 0;
 const runtime_1 = require("../runtime");
+const AccountAddress_1 = require("./AccountAddress");
 /**
  * Check if a given object implements the ActionSimplePreview interface.
  */
 function instanceOfActionSimplePreview(value) {
     let isInstance = true;
-    isInstance = isInstance && "fullDescription" in value;
     isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "shortDescription" in value;
+    isInstance = isInstance && "description" in value;
+    isInstance = isInstance && "accounts" in value;
     return isInstance;
 }
 exports.instanceOfActionSimplePreview = instanceOfActionSimplePreview;
@@ -35,10 +36,12 @@ function ActionSimplePreviewFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'fullDescription': json['full_description'],
-        'image': !(0, runtime_1.exists)(json, 'image') ? undefined : json['image'],
         'name': json['name'],
-        'shortDescription': json['short_description'],
+        'description': json['description'],
+        'actionImage': !(0, runtime_1.exists)(json, 'action_image') ? undefined : json['action_image'],
+        'value': !(0, runtime_1.exists)(json, 'value') ? undefined : json['value'],
+        'valueImage': !(0, runtime_1.exists)(json, 'value_image') ? undefined : json['value_image'],
+        'accounts': (json['accounts'].map(AccountAddress_1.AccountAddressFromJSON)),
     };
 }
 exports.ActionSimplePreviewFromJSONTyped = ActionSimplePreviewFromJSONTyped;
@@ -50,10 +53,12 @@ function ActionSimplePreviewToJSON(value) {
         return null;
     }
     return {
-        'full_description': value.fullDescription,
-        'image': value.image,
         'name': value.name,
-        'short_description': value.shortDescription,
+        'description': value.description,
+        'action_image': value.actionImage,
+        'value': value.value,
+        'value_image': value.valueImage,
+        'accounts': (value.accounts.map(AccountAddress_1.AccountAddressToJSON)),
     };
 }
 exports.ActionSimplePreviewToJSON = ActionSimplePreviewToJSON;

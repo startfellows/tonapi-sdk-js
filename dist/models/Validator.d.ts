@@ -21,24 +21,6 @@ export interface Validator {
      * @memberof Validator
      */
     address: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Validator
-     */
-    adnlAddress: string;
-    /**
-     *
-     * @type {number}
-     * @memberof Validator
-     */
-    maxFactor: number;
-    /**
-     *
-     * @type {number}
-     * @memberof Validator
-     */
-    stake: number;
 }
 /**
  * Check if a given object implements the Validator interface.

@@ -28,6 +28,12 @@ import {
 export interface DnsRecord {
     /**
      * 
+     * @type {WalletDNS}
+     * @memberof DnsRecord
+     */
+    wallet?: WalletDNS;
+    /**
+     * 
      * @type {string}
      * @memberof DnsRecord
      */
@@ -37,13 +43,13 @@ export interface DnsRecord {
      * @type {Array<string>}
      * @memberof DnsRecord
      */
-    site: Array<string>;
+    sites: Array<string>;
     /**
-     * 
-     * @type {WalletDNS}
+     * tonstorage bag id
+     * @type {string}
      * @memberof DnsRecord
      */
-    wallet?: WalletDNS;
+    storage?: string;
 }
 
 /**
@@ -51,7 +57,7 @@ export interface DnsRecord {
  */
 export function instanceOfDnsRecord(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "site" in value;
+    isInstance = isInstance && "sites" in value;
 
     return isInstance;
 }
@@ -66,9 +72,10 @@ export function DnsRecordFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     }
     return {
         
-        'nextResolver': !exists(json, 'next_resolver') ? undefined : json['next_resolver'],
-        'site': json['site'],
         'wallet': !exists(json, 'wallet') ? undefined : WalletDNSFromJSON(json['wallet']),
+        'nextResolver': !exists(json, 'next_resolver') ? undefined : json['next_resolver'],
+        'sites': json['sites'],
+        'storage': !exists(json, 'storage') ? undefined : json['storage'],
     };
 }
 
@@ -81,9 +88,10 @@ export function DnsRecordToJSON(value?: DnsRecord | null): any {
     }
     return {
         
-        'next_resolver': value.nextResolver,
-        'site': value.site,
         'wallet': WalletDNSToJSON(value.wallet),
+        'next_resolver': value.nextResolver,
+        'sites': value.sites,
+        'storage': value.storage,
     };
 }
 

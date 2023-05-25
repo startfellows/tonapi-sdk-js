@@ -26,6 +26,12 @@ export interface WalletDNS {
      * @type {boolean}
      * @memberof WalletDNS
      */
+    isWallet: boolean;
+    /**
+     *
+     * @type {boolean}
+     * @memberof WalletDNS
+     */
     hasMethodPubkey: boolean;
     /**
      *
@@ -33,12 +39,6 @@ export interface WalletDNS {
      * @memberof WalletDNS
      */
     hasMethodSeqno: boolean;
-    /**
-     *
-     * @type {boolean}
-     * @memberof WalletDNS
-     */
-    isWallet: boolean;
     /**
      *
      * @type {Array<string>}

@@ -12,24 +12,13 @@
 import type { AccountAddress } from './AccountAddress';
 import type { Action } from './Action';
 import type { Fee } from './Fee';
+import type { ValueFlow } from './ValueFlow';
 /**
- *
+ * An event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
  * @export
  * @interface AccountEvent
  */
 export interface AccountEvent {
-    /**
-     *
-     * @type {AccountAddress}
-     * @memberof AccountEvent
-     */
-    account: AccountAddress;
-    /**
-     *
-     * @type {Array<Action>}
-     * @memberof AccountEvent
-     */
-    actions: Array<Action>;
     /**
      *
      * @type {string}
@@ -38,16 +27,34 @@ export interface AccountEvent {
     eventId: string;
     /**
      *
+     * @type {AccountAddress}
+     * @memberof AccountEvent
+     */
+    account: AccountAddress;
+    /**
+     *
+     * @type {number}
+     * @memberof AccountEvent
+     */
+    timestamp: number;
+    /**
+     *
+     * @type {Array<Action>}
+     * @memberof AccountEvent
+     */
+    actions: Array<Action>;
+    /**
+     *
      * @type {Fee}
      * @memberof AccountEvent
      */
     fee: Fee;
     /**
-     * Event is not finished yet. Transactions still happening
-     * @type {boolean}
+     *
+     * @type {ValueFlow}
      * @memberof AccountEvent
      */
-    inProgress: boolean;
+    valueFlow: ValueFlow;
     /**
      * scam
      * @type {boolean}
@@ -61,11 +68,11 @@ export interface AccountEvent {
      */
     lt: number;
     /**
-     *
-     * @type {number}
+     * Event is not finished yet. Transactions still happening
+     * @type {boolean}
      * @memberof AccountEvent
      */
-    timestamp: number;
+    inProgress: boolean;
 }
 /**
  * Check if a given object implements the AccountEvent interface.

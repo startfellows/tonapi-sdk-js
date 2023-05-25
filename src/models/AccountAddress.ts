@@ -26,13 +26,13 @@ export interface AccountAddress {
      */
     address: string;
     /**
-     * 
+     * Display name. Data collected from different sources like moderation lists, dns, collections names and over.
      * @type {string}
      * @memberof AccountAddress
      */
-    icon?: string;
+    name?: string;
     /**
-     * 
+     * Is this account was marked as part of scammers activity
      * @type {boolean}
      * @memberof AccountAddress
      */
@@ -42,7 +42,7 @@ export interface AccountAddress {
      * @type {string}
      * @memberof AccountAddress
      */
-    name?: string;
+    icon?: string;
 }
 
 /**
@@ -67,9 +67,9 @@ export function AccountAddressFromJSONTyped(json: any, ignoreDiscriminator: bool
     return {
         
         'address': json['address'],
-        'icon': !exists(json, 'icon') ? undefined : json['icon'],
-        'isScam': json['is_scam'],
         'name': !exists(json, 'name') ? undefined : json['name'],
+        'isScam': json['is_scam'],
+        'icon': !exists(json, 'icon') ? undefined : json['icon'],
     };
 }
 
@@ -83,9 +83,9 @@ export function AccountAddressToJSON(value?: AccountAddress | null): any {
     return {
         
         'address': value.address,
-        'icon': value.icon,
-        'is_scam': value.isScam,
         'name': value.name,
+        'is_scam': value.isScam,
+        'icon': value.icon,
     };
 }
 

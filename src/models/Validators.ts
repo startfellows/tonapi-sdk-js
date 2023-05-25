@@ -28,34 +28,10 @@ import {
 export interface Validators {
     /**
      * 
-     * @type {number}
-     * @memberof Validators
-     */
-    electAt: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Validators
-     */
-    electClose: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Validators
-     */
-    minStake: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Validators
-     */
-    totalStake: number;
-    /**
-     * 
      * @type {Array<Validator>}
      * @memberof Validators
      */
-    validators: Array<Validator>;
+    transactions?: Array<Validator>;
 }
 
 /**
@@ -63,11 +39,6 @@ export interface Validators {
  */
 export function instanceOfValidators(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "electAt" in value;
-    isInstance = isInstance && "electClose" in value;
-    isInstance = isInstance && "minStake" in value;
-    isInstance = isInstance && "totalStake" in value;
-    isInstance = isInstance && "validators" in value;
 
     return isInstance;
 }
@@ -82,11 +53,7 @@ export function ValidatorsFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     }
     return {
         
-        'electAt': json['electAt'],
-        'electClose': json['electClose'],
-        'minStake': json['minStake'],
-        'totalStake': json['totalStake'],
-        'validators': ((json['validators'] as Array<any>).map(ValidatorFromJSON)),
+        'transactions': !exists(json, 'transactions') ? undefined : ((json['transactions'] as Array<any>).map(ValidatorFromJSON)),
     };
 }
 
@@ -99,11 +66,7 @@ export function ValidatorsToJSON(value?: Validators | null): any {
     }
     return {
         
-        'electAt': value.electAt,
-        'electClose': value.electClose,
-        'minStake': value.minStake,
-        'totalStake': value.totalStake,
-        'validators': ((value.validators as Array<any>).map(ValidatorToJSON)),
+        'transactions': value.transactions === undefined ? undefined : ((value.transactions as Array<any>).map(ValidatorToJSON)),
     };
 }
 

@@ -14,18 +14,37 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BlockToJSON = exports.BlockFromJSONTyped = exports.BlockFromJSON = exports.instanceOfBlock = void 0;
+const runtime_1 = require("../runtime");
 /**
  * Check if a given object implements the Block interface.
  */
 function instanceOfBlock(value) {
     let isInstance = true;
-    isInstance = isInstance && "endLt" in value;
-    isInstance = isInstance && "fileHash" in value;
-    isInstance = isInstance && "rootHash" in value;
-    isInstance = isInstance && "seqno" in value;
-    isInstance = isInstance && "shard" in value;
-    isInstance = isInstance && "startLt" in value;
     isInstance = isInstance && "workchainId" in value;
+    isInstance = isInstance && "shard" in value;
+    isInstance = isInstance && "seqno" in value;
+    isInstance = isInstance && "rootHash" in value;
+    isInstance = isInstance && "fileHash" in value;
+    isInstance = isInstance && "globalId" in value;
+    isInstance = isInstance && "version" in value;
+    isInstance = isInstance && "afterMerge" in value;
+    isInstance = isInstance && "beforeSplit" in value;
+    isInstance = isInstance && "afterSplit" in value;
+    isInstance = isInstance && "wantSplit" in value;
+    isInstance = isInstance && "wantMerge" in value;
+    isInstance = isInstance && "keyBlock" in value;
+    isInstance = isInstance && "genUtime" in value;
+    isInstance = isInstance && "startLt" in value;
+    isInstance = isInstance && "endLt" in value;
+    isInstance = isInstance && "vertSeqno" in value;
+    isInstance = isInstance && "genCatchainSeqno" in value;
+    isInstance = isInstance && "minRefMcSeqno" in value;
+    isInstance = isInstance && "prevKeyBlockSeqno" in value;
+    isInstance = isInstance && "prevRefs" in value;
+    isInstance = isInstance && "inMsgDescrLength" in value;
+    isInstance = isInstance && "outMsgDescrLength" in value;
+    isInstance = isInstance && "randSeed" in value;
+    isInstance = isInstance && "createdBy" in value;
     return isInstance;
 }
 exports.instanceOfBlock = instanceOfBlock;
@@ -38,13 +57,34 @@ function BlockFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'endLt': json['end_lt'],
-        'fileHash': json['file_hash'],
-        'rootHash': json['root_hash'],
-        'seqno': json['seqno'],
-        'shard': json['shard'],
-        'startLt': json['start_lt'],
         'workchainId': json['workchain_id'],
+        'shard': json['shard'],
+        'seqno': json['seqno'],
+        'rootHash': json['root_hash'],
+        'fileHash': json['file_hash'],
+        'globalId': json['global_id'],
+        'version': json['version'],
+        'afterMerge': json['after_merge'],
+        'beforeSplit': json['before_split'],
+        'afterSplit': json['after_split'],
+        'wantSplit': json['want_split'],
+        'wantMerge': json['want_merge'],
+        'keyBlock': json['key_block'],
+        'genUtime': json['gen_utime'],
+        'startLt': json['start_lt'],
+        'endLt': json['end_lt'],
+        'vertSeqno': json['vert_seqno'],
+        'genCatchainSeqno': json['gen_catchain_seqno'],
+        'minRefMcSeqno': json['min_ref_mc_seqno'],
+        'prevKeyBlockSeqno': json['prev_key_block_seqno'],
+        'genSoftwareVersion': !(0, runtime_1.exists)(json, 'gen_software_version') ? undefined : json['gen_software_version'],
+        'genSoftwareCapabilities': !(0, runtime_1.exists)(json, 'gen_software_capabilities') ? undefined : json['gen_software_capabilities'],
+        'masterRef': !(0, runtime_1.exists)(json, 'master_ref') ? undefined : json['master_ref'],
+        'prevRefs': json['prev_refs'],
+        'inMsgDescrLength': json['in_msg_descr_length'],
+        'outMsgDescrLength': json['out_msg_descr_length'],
+        'randSeed': json['rand_seed'],
+        'createdBy': json['created_by'],
     };
 }
 exports.BlockFromJSONTyped = BlockFromJSONTyped;
@@ -56,13 +96,34 @@ function BlockToJSON(value) {
         return null;
     }
     return {
-        'end_lt': value.endLt,
-        'file_hash': value.fileHash,
-        'root_hash': value.rootHash,
-        'seqno': value.seqno,
-        'shard': value.shard,
-        'start_lt': value.startLt,
         'workchain_id': value.workchainId,
+        'shard': value.shard,
+        'seqno': value.seqno,
+        'root_hash': value.rootHash,
+        'file_hash': value.fileHash,
+        'global_id': value.globalId,
+        'version': value.version,
+        'after_merge': value.afterMerge,
+        'before_split': value.beforeSplit,
+        'after_split': value.afterSplit,
+        'want_split': value.wantSplit,
+        'want_merge': value.wantMerge,
+        'key_block': value.keyBlock,
+        'gen_utime': value.genUtime,
+        'start_lt': value.startLt,
+        'end_lt': value.endLt,
+        'vert_seqno': value.vertSeqno,
+        'gen_catchain_seqno': value.genCatchainSeqno,
+        'min_ref_mc_seqno': value.minRefMcSeqno,
+        'prev_key_block_seqno': value.prevKeyBlockSeqno,
+        'gen_software_version': value.genSoftwareVersion,
+        'gen_software_capabilities': value.genSoftwareCapabilities,
+        'master_ref': value.masterRef,
+        'prev_refs': value.prevRefs,
+        'in_msg_descr_length': value.inMsgDescrLength,
+        'out_msg_descr_length': value.outMsgDescrLength,
+        'rand_seed': value.randSeed,
+        'created_by': value.createdBy,
     };
 }
 exports.BlockToJSON = BlockToJSON;

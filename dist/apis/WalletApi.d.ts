@@ -10,15 +10,13 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { PublicKey, Seqno, Wallets } from '../models';
-export interface FindWalletsByPubKeyRequest {
-    publicKey: string;
+import type { GetWalletBackup200Response } from '../models';
+export interface GetWalletBackupRequest {
+    xTonConnectAuth: string;
 }
-export interface GetWalletPublicKeyRequest {
-    account: string;
-}
-export interface GetWalletSeqnoRequest {
-    account: string;
+export interface SetWalletBackupRequest {
+    xTonConnectAuth: string;
+    body: Blob;
 }
 /**
  * WalletApi - interface
@@ -28,68 +26,49 @@ export interface GetWalletSeqnoRequest {
  */
 export interface WalletApiInterface {
     /**
-     * Find all wallets by public key
-     * @param {string} publicKey public key in hex (without 0x) format
+     * Get backup info
+     * @param {string} xTonConnectAuth
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WalletApiInterface
      */
-    findWalletsByPubKeyRaw(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Wallets>>;
+    getWalletBackupRaw(requestParameters: GetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetWalletBackup200Response>>;
     /**
-     * Find all wallets by public key
+     * Get backup info
      */
-    findWalletsByPubKey(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Wallets>;
+    getWalletBackup(requestParameters: GetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetWalletBackup200Response>;
     /**
-     * Get public key by wallet address
-     * @param {string} account address in raw (hex without 0x) or base64url format
+     * Set backup info
+     * @param {string} xTonConnectAuth
+     * @param {Blob} body Information for saving backup
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WalletApiInterface
      */
-    getWalletPublicKeyRaw(requestParameters: GetWalletPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicKey>>;
+    setWalletBackupRaw(requestParameters: SetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
     /**
-     * Get public key by wallet address
+     * Set backup info
      */
-    getWalletPublicKey(requestParameters: GetWalletPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PublicKey>;
-    /**
-     * Get last seqno for wallet
-     * @param {string} account address in raw (hex without 0x) or base64url format
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletApiInterface
-     */
-    getWalletSeqnoRaw(requestParameters: GetWalletSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Seqno>>;
-    /**
-     * Get last seqno for wallet
-     */
-    getWalletSeqno(requestParameters: GetWalletSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Seqno>;
+    setWalletBackup(requestParameters: SetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 }
 /**
  *
  */
 export declare class WalletApi extends runtime.BaseAPI implements WalletApiInterface {
     /**
-     * Find all wallets by public key
+     * Get backup info
      */
-    findWalletsByPubKeyRaw(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Wallets>>;
+    getWalletBackupRaw(requestParameters: GetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetWalletBackup200Response>>;
     /**
-     * Find all wallets by public key
+     * Get backup info
      */
-    findWalletsByPubKey(requestParameters: FindWalletsByPubKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Wallets>;
+    getWalletBackup(requestParameters: GetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetWalletBackup200Response>;
     /**
-     * Get public key by wallet address
+     * Set backup info
      */
-    getWalletPublicKeyRaw(requestParameters: GetWalletPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PublicKey>>;
+    setWalletBackupRaw(requestParameters: SetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
     /**
-     * Get public key by wallet address
+     * Set backup info
      */
-    getWalletPublicKey(requestParameters: GetWalletPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PublicKey>;
-    /**
-     * Get last seqno for wallet
-     */
-    getWalletSeqnoRaw(requestParameters: GetWalletSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Seqno>>;
-    /**
-     * Get last seqno for wallet
-     */
-    getWalletSeqno(requestParameters: GetWalletSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Seqno>;
+    setWalletBackup(requestParameters: SetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 }

@@ -14,13 +14,15 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TraceToJSON = exports.TraceFromJSONTyped = exports.TraceFromJSON = exports.instanceOfTrace = void 0;
+const runtime_1 = require("../runtime");
+const Transaction_1 = require("./Transaction");
 /**
  * Check if a given object implements the Trace interface.
  */
 function instanceOfTrace(value) {
     let isInstance = true;
-    isInstance = isInstance && "id" in value;
-    isInstance = isInstance && "utime" in value;
+    isInstance = isInstance && "transaction" in value;
+    isInstance = isInstance && "interfaces" in value;
     return isInstance;
 }
 exports.instanceOfTrace = instanceOfTrace;
@@ -33,8 +35,9 @@ function TraceFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'id': json['id'],
-        'utime': json['utime'],
+        'transaction': (0, Transaction_1.TransactionFromJSON)(json['transaction']),
+        'interfaces': json['interfaces'],
+        'children': !(0, runtime_1.exists)(json, 'children') ? undefined : (json['children'].map(TraceFromJSON)),
     };
 }
 exports.TraceFromJSONTyped = TraceFromJSONTyped;
@@ -46,8 +49,9 @@ function TraceToJSON(value) {
         return null;
     }
     return {
-        'id': value.id,
-        'utime': value.utime,
+        'transaction': (0, Transaction_1.TransactionToJSON)(value.transaction),
+        'interfaces': value.interfaces,
+        'children': value.children === undefined ? undefined : (value.children.map(TraceToJSON)),
     };
 }
 exports.TraceToJSON = TraceToJSON;

@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import type { AccountAddress } from './AccountAddress';
-import type { Jetton } from './Jetton';
+import type { JettonPreview } from './JettonPreview';
 /**
  *
  * @export
@@ -25,22 +25,16 @@ export interface JettonBalance {
     balance: string;
     /**
      *
-     * @type {string}
-     * @memberof JettonBalance
-     */
-    jettonAddress: string;
-    /**
-     *
-     * @type {Jetton}
-     * @memberof JettonBalance
-     */
-    metadata?: Jetton;
-    /**
-     *
      * @type {AccountAddress}
      * @memberof JettonBalance
      */
     walletAddress: AccountAddress;
+    /**
+     *
+     * @type {JettonPreview}
+     * @memberof JettonBalance
+     */
+    jetton: JettonPreview;
 }
 /**
  * Check if a given object implements the JettonBalance interface.

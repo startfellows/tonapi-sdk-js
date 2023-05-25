@@ -23,11 +23,11 @@ export interface Fee {
      */
     account: AccountAddress;
     /**
-     *
+     * gas + rent + deposit - refund
      * @type {number}
      * @memberof Fee
      */
-    deposit: number;
+    total: number;
     /**
      *
      * @type {number}
@@ -39,19 +39,19 @@ export interface Fee {
      * @type {number}
      * @memberof Fee
      */
-    refund: number;
+    rent: number;
     /**
      *
      * @type {number}
      * @memberof Fee
      */
-    rent: number;
+    deposit: number;
     /**
-     * gas + rent + deposit - refund
+     *
      * @type {number}
      * @memberof Fee
      */
-    total: number;
+    refund: number;
 }
 /**
  * Check if a given object implements the Fee interface.

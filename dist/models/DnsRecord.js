@@ -21,7 +21,7 @@ const WalletDNS_1 = require("./WalletDNS");
  */
 function instanceOfDnsRecord(value) {
     let isInstance = true;
-    isInstance = isInstance && "site" in value;
+    isInstance = isInstance && "sites" in value;
     return isInstance;
 }
 exports.instanceOfDnsRecord = instanceOfDnsRecord;
@@ -34,9 +34,10 @@ function DnsRecordFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'nextResolver': !(0, runtime_1.exists)(json, 'next_resolver') ? undefined : json['next_resolver'],
-        'site': json['site'],
         'wallet': !(0, runtime_1.exists)(json, 'wallet') ? undefined : (0, WalletDNS_1.WalletDNSFromJSON)(json['wallet']),
+        'nextResolver': !(0, runtime_1.exists)(json, 'next_resolver') ? undefined : json['next_resolver'],
+        'sites': json['sites'],
+        'storage': !(0, runtime_1.exists)(json, 'storage') ? undefined : json['storage'],
     };
 }
 exports.DnsRecordFromJSONTyped = DnsRecordFromJSONTyped;
@@ -48,9 +49,10 @@ function DnsRecordToJSON(value) {
         return null;
     }
     return {
-        'next_resolver': value.nextResolver,
-        'site': value.site,
         'wallet': (0, WalletDNS_1.WalletDNSToJSON)(value.wallet),
+        'next_resolver': value.nextResolver,
+        'sites': value.sites,
+        'storage': value.storage,
     };
 }
 exports.DnsRecordToJSON = DnsRecordToJSON;

@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AccountAddress } from './AccountAddress';
+import {
+    AccountAddressFromJSON,
+    AccountAddressFromJSONTyped,
+    AccountAddressToJSON,
+} from './AccountAddress';
+
 /**
  * 
  * @export
@@ -24,25 +31,37 @@ export interface ActionSimplePreview {
      * @type {string}
      * @memberof ActionSimplePreview
      */
-    fullDescription: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionSimplePreview
-     */
-    image?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionSimplePreview
-     */
     name: string;
     /**
      * 
      * @type {string}
      * @memberof ActionSimplePreview
      */
-    shortDescription: string;
+    description: string;
+    /**
+     * a link to an image for this particular action.
+     * @type {string}
+     * @memberof ActionSimplePreview
+     */
+    actionImage?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionSimplePreview
+     */
+    value?: string;
+    /**
+     * a link to an image that depicts this action's asset.
+     * @type {string}
+     * @memberof ActionSimplePreview
+     */
+    valueImage?: string;
+    /**
+     * 
+     * @type {Array<AccountAddress>}
+     * @memberof ActionSimplePreview
+     */
+    accounts: Array<AccountAddress>;
 }
 
 /**
@@ -50,9 +69,9 @@ export interface ActionSimplePreview {
  */
 export function instanceOfActionSimplePreview(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "fullDescription" in value;
     isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "shortDescription" in value;
+    isInstance = isInstance && "description" in value;
+    isInstance = isInstance && "accounts" in value;
 
     return isInstance;
 }
@@ -67,10 +86,12 @@ export function ActionSimplePreviewFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'fullDescription': json['full_description'],
-        'image': !exists(json, 'image') ? undefined : json['image'],
         'name': json['name'],
-        'shortDescription': json['short_description'],
+        'description': json['description'],
+        'actionImage': !exists(json, 'action_image') ? undefined : json['action_image'],
+        'value': !exists(json, 'value') ? undefined : json['value'],
+        'valueImage': !exists(json, 'value_image') ? undefined : json['value_image'],
+        'accounts': ((json['accounts'] as Array<any>).map(AccountAddressFromJSON)),
     };
 }
 
@@ -83,10 +104,12 @@ export function ActionSimplePreviewToJSON(value?: ActionSimplePreview | null): a
     }
     return {
         
-        'full_description': value.fullDescription,
-        'image': value.image,
         'name': value.name,
-        'short_description': value.shortDescription,
+        'description': value.description,
+        'action_image': value.actionImage,
+        'value': value.value,
+        'value_image': value.valueImage,
+        'accounts': ((value.accounts as Array<any>).map(AccountAddressToJSON)),
     };
 }
 

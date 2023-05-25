@@ -27,8 +27,8 @@ exports.RefundTypeEnum = {
  */
 function instanceOfRefund(value) {
     let isInstance = true;
-    isInstance = isInstance && "origin" in value;
     isInstance = isInstance && "type" in value;
+    isInstance = isInstance && "origin" in value;
     return isInstance;
 }
 exports.instanceOfRefund = instanceOfRefund;
@@ -41,8 +41,8 @@ function RefundFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'origin': json['origin'],
         'type': json['type'],
+        'origin': json['origin'],
     };
 }
 exports.RefundFromJSONTyped = RefundFromJSONTyped;
@@ -54,8 +54,8 @@ function RefundToJSON(value) {
         return null;
     }
     return {
-        'origin': value.origin,
         'type': value.type,
+        'origin': value.origin,
     };
 }
 exports.RefundToJSON = RefundToJSON;

@@ -17,18 +17,6 @@
 export interface Auction {
     /**
      *
-     * @type {number}
-     * @memberof Auction
-     */
-    bids: number;
-    /**
-     *
-     * @type {number}
-     * @memberof Auction
-     */
-    date: number;
-    /**
-     *
      * @type {string}
      * @memberof Auction
      */
@@ -45,6 +33,18 @@ export interface Auction {
      * @memberof Auction
      */
     price: number;
+    /**
+     *
+     * @type {number}
+     * @memberof Auction
+     */
+    bids: number;
+    /**
+     *
+     * @type {number}
+     * @memberof Auction
+     */
+    date: number;
 }
 /**
  * Check if a given object implements the Auction interface.

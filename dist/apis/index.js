@@ -16,16 +16,15 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 /* tslint:disable */
 /* eslint-disable */
-__exportStar(require("./AccountApi"), exports);
-__exportStar(require("./BackupApi"), exports);
+__exportStar(require("./AccountsApi"), exports);
+__exportStar(require("./BlockchainApi"), exports);
+__exportStar(require("./ConnectApi"), exports);
 __exportStar(require("./DNSApi"), exports);
-__exportStar(require("./DomainAuctionsApi"), exports);
-__exportStar(require("./EventApi"), exports);
-__exportStar(require("./JettonApi"), exports);
+__exportStar(require("./EventsApi"), exports);
+__exportStar(require("./JettonsApi"), exports);
 __exportStar(require("./NFTApi"), exports);
-__exportStar(require("./RawBlockchainApi"), exports);
-__exportStar(require("./SendApi"), exports);
-__exportStar(require("./SubscriptionApi"), exports);
-__exportStar(require("./SystemApi"), exports);
-__exportStar(require("./TraceApi"), exports);
+__exportStar(require("./RatesApi"), exports);
+__exportStar(require("./StakingApi"), exports);
+__exportStar(require("./StorageApi"), exports);
+__exportStar(require("./TracesApi"), exports);
 __exportStar(require("./WalletApi"), exports);

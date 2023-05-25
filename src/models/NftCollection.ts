@@ -34,12 +34,6 @@ export interface NftCollection {
     address: string;
     /**
      * 
-     * @type {any}
-     * @memberof NftCollection
-     */
-    metadata?: any | null;
-    /**
-     * 
      * @type {number}
      * @memberof NftCollection
      */
@@ -56,6 +50,12 @@ export interface NftCollection {
      * @memberof NftCollection
      */
     rawCollectionContent: string;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof NftCollection
+     */
+    metadata?: { [key: string]: any; };
 }
 
 /**
@@ -81,10 +81,10 @@ export function NftCollectionFromJSONTyped(json: any, ignoreDiscriminator: boole
     return {
         
         'address': json['address'],
-        'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
         'nextItemIndex': json['next_item_index'],
         'owner': !exists(json, 'owner') ? undefined : AccountAddressFromJSON(json['owner']),
         'rawCollectionContent': json['raw_collection_content'],
+        'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
     };
 }
 
@@ -98,10 +98,10 @@ export function NftCollectionToJSON(value?: NftCollection | null): any {
     return {
         
         'address': value.address,
-        'metadata': value.metadata,
         'next_item_index': value.nextItemIndex,
         'owner': AccountAddressToJSON(value.owner),
         'raw_collection_content': value.rawCollectionContent,
+        'metadata': value.metadata,
     };
 }
 

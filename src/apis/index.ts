@@ -1,15 +1,14 @@
 /* tslint:disable */
 /* eslint-disable */
-export * from './AccountApi';
-export * from './BackupApi';
+export * from './AccountsApi';
+export * from './BlockchainApi';
+export * from './ConnectApi';
 export * from './DNSApi';
-export * from './DomainAuctionsApi';
-export * from './EventApi';
-export * from './JettonApi';
+export * from './EventsApi';
+export * from './JettonsApi';
 export * from './NFTApi';
-export * from './RawBlockchainApi';
-export * from './SendApi';
-export * from './SubscriptionApi';
-export * from './SystemApi';
-export * from './TraceApi';
+export * from './RatesApi';
+export * from './StakingApi';
+export * from './StorageApi';
+export * from './TracesApi';
 export * from './WalletApi';

@@ -34,22 +34,10 @@ import {
 export interface NftItemTransferAction {
     /**
      * 
-     * @type {string}
+     * @type {AccountAddress}
      * @memberof NftItemTransferAction
      */
-    comment?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NftItemTransferAction
-     */
-    nft: string;
-    /**
-     * raw hex encoded payload
-     * @type {string}
-     * @memberof NftItemTransferAction
-     */
-    payload?: string;
+    sender?: AccountAddress;
     /**
      * 
      * @type {AccountAddress}
@@ -58,16 +46,28 @@ export interface NftItemTransferAction {
     recipient?: AccountAddress;
     /**
      * 
+     * @type {string}
+     * @memberof NftItemTransferAction
+     */
+    nft: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftItemTransferAction
+     */
+    comment?: string;
+    /**
+     * raw hex encoded payload
+     * @type {string}
+     * @memberof NftItemTransferAction
+     */
+    payload?: string;
+    /**
+     * 
      * @type {Refund}
      * @memberof NftItemTransferAction
      */
     refund?: Refund;
-    /**
-     * 
-     * @type {AccountAddress}
-     * @memberof NftItemTransferAction
-     */
-    sender?: AccountAddress;
 }
 
 /**
@@ -90,12 +90,12 @@ export function NftItemTransferActionFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'comment': !exists(json, 'comment') ? undefined : json['comment'],
-        'nft': json['nft'],
-        'payload': !exists(json, 'payload') ? undefined : json['payload'],
-        'recipient': !exists(json, 'recipient') ? undefined : AccountAddressFromJSON(json['recipient']),
-        'refund': !exists(json, 'refund') ? undefined : RefundFromJSON(json['refund']),
         'sender': !exists(json, 'sender') ? undefined : AccountAddressFromJSON(json['sender']),
+        'recipient': !exists(json, 'recipient') ? undefined : AccountAddressFromJSON(json['recipient']),
+        'nft': json['nft'],
+        'comment': !exists(json, 'comment') ? undefined : json['comment'],
+        'payload': !exists(json, 'payload') ? undefined : json['payload'],
+        'refund': !exists(json, 'refund') ? undefined : RefundFromJSON(json['refund']),
     };
 }
 
@@ -108,12 +108,12 @@ export function NftItemTransferActionToJSON(value?: NftItemTransferAction | null
     }
     return {
         
-        'comment': value.comment,
-        'nft': value.nft,
-        'payload': value.payload,
-        'recipient': AccountAddressToJSON(value.recipient),
-        'refund': RefundToJSON(value.refund),
         'sender': AccountAddressToJSON(value.sender),
+        'recipient': AccountAddressToJSON(value.recipient),
+        'nft': value.nft,
+        'comment': value.comment,
+        'payload': value.payload,
+        'refund': RefundToJSON(value.refund),
     };
 }
 

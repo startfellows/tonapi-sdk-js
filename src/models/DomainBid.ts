@@ -28,22 +28,16 @@ import {
 export interface DomainBid {
     /**
      * 
-     * @type {AccountAddress}
-     * @memberof DomainBid
-     */
-    bidder: AccountAddress;
-    /**
-     * 
      * @type {boolean}
      * @memberof DomainBid
      */
     success: boolean;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof DomainBid
      */
-    txHash: string;
+    value: number;
     /**
      * 
      * @type {number}
@@ -52,10 +46,16 @@ export interface DomainBid {
     txTime: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof DomainBid
      */
-    value: number;
+    txHash: string;
+    /**
+     * 
+     * @type {AccountAddress}
+     * @memberof DomainBid
+     */
+    bidder: AccountAddress;
 }
 
 /**
@@ -63,11 +63,11 @@ export interface DomainBid {
  */
 export function instanceOfDomainBid(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "bidder" in value;
     isInstance = isInstance && "success" in value;
-    isInstance = isInstance && "txHash" in value;
-    isInstance = isInstance && "txTime" in value;
     isInstance = isInstance && "value" in value;
+    isInstance = isInstance && "txTime" in value;
+    isInstance = isInstance && "txHash" in value;
+    isInstance = isInstance && "bidder" in value;
 
     return isInstance;
 }
@@ -82,11 +82,11 @@ export function DomainBidFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     }
     return {
         
-        'bidder': AccountAddressFromJSON(json['bidder']),
         'success': json['success'],
-        'txHash': json['txHash'],
-        'txTime': json['txTime'],
         'value': json['value'],
+        'txTime': json['txTime'],
+        'txHash': json['txHash'],
+        'bidder': AccountAddressFromJSON(json['bidder']),
     };
 }
 
@@ -99,11 +99,11 @@ export function DomainBidToJSON(value?: DomainBid | null): any {
     }
     return {
         
-        'bidder': AccountAddressToJSON(value.bidder),
         'success': value.success,
-        'txHash': value.txHash,
-        'txTime': value.txTime,
         'value': value.value,
+        'txTime': value.txTime,
+        'txHash': value.txHash,
+        'bidder': AccountAddressToJSON(value.bidder),
     };
 }
 

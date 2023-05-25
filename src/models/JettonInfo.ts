@@ -19,6 +19,12 @@ import {
     JettonMetadataFromJSONTyped,
     JettonMetadataToJSON,
 } from './JettonMetadata';
+import type { JettonVerificationType } from './JettonVerificationType';
+import {
+    JettonVerificationTypeFromJSON,
+    JettonVerificationTypeFromJSONTyped,
+    JettonVerificationTypeToJSON,
+} from './JettonVerificationType';
 
 /**
  * 
@@ -26,12 +32,6 @@ import {
  * @interface JettonInfo
  */
 export interface JettonInfo {
-    /**
-     * 
-     * @type {JettonMetadata}
-     * @memberof JettonInfo
-     */
-    metadata: JettonMetadata;
     /**
      * 
      * @type {boolean}
@@ -44,6 +44,18 @@ export interface JettonInfo {
      * @memberof JettonInfo
      */
     totalSupply: string;
+    /**
+     * 
+     * @type {JettonMetadata}
+     * @memberof JettonInfo
+     */
+    metadata: JettonMetadata;
+    /**
+     * 
+     * @type {JettonVerificationType}
+     * @memberof JettonInfo
+     */
+    verification: JettonVerificationType;
 }
 
 /**
@@ -51,9 +63,10 @@ export interface JettonInfo {
  */
 export function instanceOfJettonInfo(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "metadata" in value;
     isInstance = isInstance && "mintable" in value;
     isInstance = isInstance && "totalSupply" in value;
+    isInstance = isInstance && "metadata" in value;
+    isInstance = isInstance && "verification" in value;
 
     return isInstance;
 }
@@ -68,9 +81,10 @@ export function JettonInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     }
     return {
         
-        'metadata': JettonMetadataFromJSON(json['metadata']),
         'mintable': json['mintable'],
         'totalSupply': json['total_supply'],
+        'metadata': JettonMetadataFromJSON(json['metadata']),
+        'verification': JettonVerificationTypeFromJSON(json['verification']),
     };
 }
 
@@ -83,9 +97,10 @@ export function JettonInfoToJSON(value?: JettonInfo | null): any {
     }
     return {
         
-        'metadata': JettonMetadataToJSON(value.metadata),
         'mintable': value.mintable,
         'total_supply': value.totalSupply,
+        'metadata': JettonMetadataToJSON(value.metadata),
+        'verification': JettonVerificationTypeToJSON(value.verification),
     };
 }
 

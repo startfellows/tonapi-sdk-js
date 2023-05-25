@@ -27,22 +27,22 @@ export interface JettonMetadata {
     address: string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {string}
      * @memberof JettonMetadata
      */
-    catalogs?: Array<string>;
-    /**
-     * 
-     * @type {number}
-     * @memberof JettonMetadata
-     */
-    decimals: number;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof JettonMetadata
      */
-    description?: string;
+    symbol: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof JettonMetadata
+     */
+    decimals: string;
     /**
      * 
      * @type {string}
@@ -54,7 +54,7 @@ export interface JettonMetadata {
      * @type {string}
      * @memberof JettonMetadata
      */
-    name: string;
+    description?: string;
     /**
      * 
      * @type {Array<string>}
@@ -63,16 +63,16 @@ export interface JettonMetadata {
     social?: Array<string>;
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof JettonMetadata
      */
-    symbol: string;
+    websites?: Array<string>;
     /**
      * 
      * @type {Array<string>}
      * @memberof JettonMetadata
      */
-    websites?: Array<string>;
+    catalogs?: Array<string>;
 }
 
 /**
@@ -81,9 +81,9 @@ export interface JettonMetadata {
 export function instanceOfJettonMetadata(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "address" in value;
-    isInstance = isInstance && "decimals" in value;
     isInstance = isInstance && "name" in value;
     isInstance = isInstance && "symbol" in value;
+    isInstance = isInstance && "decimals" in value;
 
     return isInstance;
 }
@@ -99,14 +99,14 @@ export function JettonMetadataFromJSONTyped(json: any, ignoreDiscriminator: bool
     return {
         
         'address': json['address'],
-        'catalogs': !exists(json, 'catalogs') ? undefined : json['catalogs'],
-        'decimals': json['decimals'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'image': !exists(json, 'image') ? undefined : json['image'],
         'name': json['name'],
-        'social': !exists(json, 'social') ? undefined : json['social'],
         'symbol': json['symbol'],
+        'decimals': json['decimals'],
+        'image': !exists(json, 'image') ? undefined : json['image'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'social': !exists(json, 'social') ? undefined : json['social'],
         'websites': !exists(json, 'websites') ? undefined : json['websites'],
+        'catalogs': !exists(json, 'catalogs') ? undefined : json['catalogs'],
     };
 }
 
@@ -120,14 +120,14 @@ export function JettonMetadataToJSON(value?: JettonMetadata | null): any {
     return {
         
         'address': value.address,
-        'catalogs': value.catalogs,
-        'decimals': value.decimals,
-        'description': value.description,
-        'image': value.image,
         'name': value.name,
-        'social': value.social,
         'symbol': value.symbol,
+        'decimals': value.decimals,
+        'image': value.image,
+        'description': value.description,
+        'social': value.social,
         'websites': value.websites,
+        'catalogs': value.catalogs,
     };
 }
 
