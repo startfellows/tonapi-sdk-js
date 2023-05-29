@@ -2,7 +2,9 @@
 
 ## Overview
 It's an auto-generated SDK by open-api to reach endpoints from tonapi.io
-[swagger](https://tonapi.io/docs)
+[swagger](https://docs.tonconsole.com/tonapi)
+
+To use tonapi please create an account
 
 ## Installation
 
