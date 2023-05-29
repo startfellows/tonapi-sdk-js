@@ -26,11 +26,13 @@ import {
     Configuration,
 } from 'tonapi-sdk-js'
 
+
 // Get list of transactions
+// Token should be issued on https://tonconsole.com
 const blockchainApi = new RawBlockchainApi(new Configuration({
     headers: {
         // To get unlimited requests
-        Authorization: 'Bearer YOUR_TOKEN_FROM_TELEGRAM_BOT',
+        Authorization: 'Bearer YOUR_TOKEN',
     },
 }))
 
