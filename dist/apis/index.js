@@ -20,6 +20,7 @@ __exportStar(require("./AccountsApi"), exports);
 __exportStar(require("./BlockchainApi"), exports);
 __exportStar(require("./ConnectApi"), exports);
 __exportStar(require("./DNSApi"), exports);
+__exportStar(require("./EmulationApi"), exports);
 __exportStar(require("./EventsApi"), exports);
 __exportStar(require("./JettonsApi"), exports);
 __exportStar(require("./NFTApi"), exports);

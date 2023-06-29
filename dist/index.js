@@ -17,5 +17,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /* tslint:disable */
 /* eslint-disable */
 __exportStar(require("./runtime"), exports);
-__exportStar(require("./apis"), exports);
-__exportStar(require("./models"), exports);
+__exportStar(require("./apis/index"), exports);
+__exportStar(require("./models/index"), exports);
