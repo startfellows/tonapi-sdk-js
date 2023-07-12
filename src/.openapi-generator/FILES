@@ -11,6 +11,7 @@ apis/StakingApi.ts
 apis/StorageApi.ts
 apis/TracesApi.ts
 apis/WalletApi.ts
+apis/WalletsApi.ts
 apis/index.ts
 index.ts
 models/AccStatusChange.ts
@@ -47,7 +48,6 @@ models/DomainBids.ts
 models/DomainInfo.ts
 models/DomainNames.ts
 models/Event.ts
-models/Fee.ts
 models/FoundAccounts.ts
 models/FoundAccountsAddressesInner.ts
 models/GetAccountInfoByStateInitRequest.ts
@@ -66,6 +66,7 @@ models/JettonPreview.ts
 models/JettonQuantity.ts
 models/JettonTransferAction.ts
 models/JettonVerificationType.ts
+models/Jettons.ts
 models/JettonsBalances.ts
 models/Message.ts
 models/MessageConsequences.ts
@@ -85,8 +86,10 @@ models/RawAccount.ts
 models/RecoverStakeAction.ts
 models/Refund.ts
 models/Risk.ts
+models/STONfiSwapAction.ts
 models/Sale.ts
 models/SendMessageRequest.ts
+models/Seqno.ts
 models/SmartContractAction.ts
 models/StakingPoolHistory200Response.ts
 models/StakingPoolInfo200Response.ts
@@ -112,6 +115,8 @@ models/TvmStackRecord.ts
 models/UnSubscriptionAction.ts
 models/Validator.ts
 models/Validators.ts
+models/ValidatorsSet.ts
+models/ValidatorsSetListInner.ts
 models/ValueFlow.ts
 models/ValueFlowJettonsInner.ts
 models/WalletDNS.ts

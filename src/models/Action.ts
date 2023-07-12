@@ -61,6 +61,12 @@ import {
     RecoverStakeActionFromJSONTyped,
     RecoverStakeActionToJSON,
 } from './RecoverStakeAction';
+import type { STONfiSwapAction } from './STONfiSwapAction';
+import {
+    STONfiSwapActionFromJSON,
+    STONfiSwapActionFromJSONTyped,
+    STONfiSwapActionToJSON,
+} from './STONfiSwapAction';
 import type { SmartContractAction } from './SmartContractAction';
 import {
     SmartContractActionFromJSON,
@@ -166,6 +172,12 @@ export interface Action {
     recoverStake?: RecoverStakeAction;
     /**
      * 
+     * @type {STONfiSwapAction}
+     * @memberof Action
+     */
+    sTONfiSwap?: STONfiSwapAction;
+    /**
+     * 
      * @type {SmartContractAction}
      * @memberof Action
      */
@@ -193,6 +205,7 @@ export const ActionTypeEnum = {
     NftPurchase: 'NftPurchase',
     DepositStake: 'DepositStake',
     RecoverStake: 'RecoverStake',
+    StoNfiSwap: 'STONfiSwap',
     SmartContractExec: 'SmartContractExec',
     Unknown: 'Unknown'
 } as const;
@@ -243,6 +256,7 @@ export function ActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): Ac
         'nftPurchase': !exists(json, 'NftPurchase') ? undefined : NftPurchaseActionFromJSON(json['NftPurchase']),
         'depositStake': !exists(json, 'DepositStake') ? undefined : DepositStakeActionFromJSON(json['DepositStake']),
         'recoverStake': !exists(json, 'RecoverStake') ? undefined : RecoverStakeActionFromJSON(json['RecoverStake']),
+        'sTONfiSwap': !exists(json, 'STONfiSwap') ? undefined : STONfiSwapActionFromJSON(json['STONfiSwap']),
         'smartContractExec': !exists(json, 'SmartContractExec') ? undefined : SmartContractActionFromJSON(json['SmartContractExec']),
         'simplePreview': ActionSimplePreviewFromJSON(json['simple_preview']),
     };
@@ -269,6 +283,7 @@ export function ActionToJSON(value?: Action | null): any {
         'NftPurchase': NftPurchaseActionToJSON(value.nftPurchase),
         'DepositStake': DepositStakeActionToJSON(value.depositStake),
         'RecoverStake': RecoverStakeActionToJSON(value.recoverStake),
+        'STONfiSwap': STONfiSwapActionToJSON(value.sTONfiSwap),
         'SmartContractExec': SmartContractActionToJSON(value.smartContractExec),
         'simple_preview': ActionSimplePreviewToJSON(value.simplePreview),
     };

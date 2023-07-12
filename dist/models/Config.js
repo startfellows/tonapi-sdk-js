@@ -14,12 +14,18 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConfigToJSON = exports.ConfigFromJSONTyped = exports.ConfigFromJSON = exports.instanceOfConfig = void 0;
+const runtime_1 = require("../runtime");
+const ValidatorsSet_1 = require("./ValidatorsSet");
 /**
  * Check if a given object implements the Config interface.
  */
 function instanceOfConfig(value) {
     let isInstance = true;
-    isInstance = isInstance && "boc" in value;
+    isInstance = isInstance && "raw" in value;
+    isInstance = isInstance && "_0" in value;
+    isInstance = isInstance && "_1" in value;
+    isInstance = isInstance && "_2" in value;
+    isInstance = isInstance && "_4" in value;
     return isInstance;
 }
 exports.instanceOfConfig = instanceOfConfig;
@@ -32,7 +38,17 @@ function ConfigFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'boc': json['boc'],
+        'raw': json['raw'],
+        '_0': json['0'],
+        '_1': json['1'],
+        '_2': json['2'],
+        '_4': json['4'],
+        '_32': !(0, runtime_1.exists)(json, '32') ? undefined : (0, ValidatorsSet_1.ValidatorsSetFromJSON)(json['32']),
+        '_33': !(0, runtime_1.exists)(json, '33') ? undefined : (0, ValidatorsSet_1.ValidatorsSetFromJSON)(json['33']),
+        '_34': !(0, runtime_1.exists)(json, '34') ? undefined : (0, ValidatorsSet_1.ValidatorsSetFromJSON)(json['34']),
+        '_35': !(0, runtime_1.exists)(json, '35') ? undefined : (0, ValidatorsSet_1.ValidatorsSetFromJSON)(json['35']),
+        '_36': !(0, runtime_1.exists)(json, '36') ? undefined : (0, ValidatorsSet_1.ValidatorsSetFromJSON)(json['36']),
+        '_37': !(0, runtime_1.exists)(json, '37') ? undefined : (0, ValidatorsSet_1.ValidatorsSetFromJSON)(json['37']),
     };
 }
 exports.ConfigFromJSONTyped = ConfigFromJSONTyped;
@@ -44,7 +60,17 @@ function ConfigToJSON(value) {
         return null;
     }
     return {
-        'boc': value.boc,
+        'raw': value.raw,
+        '0': value._0,
+        '1': value._1,
+        '2': value._2,
+        '4': value._4,
+        '32': (0, ValidatorsSet_1.ValidatorsSetToJSON)(value._32),
+        '33': (0, ValidatorsSet_1.ValidatorsSetToJSON)(value._33),
+        '34': (0, ValidatorsSet_1.ValidatorsSetToJSON)(value._34),
+        '35': (0, ValidatorsSet_1.ValidatorsSetToJSON)(value._35),
+        '36': (0, ValidatorsSet_1.ValidatorsSetToJSON)(value._36),
+        '37': (0, ValidatorsSet_1.ValidatorsSetToJSON)(value._37),
     };
 }
 exports.ConfigToJSON = ConfigToJSON;

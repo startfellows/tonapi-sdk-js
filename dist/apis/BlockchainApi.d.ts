@@ -34,6 +34,9 @@ export interface GetRawAccountRequest {
 export interface GetTransactionRequest {
     transactionId: string;
 }
+export interface GetTransactionByMessageHashRequest {
+    msgId: string;
+}
 export interface SendMessageOperationRequest {
     sendMessageRequest: SendMessageRequest;
 }
@@ -144,6 +147,18 @@ export interface BlockchainApiInterface {
      */
     getTransaction(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transaction>;
     /**
+     * Get transaction data by message hash
+     * @param {string} msgId message ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlockchainApiInterface
+     */
+    getTransactionByMessageHashRaw(requestParameters: GetTransactionByMessageHashRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transaction>>;
+    /**
+     * Get transaction data by message hash
+     */
+    getTransactionByMessageHash(requestParameters: GetTransactionByMessageHashRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transaction>;
+    /**
      * Get validators
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -235,6 +250,14 @@ export declare class BlockchainApi extends runtime.BaseAPI implements Blockchain
      * Get transaction data
      */
     getTransaction(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transaction>;
+    /**
+     * Get transaction data by message hash
+     */
+    getTransactionByMessageHashRaw(requestParameters: GetTransactionByMessageHashRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transaction>>;
+    /**
+     * Get transaction data by message hash
+     */
+    getTransactionByMessageHash(requestParameters: GetTransactionByMessageHashRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transaction>;
     /**
      * Get validators
      */

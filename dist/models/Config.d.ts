@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import type { ValidatorsSet } from './ValidatorsSet';
 /**
  *
  * @export
@@ -20,7 +21,67 @@ export interface Config {
      * @type {string}
      * @memberof Config
      */
-    boc: string;
+    raw: string;
+    /**
+     * config address
+     * @type {string}
+     * @memberof Config
+     */
+    _0: string;
+    /**
+     * elector address
+     * @type {string}
+     * @memberof Config
+     */
+    _1: string;
+    /**
+     * minter address
+     * @type {string}
+     * @memberof Config
+     */
+    _2: string;
+    /**
+     * dns root address
+     * @type {string}
+     * @memberof Config
+     */
+    _4: string;
+    /**
+     *
+     * @type {ValidatorsSet}
+     * @memberof Config
+     */
+    _32?: ValidatorsSet;
+    /**
+     *
+     * @type {ValidatorsSet}
+     * @memberof Config
+     */
+    _33?: ValidatorsSet;
+    /**
+     *
+     * @type {ValidatorsSet}
+     * @memberof Config
+     */
+    _34?: ValidatorsSet;
+    /**
+     *
+     * @type {ValidatorsSet}
+     * @memberof Config
+     */
+    _35?: ValidatorsSet;
+    /**
+     *
+     * @type {ValidatorsSet}
+     * @memberof Config
+     */
+    _36?: ValidatorsSet;
+    /**
+     *
+     * @type {ValidatorsSet}
+     * @memberof Config
+     */
+    _37?: ValidatorsSet;
 }
 /**
  * Check if a given object implements the Config interface.

@@ -263,6 +263,34 @@ class BlockchainApi extends runtime.BaseAPI {
         });
     }
     /**
+     * Get transaction data by message hash
+     */
+    getTransactionByMessageHashRaw(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (requestParameters.msgId === null || requestParameters.msgId === undefined) {
+                throw new runtime.RequiredError('msgId', 'Required parameter requestParameters.msgId was null or undefined when calling getTransactionByMessageHash.');
+            }
+            const queryParameters = {};
+            const headerParameters = {};
+            const response = yield this.request({
+                path: `/v2/blockchain/messages/{msg_id}/transaction`.replace(`{${"msg_id"}}`, encodeURIComponent(String(requestParameters.msgId))),
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.TransactionFromJSON)(jsonValue));
+        });
+    }
+    /**
+     * Get transaction data by message hash
+     */
+    getTransactionByMessageHash(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.getTransactionByMessageHashRaw(requestParameters, initOverrides);
+            return yield response.value();
+        });
+    }
+    /**
      * Get validators
      */
     getValidatorsRaw(initOverrides) {

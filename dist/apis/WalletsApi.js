@@ -22,71 +22,68 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JettonsApi = void 0;
+exports.WalletsApi = void 0;
 const runtime = require("../runtime");
 const index_1 = require("../models/index");
 /**
  *
  */
-class JettonsApi extends runtime.BaseAPI {
+class WalletsApi extends runtime.BaseAPI {
     /**
-     * Get jetton metadata by jetton master address
+     * Get account seqno
      */
-    getJettonInfoRaw(requestParameters, initOverrides) {
+    getAccountSeqnoRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling getJettonInfo.');
+                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling getAccountSeqno.');
             }
             const queryParameters = {};
             const headerParameters = {};
             const response = yield this.request({
-                path: `/v2/jettons/{account_id}`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+                path: `/v2/wallet/{account_id}/seqno`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
                 method: 'GET',
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.JettonInfoFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.SeqnoFromJSON)(jsonValue));
         });
     }
     /**
-     * Get jetton metadata by jetton master address
+     * Get account seqno
      */
-    getJettonInfo(requestParameters, initOverrides) {
+    getAccountSeqno(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getJettonInfoRaw(requestParameters, initOverrides);
+            const response = yield this.getAccountSeqnoRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
-     * Get a list of all indexed jetton masters in the blockchain.
+     * Get wallets by public key
      */
-    getJettonsRaw(requestParameters, initOverrides) {
+    getWalletsByPublicKeyRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (requestParameters.publicKey === null || requestParameters.publicKey === undefined) {
+                throw new runtime.RequiredError('publicKey', 'Required parameter requestParameters.publicKey was null or undefined when calling getWalletsByPublicKey.');
+            }
             const queryParameters = {};
-            if (requestParameters.limit !== undefined) {
-                queryParameters['limit'] = requestParameters.limit;
-            }
-            if (requestParameters.offset !== undefined) {
-                queryParameters['offset'] = requestParameters.offset;
-            }
             const headerParameters = {};
             const response = yield this.request({
-                path: `/v2/jettons`,
+                path: `/v2/pubkeys/{public_key}/wallets`.replace(`{${"public_key"}}`, encodeURIComponent(String(requestParameters.publicKey))),
                 method: 'GET',
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.JettonsFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.AccountsFromJSON)(jsonValue));
         });
     }
     /**
-     * Get a list of all indexed jetton masters in the blockchain.
+     * Get wallets by public key
      */
-    getJettons(requestParameters = {}, initOverrides) {
+    getWalletsByPublicKey(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getJettonsRaw(requestParameters, initOverrides);
+            const response = yield this.getWalletsByPublicKeyRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
 }
-exports.JettonsApi = JettonsApi;
+exports.WalletsApi = WalletsApi;

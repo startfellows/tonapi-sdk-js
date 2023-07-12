@@ -17,6 +17,7 @@ import type { JettonTransferAction } from './JettonTransferAction';
 import type { NftItemTransferAction } from './NftItemTransferAction';
 import type { NftPurchaseAction } from './NftPurchaseAction';
 import type { RecoverStakeAction } from './RecoverStakeAction';
+import type { STONfiSwapAction } from './STONfiSwapAction';
 import type { SmartContractAction } from './SmartContractAction';
 import type { SubscriptionAction } from './SubscriptionAction';
 import type { TonTransferAction } from './TonTransferAction';
@@ -101,6 +102,12 @@ export interface Action {
     recoverStake?: RecoverStakeAction;
     /**
      *
+     * @type {STONfiSwapAction}
+     * @memberof Action
+     */
+    sTONfiSwap?: STONfiSwapAction;
+    /**
+     *
      * @type {SmartContractAction}
      * @memberof Action
      */
@@ -126,6 +133,7 @@ export declare const ActionTypeEnum: {
     readonly NftPurchase: "NftPurchase";
     readonly DepositStake: "DepositStake";
     readonly RecoverStake: "RecoverStake";
+    readonly StoNfiSwap: "STONfiSwap";
     readonly SmartContractExec: "SmartContractExec";
     readonly Unknown: "Unknown";
 };

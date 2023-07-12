@@ -16,7 +16,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccountEventToJSON = exports.AccountEventFromJSONTyped = exports.AccountEventFromJSON = exports.instanceOfAccountEvent = void 0;
 const AccountAddress_1 = require("./AccountAddress");
 const Action_1 = require("./Action");
-const Fee_1 = require("./Fee");
 /**
  * Check if a given object implements the AccountEvent interface.
  */
@@ -26,7 +25,6 @@ function instanceOfAccountEvent(value) {
     isInstance = isInstance && "account" in value;
     isInstance = isInstance && "timestamp" in value;
     isInstance = isInstance && "actions" in value;
-    isInstance = isInstance && "fee" in value;
     isInstance = isInstance && "isScam" in value;
     isInstance = isInstance && "lt" in value;
     isInstance = isInstance && "inProgress" in value;
@@ -47,7 +45,6 @@ function AccountEventFromJSONTyped(json, ignoreDiscriminator) {
         'account': (0, AccountAddress_1.AccountAddressFromJSON)(json['account']),
         'timestamp': json['timestamp'],
         'actions': (json['actions'].map(Action_1.ActionFromJSON)),
-        'fee': (0, Fee_1.FeeFromJSON)(json['fee']),
         'isScam': json['is_scam'],
         'lt': json['lt'],
         'inProgress': json['in_progress'],
@@ -67,7 +64,6 @@ function AccountEventToJSON(value) {
         'account': (0, AccountAddress_1.AccountAddressToJSON)(value.account),
         'timestamp': value.timestamp,
         'actions': (value.actions.map(Action_1.ActionToJSON)),
-        'fee': (0, Fee_1.FeeToJSON)(value.fee),
         'is_scam': value.isScam,
         'lt': value.lt,
         'in_progress': value.inProgress,

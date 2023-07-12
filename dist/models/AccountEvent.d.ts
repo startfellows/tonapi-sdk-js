@@ -11,7 +11,6 @@
  */
 import type { AccountAddress } from './AccountAddress';
 import type { Action } from './Action';
-import type { Fee } from './Fee';
 /**
  * An event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
  * @export
@@ -42,12 +41,6 @@ export interface AccountEvent {
      * @memberof AccountEvent
      */
     actions: Array<Action>;
-    /**
-     *
-     * @type {Fee}
-     * @memberof AccountEvent
-     */
-    fee: Fee;
     /**
      * scam
      * @type {boolean}

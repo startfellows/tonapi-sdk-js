@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 import type { Action } from './Action';
-import type { Fee } from './Fee';
 import type { ValueFlow } from './ValueFlow';
 /**
  *
@@ -36,12 +35,6 @@ export interface Event {
      * @memberof Event
      */
     actions: Array<Action>;
-    /**
-     *
-     * @type {Array<Fee>}
-     * @memberof Event
-     */
-    fees: Array<Fee>;
     /**
      *
      * @type {Array<ValueFlow>}
