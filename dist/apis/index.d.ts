@@ -5,6 +5,7 @@ export * from './DNSApi';
 export * from './EmulationApi';
 export * from './EventsApi';
 export * from './JettonsApi';
+export * from './LiteServerApi';
 export * from './NFTApi';
 export * from './RatesApi';
 export * from './StakingApi';

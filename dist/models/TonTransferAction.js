@@ -16,6 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TonTransferActionToJSON = exports.TonTransferActionFromJSONTyped = exports.TonTransferActionFromJSON = exports.instanceOfTonTransferAction = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
+const EncryptedComment_1 = require("./EncryptedComment");
 const Refund_1 = require("./Refund");
 /**
  * Check if a given object implements the TonTransferAction interface.
@@ -41,6 +42,7 @@ function TonTransferActionFromJSONTyped(json, ignoreDiscriminator) {
         'recipient': (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
         'amount': json['amount'],
         'comment': !(0, runtime_1.exists)(json, 'comment') ? undefined : json['comment'],
+        'encryptedComment': !(0, runtime_1.exists)(json, 'encrypted_comment') ? undefined : (0, EncryptedComment_1.EncryptedCommentFromJSON)(json['encrypted_comment']),
         'refund': !(0, runtime_1.exists)(json, 'refund') ? undefined : (0, Refund_1.RefundFromJSON)(json['refund']),
     };
 }
@@ -57,6 +59,7 @@ function TonTransferActionToJSON(value) {
         'recipient': (0, AccountAddress_1.AccountAddressToJSON)(value.recipient),
         'amount': value.amount,
         'comment': value.comment,
+        'encrypted_comment': (0, EncryptedComment_1.EncryptedCommentToJSON)(value.encryptedComment),
         'refund': (0, Refund_1.RefundToJSON)(value.refund),
     };
 }

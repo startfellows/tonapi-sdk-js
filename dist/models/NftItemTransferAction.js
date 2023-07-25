@@ -16,6 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NftItemTransferActionToJSON = exports.NftItemTransferActionFromJSONTyped = exports.NftItemTransferActionFromJSON = exports.instanceOfNftItemTransferAction = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
+const EncryptedComment_1 = require("./EncryptedComment");
 const Refund_1 = require("./Refund");
 /**
  * Check if a given object implements the NftItemTransferAction interface.
@@ -39,6 +40,7 @@ function NftItemTransferActionFromJSONTyped(json, ignoreDiscriminator) {
         'recipient': !(0, runtime_1.exists)(json, 'recipient') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['recipient']),
         'nft': json['nft'],
         'comment': !(0, runtime_1.exists)(json, 'comment') ? undefined : json['comment'],
+        'encryptedComment': !(0, runtime_1.exists)(json, 'encrypted_comment') ? undefined : (0, EncryptedComment_1.EncryptedCommentFromJSON)(json['encrypted_comment']),
         'payload': !(0, runtime_1.exists)(json, 'payload') ? undefined : json['payload'],
         'refund': !(0, runtime_1.exists)(json, 'refund') ? undefined : (0, Refund_1.RefundFromJSON)(json['refund']),
     };
@@ -56,6 +58,7 @@ function NftItemTransferActionToJSON(value) {
         'recipient': (0, AccountAddress_1.AccountAddressToJSON)(value.recipient),
         'nft': value.nft,
         'comment': value.comment,
+        'encrypted_comment': (0, EncryptedComment_1.EncryptedCommentToJSON)(value.encryptedComment),
         'payload': value.payload,
         'refund': (0, Refund_1.RefundToJSON)(value.refund),
     };

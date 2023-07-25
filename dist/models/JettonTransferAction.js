@@ -16,6 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.JettonTransferActionToJSON = exports.JettonTransferActionFromJSONTyped = exports.JettonTransferActionFromJSON = exports.instanceOfJettonTransferAction = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
+const EncryptedComment_1 = require("./EncryptedComment");
 const JettonPreview_1 = require("./JettonPreview");
 const Refund_1 = require("./Refund");
 /**
@@ -45,6 +46,7 @@ function JettonTransferActionFromJSONTyped(json, ignoreDiscriminator) {
         'recipientsWallet': json['recipients_wallet'],
         'amount': json['amount'],
         'comment': !(0, runtime_1.exists)(json, 'comment') ? undefined : json['comment'],
+        'encryptedComment': !(0, runtime_1.exists)(json, 'encrypted_comment') ? undefined : (0, EncryptedComment_1.EncryptedCommentFromJSON)(json['encrypted_comment']),
         'refund': !(0, runtime_1.exists)(json, 'refund') ? undefined : (0, Refund_1.RefundFromJSON)(json['refund']),
         'jetton': (0, JettonPreview_1.JettonPreviewFromJSON)(json['jetton']),
     };
@@ -64,6 +66,7 @@ function JettonTransferActionToJSON(value) {
         'recipients_wallet': value.recipientsWallet,
         'amount': value.amount,
         'comment': value.comment,
+        'encrypted_comment': (0, EncryptedComment_1.EncryptedCommentToJSON)(value.encryptedComment),
         'refund': (0, Refund_1.RefundToJSON)(value.refund),
         'jetton': (0, JettonPreview_1.JettonPreviewToJSON)(value.jetton),
     };

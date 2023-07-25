@@ -41,13 +41,13 @@ export interface AuctionBidAction {
      * @type {AccountAddress}
      * @memberof AuctionBidAction
      */
-    beneficiary: AccountAddress;
+    bidder: AccountAddress;
     /**
      *
-     * @type {AccountAddress}
+     * @type {string}
      * @memberof AuctionBidAction
      */
-    bidder: AccountAddress;
+    auction: string;
 }
 /**
  * @export

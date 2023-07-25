@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import type { AccountAddress } from './AccountAddress';
+import type { EncryptedComment } from './EncryptedComment';
 import type { Refund } from './Refund';
 /**
  *
@@ -41,6 +42,12 @@ export interface TonTransferAction {
      * @memberof TonTransferAction
      */
     comment?: string;
+    /**
+     *
+     * @type {EncryptedComment}
+     * @memberof TonTransferAction
+     */
+    encryptedComment?: EncryptedComment;
     /**
      *
      * @type {Refund}

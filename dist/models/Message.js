@@ -31,7 +31,6 @@ function instanceOfMessage(value) {
     isInstance = isInstance && "ihrFee" in value;
     isInstance = isInstance && "importFee" in value;
     isInstance = isInstance && "createdAt" in value;
-    isInstance = isInstance && "decodedBody" in value;
     return isInstance;
 }
 exports.instanceOfMessage = instanceOfMessage;
@@ -59,7 +58,7 @@ function MessageFromJSONTyped(json, ignoreDiscriminator) {
         'init': !(0, runtime_1.exists)(json, 'init') ? undefined : (0, StateInit_1.StateInitFromJSON)(json['init']),
         'rawBody': !(0, runtime_1.exists)(json, 'raw_body') ? undefined : json['raw_body'],
         'decodedOpName': !(0, runtime_1.exists)(json, 'decoded_op_name') ? undefined : json['decoded_op_name'],
-        'decodedBody': json['decoded_body'],
+        'decodedBody': !(0, runtime_1.exists)(json, 'decoded_body') ? undefined : json['decoded_body'],
     };
 }
 exports.MessageFromJSONTyped = MessageFromJSONTyped;

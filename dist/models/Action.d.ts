@@ -13,11 +13,11 @@ import type { ActionSimplePreview } from './ActionSimplePreview';
 import type { AuctionBidAction } from './AuctionBidAction';
 import type { ContractDeployAction } from './ContractDeployAction';
 import type { DepositStakeAction } from './DepositStakeAction';
+import type { JettonSwapAction } from './JettonSwapAction';
 import type { JettonTransferAction } from './JettonTransferAction';
 import type { NftItemTransferAction } from './NftItemTransferAction';
 import type { NftPurchaseAction } from './NftPurchaseAction';
 import type { RecoverStakeAction } from './RecoverStakeAction';
-import type { STONfiSwapAction } from './STONfiSwapAction';
 import type { SmartContractAction } from './SmartContractAction';
 import type { SubscriptionAction } from './SubscriptionAction';
 import type { TonTransferAction } from './TonTransferAction';
@@ -102,10 +102,10 @@ export interface Action {
     recoverStake?: RecoverStakeAction;
     /**
      *
-     * @type {STONfiSwapAction}
+     * @type {JettonSwapAction}
      * @memberof Action
      */
-    sTONfiSwap?: STONfiSwapAction;
+    jettonSwap?: JettonSwapAction;
     /**
      *
      * @type {SmartContractAction}
@@ -133,7 +133,7 @@ export declare const ActionTypeEnum: {
     readonly NftPurchase: "NftPurchase";
     readonly DepositStake: "DepositStake";
     readonly RecoverStake: "RecoverStake";
-    readonly StoNfiSwap: "STONfiSwap";
+    readonly JettonSwap: "JettonSwap";
     readonly SmartContractExec: "SmartContractExec";
     readonly Unknown: "Unknown";
 };
@@ -144,7 +144,6 @@ export declare type ActionTypeEnum = typeof ActionTypeEnum[keyof typeof ActionTy
 export declare const ActionStatusEnum: {
     readonly Ok: "ok";
     readonly Failed: "failed";
-    readonly Pending: "pending";
 };
 export declare type ActionStatusEnum = typeof ActionStatusEnum[keyof typeof ActionStatusEnum];
 /**

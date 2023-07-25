@@ -21,6 +21,7 @@ function instanceOfNftItemCollection(value) {
     let isInstance = true;
     isInstance = isInstance && "address" in value;
     isInstance = isInstance && "name" in value;
+    isInstance = isInstance && "description" in value;
     return isInstance;
 }
 exports.instanceOfNftItemCollection = instanceOfNftItemCollection;
@@ -35,6 +36,7 @@ function NftItemCollectionFromJSONTyped(json, ignoreDiscriminator) {
     return {
         'address': json['address'],
         'name': json['name'],
+        'description': json['description'],
     };
 }
 exports.NftItemCollectionFromJSONTyped = NftItemCollectionFromJSONTyped;
@@ -48,6 +50,7 @@ function NftItemCollectionToJSON(value) {
     return {
         'address': value.address,
         'name': value.name,
+        'description': value.description,
     };
 }
 exports.NftItemCollectionToJSON = NftItemCollectionToJSON;

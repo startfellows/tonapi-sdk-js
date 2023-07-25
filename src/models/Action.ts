@@ -37,6 +37,12 @@ import {
     DepositStakeActionFromJSONTyped,
     DepositStakeActionToJSON,
 } from './DepositStakeAction';
+import type { JettonSwapAction } from './JettonSwapAction';
+import {
+    JettonSwapActionFromJSON,
+    JettonSwapActionFromJSONTyped,
+    JettonSwapActionToJSON,
+} from './JettonSwapAction';
 import type { JettonTransferAction } from './JettonTransferAction';
 import {
     JettonTransferActionFromJSON,
@@ -61,12 +67,6 @@ import {
     RecoverStakeActionFromJSONTyped,
     RecoverStakeActionToJSON,
 } from './RecoverStakeAction';
-import type { STONfiSwapAction } from './STONfiSwapAction';
-import {
-    STONfiSwapActionFromJSON,
-    STONfiSwapActionFromJSONTyped,
-    STONfiSwapActionToJSON,
-} from './STONfiSwapAction';
 import type { SmartContractAction } from './SmartContractAction';
 import {
     SmartContractActionFromJSON,
@@ -172,10 +172,10 @@ export interface Action {
     recoverStake?: RecoverStakeAction;
     /**
      * 
-     * @type {STONfiSwapAction}
+     * @type {JettonSwapAction}
      * @memberof Action
      */
-    sTONfiSwap?: STONfiSwapAction;
+    jettonSwap?: JettonSwapAction;
     /**
      * 
      * @type {SmartContractAction}
@@ -205,7 +205,7 @@ export const ActionTypeEnum = {
     NftPurchase: 'NftPurchase',
     DepositStake: 'DepositStake',
     RecoverStake: 'RecoverStake',
-    StoNfiSwap: 'STONfiSwap',
+    JettonSwap: 'JettonSwap',
     SmartContractExec: 'SmartContractExec',
     Unknown: 'Unknown'
 } as const;
@@ -216,8 +216,7 @@ export type ActionTypeEnum = typeof ActionTypeEnum[keyof typeof ActionTypeEnum];
  */
 export const ActionStatusEnum = {
     Ok: 'ok',
-    Failed: 'failed',
-    Pending: 'pending'
+    Failed: 'failed'
 } as const;
 export type ActionStatusEnum = typeof ActionStatusEnum[keyof typeof ActionStatusEnum];
 
@@ -256,7 +255,7 @@ export function ActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): Ac
         'nftPurchase': !exists(json, 'NftPurchase') ? undefined : NftPurchaseActionFromJSON(json['NftPurchase']),
         'depositStake': !exists(json, 'DepositStake') ? undefined : DepositStakeActionFromJSON(json['DepositStake']),
         'recoverStake': !exists(json, 'RecoverStake') ? undefined : RecoverStakeActionFromJSON(json['RecoverStake']),
-        'sTONfiSwap': !exists(json, 'STONfiSwap') ? undefined : STONfiSwapActionFromJSON(json['STONfiSwap']),
+        'jettonSwap': !exists(json, 'JettonSwap') ? undefined : JettonSwapActionFromJSON(json['JettonSwap']),
         'smartContractExec': !exists(json, 'SmartContractExec') ? undefined : SmartContractActionFromJSON(json['SmartContractExec']),
         'simplePreview': ActionSimplePreviewFromJSON(json['simple_preview']),
     };
@@ -283,7 +282,7 @@ export function ActionToJSON(value?: Action | null): any {
         'NftPurchase': NftPurchaseActionToJSON(value.nftPurchase),
         'DepositStake': DepositStakeActionToJSON(value.depositStake),
         'RecoverStake': RecoverStakeActionToJSON(value.recoverStake),
-        'STONfiSwap': STONfiSwapActionToJSON(value.sTONfiSwap),
+        'JettonSwap': JettonSwapActionToJSON(value.jettonSwap),
         'SmartContractExec': SmartContractActionToJSON(value.smartContractExec),
         'simple_preview': ActionSimplePreviewToJSON(value.simplePreview),
     };

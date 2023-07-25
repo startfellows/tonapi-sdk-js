@@ -23,6 +23,7 @@ __exportStar(require("./DNSApi"), exports);
 __exportStar(require("./EmulationApi"), exports);
 __exportStar(require("./EventsApi"), exports);
 __exportStar(require("./JettonsApi"), exports);
+__exportStar(require("./LiteServerApi"), exports);
 __exportStar(require("./NFTApi"), exports);
 __exportStar(require("./RatesApi"), exports);
 __exportStar(require("./StakingApi"), exports);

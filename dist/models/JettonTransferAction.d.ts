@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import type { AccountAddress } from './AccountAddress';
+import type { EncryptedComment } from './EncryptedComment';
 import type { JettonPreview } from './JettonPreview';
 import type { Refund } from './Refund';
 /**
@@ -54,6 +55,12 @@ export interface JettonTransferAction {
      * @memberof JettonTransferAction
      */
     comment?: string;
+    /**
+     *
+     * @type {EncryptedComment}
+     * @memberof JettonTransferAction
+     */
+    encryptedComment?: EncryptedComment;
     /**
      *
      * @type {Refund}

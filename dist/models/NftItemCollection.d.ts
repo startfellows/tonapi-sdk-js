@@ -27,6 +27,12 @@ export interface NftItemCollection {
      * @memberof NftItemCollection
      */
     name: string;
+    /**
+     *
+     * @type {string}
+     * @memberof NftItemCollection
+     */
+    description: string;
 }
 /**
  * Check if a given object implements the NftItemCollection interface.

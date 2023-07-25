@@ -112,7 +112,7 @@ export interface Message {
      * @type {any}
      * @memberof Message
      */
-    decodedBody: any | null;
+    decodedBody?: any | null;
 }
 /**
  * Check if a given object implements the Message interface.
