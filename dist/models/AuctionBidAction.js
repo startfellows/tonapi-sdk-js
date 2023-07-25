@@ -52,7 +52,7 @@ function AuctionBidActionFromJSONTyped(json, ignoreDiscriminator) {
         'amount': (0, Price_1.PriceFromJSON)(json['amount']),
         'nft': !(0, runtime_1.exists)(json, 'nft') ? undefined : (0, NftItem_1.NftItemFromJSON)(json['nft']),
         'bidder': (0, AccountAddress_1.AccountAddressFromJSON)(json['bidder']),
-        'auction': json['auction'],
+        'auction': (0, AccountAddress_1.AccountAddressFromJSON)(json['auction']),
     };
 }
 exports.AuctionBidActionFromJSONTyped = AuctionBidActionFromJSONTyped;
@@ -68,7 +68,7 @@ function AuctionBidActionToJSON(value) {
         'amount': (0, Price_1.PriceToJSON)(value.amount),
         'nft': (0, NftItem_1.NftItemToJSON)(value.nft),
         'bidder': (0, AccountAddress_1.AccountAddressToJSON)(value.bidder),
-        'auction': value.auction,
+        'auction': (0, AccountAddress_1.AccountAddressToJSON)(value.auction),
     };
 }
 exports.AuctionBidActionToJSON = AuctionBidActionToJSON;

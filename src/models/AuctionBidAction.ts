@@ -64,10 +64,10 @@ export interface AuctionBidAction {
     bidder: AccountAddress;
     /**
      * 
-     * @type {string}
+     * @type {AccountAddress}
      * @memberof AuctionBidAction
      */
-    auction: string;
+    auction: AccountAddress;
 }
 
 
@@ -110,7 +110,7 @@ export function AuctionBidActionFromJSONTyped(json: any, ignoreDiscriminator: bo
         'amount': PriceFromJSON(json['amount']),
         'nft': !exists(json, 'nft') ? undefined : NftItemFromJSON(json['nft']),
         'bidder': AccountAddressFromJSON(json['bidder']),
-        'auction': json['auction'],
+        'auction': AccountAddressFromJSON(json['auction']),
     };
 }
 
@@ -127,7 +127,7 @@ export function AuctionBidActionToJSON(value?: AuctionBidAction | null): any {
         'amount': PriceToJSON(value.amount),
         'nft': NftItemToJSON(value.nft),
         'bidder': AccountAddressToJSON(value.bidder),
-        'auction': value.auction,
+        'auction': AccountAddressToJSON(value.auction),
     };
 }
 

@@ -44,10 +44,10 @@ export interface AuctionBidAction {
     bidder: AccountAddress;
     /**
      *
-     * @type {string}
+     * @type {AccountAddress}
      * @memberof AuctionBidAction
      */
-    auction: string;
+    auction: AccountAddress;
 }
 /**
  * @export
