@@ -14,12 +14,12 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SendMessageRequestToJSON = exports.SendMessageRequestFromJSONTyped = exports.SendMessageRequestFromJSON = exports.instanceOfSendMessageRequest = void 0;
+const runtime_1 = require("../runtime");
 /**
  * Check if a given object implements the SendMessageRequest interface.
  */
 function instanceOfSendMessageRequest(value) {
     let isInstance = true;
-    isInstance = isInstance && "boc" in value;
     return isInstance;
 }
 exports.instanceOfSendMessageRequest = instanceOfSendMessageRequest;
@@ -32,7 +32,8 @@ function SendMessageRequestFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     return {
-        'boc': json['boc'],
+        'boc': !(0, runtime_1.exists)(json, 'boc') ? undefined : json['boc'],
+        'batch': !(0, runtime_1.exists)(json, 'batch') ? undefined : json['batch'],
     };
 }
 exports.SendMessageRequestFromJSONTyped = SendMessageRequestFromJSONTyped;
@@ -45,6 +46,7 @@ function SendMessageRequestToJSON(value) {
     }
     return {
         'boc': value.boc,
+        'batch': value.batch,
     };
 }
 exports.SendMessageRequestToJSON = SendMessageRequestToJSON;

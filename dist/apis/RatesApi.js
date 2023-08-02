@@ -30,6 +30,40 @@ const index_1 = require("../models/index");
  */
 class RatesApi extends runtime.BaseAPI {
     /**
+     * Get chart by token
+     */
+    getChartRatesRaw(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (requestParameters.token === null || requestParameters.token === undefined) {
+                throw new runtime.RequiredError('token', 'Required parameter requestParameters.token was null or undefined when calling getChartRates.');
+            }
+            const queryParameters = {};
+            if (requestParameters.token !== undefined) {
+                queryParameters['token'] = requestParameters.token;
+            }
+            if (requestParameters.currency !== undefined) {
+                queryParameters['currency'] = requestParameters.currency;
+            }
+            const headerParameters = {};
+            const response = yield this.request({
+                path: `/v2/rates/chart`,
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetChartRates200ResponseFromJSON)(jsonValue));
+        });
+    }
+    /**
+     * Get chart by token
+     */
+    getChartRates(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.getChartRatesRaw(requestParameters, initOverrides);
+            return yield response.value();
+        });
+    }
+    /**
      * Get the token price to the currency
      */
     getRatesRaw(requestParameters, initOverrides) {

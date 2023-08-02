@@ -16,44 +16,44 @@
 import * as runtime from '../runtime';
 import type {
   AccountEvent,
+  EmulateMessageToEventRequest,
   Event,
-  GetBlock401Response,
+  GetBlockDefaultResponse,
   MessageConsequences,
-  SendMessageRequest,
   Trace,
 } from '../models/index';
 import {
     AccountEventFromJSON,
     AccountEventToJSON,
+    EmulateMessageToEventRequestFromJSON,
+    EmulateMessageToEventRequestToJSON,
     EventFromJSON,
     EventToJSON,
-    GetBlock401ResponseFromJSON,
-    GetBlock401ResponseToJSON,
+    GetBlockDefaultResponseFromJSON,
+    GetBlockDefaultResponseToJSON,
     MessageConsequencesFromJSON,
     MessageConsequencesToJSON,
-    SendMessageRequestFromJSON,
-    SendMessageRequestToJSON,
     TraceFromJSON,
     TraceToJSON,
 } from '../models/index';
 
 export interface EmulateMessageToAccountEventRequest {
     accountId: string;
-    sendMessageRequest: SendMessageRequest;
+    emulateMessageToEventRequest: EmulateMessageToEventRequest;
     acceptLanguage?: string;
 }
 
-export interface EmulateMessageToEventRequest {
-    sendMessageRequest: SendMessageRequest;
+export interface EmulateMessageToEventOperationRequest {
+    emulateMessageToEventRequest: EmulateMessageToEventRequest;
     acceptLanguage?: string;
 }
 
 export interface EmulateMessageToTraceRequest {
-    sendMessageRequest: SendMessageRequest;
+    emulateMessageToEventRequest: EmulateMessageToEventRequest;
 }
 
 export interface EmulateWalletMessageRequest {
-    sendMessageRequest: SendMessageRequest;
+    emulateMessageToEventRequest: EmulateMessageToEventRequest;
     acceptLanguage?: string;
 }
 
@@ -67,7 +67,7 @@ export interface EmulationApiInterface {
     /**
      * Emulate sending message to blockchain
      * @param {string} accountId account ID
-     * @param {SendMessageRequest} sendMessageRequest bag-of-cells serialized to base64
+     * @param {EmulateMessageToEventRequest} emulateMessageToEventRequest bag-of-cells serialized to base64
      * @param {string} [acceptLanguage] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -82,22 +82,22 @@ export interface EmulationApiInterface {
 
     /**
      * Emulate sending message to blockchain
-     * @param {SendMessageRequest} sendMessageRequest bag-of-cells serialized to base64
+     * @param {EmulateMessageToEventRequest} emulateMessageToEventRequest bag-of-cells serialized to base64
      * @param {string} [acceptLanguage] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EmulationApiInterface
      */
-    emulateMessageToEventRaw(requestParameters: EmulateMessageToEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Event>>;
+    emulateMessageToEventRaw(requestParameters: EmulateMessageToEventOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Event>>;
 
     /**
      * Emulate sending message to blockchain
      */
-    emulateMessageToEvent(requestParameters: EmulateMessageToEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Event>;
+    emulateMessageToEvent(requestParameters: EmulateMessageToEventOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Event>;
 
     /**
      * Emulate sending message to blockchain
-     * @param {SendMessageRequest} sendMessageRequest bag-of-cells serialized to base64
+     * @param {EmulateMessageToEventRequest} emulateMessageToEventRequest bag-of-cells serialized to base64
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EmulationApiInterface
@@ -111,7 +111,7 @@ export interface EmulationApiInterface {
 
     /**
      * Emulate sending message to blockchain
-     * @param {SendMessageRequest} sendMessageRequest bag-of-cells serialized to base64
+     * @param {EmulateMessageToEventRequest} emulateMessageToEventRequest bag-of-cells serialized to base64
      * @param {string} [acceptLanguage] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -139,8 +139,8 @@ export class EmulationApi extends runtime.BaseAPI implements EmulationApiInterfa
             throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling emulateMessageToAccountEvent.');
         }
 
-        if (requestParameters.sendMessageRequest === null || requestParameters.sendMessageRequest === undefined) {
-            throw new runtime.RequiredError('sendMessageRequest','Required parameter requestParameters.sendMessageRequest was null or undefined when calling emulateMessageToAccountEvent.');
+        if (requestParameters.emulateMessageToEventRequest === null || requestParameters.emulateMessageToEventRequest === undefined) {
+            throw new runtime.RequiredError('emulateMessageToEventRequest','Required parameter requestParameters.emulateMessageToEventRequest was null or undefined when calling emulateMessageToAccountEvent.');
         }
 
         const queryParameters: any = {};
@@ -158,7 +158,7 @@ export class EmulationApi extends runtime.BaseAPI implements EmulationApiInterfa
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: SendMessageRequestToJSON(requestParameters.sendMessageRequest),
+            body: EmulateMessageToEventRequestToJSON(requestParameters.emulateMessageToEventRequest),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => AccountEventFromJSON(jsonValue));
@@ -175,9 +175,9 @@ export class EmulationApi extends runtime.BaseAPI implements EmulationApiInterfa
     /**
      * Emulate sending message to blockchain
      */
-    async emulateMessageToEventRaw(requestParameters: EmulateMessageToEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Event>> {
-        if (requestParameters.sendMessageRequest === null || requestParameters.sendMessageRequest === undefined) {
-            throw new runtime.RequiredError('sendMessageRequest','Required parameter requestParameters.sendMessageRequest was null or undefined when calling emulateMessageToEvent.');
+    async emulateMessageToEventRaw(requestParameters: EmulateMessageToEventOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Event>> {
+        if (requestParameters.emulateMessageToEventRequest === null || requestParameters.emulateMessageToEventRequest === undefined) {
+            throw new runtime.RequiredError('emulateMessageToEventRequest','Required parameter requestParameters.emulateMessageToEventRequest was null or undefined when calling emulateMessageToEvent.');
         }
 
         const queryParameters: any = {};
@@ -195,7 +195,7 @@ export class EmulationApi extends runtime.BaseAPI implements EmulationApiInterfa
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: SendMessageRequestToJSON(requestParameters.sendMessageRequest),
+            body: EmulateMessageToEventRequestToJSON(requestParameters.emulateMessageToEventRequest),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => EventFromJSON(jsonValue));
@@ -204,7 +204,7 @@ export class EmulationApi extends runtime.BaseAPI implements EmulationApiInterfa
     /**
      * Emulate sending message to blockchain
      */
-    async emulateMessageToEvent(requestParameters: EmulateMessageToEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Event> {
+    async emulateMessageToEvent(requestParameters: EmulateMessageToEventOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Event> {
         const response = await this.emulateMessageToEventRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -213,8 +213,8 @@ export class EmulationApi extends runtime.BaseAPI implements EmulationApiInterfa
      * Emulate sending message to blockchain
      */
     async emulateMessageToTraceRaw(requestParameters: EmulateMessageToTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Trace>> {
-        if (requestParameters.sendMessageRequest === null || requestParameters.sendMessageRequest === undefined) {
-            throw new runtime.RequiredError('sendMessageRequest','Required parameter requestParameters.sendMessageRequest was null or undefined when calling emulateMessageToTrace.');
+        if (requestParameters.emulateMessageToEventRequest === null || requestParameters.emulateMessageToEventRequest === undefined) {
+            throw new runtime.RequiredError('emulateMessageToEventRequest','Required parameter requestParameters.emulateMessageToEventRequest was null or undefined when calling emulateMessageToTrace.');
         }
 
         const queryParameters: any = {};
@@ -228,7 +228,7 @@ export class EmulationApi extends runtime.BaseAPI implements EmulationApiInterfa
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: SendMessageRequestToJSON(requestParameters.sendMessageRequest),
+            body: EmulateMessageToEventRequestToJSON(requestParameters.emulateMessageToEventRequest),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => TraceFromJSON(jsonValue));
@@ -246,8 +246,8 @@ export class EmulationApi extends runtime.BaseAPI implements EmulationApiInterfa
      * Emulate sending message to blockchain
      */
     async emulateWalletMessageRaw(requestParameters: EmulateWalletMessageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageConsequences>> {
-        if (requestParameters.sendMessageRequest === null || requestParameters.sendMessageRequest === undefined) {
-            throw new runtime.RequiredError('sendMessageRequest','Required parameter requestParameters.sendMessageRequest was null or undefined when calling emulateWalletMessage.');
+        if (requestParameters.emulateMessageToEventRequest === null || requestParameters.emulateMessageToEventRequest === undefined) {
+            throw new runtime.RequiredError('emulateMessageToEventRequest','Required parameter requestParameters.emulateMessageToEventRequest was null or undefined when calling emulateWalletMessage.');
         }
 
         const queryParameters: any = {};
@@ -265,7 +265,7 @@ export class EmulationApi extends runtime.BaseAPI implements EmulationApiInterfa
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: SendMessageRequestToJSON(requestParameters.sendMessageRequest),
+            body: EmulateMessageToEventRequestToJSON(requestParameters.emulateMessageToEventRequest),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => MessageConsequencesFromJSON(jsonValue));

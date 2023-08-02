@@ -10,7 +10,11 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { GetRates200Response } from '../models/index';
+import type { GetChartRates200Response, GetRates200Response } from '../models/index';
+export interface GetChartRatesRequest {
+    token: string;
+    currency?: string;
+}
 export interface GetRatesRequest {
     tokens: string;
     currencies: string;
@@ -22,6 +26,19 @@ export interface GetRatesRequest {
  * @interface RatesApiInterface
  */
 export interface RatesApiInterface {
+    /**
+     * Get chart by token
+     * @param {string} token accept jetton master address
+     * @param {string} [currency]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RatesApiInterface
+     */
+    getChartRatesRaw(requestParameters: GetChartRatesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetChartRates200Response>>;
+    /**
+     * Get chart by token
+     */
+    getChartRates(requestParameters: GetChartRatesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetChartRates200Response>;
     /**
      * Get the token price to the currency
      * @param {string} tokens accept ton and jetton master addresses, separated by commas
@@ -40,6 +57,14 @@ export interface RatesApiInterface {
  *
  */
 export declare class RatesApi extends runtime.BaseAPI implements RatesApiInterface {
+    /**
+     * Get chart by token
+     */
+    getChartRatesRaw(requestParameters: GetChartRatesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetChartRates200Response>>;
+    /**
+     * Get chart by token
+     */
+    getChartRates(requestParameters: GetChartRatesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetChartRates200Response>;
     /**
      * Get the token price to the currency
      */

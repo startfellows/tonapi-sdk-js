@@ -10,21 +10,21 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { AccountEvent, Event, MessageConsequences, SendMessageRequest, Trace } from '../models/index';
+import type { AccountEvent, EmulateMessageToEventRequest, Event, MessageConsequences, Trace } from '../models/index';
 export interface EmulateMessageToAccountEventRequest {
     accountId: string;
-    sendMessageRequest: SendMessageRequest;
+    emulateMessageToEventRequest: EmulateMessageToEventRequest;
     acceptLanguage?: string;
 }
-export interface EmulateMessageToEventRequest {
-    sendMessageRequest: SendMessageRequest;
+export interface EmulateMessageToEventOperationRequest {
+    emulateMessageToEventRequest: EmulateMessageToEventRequest;
     acceptLanguage?: string;
 }
 export interface EmulateMessageToTraceRequest {
-    sendMessageRequest: SendMessageRequest;
+    emulateMessageToEventRequest: EmulateMessageToEventRequest;
 }
 export interface EmulateWalletMessageRequest {
-    sendMessageRequest: SendMessageRequest;
+    emulateMessageToEventRequest: EmulateMessageToEventRequest;
     acceptLanguage?: string;
 }
 /**
@@ -37,7 +37,7 @@ export interface EmulationApiInterface {
     /**
      * Emulate sending message to blockchain
      * @param {string} accountId account ID
-     * @param {SendMessageRequest} sendMessageRequest bag-of-cells serialized to base64
+     * @param {EmulateMessageToEventRequest} emulateMessageToEventRequest bag-of-cells serialized to base64
      * @param {string} [acceptLanguage]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -50,20 +50,20 @@ export interface EmulationApiInterface {
     emulateMessageToAccountEvent(requestParameters: EmulateMessageToAccountEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvent>;
     /**
      * Emulate sending message to blockchain
-     * @param {SendMessageRequest} sendMessageRequest bag-of-cells serialized to base64
+     * @param {EmulateMessageToEventRequest} emulateMessageToEventRequest bag-of-cells serialized to base64
      * @param {string} [acceptLanguage]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EmulationApiInterface
      */
-    emulateMessageToEventRaw(requestParameters: EmulateMessageToEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Event>>;
+    emulateMessageToEventRaw(requestParameters: EmulateMessageToEventOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Event>>;
     /**
      * Emulate sending message to blockchain
      */
-    emulateMessageToEvent(requestParameters: EmulateMessageToEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Event>;
+    emulateMessageToEvent(requestParameters: EmulateMessageToEventOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Event>;
     /**
      * Emulate sending message to blockchain
-     * @param {SendMessageRequest} sendMessageRequest bag-of-cells serialized to base64
+     * @param {EmulateMessageToEventRequest} emulateMessageToEventRequest bag-of-cells serialized to base64
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EmulationApiInterface
@@ -75,7 +75,7 @@ export interface EmulationApiInterface {
     emulateMessageToTrace(requestParameters: EmulateMessageToTraceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Trace>;
     /**
      * Emulate sending message to blockchain
-     * @param {SendMessageRequest} sendMessageRequest bag-of-cells serialized to base64
+     * @param {EmulateMessageToEventRequest} emulateMessageToEventRequest bag-of-cells serialized to base64
      * @param {string} [acceptLanguage]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102,11 +102,11 @@ export declare class EmulationApi extends runtime.BaseAPI implements EmulationAp
     /**
      * Emulate sending message to blockchain
      */
-    emulateMessageToEventRaw(requestParameters: EmulateMessageToEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Event>>;
+    emulateMessageToEventRaw(requestParameters: EmulateMessageToEventOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Event>>;
     /**
      * Emulate sending message to blockchain
      */
-    emulateMessageToEvent(requestParameters: EmulateMessageToEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Event>;
+    emulateMessageToEvent(requestParameters: EmulateMessageToEventOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Event>;
     /**
      * Emulate sending message to blockchain
      */

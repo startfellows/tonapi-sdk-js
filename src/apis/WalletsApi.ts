@@ -16,14 +16,14 @@
 import * as runtime from '../runtime';
 import type {
   Accounts,
-  GetBlock401Response,
+  GetBlockDefaultResponse,
   Seqno,
 } from '../models/index';
 import {
     AccountsFromJSON,
     AccountsToJSON,
-    GetBlock401ResponseFromJSON,
-    GetBlock401ResponseToJSON,
+    GetBlockDefaultResponseFromJSON,
+    GetBlockDefaultResponseToJSON,
     SeqnoFromJSON,
     SeqnoToJSON,
 } from '../models/index';

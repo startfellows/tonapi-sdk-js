@@ -49,6 +49,7 @@ models/DomainBid.ts
 models/DomainBids.ts
 models/DomainInfo.ts
 models/DomainNames.ts
+models/EmulateMessageToEventRequest.ts
 models/EncryptedComment.ts
 models/Event.ts
 models/FoundAccounts.ts
@@ -57,7 +58,7 @@ models/GetAccountInfoByStateInitRequest.ts
 models/GetAccountStateLiteServer200Response.ts
 models/GetAccountsRequest.ts
 models/GetAllShardsInfoLiteServer200Response.ts
-models/GetBlock401Response.ts
+models/GetBlockDefaultResponse.ts
 models/GetBlockHeaderLiteServer200Response.ts
 models/GetBlockLiteServer200Response.ts
 models/GetBlockProofLiteServer200Response.ts
@@ -66,6 +67,7 @@ models/GetBlockProofLiteServer200ResponseStepsInnerLiteServerBlockLinkBack.ts
 models/GetBlockProofLiteServer200ResponseStepsInnerLiteServerBlockLinkForward.ts
 models/GetBlockProofLiteServer200ResponseStepsInnerLiteServerBlockLinkForwardSignatures.ts
 models/GetBlockProofLiteServer200ResponseStepsInnerLiteServerBlockLinkForwardSignaturesSignaturesInner.ts
+models/GetChartRates200Response.ts
 models/GetConfigAllLiteServer200Response.ts
 models/GetListBlockTransactionsLiteServer200Response.ts
 models/GetListBlockTransactionsLiteServer200ResponseIdsInner.ts

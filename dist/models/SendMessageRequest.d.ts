@@ -20,7 +20,13 @@ export interface SendMessageRequest {
      * @type {string}
      * @memberof SendMessageRequest
      */
-    boc: string;
+    boc?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof SendMessageRequest
+     */
+    batch?: Array<string>;
 }
 /**
  * Check if a given object implements the SendMessageRequest interface.

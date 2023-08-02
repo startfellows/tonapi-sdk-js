@@ -37,8 +37,8 @@ class EmulationApi extends runtime.BaseAPI {
             if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
                 throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling emulateMessageToAccountEvent.');
             }
-            if (requestParameters.sendMessageRequest === null || requestParameters.sendMessageRequest === undefined) {
-                throw new runtime.RequiredError('sendMessageRequest', 'Required parameter requestParameters.sendMessageRequest was null or undefined when calling emulateMessageToAccountEvent.');
+            if (requestParameters.emulateMessageToEventRequest === null || requestParameters.emulateMessageToEventRequest === undefined) {
+                throw new runtime.RequiredError('emulateMessageToEventRequest', 'Required parameter requestParameters.emulateMessageToEventRequest was null or undefined when calling emulateMessageToAccountEvent.');
             }
             const queryParameters = {};
             const headerParameters = {};
@@ -51,7 +51,7 @@ class EmulationApi extends runtime.BaseAPI {
                 method: 'POST',
                 headers: headerParameters,
                 query: queryParameters,
-                body: (0, index_1.SendMessageRequestToJSON)(requestParameters.sendMessageRequest),
+                body: (0, index_1.EmulateMessageToEventRequestToJSON)(requestParameters.emulateMessageToEventRequest),
             }, initOverrides);
             return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.AccountEventFromJSON)(jsonValue));
         });
@@ -70,8 +70,8 @@ class EmulationApi extends runtime.BaseAPI {
      */
     emulateMessageToEventRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (requestParameters.sendMessageRequest === null || requestParameters.sendMessageRequest === undefined) {
-                throw new runtime.RequiredError('sendMessageRequest', 'Required parameter requestParameters.sendMessageRequest was null or undefined when calling emulateMessageToEvent.');
+            if (requestParameters.emulateMessageToEventRequest === null || requestParameters.emulateMessageToEventRequest === undefined) {
+                throw new runtime.RequiredError('emulateMessageToEventRequest', 'Required parameter requestParameters.emulateMessageToEventRequest was null or undefined when calling emulateMessageToEvent.');
             }
             const queryParameters = {};
             const headerParameters = {};
@@ -84,7 +84,7 @@ class EmulationApi extends runtime.BaseAPI {
                 method: 'POST',
                 headers: headerParameters,
                 query: queryParameters,
-                body: (0, index_1.SendMessageRequestToJSON)(requestParameters.sendMessageRequest),
+                body: (0, index_1.EmulateMessageToEventRequestToJSON)(requestParameters.emulateMessageToEventRequest),
             }, initOverrides);
             return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.EventFromJSON)(jsonValue));
         });
@@ -103,8 +103,8 @@ class EmulationApi extends runtime.BaseAPI {
      */
     emulateMessageToTraceRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (requestParameters.sendMessageRequest === null || requestParameters.sendMessageRequest === undefined) {
-                throw new runtime.RequiredError('sendMessageRequest', 'Required parameter requestParameters.sendMessageRequest was null or undefined when calling emulateMessageToTrace.');
+            if (requestParameters.emulateMessageToEventRequest === null || requestParameters.emulateMessageToEventRequest === undefined) {
+                throw new runtime.RequiredError('emulateMessageToEventRequest', 'Required parameter requestParameters.emulateMessageToEventRequest was null or undefined when calling emulateMessageToTrace.');
             }
             const queryParameters = {};
             const headerParameters = {};
@@ -114,7 +114,7 @@ class EmulationApi extends runtime.BaseAPI {
                 method: 'POST',
                 headers: headerParameters,
                 query: queryParameters,
-                body: (0, index_1.SendMessageRequestToJSON)(requestParameters.sendMessageRequest),
+                body: (0, index_1.EmulateMessageToEventRequestToJSON)(requestParameters.emulateMessageToEventRequest),
             }, initOverrides);
             return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.TraceFromJSON)(jsonValue));
         });
@@ -133,8 +133,8 @@ class EmulationApi extends runtime.BaseAPI {
      */
     emulateWalletMessageRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (requestParameters.sendMessageRequest === null || requestParameters.sendMessageRequest === undefined) {
-                throw new runtime.RequiredError('sendMessageRequest', 'Required parameter requestParameters.sendMessageRequest was null or undefined when calling emulateWalletMessage.');
+            if (requestParameters.emulateMessageToEventRequest === null || requestParameters.emulateMessageToEventRequest === undefined) {
+                throw new runtime.RequiredError('emulateMessageToEventRequest', 'Required parameter requestParameters.emulateMessageToEventRequest was null or undefined when calling emulateWalletMessage.');
             }
             const queryParameters = {};
             const headerParameters = {};
@@ -147,7 +147,7 @@ class EmulationApi extends runtime.BaseAPI {
                 method: 'POST',
                 headers: headerParameters,
                 query: queryParameters,
-                body: (0, index_1.SendMessageRequestToJSON)(requestParameters.sendMessageRequest),
+                body: (0, index_1.EmulateMessageToEventRequestToJSON)(requestParameters.emulateMessageToEventRequest),
             }, initOverrides);
             return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.MessageConsequencesFromJSON)(jsonValue));
         });

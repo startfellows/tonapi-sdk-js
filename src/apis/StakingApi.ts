@@ -16,7 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   AccountStaking,
-  GetBlock401Response,
+  GetBlockDefaultResponse,
   StakingPoolHistory200Response,
   StakingPoolInfo200Response,
   StakingPools200Response,
@@ -24,8 +24,8 @@ import type {
 import {
     AccountStakingFromJSON,
     AccountStakingToJSON,
-    GetBlock401ResponseFromJSON,
-    GetBlock401ResponseToJSON,
+    GetBlockDefaultResponseFromJSON,
+    GetBlockDefaultResponseToJSON,
     StakingPoolHistory200ResponseFromJSON,
     StakingPoolHistory200ResponseToJSON,
     StakingPoolInfo200ResponseFromJSON,

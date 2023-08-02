@@ -24,7 +24,13 @@ export interface SendMessageRequest {
      * @type {string}
      * @memberof SendMessageRequest
      */
-    boc: string;
+    boc?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof SendMessageRequest
+     */
+    batch?: Array<string>;
 }
 
 /**
@@ -32,7 +38,6 @@ export interface SendMessageRequest {
  */
 export function instanceOfSendMessageRequest(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "boc" in value;
 
     return isInstance;
 }
@@ -47,7 +52,8 @@ export function SendMessageRequestFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
-        'boc': json['boc'],
+        'boc': !exists(json, 'boc') ? undefined : json['boc'],
+        'batch': !exists(json, 'batch') ? undefined : json['batch'],
     };
 }
 
@@ -61,6 +67,7 @@ export function SendMessageRequestToJSON(value?: SendMessageRequest | null): any
     return {
         
         'boc': value.boc,
+        'batch': value.batch,
     };
 }
 
