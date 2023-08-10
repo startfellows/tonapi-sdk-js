@@ -15,18 +15,21 @@
 
 import * as runtime from '../runtime';
 import type {
+  AccountEvents,
   GetAccountsRequest,
-  GetBlockDefaultResponse,
+  GetBlockchainBlockDefaultResponse,
   NftCollection,
   NftCollections,
   NftItem,
   NftItems,
 } from '../models/index';
 import {
+    AccountEventsFromJSON,
+    AccountEventsToJSON,
     GetAccountsRequestFromJSON,
     GetAccountsRequestToJSON,
-    GetBlockDefaultResponseFromJSON,
-    GetBlockDefaultResponseToJSON,
+    GetBlockchainBlockDefaultResponseFromJSON,
+    GetBlockchainBlockDefaultResponseToJSON,
     NftCollectionFromJSON,
     NftCollectionToJSON,
     NftCollectionsFromJSON,
@@ -36,6 +39,15 @@ import {
     NftItemsFromJSON,
     NftItemsToJSON,
 } from '../models/index';
+
+export interface GetAccountNftHistoryRequest {
+    accountId: string;
+    limit: number;
+    acceptLanguage?: string;
+    beforeLt?: number;
+    startDate?: number;
+    endDate?: number;
+}
 
 export interface GetItemsFromCollectionRequest {
     accountId: string;
@@ -50,6 +62,15 @@ export interface GetNftCollectionRequest {
 export interface GetNftCollectionsRequest {
     limit?: number;
     offset?: number;
+}
+
+export interface GetNftHistoryByIDRequest {
+    accountId: string;
+    limit: number;
+    acceptLanguage?: string;
+    beforeLt?: number;
+    startDate?: number;
+    endDate?: number;
 }
 
 export interface GetNftItemByAddressRequest {
@@ -67,6 +88,25 @@ export interface GetNftItemsByAddressesRequest {
  * @interface NFTApiInterface
  */
 export interface NFTApiInterface {
+    /**
+     * Get the transfer nft history
+     * @param {string} accountId account ID
+     * @param {number} limit 
+     * @param {string} [acceptLanguage] 
+     * @param {number} [beforeLt] omit this parameter to get last events
+     * @param {number} [startDate] 
+     * @param {number} [endDate] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NFTApiInterface
+     */
+    getAccountNftHistoryRaw(requestParameters: GetAccountNftHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
+
+    /**
+     * Get the transfer nft history
+     */
+    getAccountNftHistory(requestParameters: GetAccountNftHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
+
     /**
      * Get NFT items from collection by collection address
      * @param {string} accountId account ID
@@ -113,6 +153,25 @@ export interface NFTApiInterface {
     getNftCollections(requestParameters: GetNftCollectionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollections>;
 
     /**
+     * Get the transfer nfts history for account
+     * @param {string} accountId account ID
+     * @param {number} limit 
+     * @param {string} [acceptLanguage] 
+     * @param {number} [beforeLt] omit this parameter to get last events
+     * @param {number} [startDate] 
+     * @param {number} [endDate] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NFTApiInterface
+     */
+    getNftHistoryByIDRaw(requestParameters: GetNftHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
+
+    /**
+     * Get the transfer nfts history for account
+     */
+    getNftHistoryByID(requestParameters: GetNftHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
+
+    /**
      * Get NFT item by its address
      * @param {string} accountId account ID
      * @param {*} [options] Override http request option.
@@ -146,6 +205,60 @@ export interface NFTApiInterface {
  * 
  */
 export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
+
+    /**
+     * Get the transfer nft history
+     */
+    async getAccountNftHistoryRaw(requestParameters: GetAccountNftHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>> {
+        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getAccountNftHistory.');
+        }
+
+        if (requestParameters.limit === null || requestParameters.limit === undefined) {
+            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling getAccountNftHistory.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.beforeLt !== undefined) {
+            queryParameters['before_lt'] = requestParameters.beforeLt;
+        }
+
+        if (requestParameters.limit !== undefined) {
+            queryParameters['limit'] = requestParameters.limit;
+        }
+
+        if (requestParameters.startDate !== undefined) {
+            queryParameters['start_date'] = requestParameters.startDate;
+        }
+
+        if (requestParameters.endDate !== undefined) {
+            queryParameters['end_date'] = requestParameters.endDate;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters.acceptLanguage !== undefined && requestParameters.acceptLanguage !== null) {
+            headerParameters['Accept-Language'] = String(requestParameters.acceptLanguage);
+        }
+
+        const response = await this.request({
+            path: `/v2/accounts/{account_id}/nfts/history`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AccountEventsFromJSON(jsonValue));
+    }
+
+    /**
+     * Get the transfer nft history
+     */
+    async getAccountNftHistory(requestParameters: GetAccountNftHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents> {
+        const response = await this.getAccountNftHistoryRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Get NFT items from collection by collection address
@@ -246,6 +359,60 @@ export class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
      */
     async getNftCollections(requestParameters: GetNftCollectionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollections> {
         const response = await this.getNftCollectionsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get the transfer nfts history for account
+     */
+    async getNftHistoryByIDRaw(requestParameters: GetNftHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>> {
+        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getNftHistoryByID.');
+        }
+
+        if (requestParameters.limit === null || requestParameters.limit === undefined) {
+            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling getNftHistoryByID.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.beforeLt !== undefined) {
+            queryParameters['before_lt'] = requestParameters.beforeLt;
+        }
+
+        if (requestParameters.limit !== undefined) {
+            queryParameters['limit'] = requestParameters.limit;
+        }
+
+        if (requestParameters.startDate !== undefined) {
+            queryParameters['start_date'] = requestParameters.startDate;
+        }
+
+        if (requestParameters.endDate !== undefined) {
+            queryParameters['end_date'] = requestParameters.endDate;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters.acceptLanguage !== undefined && requestParameters.acceptLanguage !== null) {
+            headerParameters['Accept-Language'] = String(requestParameters.acceptLanguage);
+        }
+
+        const response = await this.request({
+            path: `/v2/nfts/{account_id}/history`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AccountEventsFromJSON(jsonValue));
+    }
+
+    /**
+     * Get the transfer nfts history for account
+     */
+    async getNftHistoryByID(requestParameters: GetNftHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents> {
+        const response = await this.getNftHistoryByIDRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

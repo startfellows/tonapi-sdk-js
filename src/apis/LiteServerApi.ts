@@ -15,90 +15,94 @@
 
 import * as runtime from '../runtime';
 import type {
-  GetAccountStateLiteServer200Response,
-  GetAllShardsInfoLiteServer200Response,
-  GetBlockDefaultResponse,
-  GetBlockHeaderLiteServer200Response,
-  GetBlockLiteServer200Response,
-  GetBlockProofLiteServer200Response,
-  GetConfigAllLiteServer200Response,
-  GetListBlockTransactionsLiteServer200Response,
-  GetMasterchainInfoExtLiteServer200Response,
-  GetMasterchainInfoLiteServer200Response,
-  GetShardBlockProofLiteServer200Response,
-  GetShardInfoLiteServer200Response,
-  GetStateLiteServer200Response,
-  GetTimeLiteServer200Response,
-  GetTransactionsLiteServer200Response,
-  SendMessageLiteServer200Response,
-  SendMessageLiteServerRequest,
+  GetAllRawShardsInfo200Response,
+  GetBlockchainBlockDefaultResponse,
+  GetRawAccountState200Response,
+  GetRawBlockProof200Response,
+  GetRawBlockchainBlock200Response,
+  GetRawBlockchainBlockHeader200Response,
+  GetRawBlockchainBlockState200Response,
+  GetRawConfig200Response,
+  GetRawListBlockTransactions200Response,
+  GetRawMasterchainInfo200Response,
+  GetRawMasterchainInfoExt200Response,
+  GetRawShardBlockProof200Response,
+  GetRawShardInfo200Response,
+  GetRawTime200Response,
+  GetRawTransactions200Response,
+  SendRawMessage200Response,
+  SendRawMessageRequest,
 } from '../models/index';
 import {
-    GetAccountStateLiteServer200ResponseFromJSON,
-    GetAccountStateLiteServer200ResponseToJSON,
-    GetAllShardsInfoLiteServer200ResponseFromJSON,
-    GetAllShardsInfoLiteServer200ResponseToJSON,
-    GetBlockDefaultResponseFromJSON,
-    GetBlockDefaultResponseToJSON,
-    GetBlockHeaderLiteServer200ResponseFromJSON,
-    GetBlockHeaderLiteServer200ResponseToJSON,
-    GetBlockLiteServer200ResponseFromJSON,
-    GetBlockLiteServer200ResponseToJSON,
-    GetBlockProofLiteServer200ResponseFromJSON,
-    GetBlockProofLiteServer200ResponseToJSON,
-    GetConfigAllLiteServer200ResponseFromJSON,
-    GetConfigAllLiteServer200ResponseToJSON,
-    GetListBlockTransactionsLiteServer200ResponseFromJSON,
-    GetListBlockTransactionsLiteServer200ResponseToJSON,
-    GetMasterchainInfoExtLiteServer200ResponseFromJSON,
-    GetMasterchainInfoExtLiteServer200ResponseToJSON,
-    GetMasterchainInfoLiteServer200ResponseFromJSON,
-    GetMasterchainInfoLiteServer200ResponseToJSON,
-    GetShardBlockProofLiteServer200ResponseFromJSON,
-    GetShardBlockProofLiteServer200ResponseToJSON,
-    GetShardInfoLiteServer200ResponseFromJSON,
-    GetShardInfoLiteServer200ResponseToJSON,
-    GetStateLiteServer200ResponseFromJSON,
-    GetStateLiteServer200ResponseToJSON,
-    GetTimeLiteServer200ResponseFromJSON,
-    GetTimeLiteServer200ResponseToJSON,
-    GetTransactionsLiteServer200ResponseFromJSON,
-    GetTransactionsLiteServer200ResponseToJSON,
-    SendMessageLiteServer200ResponseFromJSON,
-    SendMessageLiteServer200ResponseToJSON,
-    SendMessageLiteServerRequestFromJSON,
-    SendMessageLiteServerRequestToJSON,
+    GetAllRawShardsInfo200ResponseFromJSON,
+    GetAllRawShardsInfo200ResponseToJSON,
+    GetBlockchainBlockDefaultResponseFromJSON,
+    GetBlockchainBlockDefaultResponseToJSON,
+    GetRawAccountState200ResponseFromJSON,
+    GetRawAccountState200ResponseToJSON,
+    GetRawBlockProof200ResponseFromJSON,
+    GetRawBlockProof200ResponseToJSON,
+    GetRawBlockchainBlock200ResponseFromJSON,
+    GetRawBlockchainBlock200ResponseToJSON,
+    GetRawBlockchainBlockHeader200ResponseFromJSON,
+    GetRawBlockchainBlockHeader200ResponseToJSON,
+    GetRawBlockchainBlockState200ResponseFromJSON,
+    GetRawBlockchainBlockState200ResponseToJSON,
+    GetRawConfig200ResponseFromJSON,
+    GetRawConfig200ResponseToJSON,
+    GetRawListBlockTransactions200ResponseFromJSON,
+    GetRawListBlockTransactions200ResponseToJSON,
+    GetRawMasterchainInfo200ResponseFromJSON,
+    GetRawMasterchainInfo200ResponseToJSON,
+    GetRawMasterchainInfoExt200ResponseFromJSON,
+    GetRawMasterchainInfoExt200ResponseToJSON,
+    GetRawShardBlockProof200ResponseFromJSON,
+    GetRawShardBlockProof200ResponseToJSON,
+    GetRawShardInfo200ResponseFromJSON,
+    GetRawShardInfo200ResponseToJSON,
+    GetRawTime200ResponseFromJSON,
+    GetRawTime200ResponseToJSON,
+    GetRawTransactions200ResponseFromJSON,
+    GetRawTransactions200ResponseToJSON,
+    SendRawMessage200ResponseFromJSON,
+    SendRawMessage200ResponseToJSON,
+    SendRawMessageRequestFromJSON,
+    SendRawMessageRequestToJSON,
 } from '../models/index';
 
-export interface GetAccountStateLiteServerRequest {
+export interface GetAllRawShardsInfoRequest {
+    blockId: string;
+}
+
+export interface GetRawAccountStateRequest {
     accountId: string;
 }
 
-export interface GetAllShardsInfoLiteServerRequest {
-    blockId: string;
-}
-
-export interface GetBlockHeaderLiteServerRequest {
-    blockId: string;
-    mode: number;
-}
-
-export interface GetBlockLiteServerRequest {
-    blockId: string;
-}
-
-export interface GetBlockProofLiteServerRequest {
+export interface GetRawBlockProofRequest {
     knownBlock: string;
     mode: number;
     targetBlock?: string;
 }
 
-export interface GetConfigAllLiteServerRequest {
+export interface GetRawBlockchainBlockRequest {
+    blockId: string;
+}
+
+export interface GetRawBlockchainBlockHeaderRequest {
     blockId: string;
     mode: number;
 }
 
-export interface GetListBlockTransactionsLiteServerRequest {
+export interface GetRawBlockchainBlockStateRequest {
+    blockId: string;
+}
+
+export interface GetRawConfigRequest {
+    blockId: string;
+    mode: number;
+}
+
+export interface GetRawListBlockTransactionsRequest {
     blockId: string;
     mode: number;
     count: number;
@@ -106,34 +110,30 @@ export interface GetListBlockTransactionsLiteServerRequest {
     lt?: number;
 }
 
-export interface GetMasterchainInfoExtLiteServerRequest {
+export interface GetRawMasterchainInfoExtRequest {
     mode: number;
 }
 
-export interface GetShardBlockProofLiteServerRequest {
+export interface GetRawShardBlockProofRequest {
     blockId: string;
 }
 
-export interface GetShardInfoLiteServerRequest {
+export interface GetRawShardInfoRequest {
     blockId: string;
     workchain: number;
     shard: number;
     exact: boolean;
 }
 
-export interface GetStateLiteServerRequest {
-    blockId: string;
-}
-
-export interface GetTransactionsLiteServerRequest {
+export interface GetRawTransactionsRequest {
     accountId: string;
     count: number;
     lt: number;
     hash: string;
 }
 
-export interface SendMessageLiteServerOperationRequest {
-    sendMessageLiteServerRequest: SendMessageLiteServerRequest;
+export interface SendRawMessageOperationRequest {
+    sendRawMessageRequest: SendRawMessageRequest;
 }
 
 /**
@@ -144,64 +144,35 @@ export interface SendMessageLiteServerOperationRequest {
  */
 export interface LiteServerApiInterface {
     /**
-     * Get account state
+     * Get all raw shards info
+     * @param {string} blockId block ID: (workchain,shard,seqno,root_hash,file_hash)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LiteServerApiInterface
+     */
+    getAllRawShardsInfoRaw(requestParameters: GetAllRawShardsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllRawShardsInfo200Response>>;
+
+    /**
+     * Get all raw shards info
+     */
+    getAllRawShardsInfo(requestParameters: GetAllRawShardsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetAllRawShardsInfo200Response>;
+
+    /**
+     * Get raw account state
      * @param {string} accountId account ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LiteServerApiInterface
      */
-    getAccountStateLiteServerRaw(requestParameters: GetAccountStateLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAccountStateLiteServer200Response>>;
+    getRawAccountStateRaw(requestParameters: GetRawAccountStateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawAccountState200Response>>;
 
     /**
-     * Get account state
+     * Get raw account state
      */
-    getAccountStateLiteServer(requestParameters: GetAccountStateLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetAccountStateLiteServer200Response>;
+    getRawAccountState(requestParameters: GetRawAccountStateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawAccountState200Response>;
 
     /**
-     * Get all shards info
-     * @param {string} blockId block ID: (workchain,shard,seqno,root_hash,file_hash)
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LiteServerApiInterface
-     */
-    getAllShardsInfoLiteServerRaw(requestParameters: GetAllShardsInfoLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllShardsInfoLiteServer200Response>>;
-
-    /**
-     * Get all shards info
-     */
-    getAllShardsInfoLiteServer(requestParameters: GetAllShardsInfoLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetAllShardsInfoLiteServer200Response>;
-
-    /**
-     * Get block header
-     * @param {string} blockId block ID: (workchain,shard,seqno,root_hash,file_hash)
-     * @param {number} mode mode
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LiteServerApiInterface
-     */
-    getBlockHeaderLiteServerRaw(requestParameters: GetBlockHeaderLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetBlockHeaderLiteServer200Response>>;
-
-    /**
-     * Get block header
-     */
-    getBlockHeaderLiteServer(requestParameters: GetBlockHeaderLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetBlockHeaderLiteServer200Response>;
-
-    /**
-     * Get block
-     * @param {string} blockId block ID: (workchain,shard,seqno,root_hash,file_hash)
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LiteServerApiInterface
-     */
-    getBlockLiteServerRaw(requestParameters: GetBlockLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetBlockLiteServer200Response>>;
-
-    /**
-     * Get block
-     */
-    getBlockLiteServer(requestParameters: GetBlockLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetBlockLiteServer200Response>;
-
-    /**
-     * Get block proof
+     * Get raw block proof
      * @param {string} knownBlock known block: (workchain,shard,seqno,root_hash,file_hash)
      * @param {number} mode mode
      * @param {string} [targetBlock] target block: (workchain,shard,seqno,root_hash,file_hash)
@@ -209,30 +180,73 @@ export interface LiteServerApiInterface {
      * @throws {RequiredError}
      * @memberof LiteServerApiInterface
      */
-    getBlockProofLiteServerRaw(requestParameters: GetBlockProofLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetBlockProofLiteServer200Response>>;
+    getRawBlockProofRaw(requestParameters: GetRawBlockProofRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawBlockProof200Response>>;
 
     /**
-     * Get block proof
+     * Get raw block proof
      */
-    getBlockProofLiteServer(requestParameters: GetBlockProofLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetBlockProofLiteServer200Response>;
+    getRawBlockProof(requestParameters: GetRawBlockProofRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawBlockProof200Response>;
 
     /**
-     * Get config all
+     * Get raw blockchain block
+     * @param {string} blockId block ID: (workchain,shard,seqno,root_hash,file_hash)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LiteServerApiInterface
+     */
+    getRawBlockchainBlockRaw(requestParameters: GetRawBlockchainBlockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawBlockchainBlock200Response>>;
+
+    /**
+     * Get raw blockchain block
+     */
+    getRawBlockchainBlock(requestParameters: GetRawBlockchainBlockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawBlockchainBlock200Response>;
+
+    /**
+     * Get raw blockchain block header
      * @param {string} blockId block ID: (workchain,shard,seqno,root_hash,file_hash)
      * @param {number} mode mode
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LiteServerApiInterface
      */
-    getConfigAllLiteServerRaw(requestParameters: GetConfigAllLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetConfigAllLiteServer200Response>>;
+    getRawBlockchainBlockHeaderRaw(requestParameters: GetRawBlockchainBlockHeaderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawBlockchainBlockHeader200Response>>;
 
     /**
-     * Get config all
+     * Get raw blockchain block header
      */
-    getConfigAllLiteServer(requestParameters: GetConfigAllLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetConfigAllLiteServer200Response>;
+    getRawBlockchainBlockHeader(requestParameters: GetRawBlockchainBlockHeaderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawBlockchainBlockHeader200Response>;
 
     /**
-     * Get list block transactions
+     * Get raw blockchain block state
+     * @param {string} blockId block ID: (workchain,shard,seqno,root_hash,file_hash)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LiteServerApiInterface
+     */
+    getRawBlockchainBlockStateRaw(requestParameters: GetRawBlockchainBlockStateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawBlockchainBlockState200Response>>;
+
+    /**
+     * Get raw blockchain block state
+     */
+    getRawBlockchainBlockState(requestParameters: GetRawBlockchainBlockStateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawBlockchainBlockState200Response>;
+
+    /**
+     * Get raw config
+     * @param {string} blockId block ID: (workchain,shard,seqno,root_hash,file_hash)
+     * @param {number} mode mode
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LiteServerApiInterface
+     */
+    getRawConfigRaw(requestParameters: GetRawConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawConfig200Response>>;
+
+    /**
+     * Get raw config
+     */
+    getRawConfig(requestParameters: GetRawConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawConfig200Response>;
+
+    /**
+     * Get raw list block transactions
      * @param {string} blockId block ID: (workchain,shard,seqno,root_hash,file_hash)
      * @param {number} mode mode
      * @param {number} count count
@@ -242,56 +256,56 @@ export interface LiteServerApiInterface {
      * @throws {RequiredError}
      * @memberof LiteServerApiInterface
      */
-    getListBlockTransactionsLiteServerRaw(requestParameters: GetListBlockTransactionsLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetListBlockTransactionsLiteServer200Response>>;
+    getRawListBlockTransactionsRaw(requestParameters: GetRawListBlockTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawListBlockTransactions200Response>>;
 
     /**
-     * Get list block transactions
+     * Get raw list block transactions
      */
-    getListBlockTransactionsLiteServer(requestParameters: GetListBlockTransactionsLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetListBlockTransactionsLiteServer200Response>;
+    getRawListBlockTransactions(requestParameters: GetRawListBlockTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawListBlockTransactions200Response>;
 
     /**
-     * Get masterchain info ext
+     * Get raw masterchain info
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LiteServerApiInterface
+     */
+    getRawMasterchainInfoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawMasterchainInfo200Response>>;
+
+    /**
+     * Get raw masterchain info
+     */
+    getRawMasterchainInfo(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawMasterchainInfo200Response>;
+
+    /**
+     * Get raw masterchain info ext
      * @param {number} mode mode
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LiteServerApiInterface
      */
-    getMasterchainInfoExtLiteServerRaw(requestParameters: GetMasterchainInfoExtLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetMasterchainInfoExtLiteServer200Response>>;
+    getRawMasterchainInfoExtRaw(requestParameters: GetRawMasterchainInfoExtRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawMasterchainInfoExt200Response>>;
 
     /**
-     * Get masterchain info ext
+     * Get raw masterchain info ext
      */
-    getMasterchainInfoExtLiteServer(requestParameters: GetMasterchainInfoExtLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetMasterchainInfoExtLiteServer200Response>;
+    getRawMasterchainInfoExt(requestParameters: GetRawMasterchainInfoExtRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawMasterchainInfoExt200Response>;
 
     /**
-     * Get masterchain info
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LiteServerApiInterface
-     */
-    getMasterchainInfoLiteServerRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetMasterchainInfoLiteServer200Response>>;
-
-    /**
-     * Get masterchain info
-     */
-    getMasterchainInfoLiteServer(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetMasterchainInfoLiteServer200Response>;
-
-    /**
-     * Get shard block proof
+     * Get raw shard block proof
      * @param {string} blockId block ID: (workchain,shard,seqno,root_hash,file_hash)
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LiteServerApiInterface
      */
-    getShardBlockProofLiteServerRaw(requestParameters: GetShardBlockProofLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetShardBlockProofLiteServer200Response>>;
+    getRawShardBlockProofRaw(requestParameters: GetRawShardBlockProofRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawShardBlockProof200Response>>;
 
     /**
-     * Get shard block proof
+     * Get raw shard block proof
      */
-    getShardBlockProofLiteServer(requestParameters: GetShardBlockProofLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetShardBlockProofLiteServer200Response>;
+    getRawShardBlockProof(requestParameters: GetRawShardBlockProofRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawShardBlockProof200Response>;
 
     /**
-     * Get shard info
+     * Get raw shard info
      * @param {string} blockId block ID: (workchain,shard,seqno,root_hash,file_hash)
      * @param {number} workchain workchain
      * @param {number} shard shard
@@ -300,42 +314,28 @@ export interface LiteServerApiInterface {
      * @throws {RequiredError}
      * @memberof LiteServerApiInterface
      */
-    getShardInfoLiteServerRaw(requestParameters: GetShardInfoLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetShardInfoLiteServer200Response>>;
+    getRawShardInfoRaw(requestParameters: GetRawShardInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawShardInfo200Response>>;
 
     /**
-     * Get shard info
+     * Get raw shard info
      */
-    getShardInfoLiteServer(requestParameters: GetShardInfoLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetShardInfoLiteServer200Response>;
+    getRawShardInfo(requestParameters: GetRawShardInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawShardInfo200Response>;
 
     /**
-     * Get block state
-     * @param {string} blockId block ID: (workchain,shard,seqno,root_hash,file_hash)
+     * Get raw time
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LiteServerApiInterface
      */
-    getStateLiteServerRaw(requestParameters: GetStateLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetStateLiteServer200Response>>;
+    getRawTimeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawTime200Response>>;
 
     /**
-     * Get block state
+     * Get raw time
      */
-    getStateLiteServer(requestParameters: GetStateLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetStateLiteServer200Response>;
+    getRawTime(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawTime200Response>;
 
     /**
-     * Get time
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LiteServerApiInterface
-     */
-    getTimeLiteServerRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetTimeLiteServer200Response>>;
-
-    /**
-     * Get time
-     */
-    getTimeLiteServer(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetTimeLiteServer200Response>;
-
-    /**
-     * Get transactions
+     * Get raw transactions
      * @param {string} accountId account ID
      * @param {number} count count
      * @param {number} lt lt
@@ -344,26 +344,26 @@ export interface LiteServerApiInterface {
      * @throws {RequiredError}
      * @memberof LiteServerApiInterface
      */
-    getTransactionsLiteServerRaw(requestParameters: GetTransactionsLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetTransactionsLiteServer200Response>>;
+    getRawTransactionsRaw(requestParameters: GetRawTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawTransactions200Response>>;
 
     /**
-     * Get transactions
+     * Get raw transactions
      */
-    getTransactionsLiteServer(requestParameters: GetTransactionsLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetTransactionsLiteServer200Response>;
+    getRawTransactions(requestParameters: GetRawTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawTransactions200Response>;
 
     /**
-     * Send message
-     * @param {SendMessageLiteServerRequest} sendMessageLiteServerRequest Data that is expected
+     * Send raw message to blockchain
+     * @param {SendRawMessageRequest} sendRawMessageRequest Data that is expected
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LiteServerApiInterface
      */
-    sendMessageLiteServerRaw(requestParameters: SendMessageLiteServerOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SendMessageLiteServer200Response>>;
+    sendRawMessageRaw(requestParameters: SendRawMessageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SendRawMessage200Response>>;
 
     /**
-     * Send message
+     * Send raw message to blockchain
      */
-    sendMessageLiteServer(requestParameters: SendMessageLiteServerOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SendMessageLiteServer200Response>;
+    sendRawMessage(requestParameters: SendRawMessageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SendRawMessage200Response>;
 
 }
 
@@ -373,41 +373,11 @@ export interface LiteServerApiInterface {
 export class LiteServerApi extends runtime.BaseAPI implements LiteServerApiInterface {
 
     /**
-     * Get account state
+     * Get all raw shards info
      */
-    async getAccountStateLiteServerRaw(requestParameters: GetAccountStateLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAccountStateLiteServer200Response>> {
-        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getAccountStateLiteServer.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v2/liteserver/get_account_state/{account_id}`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetAccountStateLiteServer200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Get account state
-     */
-    async getAccountStateLiteServer(requestParameters: GetAccountStateLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetAccountStateLiteServer200Response> {
-        const response = await this.getAccountStateLiteServerRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Get all shards info
-     */
-    async getAllShardsInfoLiteServerRaw(requestParameters: GetAllShardsInfoLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllShardsInfoLiteServer200Response>> {
+    async getAllRawShardsInfoRaw(requestParameters: GetAllRawShardsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAllRawShardsInfo200Response>> {
         if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
-            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getAllShardsInfoLiteServer.');
+            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getAllRawShardsInfo.');
         }
 
         const queryParameters: any = {};
@@ -421,61 +391,23 @@ export class LiteServerApi extends runtime.BaseAPI implements LiteServerApiInter
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetAllShardsInfoLiteServer200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetAllRawShardsInfo200ResponseFromJSON(jsonValue));
     }
 
     /**
-     * Get all shards info
+     * Get all raw shards info
      */
-    async getAllShardsInfoLiteServer(requestParameters: GetAllShardsInfoLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetAllShardsInfoLiteServer200Response> {
-        const response = await this.getAllShardsInfoLiteServerRaw(requestParameters, initOverrides);
+    async getAllRawShardsInfo(requestParameters: GetAllRawShardsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetAllRawShardsInfo200Response> {
+        const response = await this.getAllRawShardsInfoRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Get block header
+     * Get raw account state
      */
-    async getBlockHeaderLiteServerRaw(requestParameters: GetBlockHeaderLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetBlockHeaderLiteServer200Response>> {
-        if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
-            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getBlockHeaderLiteServer.');
-        }
-
-        if (requestParameters.mode === null || requestParameters.mode === undefined) {
-            throw new runtime.RequiredError('mode','Required parameter requestParameters.mode was null or undefined when calling getBlockHeaderLiteServer.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.mode !== undefined) {
-            queryParameters['mode'] = requestParameters.mode;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v2/liteserver/get_block_header/{block_id}`.replace(`{${"block_id"}}`, encodeURIComponent(String(requestParameters.blockId))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetBlockHeaderLiteServer200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Get block header
-     */
-    async getBlockHeaderLiteServer(requestParameters: GetBlockHeaderLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetBlockHeaderLiteServer200Response> {
-        const response = await this.getBlockHeaderLiteServerRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Get block
-     */
-    async getBlockLiteServerRaw(requestParameters: GetBlockLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetBlockLiteServer200Response>> {
-        if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
-            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getBlockLiteServer.');
+    async getRawAccountStateRaw(requestParameters: GetRawAccountStateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawAccountState200Response>> {
+        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getRawAccountState.');
         }
 
         const queryParameters: any = {};
@@ -483,33 +415,33 @@ export class LiteServerApi extends runtime.BaseAPI implements LiteServerApiInter
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/v2/liteserver/get_block/{block_id}`.replace(`{${"block_id"}}`, encodeURIComponent(String(requestParameters.blockId))),
+            path: `/v2/liteserver/get_account_state/{account_id}`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetBlockLiteServer200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetRawAccountState200ResponseFromJSON(jsonValue));
     }
 
     /**
-     * Get block
+     * Get raw account state
      */
-    async getBlockLiteServer(requestParameters: GetBlockLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetBlockLiteServer200Response> {
-        const response = await this.getBlockLiteServerRaw(requestParameters, initOverrides);
+    async getRawAccountState(requestParameters: GetRawAccountStateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawAccountState200Response> {
+        const response = await this.getRawAccountStateRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Get block proof
+     * Get raw block proof
      */
-    async getBlockProofLiteServerRaw(requestParameters: GetBlockProofLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetBlockProofLiteServer200Response>> {
+    async getRawBlockProofRaw(requestParameters: GetRawBlockProofRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawBlockProof200Response>> {
         if (requestParameters.knownBlock === null || requestParameters.knownBlock === undefined) {
-            throw new runtime.RequiredError('knownBlock','Required parameter requestParameters.knownBlock was null or undefined when calling getBlockProofLiteServer.');
+            throw new runtime.RequiredError('knownBlock','Required parameter requestParameters.knownBlock was null or undefined when calling getRawBlockProof.');
         }
 
         if (requestParameters.mode === null || requestParameters.mode === undefined) {
-            throw new runtime.RequiredError('mode','Required parameter requestParameters.mode was null or undefined when calling getBlockProofLiteServer.');
+            throw new runtime.RequiredError('mode','Required parameter requestParameters.mode was null or undefined when calling getRawBlockProof.');
         }
 
         const queryParameters: any = {};
@@ -535,27 +467,125 @@ export class LiteServerApi extends runtime.BaseAPI implements LiteServerApiInter
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetBlockProofLiteServer200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetRawBlockProof200ResponseFromJSON(jsonValue));
     }
 
     /**
-     * Get block proof
+     * Get raw block proof
      */
-    async getBlockProofLiteServer(requestParameters: GetBlockProofLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetBlockProofLiteServer200Response> {
-        const response = await this.getBlockProofLiteServerRaw(requestParameters, initOverrides);
+    async getRawBlockProof(requestParameters: GetRawBlockProofRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawBlockProof200Response> {
+        const response = await this.getRawBlockProofRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Get config all
+     * Get raw blockchain block
      */
-    async getConfigAllLiteServerRaw(requestParameters: GetConfigAllLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetConfigAllLiteServer200Response>> {
+    async getRawBlockchainBlockRaw(requestParameters: GetRawBlockchainBlockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawBlockchainBlock200Response>> {
         if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
-            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getConfigAllLiteServer.');
+            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getRawBlockchainBlock.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v2/liteserver/get_block/{block_id}`.replace(`{${"block_id"}}`, encodeURIComponent(String(requestParameters.blockId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetRawBlockchainBlock200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get raw blockchain block
+     */
+    async getRawBlockchainBlock(requestParameters: GetRawBlockchainBlockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawBlockchainBlock200Response> {
+        const response = await this.getRawBlockchainBlockRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get raw blockchain block header
+     */
+    async getRawBlockchainBlockHeaderRaw(requestParameters: GetRawBlockchainBlockHeaderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawBlockchainBlockHeader200Response>> {
+        if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
+            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getRawBlockchainBlockHeader.');
         }
 
         if (requestParameters.mode === null || requestParameters.mode === undefined) {
-            throw new runtime.RequiredError('mode','Required parameter requestParameters.mode was null or undefined when calling getConfigAllLiteServer.');
+            throw new runtime.RequiredError('mode','Required parameter requestParameters.mode was null or undefined when calling getRawBlockchainBlockHeader.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.mode !== undefined) {
+            queryParameters['mode'] = requestParameters.mode;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v2/liteserver/get_block_header/{block_id}`.replace(`{${"block_id"}}`, encodeURIComponent(String(requestParameters.blockId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetRawBlockchainBlockHeader200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get raw blockchain block header
+     */
+    async getRawBlockchainBlockHeader(requestParameters: GetRawBlockchainBlockHeaderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawBlockchainBlockHeader200Response> {
+        const response = await this.getRawBlockchainBlockHeaderRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get raw blockchain block state
+     */
+    async getRawBlockchainBlockStateRaw(requestParameters: GetRawBlockchainBlockStateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawBlockchainBlockState200Response>> {
+        if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
+            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getRawBlockchainBlockState.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v2/liteserver/get_state/{block_id}`.replace(`{${"block_id"}}`, encodeURIComponent(String(requestParameters.blockId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetRawBlockchainBlockState200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get raw blockchain block state
+     */
+    async getRawBlockchainBlockState(requestParameters: GetRawBlockchainBlockStateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawBlockchainBlockState200Response> {
+        const response = await this.getRawBlockchainBlockStateRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get raw config
+     */
+    async getRawConfigRaw(requestParameters: GetRawConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawConfig200Response>> {
+        if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
+            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getRawConfig.');
+        }
+
+        if (requestParameters.mode === null || requestParameters.mode === undefined) {
+            throw new runtime.RequiredError('mode','Required parameter requestParameters.mode was null or undefined when calling getRawConfig.');
         }
 
         const queryParameters: any = {};
@@ -573,31 +603,31 @@ export class LiteServerApi extends runtime.BaseAPI implements LiteServerApiInter
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetConfigAllLiteServer200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetRawConfig200ResponseFromJSON(jsonValue));
     }
 
     /**
-     * Get config all
+     * Get raw config
      */
-    async getConfigAllLiteServer(requestParameters: GetConfigAllLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetConfigAllLiteServer200Response> {
-        const response = await this.getConfigAllLiteServerRaw(requestParameters, initOverrides);
+    async getRawConfig(requestParameters: GetRawConfigRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawConfig200Response> {
+        const response = await this.getRawConfigRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Get list block transactions
+     * Get raw list block transactions
      */
-    async getListBlockTransactionsLiteServerRaw(requestParameters: GetListBlockTransactionsLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetListBlockTransactionsLiteServer200Response>> {
+    async getRawListBlockTransactionsRaw(requestParameters: GetRawListBlockTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawListBlockTransactions200Response>> {
         if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
-            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getListBlockTransactionsLiteServer.');
+            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getRawListBlockTransactions.');
         }
 
         if (requestParameters.mode === null || requestParameters.mode === undefined) {
-            throw new runtime.RequiredError('mode','Required parameter requestParameters.mode was null or undefined when calling getListBlockTransactionsLiteServer.');
+            throw new runtime.RequiredError('mode','Required parameter requestParameters.mode was null or undefined when calling getRawListBlockTransactions.');
         }
 
         if (requestParameters.count === null || requestParameters.count === undefined) {
-            throw new runtime.RequiredError('count','Required parameter requestParameters.count was null or undefined when calling getListBlockTransactionsLiteServer.');
+            throw new runtime.RequiredError('count','Required parameter requestParameters.count was null or undefined when calling getRawListBlockTransactions.');
         }
 
         const queryParameters: any = {};
@@ -627,23 +657,49 @@ export class LiteServerApi extends runtime.BaseAPI implements LiteServerApiInter
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetListBlockTransactionsLiteServer200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetRawListBlockTransactions200ResponseFromJSON(jsonValue));
     }
 
     /**
-     * Get list block transactions
+     * Get raw list block transactions
      */
-    async getListBlockTransactionsLiteServer(requestParameters: GetListBlockTransactionsLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetListBlockTransactionsLiteServer200Response> {
-        const response = await this.getListBlockTransactionsLiteServerRaw(requestParameters, initOverrides);
+    async getRawListBlockTransactions(requestParameters: GetRawListBlockTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawListBlockTransactions200Response> {
+        const response = await this.getRawListBlockTransactionsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Get masterchain info ext
+     * Get raw masterchain info
      */
-    async getMasterchainInfoExtLiteServerRaw(requestParameters: GetMasterchainInfoExtLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetMasterchainInfoExtLiteServer200Response>> {
+    async getRawMasterchainInfoRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawMasterchainInfo200Response>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v2/liteserver/get_masterchain_info`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetRawMasterchainInfo200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get raw masterchain info
+     */
+    async getRawMasterchainInfo(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawMasterchainInfo200Response> {
+        const response = await this.getRawMasterchainInfoRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get raw masterchain info ext
+     */
+    async getRawMasterchainInfoExtRaw(requestParameters: GetRawMasterchainInfoExtRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawMasterchainInfoExt200Response>> {
         if (requestParameters.mode === null || requestParameters.mode === undefined) {
-            throw new runtime.RequiredError('mode','Required parameter requestParameters.mode was null or undefined when calling getMasterchainInfoExtLiteServer.');
+            throw new runtime.RequiredError('mode','Required parameter requestParameters.mode was null or undefined when calling getRawMasterchainInfoExt.');
         }
 
         const queryParameters: any = {};
@@ -661,49 +717,23 @@ export class LiteServerApi extends runtime.BaseAPI implements LiteServerApiInter
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetMasterchainInfoExtLiteServer200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetRawMasterchainInfoExt200ResponseFromJSON(jsonValue));
     }
 
     /**
-     * Get masterchain info ext
+     * Get raw masterchain info ext
      */
-    async getMasterchainInfoExtLiteServer(requestParameters: GetMasterchainInfoExtLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetMasterchainInfoExtLiteServer200Response> {
-        const response = await this.getMasterchainInfoExtLiteServerRaw(requestParameters, initOverrides);
+    async getRawMasterchainInfoExt(requestParameters: GetRawMasterchainInfoExtRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawMasterchainInfoExt200Response> {
+        const response = await this.getRawMasterchainInfoExtRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Get masterchain info
+     * Get raw shard block proof
      */
-    async getMasterchainInfoLiteServerRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetMasterchainInfoLiteServer200Response>> {
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v2/liteserver/get_masterchain_info`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetMasterchainInfoLiteServer200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Get masterchain info
-     */
-    async getMasterchainInfoLiteServer(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetMasterchainInfoLiteServer200Response> {
-        const response = await this.getMasterchainInfoLiteServerRaw(initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Get shard block proof
-     */
-    async getShardBlockProofLiteServerRaw(requestParameters: GetShardBlockProofLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetShardBlockProofLiteServer200Response>> {
+    async getRawShardBlockProofRaw(requestParameters: GetRawShardBlockProofRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawShardBlockProof200Response>> {
         if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
-            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getShardBlockProofLiteServer.');
+            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getRawShardBlockProof.');
         }
 
         const queryParameters: any = {};
@@ -717,35 +747,35 @@ export class LiteServerApi extends runtime.BaseAPI implements LiteServerApiInter
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetShardBlockProofLiteServer200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetRawShardBlockProof200ResponseFromJSON(jsonValue));
     }
 
     /**
-     * Get shard block proof
+     * Get raw shard block proof
      */
-    async getShardBlockProofLiteServer(requestParameters: GetShardBlockProofLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetShardBlockProofLiteServer200Response> {
-        const response = await this.getShardBlockProofLiteServerRaw(requestParameters, initOverrides);
+    async getRawShardBlockProof(requestParameters: GetRawShardBlockProofRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawShardBlockProof200Response> {
+        const response = await this.getRawShardBlockProofRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Get shard info
+     * Get raw shard info
      */
-    async getShardInfoLiteServerRaw(requestParameters: GetShardInfoLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetShardInfoLiteServer200Response>> {
+    async getRawShardInfoRaw(requestParameters: GetRawShardInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawShardInfo200Response>> {
         if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
-            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getShardInfoLiteServer.');
+            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getRawShardInfo.');
         }
 
         if (requestParameters.workchain === null || requestParameters.workchain === undefined) {
-            throw new runtime.RequiredError('workchain','Required parameter requestParameters.workchain was null or undefined when calling getShardInfoLiteServer.');
+            throw new runtime.RequiredError('workchain','Required parameter requestParameters.workchain was null or undefined when calling getRawShardInfo.');
         }
 
         if (requestParameters.shard === null || requestParameters.shard === undefined) {
-            throw new runtime.RequiredError('shard','Required parameter requestParameters.shard was null or undefined when calling getShardInfoLiteServer.');
+            throw new runtime.RequiredError('shard','Required parameter requestParameters.shard was null or undefined when calling getRawShardInfo.');
         }
 
         if (requestParameters.exact === null || requestParameters.exact === undefined) {
-            throw new runtime.RequiredError('exact','Required parameter requestParameters.exact was null or undefined when calling getShardInfoLiteServer.');
+            throw new runtime.RequiredError('exact','Required parameter requestParameters.exact was null or undefined when calling getRawShardInfo.');
         }
 
         const queryParameters: any = {};
@@ -771,51 +801,21 @@ export class LiteServerApi extends runtime.BaseAPI implements LiteServerApiInter
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetShardInfoLiteServer200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetRawShardInfo200ResponseFromJSON(jsonValue));
     }
 
     /**
-     * Get shard info
+     * Get raw shard info
      */
-    async getShardInfoLiteServer(requestParameters: GetShardInfoLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetShardInfoLiteServer200Response> {
-        const response = await this.getShardInfoLiteServerRaw(requestParameters, initOverrides);
+    async getRawShardInfo(requestParameters: GetRawShardInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawShardInfo200Response> {
+        const response = await this.getRawShardInfoRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Get block state
+     * Get raw time
      */
-    async getStateLiteServerRaw(requestParameters: GetStateLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetStateLiteServer200Response>> {
-        if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
-            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getStateLiteServer.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v2/liteserver/get_state/{block_id}`.replace(`{${"block_id"}}`, encodeURIComponent(String(requestParameters.blockId))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetStateLiteServer200ResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Get block state
-     */
-    async getStateLiteServer(requestParameters: GetStateLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetStateLiteServer200Response> {
-        const response = await this.getStateLiteServerRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Get time
-     */
-    async getTimeLiteServerRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetTimeLiteServer200Response>> {
+    async getRawTimeRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawTime200Response>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -827,35 +827,35 @@ export class LiteServerApi extends runtime.BaseAPI implements LiteServerApiInter
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetTimeLiteServer200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetRawTime200ResponseFromJSON(jsonValue));
     }
 
     /**
-     * Get time
+     * Get raw time
      */
-    async getTimeLiteServer(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetTimeLiteServer200Response> {
-        const response = await this.getTimeLiteServerRaw(initOverrides);
+    async getRawTime(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawTime200Response> {
+        const response = await this.getRawTimeRaw(initOverrides);
         return await response.value();
     }
 
     /**
-     * Get transactions
+     * Get raw transactions
      */
-    async getTransactionsLiteServerRaw(requestParameters: GetTransactionsLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetTransactionsLiteServer200Response>> {
+    async getRawTransactionsRaw(requestParameters: GetRawTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetRawTransactions200Response>> {
         if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getTransactionsLiteServer.');
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getRawTransactions.');
         }
 
         if (requestParameters.count === null || requestParameters.count === undefined) {
-            throw new runtime.RequiredError('count','Required parameter requestParameters.count was null or undefined when calling getTransactionsLiteServer.');
+            throw new runtime.RequiredError('count','Required parameter requestParameters.count was null or undefined when calling getRawTransactions.');
         }
 
         if (requestParameters.lt === null || requestParameters.lt === undefined) {
-            throw new runtime.RequiredError('lt','Required parameter requestParameters.lt was null or undefined when calling getTransactionsLiteServer.');
+            throw new runtime.RequiredError('lt','Required parameter requestParameters.lt was null or undefined when calling getRawTransactions.');
         }
 
         if (requestParameters.hash === null || requestParameters.hash === undefined) {
-            throw new runtime.RequiredError('hash','Required parameter requestParameters.hash was null or undefined when calling getTransactionsLiteServer.');
+            throw new runtime.RequiredError('hash','Required parameter requestParameters.hash was null or undefined when calling getRawTransactions.');
         }
 
         const queryParameters: any = {};
@@ -881,23 +881,23 @@ export class LiteServerApi extends runtime.BaseAPI implements LiteServerApiInter
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetTransactionsLiteServer200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetRawTransactions200ResponseFromJSON(jsonValue));
     }
 
     /**
-     * Get transactions
+     * Get raw transactions
      */
-    async getTransactionsLiteServer(requestParameters: GetTransactionsLiteServerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetTransactionsLiteServer200Response> {
-        const response = await this.getTransactionsLiteServerRaw(requestParameters, initOverrides);
+    async getRawTransactions(requestParameters: GetRawTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetRawTransactions200Response> {
+        const response = await this.getRawTransactionsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Send message
+     * Send raw message to blockchain
      */
-    async sendMessageLiteServerRaw(requestParameters: SendMessageLiteServerOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SendMessageLiteServer200Response>> {
-        if (requestParameters.sendMessageLiteServerRequest === null || requestParameters.sendMessageLiteServerRequest === undefined) {
-            throw new runtime.RequiredError('sendMessageLiteServerRequest','Required parameter requestParameters.sendMessageLiteServerRequest was null or undefined when calling sendMessageLiteServer.');
+    async sendRawMessageRaw(requestParameters: SendRawMessageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SendRawMessage200Response>> {
+        if (requestParameters.sendRawMessageRequest === null || requestParameters.sendRawMessageRequest === undefined) {
+            throw new runtime.RequiredError('sendRawMessageRequest','Required parameter requestParameters.sendRawMessageRequest was null or undefined when calling sendRawMessage.');
         }
 
         const queryParameters: any = {};
@@ -911,17 +911,17 @@ export class LiteServerApi extends runtime.BaseAPI implements LiteServerApiInter
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: SendMessageLiteServerRequestToJSON(requestParameters.sendMessageLiteServerRequest),
+            body: SendRawMessageRequestToJSON(requestParameters.sendRawMessageRequest),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => SendMessageLiteServer200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => SendRawMessage200ResponseFromJSON(jsonValue));
     }
 
     /**
-     * Send message
+     * Send raw message to blockchain
      */
-    async sendMessageLiteServer(requestParameters: SendMessageLiteServerOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SendMessageLiteServer200Response> {
-        const response = await this.sendMessageLiteServerRaw(requestParameters, initOverrides);
+    async sendRawMessage(requestParameters: SendRawMessageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SendRawMessage200Response> {
+        const response = await this.sendRawMessageRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

@@ -19,7 +19,7 @@ import type {
   DnsRecord,
   DomainBids,
   DomainInfo,
-  GetBlockDefaultResponse,
+  GetBlockchainBlockDefaultResponse,
 } from '../models/index';
 import {
     AuctionsFromJSON,
@@ -30,13 +30,9 @@ import {
     DomainBidsToJSON,
     DomainInfoFromJSON,
     DomainInfoToJSON,
-    GetBlockDefaultResponseFromJSON,
-    GetBlockDefaultResponseToJSON,
+    GetBlockchainBlockDefaultResponseFromJSON,
+    GetBlockchainBlockDefaultResponseToJSON,
 } from '../models/index';
-
-export interface DnsInfoRequest {
-    domainName: string;
-}
 
 export interface DnsResolveRequest {
     domainName: string;
@@ -44,6 +40,10 @@ export interface DnsResolveRequest {
 
 export interface GetAllAuctionsRequest {
     tld?: string;
+}
+
+export interface GetDnsInfoRequest {
+    domainName: string;
 }
 
 export interface GetDomainBidsRequest {
@@ -57,20 +57,6 @@ export interface GetDomainBidsRequest {
  * @interface DNSApiInterface
  */
 export interface DNSApiInterface {
-    /**
-     * get full information about domain name
-     * @param {string} domainName domain name with .ton or .t.me
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DNSApiInterface
-     */
-    dnsInfoRaw(requestParameters: DnsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainInfo>>;
-
-    /**
-     * get full information about domain name
-     */
-    dnsInfo(requestParameters: DnsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainInfo>;
-
     /**
      * DNS resolve for domain name
      * @param {string} domainName domain name with .ton or .t.me
@@ -100,6 +86,20 @@ export interface DNSApiInterface {
     getAllAuctions(requestParameters: GetAllAuctionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Auctions>;
 
     /**
+     * Get full information about domain name
+     * @param {string} domainName domain name with .ton or .t.me
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DNSApiInterface
+     */
+    getDnsInfoRaw(requestParameters: GetDnsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainInfo>>;
+
+    /**
+     * Get full information about domain name
+     */
+    getDnsInfo(requestParameters: GetDnsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainInfo>;
+
+    /**
      * Get domain bids
      * @param {string} domainName domain name with .ton or .t.me
      * @param {*} [options] Override http request option.
@@ -119,36 +119,6 @@ export interface DNSApiInterface {
  * 
  */
 export class DNSApi extends runtime.BaseAPI implements DNSApiInterface {
-
-    /**
-     * get full information about domain name
-     */
-    async dnsInfoRaw(requestParameters: DnsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainInfo>> {
-        if (requestParameters.domainName === null || requestParameters.domainName === undefined) {
-            throw new runtime.RequiredError('domainName','Required parameter requestParameters.domainName was null or undefined when calling dnsInfo.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v2/dns/{domain_name}`.replace(`{${"domain_name"}}`, encodeURIComponent(String(requestParameters.domainName))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => DomainInfoFromJSON(jsonValue));
-    }
-
-    /**
-     * get full information about domain name
-     */
-    async dnsInfo(requestParameters: DnsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainInfo> {
-        const response = await this.dnsInfoRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
 
     /**
      * DNS resolve for domain name
@@ -207,6 +177,36 @@ export class DNSApi extends runtime.BaseAPI implements DNSApiInterface {
      */
     async getAllAuctions(requestParameters: GetAllAuctionsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Auctions> {
         const response = await this.getAllAuctionsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get full information about domain name
+     */
+    async getDnsInfoRaw(requestParameters: GetDnsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainInfo>> {
+        if (requestParameters.domainName === null || requestParameters.domainName === undefined) {
+            throw new runtime.RequiredError('domainName','Required parameter requestParameters.domainName was null or undefined when calling getDnsInfo.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v2/dns/{domain_name}`.replace(`{${"domain_name"}}`, encodeURIComponent(String(requestParameters.domainName))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DomainInfoFromJSON(jsonValue));
+    }
+
+    /**
+     * Get full information about domain name
+     */
+    async getDnsInfo(requestParameters: GetDnsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainInfo> {
+        const response = await this.getDnsInfoRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

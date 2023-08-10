@@ -13,31 +13,31 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TraceIdsToJSON = exports.TraceIdsFromJSONTyped = exports.TraceIdsFromJSON = exports.instanceOfTraceIds = void 0;
-const TraceId_1 = require("./TraceId");
+exports.TraceIDsToJSON = exports.TraceIDsFromJSONTyped = exports.TraceIDsFromJSON = exports.instanceOfTraceIDs = void 0;
+const TraceID_1 = require("./TraceID");
 /**
- * Check if a given object implements the TraceIds interface.
+ * Check if a given object implements the TraceIDs interface.
  */
-function instanceOfTraceIds(value) {
+function instanceOfTraceIDs(value) {
     let isInstance = true;
     isInstance = isInstance && "traces" in value;
     return isInstance;
 }
-exports.instanceOfTraceIds = instanceOfTraceIds;
-function TraceIdsFromJSON(json) {
-    return TraceIdsFromJSONTyped(json, false);
+exports.instanceOfTraceIDs = instanceOfTraceIDs;
+function TraceIDsFromJSON(json) {
+    return TraceIDsFromJSONTyped(json, false);
 }
-exports.TraceIdsFromJSON = TraceIdsFromJSON;
-function TraceIdsFromJSONTyped(json, ignoreDiscriminator) {
+exports.TraceIDsFromJSON = TraceIDsFromJSON;
+function TraceIDsFromJSONTyped(json, ignoreDiscriminator) {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
-        'traces': (json['traces'].map(TraceId_1.TraceIdFromJSON)),
+        'traces': (json['traces'].map(TraceID_1.TraceIDFromJSON)),
     };
 }
-exports.TraceIdsFromJSONTyped = TraceIdsFromJSONTyped;
-function TraceIdsToJSON(value) {
+exports.TraceIDsFromJSONTyped = TraceIDsFromJSONTyped;
+function TraceIDsToJSON(value) {
     if (value === undefined) {
         return undefined;
     }
@@ -45,7 +45,7 @@ function TraceIdsToJSON(value) {
         return null;
     }
     return {
-        'traces': (value.traces.map(TraceId_1.TraceIdToJSON)),
+        'traces': (value.traces.map(TraceID_1.TraceIDToJSON)),
     };
 }
-exports.TraceIdsToJSON = TraceIdsToJSON;
+exports.TraceIDsToJSON = TraceIDsToJSON;

@@ -30,40 +30,12 @@ const index_1 = require("../models/index");
  */
 class LiteServerApi extends runtime.BaseAPI {
     /**
-     * Get account state
+     * Get all raw shards info
      */
-    getAccountStateLiteServerRaw(requestParameters, initOverrides) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling getAccountStateLiteServer.');
-            }
-            const queryParameters = {};
-            const headerParameters = {};
-            const response = yield this.request({
-                path: `/v2/liteserver/get_account_state/{account_id}`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
-                method: 'GET',
-                headers: headerParameters,
-                query: queryParameters,
-            }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetAccountStateLiteServer200ResponseFromJSON)(jsonValue));
-        });
-    }
-    /**
-     * Get account state
-     */
-    getAccountStateLiteServer(requestParameters, initOverrides) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getAccountStateLiteServerRaw(requestParameters, initOverrides);
-            return yield response.value();
-        });
-    }
-    /**
-     * Get all shards info
-     */
-    getAllShardsInfoLiteServerRaw(requestParameters, initOverrides) {
+    getAllRawShardsInfoRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
-                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getAllShardsInfoLiteServer.');
+                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getAllRawShardsInfo.');
             }
             const queryParameters = {};
             const headerParameters = {};
@@ -73,90 +45,56 @@ class LiteServerApi extends runtime.BaseAPI {
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetAllShardsInfoLiteServer200ResponseFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetAllRawShardsInfo200ResponseFromJSON)(jsonValue));
         });
     }
     /**
-     * Get all shards info
+     * Get all raw shards info
      */
-    getAllShardsInfoLiteServer(requestParameters, initOverrides) {
+    getAllRawShardsInfo(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getAllShardsInfoLiteServerRaw(requestParameters, initOverrides);
+            const response = yield this.getAllRawShardsInfoRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
-     * Get block header
+     * Get raw account state
      */
-    getBlockHeaderLiteServerRaw(requestParameters, initOverrides) {
+    getRawAccountStateRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
-                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getBlockHeaderLiteServer.');
-            }
-            if (requestParameters.mode === null || requestParameters.mode === undefined) {
-                throw new runtime.RequiredError('mode', 'Required parameter requestParameters.mode was null or undefined when calling getBlockHeaderLiteServer.');
-            }
-            const queryParameters = {};
-            if (requestParameters.mode !== undefined) {
-                queryParameters['mode'] = requestParameters.mode;
-            }
-            const headerParameters = {};
-            const response = yield this.request({
-                path: `/v2/liteserver/get_block_header/{block_id}`.replace(`{${"block_id"}}`, encodeURIComponent(String(requestParameters.blockId))),
-                method: 'GET',
-                headers: headerParameters,
-                query: queryParameters,
-            }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetBlockHeaderLiteServer200ResponseFromJSON)(jsonValue));
-        });
-    }
-    /**
-     * Get block header
-     */
-    getBlockHeaderLiteServer(requestParameters, initOverrides) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getBlockHeaderLiteServerRaw(requestParameters, initOverrides);
-            return yield response.value();
-        });
-    }
-    /**
-     * Get block
-     */
-    getBlockLiteServerRaw(requestParameters, initOverrides) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
-                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getBlockLiteServer.');
+            if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling getRawAccountState.');
             }
             const queryParameters = {};
             const headerParameters = {};
             const response = yield this.request({
-                path: `/v2/liteserver/get_block/{block_id}`.replace(`{${"block_id"}}`, encodeURIComponent(String(requestParameters.blockId))),
+                path: `/v2/liteserver/get_account_state/{account_id}`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
                 method: 'GET',
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetBlockLiteServer200ResponseFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetRawAccountState200ResponseFromJSON)(jsonValue));
         });
     }
     /**
-     * Get block
+     * Get raw account state
      */
-    getBlockLiteServer(requestParameters, initOverrides) {
+    getRawAccountState(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getBlockLiteServerRaw(requestParameters, initOverrides);
+            const response = yield this.getRawAccountStateRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
-     * Get block proof
+     * Get raw block proof
      */
-    getBlockProofLiteServerRaw(requestParameters, initOverrides) {
+    getRawBlockProofRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.knownBlock === null || requestParameters.knownBlock === undefined) {
-                throw new runtime.RequiredError('knownBlock', 'Required parameter requestParameters.knownBlock was null or undefined when calling getBlockProofLiteServer.');
+                throw new runtime.RequiredError('knownBlock', 'Required parameter requestParameters.knownBlock was null or undefined when calling getRawBlockProof.');
             }
             if (requestParameters.mode === null || requestParameters.mode === undefined) {
-                throw new runtime.RequiredError('mode', 'Required parameter requestParameters.mode was null or undefined when calling getBlockProofLiteServer.');
+                throw new runtime.RequiredError('mode', 'Required parameter requestParameters.mode was null or undefined when calling getRawBlockProof.');
             }
             const queryParameters = {};
             if (requestParameters.knownBlock !== undefined) {
@@ -175,28 +113,118 @@ class LiteServerApi extends runtime.BaseAPI {
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetBlockProofLiteServer200ResponseFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetRawBlockProof200ResponseFromJSON)(jsonValue));
         });
     }
     /**
-     * Get block proof
+     * Get raw block proof
      */
-    getBlockProofLiteServer(requestParameters, initOverrides) {
+    getRawBlockProof(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getBlockProofLiteServerRaw(requestParameters, initOverrides);
+            const response = yield this.getRawBlockProofRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
-     * Get config all
+     * Get raw blockchain block
      */
-    getConfigAllLiteServerRaw(requestParameters, initOverrides) {
+    getRawBlockchainBlockRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
-                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getConfigAllLiteServer.');
+                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getRawBlockchainBlock.');
+            }
+            const queryParameters = {};
+            const headerParameters = {};
+            const response = yield this.request({
+                path: `/v2/liteserver/get_block/{block_id}`.replace(`{${"block_id"}}`, encodeURIComponent(String(requestParameters.blockId))),
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetRawBlockchainBlock200ResponseFromJSON)(jsonValue));
+        });
+    }
+    /**
+     * Get raw blockchain block
+     */
+    getRawBlockchainBlock(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.getRawBlockchainBlockRaw(requestParameters, initOverrides);
+            return yield response.value();
+        });
+    }
+    /**
+     * Get raw blockchain block header
+     */
+    getRawBlockchainBlockHeaderRaw(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
+                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getRawBlockchainBlockHeader.');
             }
             if (requestParameters.mode === null || requestParameters.mode === undefined) {
-                throw new runtime.RequiredError('mode', 'Required parameter requestParameters.mode was null or undefined when calling getConfigAllLiteServer.');
+                throw new runtime.RequiredError('mode', 'Required parameter requestParameters.mode was null or undefined when calling getRawBlockchainBlockHeader.');
+            }
+            const queryParameters = {};
+            if (requestParameters.mode !== undefined) {
+                queryParameters['mode'] = requestParameters.mode;
+            }
+            const headerParameters = {};
+            const response = yield this.request({
+                path: `/v2/liteserver/get_block_header/{block_id}`.replace(`{${"block_id"}}`, encodeURIComponent(String(requestParameters.blockId))),
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetRawBlockchainBlockHeader200ResponseFromJSON)(jsonValue));
+        });
+    }
+    /**
+     * Get raw blockchain block header
+     */
+    getRawBlockchainBlockHeader(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.getRawBlockchainBlockHeaderRaw(requestParameters, initOverrides);
+            return yield response.value();
+        });
+    }
+    /**
+     * Get raw blockchain block state
+     */
+    getRawBlockchainBlockStateRaw(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
+                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getRawBlockchainBlockState.');
+            }
+            const queryParameters = {};
+            const headerParameters = {};
+            const response = yield this.request({
+                path: `/v2/liteserver/get_state/{block_id}`.replace(`{${"block_id"}}`, encodeURIComponent(String(requestParameters.blockId))),
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetRawBlockchainBlockState200ResponseFromJSON)(jsonValue));
+        });
+    }
+    /**
+     * Get raw blockchain block state
+     */
+    getRawBlockchainBlockState(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.getRawBlockchainBlockStateRaw(requestParameters, initOverrides);
+            return yield response.value();
+        });
+    }
+    /**
+     * Get raw config
+     */
+    getRawConfigRaw(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
+                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getRawConfig.');
+            }
+            if (requestParameters.mode === null || requestParameters.mode === undefined) {
+                throw new runtime.RequiredError('mode', 'Required parameter requestParameters.mode was null or undefined when calling getRawConfig.');
             }
             const queryParameters = {};
             if (requestParameters.mode !== undefined) {
@@ -209,31 +237,31 @@ class LiteServerApi extends runtime.BaseAPI {
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetConfigAllLiteServer200ResponseFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetRawConfig200ResponseFromJSON)(jsonValue));
         });
     }
     /**
-     * Get config all
+     * Get raw config
      */
-    getConfigAllLiteServer(requestParameters, initOverrides) {
+    getRawConfig(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getConfigAllLiteServerRaw(requestParameters, initOverrides);
+            const response = yield this.getRawConfigRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
-     * Get list block transactions
+     * Get raw list block transactions
      */
-    getListBlockTransactionsLiteServerRaw(requestParameters, initOverrides) {
+    getRawListBlockTransactionsRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
-                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getListBlockTransactionsLiteServer.');
+                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getRawListBlockTransactions.');
             }
             if (requestParameters.mode === null || requestParameters.mode === undefined) {
-                throw new runtime.RequiredError('mode', 'Required parameter requestParameters.mode was null or undefined when calling getListBlockTransactionsLiteServer.');
+                throw new runtime.RequiredError('mode', 'Required parameter requestParameters.mode was null or undefined when calling getRawListBlockTransactions.');
             }
             if (requestParameters.count === null || requestParameters.count === undefined) {
-                throw new runtime.RequiredError('count', 'Required parameter requestParameters.count was null or undefined when calling getListBlockTransactionsLiteServer.');
+                throw new runtime.RequiredError('count', 'Required parameter requestParameters.count was null or undefined when calling getRawListBlockTransactions.');
             }
             const queryParameters = {};
             if (requestParameters.mode !== undefined) {
@@ -255,25 +283,50 @@ class LiteServerApi extends runtime.BaseAPI {
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetListBlockTransactionsLiteServer200ResponseFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetRawListBlockTransactions200ResponseFromJSON)(jsonValue));
         });
     }
     /**
-     * Get list block transactions
+     * Get raw list block transactions
      */
-    getListBlockTransactionsLiteServer(requestParameters, initOverrides) {
+    getRawListBlockTransactions(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getListBlockTransactionsLiteServerRaw(requestParameters, initOverrides);
+            const response = yield this.getRawListBlockTransactionsRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
-     * Get masterchain info ext
+     * Get raw masterchain info
      */
-    getMasterchainInfoExtLiteServerRaw(requestParameters, initOverrides) {
+    getRawMasterchainInfoRaw(initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const queryParameters = {};
+            const headerParameters = {};
+            const response = yield this.request({
+                path: `/v2/liteserver/get_masterchain_info`,
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetRawMasterchainInfo200ResponseFromJSON)(jsonValue));
+        });
+    }
+    /**
+     * Get raw masterchain info
+     */
+    getRawMasterchainInfo(initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.getRawMasterchainInfoRaw(initOverrides);
+            return yield response.value();
+        });
+    }
+    /**
+     * Get raw masterchain info ext
+     */
+    getRawMasterchainInfoExtRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.mode === null || requestParameters.mode === undefined) {
-                throw new runtime.RequiredError('mode', 'Required parameter requestParameters.mode was null or undefined when calling getMasterchainInfoExtLiteServer.');
+                throw new runtime.RequiredError('mode', 'Required parameter requestParameters.mode was null or undefined when calling getRawMasterchainInfoExt.');
             }
             const queryParameters = {};
             if (requestParameters.mode !== undefined) {
@@ -286,50 +339,25 @@ class LiteServerApi extends runtime.BaseAPI {
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetMasterchainInfoExtLiteServer200ResponseFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetRawMasterchainInfoExt200ResponseFromJSON)(jsonValue));
         });
     }
     /**
-     * Get masterchain info ext
+     * Get raw masterchain info ext
      */
-    getMasterchainInfoExtLiteServer(requestParameters, initOverrides) {
+    getRawMasterchainInfoExt(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getMasterchainInfoExtLiteServerRaw(requestParameters, initOverrides);
+            const response = yield this.getRawMasterchainInfoExtRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
-     * Get masterchain info
+     * Get raw shard block proof
      */
-    getMasterchainInfoLiteServerRaw(initOverrides) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const queryParameters = {};
-            const headerParameters = {};
-            const response = yield this.request({
-                path: `/v2/liteserver/get_masterchain_info`,
-                method: 'GET',
-                headers: headerParameters,
-                query: queryParameters,
-            }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetMasterchainInfoLiteServer200ResponseFromJSON)(jsonValue));
-        });
-    }
-    /**
-     * Get masterchain info
-     */
-    getMasterchainInfoLiteServer(initOverrides) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getMasterchainInfoLiteServerRaw(initOverrides);
-            return yield response.value();
-        });
-    }
-    /**
-     * Get shard block proof
-     */
-    getShardBlockProofLiteServerRaw(requestParameters, initOverrides) {
+    getRawShardBlockProofRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
-                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getShardBlockProofLiteServer.');
+                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getRawShardBlockProof.');
             }
             const queryParameters = {};
             const headerParameters = {};
@@ -339,34 +367,34 @@ class LiteServerApi extends runtime.BaseAPI {
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetShardBlockProofLiteServer200ResponseFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetRawShardBlockProof200ResponseFromJSON)(jsonValue));
         });
     }
     /**
-     * Get shard block proof
+     * Get raw shard block proof
      */
-    getShardBlockProofLiteServer(requestParameters, initOverrides) {
+    getRawShardBlockProof(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getShardBlockProofLiteServerRaw(requestParameters, initOverrides);
+            const response = yield this.getRawShardBlockProofRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
-     * Get shard info
+     * Get raw shard info
      */
-    getShardInfoLiteServerRaw(requestParameters, initOverrides) {
+    getRawShardInfoRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
-                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getShardInfoLiteServer.');
+                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getRawShardInfo.');
             }
             if (requestParameters.workchain === null || requestParameters.workchain === undefined) {
-                throw new runtime.RequiredError('workchain', 'Required parameter requestParameters.workchain was null or undefined when calling getShardInfoLiteServer.');
+                throw new runtime.RequiredError('workchain', 'Required parameter requestParameters.workchain was null or undefined when calling getRawShardInfo.');
             }
             if (requestParameters.shard === null || requestParameters.shard === undefined) {
-                throw new runtime.RequiredError('shard', 'Required parameter requestParameters.shard was null or undefined when calling getShardInfoLiteServer.');
+                throw new runtime.RequiredError('shard', 'Required parameter requestParameters.shard was null or undefined when calling getRawShardInfo.');
             }
             if (requestParameters.exact === null || requestParameters.exact === undefined) {
-                throw new runtime.RequiredError('exact', 'Required parameter requestParameters.exact was null or undefined when calling getShardInfoLiteServer.');
+                throw new runtime.RequiredError('exact', 'Required parameter requestParameters.exact was null or undefined when calling getRawShardInfo.');
             }
             const queryParameters = {};
             if (requestParameters.workchain !== undefined) {
@@ -385,50 +413,22 @@ class LiteServerApi extends runtime.BaseAPI {
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetShardInfoLiteServer200ResponseFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetRawShardInfo200ResponseFromJSON)(jsonValue));
         });
     }
     /**
-     * Get shard info
+     * Get raw shard info
      */
-    getShardInfoLiteServer(requestParameters, initOverrides) {
+    getRawShardInfo(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getShardInfoLiteServerRaw(requestParameters, initOverrides);
+            const response = yield this.getRawShardInfoRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
-     * Get block state
+     * Get raw time
      */
-    getStateLiteServerRaw(requestParameters, initOverrides) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
-                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getStateLiteServer.');
-            }
-            const queryParameters = {};
-            const headerParameters = {};
-            const response = yield this.request({
-                path: `/v2/liteserver/get_state/{block_id}`.replace(`{${"block_id"}}`, encodeURIComponent(String(requestParameters.blockId))),
-                method: 'GET',
-                headers: headerParameters,
-                query: queryParameters,
-            }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetStateLiteServer200ResponseFromJSON)(jsonValue));
-        });
-    }
-    /**
-     * Get block state
-     */
-    getStateLiteServer(requestParameters, initOverrides) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getStateLiteServerRaw(requestParameters, initOverrides);
-            return yield response.value();
-        });
-    }
-    /**
-     * Get time
-     */
-    getTimeLiteServerRaw(initOverrides) {
+    getRawTimeRaw(initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             const queryParameters = {};
             const headerParameters = {};
@@ -438,34 +438,34 @@ class LiteServerApi extends runtime.BaseAPI {
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetTimeLiteServer200ResponseFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetRawTime200ResponseFromJSON)(jsonValue));
         });
     }
     /**
-     * Get time
+     * Get raw time
      */
-    getTimeLiteServer(initOverrides) {
+    getRawTime(initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getTimeLiteServerRaw(initOverrides);
+            const response = yield this.getRawTimeRaw(initOverrides);
             return yield response.value();
         });
     }
     /**
-     * Get transactions
+     * Get raw transactions
      */
-    getTransactionsLiteServerRaw(requestParameters, initOverrides) {
+    getRawTransactionsRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling getTransactionsLiteServer.');
+                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling getRawTransactions.');
             }
             if (requestParameters.count === null || requestParameters.count === undefined) {
-                throw new runtime.RequiredError('count', 'Required parameter requestParameters.count was null or undefined when calling getTransactionsLiteServer.');
+                throw new runtime.RequiredError('count', 'Required parameter requestParameters.count was null or undefined when calling getRawTransactions.');
             }
             if (requestParameters.lt === null || requestParameters.lt === undefined) {
-                throw new runtime.RequiredError('lt', 'Required parameter requestParameters.lt was null or undefined when calling getTransactionsLiteServer.');
+                throw new runtime.RequiredError('lt', 'Required parameter requestParameters.lt was null or undefined when calling getRawTransactions.');
             }
             if (requestParameters.hash === null || requestParameters.hash === undefined) {
-                throw new runtime.RequiredError('hash', 'Required parameter requestParameters.hash was null or undefined when calling getTransactionsLiteServer.');
+                throw new runtime.RequiredError('hash', 'Required parameter requestParameters.hash was null or undefined when calling getRawTransactions.');
             }
             const queryParameters = {};
             if (requestParameters.count !== undefined) {
@@ -484,25 +484,25 @@ class LiteServerApi extends runtime.BaseAPI {
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetTransactionsLiteServer200ResponseFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetRawTransactions200ResponseFromJSON)(jsonValue));
         });
     }
     /**
-     * Get transactions
+     * Get raw transactions
      */
-    getTransactionsLiteServer(requestParameters, initOverrides) {
+    getRawTransactions(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getTransactionsLiteServerRaw(requestParameters, initOverrides);
+            const response = yield this.getRawTransactionsRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
-     * Send message
+     * Send raw message to blockchain
      */
-    sendMessageLiteServerRaw(requestParameters, initOverrides) {
+    sendRawMessageRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (requestParameters.sendMessageLiteServerRequest === null || requestParameters.sendMessageLiteServerRequest === undefined) {
-                throw new runtime.RequiredError('sendMessageLiteServerRequest', 'Required parameter requestParameters.sendMessageLiteServerRequest was null or undefined when calling sendMessageLiteServer.');
+            if (requestParameters.sendRawMessageRequest === null || requestParameters.sendRawMessageRequest === undefined) {
+                throw new runtime.RequiredError('sendRawMessageRequest', 'Required parameter requestParameters.sendRawMessageRequest was null or undefined when calling sendRawMessage.');
             }
             const queryParameters = {};
             const headerParameters = {};
@@ -512,17 +512,17 @@ class LiteServerApi extends runtime.BaseAPI {
                 method: 'POST',
                 headers: headerParameters,
                 query: queryParameters,
-                body: (0, index_1.SendMessageLiteServerRequestToJSON)(requestParameters.sendMessageLiteServerRequest),
+                body: (0, index_1.SendRawMessageRequestToJSON)(requestParameters.sendRawMessageRequest),
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.SendMessageLiteServer200ResponseFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.SendRawMessage200ResponseFromJSON)(jsonValue));
         });
     }
     /**
-     * Send message
+     * Send raw message to blockchain
      */
-    sendMessageLiteServer(requestParameters, initOverrides) {
+    sendRawMessage(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.sendMessageLiteServerRaw(requestParameters, initOverrides);
+            const response = yield this.sendRawMessageRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }

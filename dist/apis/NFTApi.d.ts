@@ -10,7 +10,15 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { GetAccountsRequest, NftCollection, NftCollections, NftItem, NftItems } from '../models/index';
+import type { AccountEvents, GetAccountsRequest, NftCollection, NftCollections, NftItem, NftItems } from '../models/index';
+export interface GetAccountNftHistoryRequest {
+    accountId: string;
+    limit: number;
+    acceptLanguage?: string;
+    beforeLt?: number;
+    startDate?: number;
+    endDate?: number;
+}
 export interface GetItemsFromCollectionRequest {
     accountId: string;
     limit?: number;
@@ -22,6 +30,14 @@ export interface GetNftCollectionRequest {
 export interface GetNftCollectionsRequest {
     limit?: number;
     offset?: number;
+}
+export interface GetNftHistoryByIDRequest {
+    accountId: string;
+    limit: number;
+    acceptLanguage?: string;
+    beforeLt?: number;
+    startDate?: number;
+    endDate?: number;
 }
 export interface GetNftItemByAddressRequest {
     accountId: string;
@@ -36,6 +52,23 @@ export interface GetNftItemsByAddressesRequest {
  * @interface NFTApiInterface
  */
 export interface NFTApiInterface {
+    /**
+     * Get the transfer nft history
+     * @param {string} accountId account ID
+     * @param {number} limit
+     * @param {string} [acceptLanguage]
+     * @param {number} [beforeLt] omit this parameter to get last events
+     * @param {number} [startDate]
+     * @param {number} [endDate]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NFTApiInterface
+     */
+    getAccountNftHistoryRaw(requestParameters: GetAccountNftHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
+    /**
+     * Get the transfer nft history
+     */
+    getAccountNftHistory(requestParameters: GetAccountNftHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
     /**
      * Get NFT items from collection by collection address
      * @param {string} accountId account ID
@@ -76,6 +109,23 @@ export interface NFTApiInterface {
      */
     getNftCollections(requestParameters: GetNftCollectionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollections>;
     /**
+     * Get the transfer nfts history for account
+     * @param {string} accountId account ID
+     * @param {number} limit
+     * @param {string} [acceptLanguage]
+     * @param {number} [beforeLt] omit this parameter to get last events
+     * @param {number} [startDate]
+     * @param {number} [endDate]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NFTApiInterface
+     */
+    getNftHistoryByIDRaw(requestParameters: GetNftHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
+    /**
+     * Get the transfer nfts history for account
+     */
+    getNftHistoryByID(requestParameters: GetNftHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
+    /**
      * Get NFT item by its address
      * @param {string} accountId account ID
      * @param {*} [options] Override http request option.
@@ -105,6 +155,14 @@ export interface NFTApiInterface {
  */
 export declare class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
     /**
+     * Get the transfer nft history
+     */
+    getAccountNftHistoryRaw(requestParameters: GetAccountNftHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
+    /**
+     * Get the transfer nft history
+     */
+    getAccountNftHistory(requestParameters: GetAccountNftHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
+    /**
      * Get NFT items from collection by collection address
      */
     getItemsFromCollectionRaw(requestParameters: GetItemsFromCollectionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>>;
@@ -128,6 +186,14 @@ export declare class NFTApi extends runtime.BaseAPI implements NFTApiInterface {
      * Get NFT collections
      */
     getNftCollections(requestParameters?: GetNftCollectionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftCollections>;
+    /**
+     * Get the transfer nfts history for account
+     */
+    getNftHistoryByIDRaw(requestParameters: GetNftHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
+    /**
+     * Get the transfer nfts history for account
+     */
+    getNftHistoryByID(requestParameters: GetNftHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
     /**
      * Get NFT item by its address
      */

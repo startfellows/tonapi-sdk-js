@@ -30,34 +30,6 @@ const index_1 = require("../models/index");
  */
 class DNSApi extends runtime.BaseAPI {
     /**
-     * get full information about domain name
-     */
-    dnsInfoRaw(requestParameters, initOverrides) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (requestParameters.domainName === null || requestParameters.domainName === undefined) {
-                throw new runtime.RequiredError('domainName', 'Required parameter requestParameters.domainName was null or undefined when calling dnsInfo.');
-            }
-            const queryParameters = {};
-            const headerParameters = {};
-            const response = yield this.request({
-                path: `/v2/dns/{domain_name}`.replace(`{${"domain_name"}}`, encodeURIComponent(String(requestParameters.domainName))),
-                method: 'GET',
-                headers: headerParameters,
-                query: queryParameters,
-            }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.DomainInfoFromJSON)(jsonValue));
-        });
-    }
-    /**
-     * get full information about domain name
-     */
-    dnsInfo(requestParameters, initOverrides) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.dnsInfoRaw(requestParameters, initOverrides);
-            return yield response.value();
-        });
-    }
-    /**
      * DNS resolve for domain name
      */
     dnsResolveRaw(requestParameters, initOverrides) {
@@ -110,6 +82,34 @@ class DNSApi extends runtime.BaseAPI {
     getAllAuctions(requestParameters = {}, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield this.getAllAuctionsRaw(requestParameters, initOverrides);
+            return yield response.value();
+        });
+    }
+    /**
+     * Get full information about domain name
+     */
+    getDnsInfoRaw(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (requestParameters.domainName === null || requestParameters.domainName === undefined) {
+                throw new runtime.RequiredError('domainName', 'Required parameter requestParameters.domainName was null or undefined when calling getDnsInfo.');
+            }
+            const queryParameters = {};
+            const headerParameters = {};
+            const response = yield this.request({
+                path: `/v2/dns/{domain_name}`.replace(`{${"domain_name"}}`, encodeURIComponent(String(requestParameters.domainName))),
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.DomainInfoFromJSON)(jsonValue));
+        });
+    }
+    /**
+     * Get full information about domain name
+     */
+    getDnsInfo(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.getDnsInfoRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }

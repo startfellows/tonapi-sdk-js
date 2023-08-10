@@ -15,13 +15,13 @@
 
 import * as runtime from '../runtime';
 import type {
-  GetBlockDefaultResponse,
+  GetBlockchainBlockDefaultResponse,
   JettonInfo,
   Jettons,
 } from '../models/index';
 import {
-    GetBlockDefaultResponseFromJSON,
-    GetBlockDefaultResponseToJSON,
+    GetBlockchainBlockDefaultResponseFromJSON,
+    GetBlockchainBlockDefaultResponseToJSON,
     JettonInfoFromJSON,
     JettonInfoToJSON,
     JettonsFromJSON,

@@ -91,6 +91,18 @@ export interface PoolInfo {
      * @memberof PoolInfo
      */
     liquidJettonMaster?: string;
+    /**
+     * total stake of all nominators
+     * @type {number}
+     * @memberof PoolInfo
+     */
+    nominatorsStake: number;
+    /**
+     * stake of validator
+     * @type {number}
+     * @memberof PoolInfo
+     */
+    validatorStake: number;
 }
 
 
@@ -121,6 +133,8 @@ export function instanceOfPoolInfo(value: object): boolean {
     isInstance = isInstance && "verified" in value;
     isInstance = isInstance && "currentNominators" in value;
     isInstance = isInstance && "maxNominators" in value;
+    isInstance = isInstance && "nominatorsStake" in value;
+    isInstance = isInstance && "validatorStake" in value;
 
     return isInstance;
 }
@@ -147,6 +161,8 @@ export function PoolInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'currentNominators': json['current_nominators'],
         'maxNominators': json['max_nominators'],
         'liquidJettonMaster': !exists(json, 'liquid_jetton_master') ? undefined : json['liquid_jetton_master'],
+        'nominatorsStake': json['nominators_stake'],
+        'validatorStake': json['validator_stake'],
     };
 }
 
@@ -171,6 +187,8 @@ export function PoolInfoToJSON(value?: PoolInfo | null): any {
         'current_nominators': value.currentNominators,
         'max_nominators': value.maxNominators,
         'liquid_jetton_master': value.liquidJettonMaster,
+        'nominators_stake': value.nominatorsStake,
+        'validator_stake': value.validatorStake,
     };
 }
 

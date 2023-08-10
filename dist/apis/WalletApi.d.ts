@@ -10,9 +10,15 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { GetWalletBackup200Response, TonConnectProof200Response, TonConnectProofRequest } from '../models/index';
+import type { Accounts, GetWalletBackup200Response, Seqno, TonConnectProof200Response, TonConnectProofRequest } from '../models/index';
+export interface GetAccountSeqnoRequest {
+    accountId: string;
+}
 export interface GetWalletBackupRequest {
     xTonConnectAuth: string;
+}
+export interface GetWalletsByPublicKeyRequest {
+    publicKey: string;
 }
 export interface SetWalletBackupRequest {
     xTonConnectAuth: string;
@@ -29,6 +35,18 @@ export interface TonConnectProofOperationRequest {
  */
 export interface WalletApiInterface {
     /**
+     * Get account seqno
+     * @param {string} accountId account ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WalletApiInterface
+     */
+    getAccountSeqnoRaw(requestParameters: GetAccountSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Seqno>>;
+    /**
+     * Get account seqno
+     */
+    getAccountSeqno(requestParameters: GetAccountSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Seqno>;
+    /**
      * Get backup info
      * @param {string} xTonConnectAuth
      * @param {*} [options] Override http request option.
@@ -40,6 +58,18 @@ export interface WalletApiInterface {
      * Get backup info
      */
     getWalletBackup(requestParameters: GetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetWalletBackup200Response>;
+    /**
+     * Get wallets by public key
+     * @param {string} publicKey
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WalletApiInterface
+     */
+    getWalletsByPublicKeyRaw(requestParameters: GetWalletsByPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Accounts>>;
+    /**
+     * Get wallets by public key
+     */
+    getWalletsByPublicKey(requestParameters: GetWalletsByPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Accounts>;
     /**
      * Set backup info
      * @param {string} xTonConnectAuth
@@ -71,6 +101,14 @@ export interface WalletApiInterface {
  */
 export declare class WalletApi extends runtime.BaseAPI implements WalletApiInterface {
     /**
+     * Get account seqno
+     */
+    getAccountSeqnoRaw(requestParameters: GetAccountSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Seqno>>;
+    /**
+     * Get account seqno
+     */
+    getAccountSeqno(requestParameters: GetAccountSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Seqno>;
+    /**
      * Get backup info
      */
     getWalletBackupRaw(requestParameters: GetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetWalletBackup200Response>>;
@@ -78,6 +116,14 @@ export declare class WalletApi extends runtime.BaseAPI implements WalletApiInter
      * Get backup info
      */
     getWalletBackup(requestParameters: GetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetWalletBackup200Response>;
+    /**
+     * Get wallets by public key
+     */
+    getWalletsByPublicKeyRaw(requestParameters: GetWalletsByPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Accounts>>;
+    /**
+     * Get wallets by public key
+     */
+    getWalletsByPublicKey(requestParameters: GetWalletsByPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Accounts>;
     /**
      * Set backup info
      */

@@ -13,52 +13,52 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { TraceId } from './TraceId';
+import type { TraceID } from './TraceID';
 import {
-    TraceIdFromJSON,
-    TraceIdFromJSONTyped,
-    TraceIdToJSON,
-} from './TraceId';
+    TraceIDFromJSON,
+    TraceIDFromJSONTyped,
+    TraceIDToJSON,
+} from './TraceID';
 
 /**
  * 
  * @export
- * @interface TraceIds
+ * @interface TraceIDs
  */
-export interface TraceIds {
+export interface TraceIDs {
     /**
      * 
-     * @type {Array<TraceId>}
-     * @memberof TraceIds
+     * @type {Array<TraceID>}
+     * @memberof TraceIDs
      */
-    traces: Array<TraceId>;
+    traces: Array<TraceID>;
 }
 
 /**
- * Check if a given object implements the TraceIds interface.
+ * Check if a given object implements the TraceIDs interface.
  */
-export function instanceOfTraceIds(value: object): boolean {
+export function instanceOfTraceIDs(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "traces" in value;
 
     return isInstance;
 }
 
-export function TraceIdsFromJSON(json: any): TraceIds {
-    return TraceIdsFromJSONTyped(json, false);
+export function TraceIDsFromJSON(json: any): TraceIDs {
+    return TraceIDsFromJSONTyped(json, false);
 }
 
-export function TraceIdsFromJSONTyped(json: any, ignoreDiscriminator: boolean): TraceIds {
+export function TraceIDsFromJSONTyped(json: any, ignoreDiscriminator: boolean): TraceIDs {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'traces': ((json['traces'] as Array<any>).map(TraceIdFromJSON)),
+        'traces': ((json['traces'] as Array<any>).map(TraceIDFromJSON)),
     };
 }
 
-export function TraceIdsToJSON(value?: TraceIds | null): any {
+export function TraceIDsToJSON(value?: TraceIDs | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -67,7 +67,7 @@ export function TraceIdsToJSON(value?: TraceIds | null): any {
     }
     return {
         
-        'traces': ((value.traces as Array<any>).map(TraceIdToJSON)),
+        'traces': ((value.traces as Array<any>).map(TraceIDToJSON)),
     };
 }
 

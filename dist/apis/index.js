@@ -30,4 +30,3 @@ __exportStar(require("./StakingApi"), exports);
 __exportStar(require("./StorageApi"), exports);
 __exportStar(require("./TracesApi"), exports);
 __exportStar(require("./WalletApi"), exports);
-__exportStar(require("./WalletsApi"), exports);

@@ -9,24 +9,24 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import type { TraceId } from './TraceId';
+import type { TraceID } from './TraceID';
 /**
  *
  * @export
- * @interface TraceIds
+ * @interface TraceIDs
  */
-export interface TraceIds {
+export interface TraceIDs {
     /**
      *
-     * @type {Array<TraceId>}
-     * @memberof TraceIds
+     * @type {Array<TraceID>}
+     * @memberof TraceIDs
      */
-    traces: Array<TraceId>;
+    traces: Array<TraceID>;
 }
 /**
- * Check if a given object implements the TraceIds interface.
+ * Check if a given object implements the TraceIDs interface.
  */
-export declare function instanceOfTraceIds(value: object): boolean;
-export declare function TraceIdsFromJSON(json: any): TraceIds;
-export declare function TraceIdsFromJSONTyped(json: any, ignoreDiscriminator: boolean): TraceIds;
-export declare function TraceIdsToJSON(value?: TraceIds | null): any;
+export declare function instanceOfTraceIDs(value: object): boolean;
+export declare function TraceIDsFromJSON(json: any): TraceIDs;
+export declare function TraceIDsFromJSONTyped(json: any, ignoreDiscriminator: boolean): TraceIDs;
+export declare function TraceIDsToJSON(value?: TraceIDs | null): any;

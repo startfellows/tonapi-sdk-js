@@ -15,24 +15,38 @@
 
 import * as runtime from '../runtime';
 import type {
-  GetBlockDefaultResponse,
+  Accounts,
+  GetBlockchainBlockDefaultResponse,
   GetWalletBackup200Response,
+  Seqno,
   TonConnectProof200Response,
   TonConnectProofRequest,
 } from '../models/index';
 import {
-    GetBlockDefaultResponseFromJSON,
-    GetBlockDefaultResponseToJSON,
+    AccountsFromJSON,
+    AccountsToJSON,
+    GetBlockchainBlockDefaultResponseFromJSON,
+    GetBlockchainBlockDefaultResponseToJSON,
     GetWalletBackup200ResponseFromJSON,
     GetWalletBackup200ResponseToJSON,
+    SeqnoFromJSON,
+    SeqnoToJSON,
     TonConnectProof200ResponseFromJSON,
     TonConnectProof200ResponseToJSON,
     TonConnectProofRequestFromJSON,
     TonConnectProofRequestToJSON,
 } from '../models/index';
 
+export interface GetAccountSeqnoRequest {
+    accountId: string;
+}
+
 export interface GetWalletBackupRequest {
     xTonConnectAuth: string;
+}
+
+export interface GetWalletsByPublicKeyRequest {
+    publicKey: string;
 }
 
 export interface SetWalletBackupRequest {
@@ -52,6 +66,20 @@ export interface TonConnectProofOperationRequest {
  */
 export interface WalletApiInterface {
     /**
+     * Get account seqno
+     * @param {string} accountId account ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WalletApiInterface
+     */
+    getAccountSeqnoRaw(requestParameters: GetAccountSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Seqno>>;
+
+    /**
+     * Get account seqno
+     */
+    getAccountSeqno(requestParameters: GetAccountSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Seqno>;
+
+    /**
      * Get backup info
      * @param {string} xTonConnectAuth 
      * @param {*} [options] Override http request option.
@@ -64,6 +92,20 @@ export interface WalletApiInterface {
      * Get backup info
      */
     getWalletBackup(requestParameters: GetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetWalletBackup200Response>;
+
+    /**
+     * Get wallets by public key
+     * @param {string} publicKey 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WalletApiInterface
+     */
+    getWalletsByPublicKeyRaw(requestParameters: GetWalletsByPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Accounts>>;
+
+    /**
+     * Get wallets by public key
+     */
+    getWalletsByPublicKey(requestParameters: GetWalletsByPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Accounts>;
 
     /**
      * Set backup info
@@ -102,6 +144,36 @@ export interface WalletApiInterface {
 export class WalletApi extends runtime.BaseAPI implements WalletApiInterface {
 
     /**
+     * Get account seqno
+     */
+    async getAccountSeqnoRaw(requestParameters: GetAccountSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Seqno>> {
+        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getAccountSeqno.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v2/wallet/{account_id}/seqno`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => SeqnoFromJSON(jsonValue));
+    }
+
+    /**
+     * Get account seqno
+     */
+    async getAccountSeqno(requestParameters: GetAccountSeqnoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Seqno> {
+        const response = await this.getAccountSeqnoRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Get backup info
      */
     async getWalletBackupRaw(requestParameters: GetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetWalletBackup200Response>> {
@@ -132,6 +204,36 @@ export class WalletApi extends runtime.BaseAPI implements WalletApiInterface {
      */
     async getWalletBackup(requestParameters: GetWalletBackupRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetWalletBackup200Response> {
         const response = await this.getWalletBackupRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get wallets by public key
+     */
+    async getWalletsByPublicKeyRaw(requestParameters: GetWalletsByPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Accounts>> {
+        if (requestParameters.publicKey === null || requestParameters.publicKey === undefined) {
+            throw new runtime.RequiredError('publicKey','Required parameter requestParameters.publicKey was null or undefined when calling getWalletsByPublicKey.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v2/pubkeys/{public_key}/wallets`.replace(`{${"public_key"}}`, encodeURIComponent(String(requestParameters.publicKey))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AccountsFromJSON(jsonValue));
+    }
+
+    /**
+     * Get wallets by public key
+     */
+    async getWalletsByPublicKey(requestParameters: GetWalletsByPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Accounts> {
+        const response = await this.getWalletsByPublicKeyRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

@@ -30,6 +30,52 @@ const index_1 = require("../models/index");
  */
 class NFTApi extends runtime.BaseAPI {
     /**
+     * Get the transfer nft history
+     */
+    getAccountNftHistoryRaw(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling getAccountNftHistory.');
+            }
+            if (requestParameters.limit === null || requestParameters.limit === undefined) {
+                throw new runtime.RequiredError('limit', 'Required parameter requestParameters.limit was null or undefined when calling getAccountNftHistory.');
+            }
+            const queryParameters = {};
+            if (requestParameters.beforeLt !== undefined) {
+                queryParameters['before_lt'] = requestParameters.beforeLt;
+            }
+            if (requestParameters.limit !== undefined) {
+                queryParameters['limit'] = requestParameters.limit;
+            }
+            if (requestParameters.startDate !== undefined) {
+                queryParameters['start_date'] = requestParameters.startDate;
+            }
+            if (requestParameters.endDate !== undefined) {
+                queryParameters['end_date'] = requestParameters.endDate;
+            }
+            const headerParameters = {};
+            if (requestParameters.acceptLanguage !== undefined && requestParameters.acceptLanguage !== null) {
+                headerParameters['Accept-Language'] = String(requestParameters.acceptLanguage);
+            }
+            const response = yield this.request({
+                path: `/v2/accounts/{account_id}/nfts/history`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.AccountEventsFromJSON)(jsonValue));
+        });
+    }
+    /**
+     * Get the transfer nft history
+     */
+    getAccountNftHistory(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.getAccountNftHistoryRaw(requestParameters, initOverrides);
+            return yield response.value();
+        });
+    }
+    /**
      * Get NFT items from collection by collection address
      */
     getItemsFromCollectionRaw(requestParameters, initOverrides) {
@@ -119,6 +165,52 @@ class NFTApi extends runtime.BaseAPI {
     getNftCollections(requestParameters = {}, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield this.getNftCollectionsRaw(requestParameters, initOverrides);
+            return yield response.value();
+        });
+    }
+    /**
+     * Get the transfer nfts history for account
+     */
+    getNftHistoryByIDRaw(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling getNftHistoryByID.');
+            }
+            if (requestParameters.limit === null || requestParameters.limit === undefined) {
+                throw new runtime.RequiredError('limit', 'Required parameter requestParameters.limit was null or undefined when calling getNftHistoryByID.');
+            }
+            const queryParameters = {};
+            if (requestParameters.beforeLt !== undefined) {
+                queryParameters['before_lt'] = requestParameters.beforeLt;
+            }
+            if (requestParameters.limit !== undefined) {
+                queryParameters['limit'] = requestParameters.limit;
+            }
+            if (requestParameters.startDate !== undefined) {
+                queryParameters['start_date'] = requestParameters.startDate;
+            }
+            if (requestParameters.endDate !== undefined) {
+                queryParameters['end_date'] = requestParameters.endDate;
+            }
+            const headerParameters = {};
+            if (requestParameters.acceptLanguage !== undefined && requestParameters.acceptLanguage !== null) {
+                headerParameters['Accept-Language'] = String(requestParameters.acceptLanguage);
+            }
+            const response = yield this.request({
+                path: `/v2/nfts/{account_id}/history`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.AccountEventsFromJSON)(jsonValue));
+        });
+    }
+    /**
+     * Get the transfer nfts history for account
+     */
+    getNftHistoryByID(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.getNftHistoryByIDRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }

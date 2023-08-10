@@ -32,10 +32,10 @@ class StakingApi extends runtime.BaseAPI {
     /**
      * All pools where account participates
      */
-    poolsByNominatorsRaw(requestParameters, initOverrides) {
+    getAccountNominatorsPoolsRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling poolsByNominators.');
+                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling getAccountNominatorsPools.');
             }
             const queryParameters = {};
             const headerParameters = {};
@@ -51,19 +51,19 @@ class StakingApi extends runtime.BaseAPI {
     /**
      * All pools where account participates
      */
-    poolsByNominators(requestParameters, initOverrides) {
+    getAccountNominatorsPools(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.poolsByNominatorsRaw(requestParameters, initOverrides);
+            const response = yield this.getAccountNominatorsPoolsRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
-     * Pool info
+     * Pool history
      */
-    stakingPoolHistoryRaw(requestParameters, initOverrides) {
+    getStakingPoolHistoryRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling stakingPoolHistory.');
+                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling getStakingPoolHistory.');
             }
             const queryParameters = {};
             const headerParameters = {};
@@ -73,25 +73,25 @@ class StakingApi extends runtime.BaseAPI {
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.StakingPoolHistory200ResponseFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetStakingPoolHistory200ResponseFromJSON)(jsonValue));
         });
     }
     /**
-     * Pool info
+     * Pool history
      */
-    stakingPoolHistory(requestParameters, initOverrides) {
+    getStakingPoolHistory(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.stakingPoolHistoryRaw(requestParameters, initOverrides);
+            const response = yield this.getStakingPoolHistoryRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
-     * Pool info
+     * Stacking pool info
      */
-    stakingPoolInfoRaw(requestParameters, initOverrides) {
+    getStakingPoolInfoRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling stakingPoolInfo.');
+                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling getStakingPoolInfo.');
             }
             const queryParameters = {};
             const headerParameters = {};
@@ -104,22 +104,22 @@ class StakingApi extends runtime.BaseAPI {
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.StakingPoolInfo200ResponseFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetStakingPoolInfo200ResponseFromJSON)(jsonValue));
         });
     }
     /**
-     * Pool info
+     * Stacking pool info
      */
-    stakingPoolInfo(requestParameters, initOverrides) {
+    getStakingPoolInfo(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.stakingPoolInfoRaw(requestParameters, initOverrides);
+            const response = yield this.getStakingPoolInfoRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
      * All pools available in network
      */
-    stakingPoolsRaw(requestParameters, initOverrides) {
+    getStakingPoolsRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             const queryParameters = {};
             if (requestParameters.availableFor !== undefined) {
@@ -138,15 +138,15 @@ class StakingApi extends runtime.BaseAPI {
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.StakingPools200ResponseFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetStakingPools200ResponseFromJSON)(jsonValue));
         });
     }
     /**
      * All pools available in network
      */
-    stakingPools(requestParameters = {}, initOverrides) {
+    getStakingPools(requestParameters = {}, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.stakingPoolsRaw(requestParameters, initOverrides);
+            const response = yield this.getStakingPoolsRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }

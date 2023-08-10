@@ -16,27 +16,27 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface TraceId
+ * @interface TraceID
  */
-export interface TraceId {
+export interface TraceID {
     /**
      * 
      * @type {string}
-     * @memberof TraceId
+     * @memberof TraceID
      */
     id: string;
     /**
      * 
      * @type {number}
-     * @memberof TraceId
+     * @memberof TraceID
      */
     utime: number;
 }
 
 /**
- * Check if a given object implements the TraceId interface.
+ * Check if a given object implements the TraceID interface.
  */
-export function instanceOfTraceId(value: object): boolean {
+export function instanceOfTraceID(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "id" in value;
     isInstance = isInstance && "utime" in value;
@@ -44,11 +44,11 @@ export function instanceOfTraceId(value: object): boolean {
     return isInstance;
 }
 
-export function TraceIdFromJSON(json: any): TraceId {
-    return TraceIdFromJSONTyped(json, false);
+export function TraceIDFromJSON(json: any): TraceID {
+    return TraceIDFromJSONTyped(json, false);
 }
 
-export function TraceIdFromJSONTyped(json: any, ignoreDiscriminator: boolean): TraceId {
+export function TraceIDFromJSONTyped(json: any, ignoreDiscriminator: boolean): TraceID {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -59,7 +59,7 @@ export function TraceIdFromJSONTyped(json: any, ignoreDiscriminator: boolean): T
     };
 }
 
-export function TraceIdToJSON(value?: TraceId | null): any {
+export function TraceIDToJSON(value?: TraceID | null): any {
     if (value === undefined) {
         return undefined;
     }

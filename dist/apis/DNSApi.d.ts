@@ -11,14 +11,14 @@
  */
 import * as runtime from '../runtime';
 import type { Auctions, DnsRecord, DomainBids, DomainInfo } from '../models/index';
-export interface DnsInfoRequest {
-    domainName: string;
-}
 export interface DnsResolveRequest {
     domainName: string;
 }
 export interface GetAllAuctionsRequest {
     tld?: string;
+}
+export interface GetDnsInfoRequest {
+    domainName: string;
 }
 export interface GetDomainBidsRequest {
     domainName: string;
@@ -30,18 +30,6 @@ export interface GetDomainBidsRequest {
  * @interface DNSApiInterface
  */
 export interface DNSApiInterface {
-    /**
-     * get full information about domain name
-     * @param {string} domainName domain name with .ton or .t.me
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DNSApiInterface
-     */
-    dnsInfoRaw(requestParameters: DnsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainInfo>>;
-    /**
-     * get full information about domain name
-     */
-    dnsInfo(requestParameters: DnsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainInfo>;
     /**
      * DNS resolve for domain name
      * @param {string} domainName domain name with .ton or .t.me
@@ -67,6 +55,18 @@ export interface DNSApiInterface {
      */
     getAllAuctions(requestParameters: GetAllAuctionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Auctions>;
     /**
+     * Get full information about domain name
+     * @param {string} domainName domain name with .ton or .t.me
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DNSApiInterface
+     */
+    getDnsInfoRaw(requestParameters: GetDnsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainInfo>>;
+    /**
+     * Get full information about domain name
+     */
+    getDnsInfo(requestParameters: GetDnsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainInfo>;
+    /**
      * Get domain bids
      * @param {string} domainName domain name with .ton or .t.me
      * @param {*} [options] Override http request option.
@@ -84,14 +84,6 @@ export interface DNSApiInterface {
  */
 export declare class DNSApi extends runtime.BaseAPI implements DNSApiInterface {
     /**
-     * get full information about domain name
-     */
-    dnsInfoRaw(requestParameters: DnsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainInfo>>;
-    /**
-     * get full information about domain name
-     */
-    dnsInfo(requestParameters: DnsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainInfo>;
-    /**
      * DNS resolve for domain name
      */
     dnsResolveRaw(requestParameters: DnsResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DnsRecord>>;
@@ -107,6 +99,14 @@ export declare class DNSApi extends runtime.BaseAPI implements DNSApiInterface {
      * Get all auctions
      */
     getAllAuctions(requestParameters?: GetAllAuctionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Auctions>;
+    /**
+     * Get full information about domain name
+     */
+    getDnsInfoRaw(requestParameters: GetDnsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainInfo>>;
+    /**
+     * Get full information about domain name
+     */
+    getDnsInfo(requestParameters: GetDnsInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainInfo>;
     /**
      * Get domain bids
      */

@@ -23,7 +23,7 @@ export interface EmulateMessageToEventOperationRequest {
 export interface EmulateMessageToTraceRequest {
     emulateMessageToEventRequest: EmulateMessageToEventRequest;
 }
-export interface EmulateWalletMessageRequest {
+export interface EmulateMessageToWalletRequest {
     emulateMessageToEventRequest: EmulateMessageToEventRequest;
     acceptLanguage?: string;
 }
@@ -81,11 +81,11 @@ export interface EmulationApiInterface {
      * @throws {RequiredError}
      * @memberof EmulationApiInterface
      */
-    emulateWalletMessageRaw(requestParameters: EmulateWalletMessageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageConsequences>>;
+    emulateMessageToWalletRaw(requestParameters: EmulateMessageToWalletRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageConsequences>>;
     /**
      * Emulate sending message to blockchain
      */
-    emulateWalletMessage(requestParameters: EmulateWalletMessageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageConsequences>;
+    emulateMessageToWallet(requestParameters: EmulateMessageToWalletRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageConsequences>;
 }
 /**
  *
@@ -118,9 +118,9 @@ export declare class EmulationApi extends runtime.BaseAPI implements EmulationAp
     /**
      * Emulate sending message to blockchain
      */
-    emulateWalletMessageRaw(requestParameters: EmulateWalletMessageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageConsequences>>;
+    emulateMessageToWalletRaw(requestParameters: EmulateMessageToWalletRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageConsequences>>;
     /**
      * Emulate sending message to blockchain
      */
-    emulateWalletMessage(requestParameters: EmulateWalletMessageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageConsequences>;
+    emulateMessageToWallet(requestParameters: EmulateMessageToWalletRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageConsequences>;
 }

@@ -131,10 +131,10 @@ class EmulationApi extends runtime.BaseAPI {
     /**
      * Emulate sending message to blockchain
      */
-    emulateWalletMessageRaw(requestParameters, initOverrides) {
+    emulateMessageToWalletRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.emulateMessageToEventRequest === null || requestParameters.emulateMessageToEventRequest === undefined) {
-                throw new runtime.RequiredError('emulateMessageToEventRequest', 'Required parameter requestParameters.emulateMessageToEventRequest was null or undefined when calling emulateWalletMessage.');
+                throw new runtime.RequiredError('emulateMessageToEventRequest', 'Required parameter requestParameters.emulateMessageToEventRequest was null or undefined when calling emulateMessageToWallet.');
             }
             const queryParameters = {};
             const headerParameters = {};
@@ -155,9 +155,9 @@ class EmulationApi extends runtime.BaseAPI {
     /**
      * Emulate sending message to blockchain
      */
-    emulateWalletMessage(requestParameters, initOverrides) {
+    emulateMessageToWallet(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.emulateWalletMessageRaw(requestParameters, initOverrides);
+            const response = yield this.emulateMessageToWalletRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }

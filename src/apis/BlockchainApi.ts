@@ -15,29 +15,29 @@
 
 import * as runtime from '../runtime';
 import type {
-  Block,
-  Config,
-  GetBlockDefaultResponse,
+  BlockchainBlock,
+  BlockchainConfig,
+  BlockchainRawAccount,
+  GetBlockchainBlockDefaultResponse,
   MethodExecutionResult,
-  RawAccount,
-  SendMessageRequest,
+  SendBlockchainMessageRequest,
   Transaction,
   Transactions,
   Validators,
 } from '../models/index';
 import {
-    BlockFromJSON,
-    BlockToJSON,
-    ConfigFromJSON,
-    ConfigToJSON,
-    GetBlockDefaultResponseFromJSON,
-    GetBlockDefaultResponseToJSON,
+    BlockchainBlockFromJSON,
+    BlockchainBlockToJSON,
+    BlockchainConfigFromJSON,
+    BlockchainConfigToJSON,
+    BlockchainRawAccountFromJSON,
+    BlockchainRawAccountToJSON,
+    GetBlockchainBlockDefaultResponseFromJSON,
+    GetBlockchainBlockDefaultResponseToJSON,
     MethodExecutionResultFromJSON,
     MethodExecutionResultToJSON,
-    RawAccountFromJSON,
-    RawAccountToJSON,
-    SendMessageRequestFromJSON,
-    SendMessageRequestToJSON,
+    SendBlockchainMessageRequestFromJSON,
+    SendBlockchainMessageRequestToJSON,
     TransactionFromJSON,
     TransactionToJSON,
     TransactionsFromJSON,
@@ -46,41 +46,41 @@ import {
     ValidatorsToJSON,
 } from '../models/index';
 
-export interface ExecGetMethodRequest {
+export interface ExecGetMethodForBlockchainAccountRequest {
     accountId: string;
     methodName: string;
     args?: Array<string>;
 }
 
-export interface GetAccountTransactionsRequest {
+export interface GetBlockchainAccountTransactionsRequest {
     accountId: string;
     afterLt?: number;
     beforeLt?: number;
     limit?: number;
 }
 
-export interface GetBlockRequest {
+export interface GetBlockchainBlockRequest {
     blockId: string;
 }
 
-export interface GetBlockTransactionsRequest {
+export interface GetBlockchainBlockTransactionsRequest {
     blockId: string;
 }
 
-export interface GetRawAccountRequest {
+export interface GetBlockchainRawAccountRequest {
     accountId: string;
 }
 
-export interface GetTransactionRequest {
+export interface GetBlockchainTransactionRequest {
     transactionId: string;
 }
 
-export interface GetTransactionByMessageHashRequest {
+export interface GetBlockchainTransactionByMessageHashRequest {
     msgId: string;
 }
 
-export interface SendMessageOperationRequest {
-    sendMessageRequest: SendMessageRequest;
+export interface SendBlockchainMessageOperationRequest {
+    sendBlockchainMessageRequest: SendBlockchainMessageRequest;
 }
 
 /**
@@ -99,12 +99,12 @@ export interface BlockchainApiInterface {
      * @throws {RequiredError}
      * @memberof BlockchainApiInterface
      */
-    execGetMethodRaw(requestParameters: ExecGetMethodRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MethodExecutionResult>>;
+    execGetMethodForBlockchainAccountRaw(requestParameters: ExecGetMethodForBlockchainAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MethodExecutionResult>>;
 
     /**
      * Execute get method for account
      */
-    execGetMethod(requestParameters: ExecGetMethodRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MethodExecutionResult>;
+    execGetMethodForBlockchainAccount(requestParameters: ExecGetMethodForBlockchainAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MethodExecutionResult>;
 
     /**
      * Get account transactions
@@ -116,26 +116,26 @@ export interface BlockchainApiInterface {
      * @throws {RequiredError}
      * @memberof BlockchainApiInterface
      */
-    getAccountTransactionsRaw(requestParameters: GetAccountTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transactions>>;
+    getBlockchainAccountTransactionsRaw(requestParameters: GetBlockchainAccountTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transactions>>;
 
     /**
      * Get account transactions
      */
-    getAccountTransactions(requestParameters: GetAccountTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transactions>;
+    getBlockchainAccountTransactions(requestParameters: GetBlockchainAccountTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transactions>;
 
     /**
-     * Get block data
+     * Get blockchain block data
      * @param {string} blockId block ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BlockchainApiInterface
      */
-    getBlockRaw(requestParameters: GetBlockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Block>>;
+    getBlockchainBlockRaw(requestParameters: GetBlockchainBlockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlockchainBlock>>;
 
     /**
-     * Get block data
+     * Get blockchain block data
      */
-    getBlock(requestParameters: GetBlockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Block>;
+    getBlockchainBlock(requestParameters: GetBlockchainBlockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlockchainBlock>;
 
     /**
      * Get transactions from block
@@ -144,12 +144,12 @@ export interface BlockchainApiInterface {
      * @throws {RequiredError}
      * @memberof BlockchainApiInterface
      */
-    getBlockTransactionsRaw(requestParameters: GetBlockTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transactions>>;
+    getBlockchainBlockTransactionsRaw(requestParameters: GetBlockchainBlockTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transactions>>;
 
     /**
      * Get transactions from block
      */
-    getBlockTransactions(requestParameters: GetBlockTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transactions>;
+    getBlockchainBlockTransactions(requestParameters: GetBlockchainBlockTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transactions>;
 
     /**
      * Get blockchain config
@@ -157,12 +157,12 @@ export interface BlockchainApiInterface {
      * @throws {RequiredError}
      * @memberof BlockchainApiInterface
      */
-    getConfigRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Config>>;
+    getBlockchainConfigRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlockchainConfig>>;
 
     /**
      * Get blockchain config
      */
-    getConfig(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Config>;
+    getBlockchainConfig(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlockchainConfig>;
 
     /**
      * Get last known masterchain block
@@ -170,12 +170,12 @@ export interface BlockchainApiInterface {
      * @throws {RequiredError}
      * @memberof BlockchainApiInterface
      */
-    getMasterchainHeadRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Block>>;
+    getBlockchainMasterchainHeadRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlockchainBlock>>;
 
     /**
      * Get last known masterchain block
      */
-    getMasterchainHead(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Block>;
+    getBlockchainMasterchainHead(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlockchainBlock>;
 
     /**
      * Get low-level information about an account taken directly from the blockchain.
@@ -184,12 +184,12 @@ export interface BlockchainApiInterface {
      * @throws {RequiredError}
      * @memberof BlockchainApiInterface
      */
-    getRawAccountRaw(requestParameters: GetRawAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RawAccount>>;
+    getBlockchainRawAccountRaw(requestParameters: GetBlockchainRawAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlockchainRawAccount>>;
 
     /**
      * Get low-level information about an account taken directly from the blockchain.
      */
-    getRawAccount(requestParameters: GetRawAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RawAccount>;
+    getBlockchainRawAccount(requestParameters: GetBlockchainRawAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlockchainRawAccount>;
 
     /**
      * Get transaction data
@@ -198,12 +198,12 @@ export interface BlockchainApiInterface {
      * @throws {RequiredError}
      * @memberof BlockchainApiInterface
      */
-    getTransactionRaw(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transaction>>;
+    getBlockchainTransactionRaw(requestParameters: GetBlockchainTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transaction>>;
 
     /**
      * Get transaction data
      */
-    getTransaction(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transaction>;
+    getBlockchainTransaction(requestParameters: GetBlockchainTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transaction>;
 
     /**
      * Get transaction data by message hash
@@ -212,39 +212,39 @@ export interface BlockchainApiInterface {
      * @throws {RequiredError}
      * @memberof BlockchainApiInterface
      */
-    getTransactionByMessageHashRaw(requestParameters: GetTransactionByMessageHashRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transaction>>;
+    getBlockchainTransactionByMessageHashRaw(requestParameters: GetBlockchainTransactionByMessageHashRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transaction>>;
 
     /**
      * Get transaction data by message hash
      */
-    getTransactionByMessageHash(requestParameters: GetTransactionByMessageHashRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transaction>;
+    getBlockchainTransactionByMessageHash(requestParameters: GetBlockchainTransactionByMessageHashRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transaction>;
 
     /**
-     * Get validators
+     * Get blockchain validators
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BlockchainApiInterface
      */
-    getValidatorsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Validators>>;
+    getBlockchainValidatorsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Validators>>;
 
     /**
-     * Get validators
+     * Get blockchain validators
      */
-    getValidators(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Validators>;
+    getBlockchainValidators(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Validators>;
 
     /**
      * Send message to blockchain
-     * @param {SendMessageRequest} sendMessageRequest bag-of-cells serialized to base64
+     * @param {SendBlockchainMessageRequest} sendBlockchainMessageRequest both a single boc and a batch of boc serialized in base64 are accepted
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BlockchainApiInterface
      */
-    sendMessageRaw(requestParameters: SendMessageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
+    sendBlockchainMessageRaw(requestParameters: SendBlockchainMessageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
 
     /**
      * Send message to blockchain
      */
-    sendMessage(requestParameters: SendMessageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+    sendBlockchainMessage(requestParameters: SendBlockchainMessageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
 }
 
@@ -256,13 +256,13 @@ export class BlockchainApi extends runtime.BaseAPI implements BlockchainApiInter
     /**
      * Execute get method for account
      */
-    async execGetMethodRaw(requestParameters: ExecGetMethodRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MethodExecutionResult>> {
+    async execGetMethodForBlockchainAccountRaw(requestParameters: ExecGetMethodForBlockchainAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MethodExecutionResult>> {
         if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling execGetMethod.');
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling execGetMethodForBlockchainAccount.');
         }
 
         if (requestParameters.methodName === null || requestParameters.methodName === undefined) {
-            throw new runtime.RequiredError('methodName','Required parameter requestParameters.methodName was null or undefined when calling execGetMethod.');
+            throw new runtime.RequiredError('methodName','Required parameter requestParameters.methodName was null or undefined when calling execGetMethodForBlockchainAccount.');
         }
 
         const queryParameters: any = {};
@@ -286,17 +286,17 @@ export class BlockchainApi extends runtime.BaseAPI implements BlockchainApiInter
     /**
      * Execute get method for account
      */
-    async execGetMethod(requestParameters: ExecGetMethodRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MethodExecutionResult> {
-        const response = await this.execGetMethodRaw(requestParameters, initOverrides);
+    async execGetMethodForBlockchainAccount(requestParameters: ExecGetMethodForBlockchainAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MethodExecutionResult> {
+        const response = await this.execGetMethodForBlockchainAccountRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      * Get account transactions
      */
-    async getAccountTransactionsRaw(requestParameters: GetAccountTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transactions>> {
+    async getBlockchainAccountTransactionsRaw(requestParameters: GetBlockchainAccountTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transactions>> {
         if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getAccountTransactions.');
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getBlockchainAccountTransactions.');
         }
 
         const queryParameters: any = {};
@@ -328,17 +328,17 @@ export class BlockchainApi extends runtime.BaseAPI implements BlockchainApiInter
     /**
      * Get account transactions
      */
-    async getAccountTransactions(requestParameters: GetAccountTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transactions> {
-        const response = await this.getAccountTransactionsRaw(requestParameters, initOverrides);
+    async getBlockchainAccountTransactions(requestParameters: GetBlockchainAccountTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transactions> {
+        const response = await this.getBlockchainAccountTransactionsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Get block data
+     * Get blockchain block data
      */
-    async getBlockRaw(requestParameters: GetBlockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Block>> {
+    async getBlockchainBlockRaw(requestParameters: GetBlockchainBlockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlockchainBlock>> {
         if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
-            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getBlock.');
+            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getBlockchainBlock.');
         }
 
         const queryParameters: any = {};
@@ -352,23 +352,23 @@ export class BlockchainApi extends runtime.BaseAPI implements BlockchainApiInter
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => BlockFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => BlockchainBlockFromJSON(jsonValue));
     }
 
     /**
-     * Get block data
+     * Get blockchain block data
      */
-    async getBlock(requestParameters: GetBlockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Block> {
-        const response = await this.getBlockRaw(requestParameters, initOverrides);
+    async getBlockchainBlock(requestParameters: GetBlockchainBlockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlockchainBlock> {
+        const response = await this.getBlockchainBlockRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      * Get transactions from block
      */
-    async getBlockTransactionsRaw(requestParameters: GetBlockTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transactions>> {
+    async getBlockchainBlockTransactionsRaw(requestParameters: GetBlockchainBlockTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transactions>> {
         if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
-            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getBlockTransactions.');
+            throw new runtime.RequiredError('blockId','Required parameter requestParameters.blockId was null or undefined when calling getBlockchainBlockTransactions.');
         }
 
         const queryParameters: any = {};
@@ -388,15 +388,15 @@ export class BlockchainApi extends runtime.BaseAPI implements BlockchainApiInter
     /**
      * Get transactions from block
      */
-    async getBlockTransactions(requestParameters: GetBlockTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transactions> {
-        const response = await this.getBlockTransactionsRaw(requestParameters, initOverrides);
+    async getBlockchainBlockTransactions(requestParameters: GetBlockchainBlockTransactionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transactions> {
+        const response = await this.getBlockchainBlockTransactionsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      * Get blockchain config
      */
-    async getConfigRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Config>> {
+    async getBlockchainConfigRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlockchainConfig>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -408,21 +408,21 @@ export class BlockchainApi extends runtime.BaseAPI implements BlockchainApiInter
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ConfigFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => BlockchainConfigFromJSON(jsonValue));
     }
 
     /**
      * Get blockchain config
      */
-    async getConfig(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Config> {
-        const response = await this.getConfigRaw(initOverrides);
+    async getBlockchainConfig(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlockchainConfig> {
+        const response = await this.getBlockchainConfigRaw(initOverrides);
         return await response.value();
     }
 
     /**
      * Get last known masterchain block
      */
-    async getMasterchainHeadRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Block>> {
+    async getBlockchainMasterchainHeadRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlockchainBlock>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -434,23 +434,23 @@ export class BlockchainApi extends runtime.BaseAPI implements BlockchainApiInter
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => BlockFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => BlockchainBlockFromJSON(jsonValue));
     }
 
     /**
      * Get last known masterchain block
      */
-    async getMasterchainHead(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Block> {
-        const response = await this.getMasterchainHeadRaw(initOverrides);
+    async getBlockchainMasterchainHead(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlockchainBlock> {
+        const response = await this.getBlockchainMasterchainHeadRaw(initOverrides);
         return await response.value();
     }
 
     /**
      * Get low-level information about an account taken directly from the blockchain.
      */
-    async getRawAccountRaw(requestParameters: GetRawAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RawAccount>> {
+    async getBlockchainRawAccountRaw(requestParameters: GetBlockchainRawAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlockchainRawAccount>> {
         if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getRawAccount.');
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getBlockchainRawAccount.');
         }
 
         const queryParameters: any = {};
@@ -464,23 +464,23 @@ export class BlockchainApi extends runtime.BaseAPI implements BlockchainApiInter
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => RawAccountFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => BlockchainRawAccountFromJSON(jsonValue));
     }
 
     /**
      * Get low-level information about an account taken directly from the blockchain.
      */
-    async getRawAccount(requestParameters: GetRawAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RawAccount> {
-        const response = await this.getRawAccountRaw(requestParameters, initOverrides);
+    async getBlockchainRawAccount(requestParameters: GetBlockchainRawAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlockchainRawAccount> {
+        const response = await this.getBlockchainRawAccountRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      * Get transaction data
      */
-    async getTransactionRaw(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transaction>> {
+    async getBlockchainTransactionRaw(requestParameters: GetBlockchainTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transaction>> {
         if (requestParameters.transactionId === null || requestParameters.transactionId === undefined) {
-            throw new runtime.RequiredError('transactionId','Required parameter requestParameters.transactionId was null or undefined when calling getTransaction.');
+            throw new runtime.RequiredError('transactionId','Required parameter requestParameters.transactionId was null or undefined when calling getBlockchainTransaction.');
         }
 
         const queryParameters: any = {};
@@ -500,17 +500,17 @@ export class BlockchainApi extends runtime.BaseAPI implements BlockchainApiInter
     /**
      * Get transaction data
      */
-    async getTransaction(requestParameters: GetTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transaction> {
-        const response = await this.getTransactionRaw(requestParameters, initOverrides);
+    async getBlockchainTransaction(requestParameters: GetBlockchainTransactionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transaction> {
+        const response = await this.getBlockchainTransactionRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      * Get transaction data by message hash
      */
-    async getTransactionByMessageHashRaw(requestParameters: GetTransactionByMessageHashRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transaction>> {
+    async getBlockchainTransactionByMessageHashRaw(requestParameters: GetBlockchainTransactionByMessageHashRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Transaction>> {
         if (requestParameters.msgId === null || requestParameters.msgId === undefined) {
-            throw new runtime.RequiredError('msgId','Required parameter requestParameters.msgId was null or undefined when calling getTransactionByMessageHash.');
+            throw new runtime.RequiredError('msgId','Required parameter requestParameters.msgId was null or undefined when calling getBlockchainTransactionByMessageHash.');
         }
 
         const queryParameters: any = {};
@@ -530,15 +530,15 @@ export class BlockchainApi extends runtime.BaseAPI implements BlockchainApiInter
     /**
      * Get transaction data by message hash
      */
-    async getTransactionByMessageHash(requestParameters: GetTransactionByMessageHashRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transaction> {
-        const response = await this.getTransactionByMessageHashRaw(requestParameters, initOverrides);
+    async getBlockchainTransactionByMessageHash(requestParameters: GetBlockchainTransactionByMessageHashRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Transaction> {
+        const response = await this.getBlockchainTransactionByMessageHashRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Get validators
+     * Get blockchain validators
      */
-    async getValidatorsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Validators>> {
+    async getBlockchainValidatorsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Validators>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -554,19 +554,19 @@ export class BlockchainApi extends runtime.BaseAPI implements BlockchainApiInter
     }
 
     /**
-     * Get validators
+     * Get blockchain validators
      */
-    async getValidators(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Validators> {
-        const response = await this.getValidatorsRaw(initOverrides);
+    async getBlockchainValidators(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Validators> {
+        const response = await this.getBlockchainValidatorsRaw(initOverrides);
         return await response.value();
     }
 
     /**
      * Send message to blockchain
      */
-    async sendMessageRaw(requestParameters: SendMessageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.sendMessageRequest === null || requestParameters.sendMessageRequest === undefined) {
-            throw new runtime.RequiredError('sendMessageRequest','Required parameter requestParameters.sendMessageRequest was null or undefined when calling sendMessage.');
+    async sendBlockchainMessageRaw(requestParameters: SendBlockchainMessageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.sendBlockchainMessageRequest === null || requestParameters.sendBlockchainMessageRequest === undefined) {
+            throw new runtime.RequiredError('sendBlockchainMessageRequest','Required parameter requestParameters.sendBlockchainMessageRequest was null or undefined when calling sendBlockchainMessage.');
         }
 
         const queryParameters: any = {};
@@ -580,7 +580,7 @@ export class BlockchainApi extends runtime.BaseAPI implements BlockchainApiInter
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: SendMessageRequestToJSON(requestParameters.sendMessageRequest),
+            body: SendBlockchainMessageRequestToJSON(requestParameters.sendBlockchainMessageRequest),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -589,8 +589,8 @@ export class BlockchainApi extends runtime.BaseAPI implements BlockchainApiInter
     /**
      * Send message to blockchain
      */
-    async sendMessage(requestParameters: SendMessageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.sendMessageRaw(requestParameters, initOverrides);
+    async sendBlockchainMessage(requestParameters: SendBlockchainMessageOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.sendBlockchainMessageRaw(requestParameters, initOverrides);
     }
 
 }

@@ -17,7 +17,7 @@ import * as runtime from '../runtime';
 import type {
   AccountInfoByStateInit,
   GetAccountInfoByStateInitRequest,
-  GetBlockDefaultResponse,
+  GetBlockchainBlockDefaultResponse,
   GetTonConnectPayload200Response,
 } from '../models/index';
 import {
@@ -25,8 +25,8 @@ import {
     AccountInfoByStateInitToJSON,
     GetAccountInfoByStateInitRequestFromJSON,
     GetAccountInfoByStateInitRequestToJSON,
-    GetBlockDefaultResponseFromJSON,
-    GetBlockDefaultResponseToJSON,
+    GetBlockchainBlockDefaultResponseFromJSON,
+    GetBlockchainBlockDefaultResponseToJSON,
     GetTonConnectPayload200ResponseFromJSON,
     GetTonConnectPayload200ResponseToJSON,
 } from '../models/index';

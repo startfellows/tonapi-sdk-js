@@ -16,22 +16,25 @@
 import * as runtime from '../runtime';
 import type {
   Account,
+  AccountEvent,
   AccountEvents,
   Accounts,
   DnsExpiring,
   DomainNames,
   FoundAccounts,
+  GetAccountPublicKey200Response,
   GetAccountsRequest,
-  GetBlockDefaultResponse,
-  GetPublicKeyByAccountID200Response,
+  GetBlockchainBlockDefaultResponse,
   JettonsBalances,
   NftItems,
   Subscriptions,
-  TraceIds,
+  TraceIDs,
 } from '../models/index';
 import {
     AccountFromJSON,
     AccountToJSON,
+    AccountEventFromJSON,
+    AccountEventToJSON,
     AccountEventsFromJSON,
     AccountEventsToJSON,
     AccountsFromJSON,
@@ -42,23 +45,23 @@ import {
     DomainNamesToJSON,
     FoundAccountsFromJSON,
     FoundAccountsToJSON,
+    GetAccountPublicKey200ResponseFromJSON,
+    GetAccountPublicKey200ResponseToJSON,
     GetAccountsRequestFromJSON,
     GetAccountsRequestToJSON,
-    GetBlockDefaultResponseFromJSON,
-    GetBlockDefaultResponseToJSON,
-    GetPublicKeyByAccountID200ResponseFromJSON,
-    GetPublicKeyByAccountID200ResponseToJSON,
+    GetBlockchainBlockDefaultResponseFromJSON,
+    GetBlockchainBlockDefaultResponseToJSON,
     JettonsBalancesFromJSON,
     JettonsBalancesToJSON,
     NftItemsFromJSON,
     NftItemsToJSON,
     SubscriptionsFromJSON,
     SubscriptionsToJSON,
-    TraceIdsFromJSON,
-    TraceIdsToJSON,
+    TraceIDsFromJSON,
+    TraceIDsToJSON,
 } from '../models/index';
 
-export interface DnsBackResolveRequest {
+export interface AccountDnsBackResolveRequest {
     accountId: string;
 }
 
@@ -66,16 +69,19 @@ export interface GetAccountRequest {
     accountId: string;
 }
 
-export interface GetAccountsOperationRequest {
-    getAccountsRequest?: GetAccountsRequest;
-}
-
-export interface GetDnsExpiringRequest {
+export interface GetAccountDnsExpiringRequest {
     accountId: string;
     period?: number;
 }
 
-export interface GetEventsByAccountRequest {
+export interface GetAccountEventRequest {
+    accountId: string;
+    eventId: string;
+    acceptLanguage?: string;
+    subjectOnly?: boolean;
+}
+
+export interface GetAccountEventsRequest {
     accountId: string;
     limit: number;
     acceptLanguage?: string;
@@ -85,20 +91,7 @@ export interface GetEventsByAccountRequest {
     endDate?: number;
 }
 
-export interface GetJettonsBalancesRequest {
-    accountId: string;
-}
-
-export interface GetJettonsHistoryRequest {
-    accountId: string;
-    limit: number;
-    acceptLanguage?: string;
-    beforeLt?: number;
-    startDate?: number;
-    endDate?: number;
-}
-
-export interface GetJettonsHistoryByIDRequest {
+export interface GetAccountJettonHistoryByIDRequest {
     accountId: string;
     jettonId: string;
     limit: number;
@@ -108,7 +101,20 @@ export interface GetJettonsHistoryByIDRequest {
     endDate?: number;
 }
 
-export interface GetNftItemsByOwnerRequest {
+export interface GetAccountJettonsBalancesRequest {
+    accountId: string;
+}
+
+export interface GetAccountJettonsHistoryRequest {
+    accountId: string;
+    limit: number;
+    acceptLanguage?: string;
+    beforeLt?: number;
+    startDate?: number;
+    endDate?: number;
+}
+
+export interface GetAccountNftItemsRequest {
     accountId: string;
     collection?: string;
     limit?: number;
@@ -116,25 +122,29 @@ export interface GetNftItemsByOwnerRequest {
     indirectOwnership?: boolean;
 }
 
-export interface GetPublicKeyByAccountIDRequest {
+export interface GetAccountPublicKeyRequest {
     accountId: string;
 }
 
-export interface GetSearchAccountsRequest {
-    name: string;
-}
-
-export interface GetSubscriptionsByAccountRequest {
+export interface GetAccountSubscriptionsRequest {
     accountId: string;
 }
 
-export interface GetTracesByAccountRequest {
+export interface GetAccountTracesRequest {
     accountId: string;
     limit?: number;
 }
 
+export interface GetAccountsOperationRequest {
+    getAccountsRequest?: GetAccountsRequest;
+}
+
 export interface ReindexAccountRequest {
     accountId: string;
+}
+
+export interface SearchAccountsRequest {
+    name: string;
 }
 
 /**
@@ -145,18 +155,18 @@ export interface ReindexAccountRequest {
  */
 export interface AccountsApiInterface {
     /**
-     * Get domains for wallet account
+     * Get account\'s domains
      * @param {string} accountId account ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountsApiInterface
      */
-    dnsBackResolveRaw(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>>;
+    accountDnsBackResolveRaw(requestParameters: AccountDnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>>;
 
     /**
-     * Get domains for wallet account
+     * Get account\'s domains
      */
-    dnsBackResolve(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames>;
+    accountDnsBackResolve(requestParameters: AccountDnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames>;
 
     /**
      * Get human-friendly information about an account without low-level details.
@@ -173,40 +183,43 @@ export interface AccountsApiInterface {
     getAccount(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account>;
 
     /**
-     * Get human-friendly information about several accounts without low-level details.
-     * @param {GetAccountsRequest} [getAccountsRequest] a list of account ids
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    getAccountsRaw(requestParameters: GetAccountsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Accounts>>;
-
-    /**
-     * Get human-friendly information about several accounts without low-level details.
-     */
-    getAccounts(requestParameters: GetAccountsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Accounts>;
-
-    /**
-     * Get expiring .ton dns
+     * Get expiring account .ton dns
      * @param {string} accountId account ID
      * @param {number} [period] number of days before expiration
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountsApiInterface
      */
-    getDnsExpiringRaw(requestParameters: GetDnsExpiringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DnsExpiring>>;
+    getAccountDnsExpiringRaw(requestParameters: GetAccountDnsExpiringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DnsExpiring>>;
 
     /**
-     * Get expiring .ton dns
+     * Get expiring account .ton dns
      */
-    getDnsExpiring(requestParameters: GetDnsExpiringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DnsExpiring>;
+    getAccountDnsExpiring(requestParameters: GetAccountDnsExpiringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DnsExpiring>;
+
+    /**
+     * Get event for an account by event_id
+     * @param {string} accountId account ID
+     * @param {string} eventId event ID or transaction hash in hex (without 0x) or base64url format
+     * @param {string} [acceptLanguage] 
+     * @param {boolean} [subjectOnly] filter actions where requested account is not real subject (for example sender or receiver jettons)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    getAccountEventRaw(requestParameters: GetAccountEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvent>>;
+
+    /**
+     * Get event for an account by event_id
+     */
+    getAccountEvent(requestParameters: GetAccountEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvent>;
 
     /**
      * Get events for an account. Each event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
      * @param {string} accountId account ID
      * @param {number} limit 
      * @param {string} [acceptLanguage] 
-     * @param {boolean} [subjectOnly] filter actions where requested account is not real subject (for example sender or reciver jettons)
+     * @param {boolean} [subjectOnly] filter actions where requested account is not real subject (for example sender or receiver jettons)
      * @param {number} [beforeLt] omit this parameter to get last events
      * @param {number} [startDate] 
      * @param {number} [endDate] 
@@ -214,48 +227,15 @@ export interface AccountsApiInterface {
      * @throws {RequiredError}
      * @memberof AccountsApiInterface
      */
-    getEventsByAccountRaw(requestParameters: GetEventsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
+    getAccountEventsRaw(requestParameters: GetAccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
 
     /**
      * Get events for an account. Each event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
      */
-    getEventsByAccount(requestParameters: GetEventsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
+    getAccountEvents(requestParameters: GetAccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
 
     /**
-     * Get all Jettons balances by owner address
-     * @param {string} accountId account ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    getJettonsBalancesRaw(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonsBalances>>;
-
-    /**
-     * Get all Jettons balances by owner address
-     */
-    getJettonsBalances(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonsBalances>;
-
-    /**
-     * Get the transfer jettons history for account_id
-     * @param {string} accountId account ID
-     * @param {number} limit 
-     * @param {string} [acceptLanguage] 
-     * @param {number} [beforeLt] omit this parameter to get last events
-     * @param {number} [startDate] 
-     * @param {number} [endDate] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    getJettonsHistoryRaw(requestParameters: GetJettonsHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
-
-    /**
-     * Get the transfer jettons history for account_id
-     */
-    getJettonsHistory(requestParameters: GetJettonsHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
-
-    /**
-     * Get the transfer jetton history for account_id and jetton_id
+     * Get the transfer jetton history for account and jetton
      * @param {string} accountId account ID
      * @param {string} jettonId jetton ID
      * @param {number} limit 
@@ -267,12 +247,45 @@ export interface AccountsApiInterface {
      * @throws {RequiredError}
      * @memberof AccountsApiInterface
      */
-    getJettonsHistoryByIDRaw(requestParameters: GetJettonsHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
+    getAccountJettonHistoryByIDRaw(requestParameters: GetAccountJettonHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
 
     /**
-     * Get the transfer jetton history for account_id and jetton_id
+     * Get the transfer jetton history for account and jetton
      */
-    getJettonsHistoryByID(requestParameters: GetJettonsHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
+    getAccountJettonHistoryByID(requestParameters: GetAccountJettonHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
+
+    /**
+     * Get all Jettons balances by owner address
+     * @param {string} accountId account ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    getAccountJettonsBalancesRaw(requestParameters: GetAccountJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonsBalances>>;
+
+    /**
+     * Get all Jettons balances by owner address
+     */
+    getAccountJettonsBalances(requestParameters: GetAccountJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonsBalances>;
+
+    /**
+     * Get the transfer jettons history for account
+     * @param {string} accountId account ID
+     * @param {number} limit 
+     * @param {string} [acceptLanguage] 
+     * @param {number} [beforeLt] omit this parameter to get last events
+     * @param {number} [startDate] 
+     * @param {number} [endDate] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    getAccountJettonsHistoryRaw(requestParameters: GetAccountJettonsHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
+
+    /**
+     * Get the transfer jettons history for account
+     */
+    getAccountJettonsHistory(requestParameters: GetAccountJettonsHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
 
     /**
      * Get all NFT items by owner address
@@ -285,12 +298,12 @@ export interface AccountsApiInterface {
      * @throws {RequiredError}
      * @memberof AccountsApiInterface
      */
-    getNftItemsByOwnerRaw(requestParameters: GetNftItemsByOwnerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>>;
+    getAccountNftItemsRaw(requestParameters: GetAccountNftItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>>;
 
     /**
      * Get all NFT items by owner address
      */
-    getNftItemsByOwner(requestParameters: GetNftItemsByOwnerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems>;
+    getAccountNftItems(requestParameters: GetAccountNftItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems>;
 
     /**
      * Get public key by account id
@@ -299,26 +312,12 @@ export interface AccountsApiInterface {
      * @throws {RequiredError}
      * @memberof AccountsApiInterface
      */
-    getPublicKeyByAccountIDRaw(requestParameters: GetPublicKeyByAccountIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPublicKeyByAccountID200Response>>;
+    getAccountPublicKeyRaw(requestParameters: GetAccountPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAccountPublicKey200Response>>;
 
     /**
      * Get public key by account id
      */
-    getPublicKeyByAccountID(requestParameters: GetPublicKeyByAccountIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPublicKeyByAccountID200Response>;
-
-    /**
-     * Search for accounts by name. You can find the account by the first characters of the domain.
-     * @param {string} name 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    getSearchAccountsRaw(requestParameters: GetSearchAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FoundAccounts>>;
-
-    /**
-     * Search for accounts by name. You can find the account by the first characters of the domain.
-     */
-    getSearchAccounts(requestParameters: GetSearchAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FoundAccounts>;
+    getAccountPublicKey(requestParameters: GetAccountPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetAccountPublicKey200Response>;
 
     /**
      * Get all subscriptions by wallet address
@@ -327,12 +326,12 @@ export interface AccountsApiInterface {
      * @throws {RequiredError}
      * @memberof AccountsApiInterface
      */
-    getSubscriptionsByAccountRaw(requestParameters: GetSubscriptionsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Subscriptions>>;
+    getAccountSubscriptionsRaw(requestParameters: GetAccountSubscriptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Subscriptions>>;
 
     /**
      * Get all subscriptions by wallet address
      */
-    getSubscriptionsByAccount(requestParameters: GetSubscriptionsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Subscriptions>;
+    getAccountSubscriptions(requestParameters: GetAccountSubscriptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Subscriptions>;
 
     /**
      * Get traces for account
@@ -342,12 +341,26 @@ export interface AccountsApiInterface {
      * @throws {RequiredError}
      * @memberof AccountsApiInterface
      */
-    getTracesByAccountRaw(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TraceIds>>;
+    getAccountTracesRaw(requestParameters: GetAccountTracesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TraceIDs>>;
 
     /**
      * Get traces for account
      */
-    getTracesByAccount(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TraceIds>;
+    getAccountTraces(requestParameters: GetAccountTracesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TraceIDs>;
+
+    /**
+     * Get human-friendly information about several accounts without low-level details.
+     * @param {GetAccountsRequest} [getAccountsRequest] a list of account ids
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    getAccountsRaw(requestParameters: GetAccountsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Accounts>>;
+
+    /**
+     * Get human-friendly information about several accounts without low-level details.
+     */
+    getAccounts(requestParameters: GetAccountsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Accounts>;
 
     /**
      * Update internal cache for a particular account
@@ -363,6 +376,20 @@ export interface AccountsApiInterface {
      */
     reindexAccount(requestParameters: ReindexAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
 
+    /**
+     * Search by account domain name
+     * @param {string} name 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    searchAccountsRaw(requestParameters: SearchAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FoundAccounts>>;
+
+    /**
+     * Search by account domain name
+     */
+    searchAccounts(requestParameters: SearchAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FoundAccounts>;
+
 }
 
 /**
@@ -371,11 +398,11 @@ export interface AccountsApiInterface {
 export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface {
 
     /**
-     * Get domains for wallet account
+     * Get account\'s domains
      */
-    async dnsBackResolveRaw(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>> {
+    async accountDnsBackResolveRaw(requestParameters: AccountDnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>> {
         if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling dnsBackResolve.');
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling accountDnsBackResolve.');
         }
 
         const queryParameters: any = {};
@@ -393,10 +420,10 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
     }
 
     /**
-     * Get domains for wallet account
+     * Get account\'s domains
      */
-    async dnsBackResolve(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames> {
-        const response = await this.dnsBackResolveRaw(requestParameters, initOverrides);
+    async accountDnsBackResolve(requestParameters: AccountDnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames> {
+        const response = await this.accountDnsBackResolveRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -431,40 +458,11 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
     }
 
     /**
-     * Get human-friendly information about several accounts without low-level details.
+     * Get expiring account .ton dns
      */
-    async getAccountsRaw(requestParameters: GetAccountsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Accounts>> {
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        const response = await this.request({
-            path: `/v2/accounts/_bulk`,
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: GetAccountsRequestToJSON(requestParameters.getAccountsRequest),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => AccountsFromJSON(jsonValue));
-    }
-
-    /**
-     * Get human-friendly information about several accounts without low-level details.
-     */
-    async getAccounts(requestParameters: GetAccountsOperationRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Accounts> {
-        const response = await this.getAccountsRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Get expiring .ton dns
-     */
-    async getDnsExpiringRaw(requestParameters: GetDnsExpiringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DnsExpiring>> {
+    async getAccountDnsExpiringRaw(requestParameters: GetAccountDnsExpiringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DnsExpiring>> {
         if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getDnsExpiring.');
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getAccountDnsExpiring.');
         }
 
         const queryParameters: any = {};
@@ -486,23 +484,65 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
     }
 
     /**
-     * Get expiring .ton dns
+     * Get expiring account .ton dns
      */
-    async getDnsExpiring(requestParameters: GetDnsExpiringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DnsExpiring> {
-        const response = await this.getDnsExpiringRaw(requestParameters, initOverrides);
+    async getAccountDnsExpiring(requestParameters: GetAccountDnsExpiringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DnsExpiring> {
+        const response = await this.getAccountDnsExpiringRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get event for an account by event_id
+     */
+    async getAccountEventRaw(requestParameters: GetAccountEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvent>> {
+        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getAccountEvent.');
+        }
+
+        if (requestParameters.eventId === null || requestParameters.eventId === undefined) {
+            throw new runtime.RequiredError('eventId','Required parameter requestParameters.eventId was null or undefined when calling getAccountEvent.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.subjectOnly !== undefined) {
+            queryParameters['subject_only'] = requestParameters.subjectOnly;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters.acceptLanguage !== undefined && requestParameters.acceptLanguage !== null) {
+            headerParameters['Accept-Language'] = String(requestParameters.acceptLanguage);
+        }
+
+        const response = await this.request({
+            path: `/v2/accounts/{account_id}/events/{event_id}`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))).replace(`{${"event_id"}}`, encodeURIComponent(String(requestParameters.eventId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AccountEventFromJSON(jsonValue));
+    }
+
+    /**
+     * Get event for an account by event_id
+     */
+    async getAccountEvent(requestParameters: GetAccountEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvent> {
+        const response = await this.getAccountEventRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      * Get events for an account. Each event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
      */
-    async getEventsByAccountRaw(requestParameters: GetEventsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>> {
+    async getAccountEventsRaw(requestParameters: GetAccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>> {
         if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getEventsByAccount.');
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getAccountEvents.');
         }
 
         if (requestParameters.limit === null || requestParameters.limit === undefined) {
-            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling getEventsByAccount.');
+            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling getAccountEvents.');
         }
 
         const queryParameters: any = {};
@@ -546,109 +586,25 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
     /**
      * Get events for an account. Each event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
      */
-    async getEventsByAccount(requestParameters: GetEventsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents> {
-        const response = await this.getEventsByAccountRaw(requestParameters, initOverrides);
+    async getAccountEvents(requestParameters: GetAccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents> {
+        const response = await this.getAccountEventsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Get all Jettons balances by owner address
+     * Get the transfer jetton history for account and jetton
      */
-    async getJettonsBalancesRaw(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonsBalances>> {
+    async getAccountJettonHistoryByIDRaw(requestParameters: GetAccountJettonHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>> {
         if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getJettonsBalances.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v2/accounts/{account_id}/jettons`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => JettonsBalancesFromJSON(jsonValue));
-    }
-
-    /**
-     * Get all Jettons balances by owner address
-     */
-    async getJettonsBalances(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonsBalances> {
-        const response = await this.getJettonsBalancesRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Get the transfer jettons history for account_id
-     */
-    async getJettonsHistoryRaw(requestParameters: GetJettonsHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>> {
-        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getJettonsHistory.');
-        }
-
-        if (requestParameters.limit === null || requestParameters.limit === undefined) {
-            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling getJettonsHistory.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.beforeLt !== undefined) {
-            queryParameters['before_lt'] = requestParameters.beforeLt;
-        }
-
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
-        }
-
-        if (requestParameters.startDate !== undefined) {
-            queryParameters['start_date'] = requestParameters.startDate;
-        }
-
-        if (requestParameters.endDate !== undefined) {
-            queryParameters['end_date'] = requestParameters.endDate;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (requestParameters.acceptLanguage !== undefined && requestParameters.acceptLanguage !== null) {
-            headerParameters['Accept-Language'] = String(requestParameters.acceptLanguage);
-        }
-
-        const response = await this.request({
-            path: `/v2/accounts/{account_id}/jettons/history`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => AccountEventsFromJSON(jsonValue));
-    }
-
-    /**
-     * Get the transfer jettons history for account_id
-     */
-    async getJettonsHistory(requestParameters: GetJettonsHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents> {
-        const response = await this.getJettonsHistoryRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Get the transfer jetton history for account_id and jetton_id
-     */
-    async getJettonsHistoryByIDRaw(requestParameters: GetJettonsHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>> {
-        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getJettonsHistoryByID.');
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getAccountJettonHistoryByID.');
         }
 
         if (requestParameters.jettonId === null || requestParameters.jettonId === undefined) {
-            throw new runtime.RequiredError('jettonId','Required parameter requestParameters.jettonId was null or undefined when calling getJettonsHistoryByID.');
+            throw new runtime.RequiredError('jettonId','Required parameter requestParameters.jettonId was null or undefined when calling getAccountJettonHistoryByID.');
         }
 
         if (requestParameters.limit === null || requestParameters.limit === undefined) {
-            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling getJettonsHistoryByID.');
+            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling getAccountJettonHistoryByID.');
         }
 
         const queryParameters: any = {};
@@ -686,19 +642,103 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
     }
 
     /**
-     * Get the transfer jetton history for account_id and jetton_id
+     * Get the transfer jetton history for account and jetton
      */
-    async getJettonsHistoryByID(requestParameters: GetJettonsHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents> {
-        const response = await this.getJettonsHistoryByIDRaw(requestParameters, initOverrides);
+    async getAccountJettonHistoryByID(requestParameters: GetAccountJettonHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents> {
+        const response = await this.getAccountJettonHistoryByIDRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get all Jettons balances by owner address
+     */
+    async getAccountJettonsBalancesRaw(requestParameters: GetAccountJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonsBalances>> {
+        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getAccountJettonsBalances.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v2/accounts/{account_id}/jettons`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => JettonsBalancesFromJSON(jsonValue));
+    }
+
+    /**
+     * Get all Jettons balances by owner address
+     */
+    async getAccountJettonsBalances(requestParameters: GetAccountJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonsBalances> {
+        const response = await this.getAccountJettonsBalancesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get the transfer jettons history for account
+     */
+    async getAccountJettonsHistoryRaw(requestParameters: GetAccountJettonsHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>> {
+        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getAccountJettonsHistory.');
+        }
+
+        if (requestParameters.limit === null || requestParameters.limit === undefined) {
+            throw new runtime.RequiredError('limit','Required parameter requestParameters.limit was null or undefined when calling getAccountJettonsHistory.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.beforeLt !== undefined) {
+            queryParameters['before_lt'] = requestParameters.beforeLt;
+        }
+
+        if (requestParameters.limit !== undefined) {
+            queryParameters['limit'] = requestParameters.limit;
+        }
+
+        if (requestParameters.startDate !== undefined) {
+            queryParameters['start_date'] = requestParameters.startDate;
+        }
+
+        if (requestParameters.endDate !== undefined) {
+            queryParameters['end_date'] = requestParameters.endDate;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters.acceptLanguage !== undefined && requestParameters.acceptLanguage !== null) {
+            headerParameters['Accept-Language'] = String(requestParameters.acceptLanguage);
+        }
+
+        const response = await this.request({
+            path: `/v2/accounts/{account_id}/jettons/history`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AccountEventsFromJSON(jsonValue));
+    }
+
+    /**
+     * Get the transfer jettons history for account
+     */
+    async getAccountJettonsHistory(requestParameters: GetAccountJettonsHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents> {
+        const response = await this.getAccountJettonsHistoryRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      * Get all NFT items by owner address
      */
-    async getNftItemsByOwnerRaw(requestParameters: GetNftItemsByOwnerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>> {
+    async getAccountNftItemsRaw(requestParameters: GetAccountNftItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>> {
         if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getNftItemsByOwner.');
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getAccountNftItems.');
         }
 
         const queryParameters: any = {};
@@ -734,17 +774,17 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
     /**
      * Get all NFT items by owner address
      */
-    async getNftItemsByOwner(requestParameters: GetNftItemsByOwnerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems> {
-        const response = await this.getNftItemsByOwnerRaw(requestParameters, initOverrides);
+    async getAccountNftItems(requestParameters: GetAccountNftItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems> {
+        const response = await this.getAccountNftItemsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      * Get public key by account id
      */
-    async getPublicKeyByAccountIDRaw(requestParameters: GetPublicKeyByAccountIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPublicKeyByAccountID200Response>> {
+    async getAccountPublicKeyRaw(requestParameters: GetAccountPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAccountPublicKey200Response>> {
         if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getPublicKeyByAccountID.');
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getAccountPublicKey.');
         }
 
         const queryParameters: any = {};
@@ -758,57 +798,23 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => GetPublicKeyByAccountID200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetAccountPublicKey200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Get public key by account id
      */
-    async getPublicKeyByAccountID(requestParameters: GetPublicKeyByAccountIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPublicKeyByAccountID200Response> {
-        const response = await this.getPublicKeyByAccountIDRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Search for accounts by name. You can find the account by the first characters of the domain.
-     */
-    async getSearchAccountsRaw(requestParameters: GetSearchAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FoundAccounts>> {
-        if (requestParameters.name === null || requestParameters.name === undefined) {
-            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling getSearchAccounts.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.name !== undefined) {
-            queryParameters['name'] = requestParameters.name;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/v2/accounts/search`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => FoundAccountsFromJSON(jsonValue));
-    }
-
-    /**
-     * Search for accounts by name. You can find the account by the first characters of the domain.
-     */
-    async getSearchAccounts(requestParameters: GetSearchAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FoundAccounts> {
-        const response = await this.getSearchAccountsRaw(requestParameters, initOverrides);
+    async getAccountPublicKey(requestParameters: GetAccountPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetAccountPublicKey200Response> {
+        const response = await this.getAccountPublicKeyRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      * Get all subscriptions by wallet address
      */
-    async getSubscriptionsByAccountRaw(requestParameters: GetSubscriptionsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Subscriptions>> {
+    async getAccountSubscriptionsRaw(requestParameters: GetAccountSubscriptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Subscriptions>> {
         if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getSubscriptionsByAccount.');
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getAccountSubscriptions.');
         }
 
         const queryParameters: any = {};
@@ -828,17 +834,17 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
     /**
      * Get all subscriptions by wallet address
      */
-    async getSubscriptionsByAccount(requestParameters: GetSubscriptionsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Subscriptions> {
-        const response = await this.getSubscriptionsByAccountRaw(requestParameters, initOverrides);
+    async getAccountSubscriptions(requestParameters: GetAccountSubscriptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Subscriptions> {
+        const response = await this.getAccountSubscriptionsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      * Get traces for account
      */
-    async getTracesByAccountRaw(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TraceIds>> {
+    async getAccountTracesRaw(requestParameters: GetAccountTracesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TraceIDs>> {
         if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getTracesByAccount.');
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getAccountTraces.');
         }
 
         const queryParameters: any = {};
@@ -856,14 +862,43 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TraceIdsFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TraceIDsFromJSON(jsonValue));
     }
 
     /**
      * Get traces for account
      */
-    async getTracesByAccount(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TraceIds> {
-        const response = await this.getTracesByAccountRaw(requestParameters, initOverrides);
+    async getAccountTraces(requestParameters: GetAccountTracesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TraceIDs> {
+        const response = await this.getAccountTracesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get human-friendly information about several accounts without low-level details.
+     */
+    async getAccountsRaw(requestParameters: GetAccountsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Accounts>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/v2/accounts/_bulk`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: GetAccountsRequestToJSON(requestParameters.getAccountsRequest),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AccountsFromJSON(jsonValue));
+    }
+
+    /**
+     * Get human-friendly information about several accounts without low-level details.
+     */
+    async getAccounts(requestParameters: GetAccountsOperationRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Accounts> {
+        const response = await this.getAccountsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -894,6 +929,40 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
      */
     async reindexAccount(requestParameters: ReindexAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.reindexAccountRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Search by account domain name
+     */
+    async searchAccountsRaw(requestParameters: SearchAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FoundAccounts>> {
+        if (requestParameters.name === null || requestParameters.name === undefined) {
+            throw new runtime.RequiredError('name','Required parameter requestParameters.name was null or undefined when calling searchAccounts.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v2/accounts/search`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => FoundAccountsFromJSON(jsonValue));
+    }
+
+    /**
+     * Search by account domain name
+     */
+    async searchAccounts(requestParameters: SearchAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FoundAccounts> {
+        const response = await this.searchAccountsRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
 }

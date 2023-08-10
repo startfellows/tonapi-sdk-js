@@ -32,13 +32,13 @@ class BlockchainApi extends runtime.BaseAPI {
     /**
      * Execute get method for account
      */
-    execGetMethodRaw(requestParameters, initOverrides) {
+    execGetMethodForBlockchainAccountRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling execGetMethod.');
+                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling execGetMethodForBlockchainAccount.');
             }
             if (requestParameters.methodName === null || requestParameters.methodName === undefined) {
-                throw new runtime.RequiredError('methodName', 'Required parameter requestParameters.methodName was null or undefined when calling execGetMethod.');
+                throw new runtime.RequiredError('methodName', 'Required parameter requestParameters.methodName was null or undefined when calling execGetMethodForBlockchainAccount.');
             }
             const queryParameters = {};
             if (requestParameters.args) {
@@ -57,19 +57,19 @@ class BlockchainApi extends runtime.BaseAPI {
     /**
      * Execute get method for account
      */
-    execGetMethod(requestParameters, initOverrides) {
+    execGetMethodForBlockchainAccount(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.execGetMethodRaw(requestParameters, initOverrides);
+            const response = yield this.execGetMethodForBlockchainAccountRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
      * Get account transactions
      */
-    getAccountTransactionsRaw(requestParameters, initOverrides) {
+    getBlockchainAccountTransactionsRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling getAccountTransactions.');
+                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling getBlockchainAccountTransactions.');
             }
             const queryParameters = {};
             if (requestParameters.afterLt !== undefined) {
@@ -94,19 +94,19 @@ class BlockchainApi extends runtime.BaseAPI {
     /**
      * Get account transactions
      */
-    getAccountTransactions(requestParameters, initOverrides) {
+    getBlockchainAccountTransactions(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getAccountTransactionsRaw(requestParameters, initOverrides);
+            const response = yield this.getBlockchainAccountTransactionsRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
-     * Get block data
+     * Get blockchain block data
      */
-    getBlockRaw(requestParameters, initOverrides) {
+    getBlockchainBlockRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
-                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getBlock.');
+                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getBlockchainBlock.');
             }
             const queryParameters = {};
             const headerParameters = {};
@@ -116,25 +116,25 @@ class BlockchainApi extends runtime.BaseAPI {
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.BlockFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.BlockchainBlockFromJSON)(jsonValue));
         });
     }
     /**
-     * Get block data
+     * Get blockchain block data
      */
-    getBlock(requestParameters, initOverrides) {
+    getBlockchainBlock(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getBlockRaw(requestParameters, initOverrides);
+            const response = yield this.getBlockchainBlockRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
      * Get transactions from block
      */
-    getBlockTransactionsRaw(requestParameters, initOverrides) {
+    getBlockchainBlockTransactionsRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.blockId === null || requestParameters.blockId === undefined) {
-                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getBlockTransactions.');
+                throw new runtime.RequiredError('blockId', 'Required parameter requestParameters.blockId was null or undefined when calling getBlockchainBlockTransactions.');
             }
             const queryParameters = {};
             const headerParameters = {};
@@ -150,16 +150,16 @@ class BlockchainApi extends runtime.BaseAPI {
     /**
      * Get transactions from block
      */
-    getBlockTransactions(requestParameters, initOverrides) {
+    getBlockchainBlockTransactions(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getBlockTransactionsRaw(requestParameters, initOverrides);
+            const response = yield this.getBlockchainBlockTransactionsRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
      * Get blockchain config
      */
-    getConfigRaw(initOverrides) {
+    getBlockchainConfigRaw(initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             const queryParameters = {};
             const headerParameters = {};
@@ -169,22 +169,22 @@ class BlockchainApi extends runtime.BaseAPI {
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.ConfigFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.BlockchainConfigFromJSON)(jsonValue));
         });
     }
     /**
      * Get blockchain config
      */
-    getConfig(initOverrides) {
+    getBlockchainConfig(initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getConfigRaw(initOverrides);
+            const response = yield this.getBlockchainConfigRaw(initOverrides);
             return yield response.value();
         });
     }
     /**
      * Get last known masterchain block
      */
-    getMasterchainHeadRaw(initOverrides) {
+    getBlockchainMasterchainHeadRaw(initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             const queryParameters = {};
             const headerParameters = {};
@@ -194,25 +194,25 @@ class BlockchainApi extends runtime.BaseAPI {
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.BlockFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.BlockchainBlockFromJSON)(jsonValue));
         });
     }
     /**
      * Get last known masterchain block
      */
-    getMasterchainHead(initOverrides) {
+    getBlockchainMasterchainHead(initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getMasterchainHeadRaw(initOverrides);
+            const response = yield this.getBlockchainMasterchainHeadRaw(initOverrides);
             return yield response.value();
         });
     }
     /**
      * Get low-level information about an account taken directly from the blockchain.
      */
-    getRawAccountRaw(requestParameters, initOverrides) {
+    getBlockchainRawAccountRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
-                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling getRawAccount.');
+                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling getBlockchainRawAccount.');
             }
             const queryParameters = {};
             const headerParameters = {};
@@ -222,25 +222,25 @@ class BlockchainApi extends runtime.BaseAPI {
                 headers: headerParameters,
                 query: queryParameters,
             }, initOverrides);
-            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.RawAccountFromJSON)(jsonValue));
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.BlockchainRawAccountFromJSON)(jsonValue));
         });
     }
     /**
      * Get low-level information about an account taken directly from the blockchain.
      */
-    getRawAccount(requestParameters, initOverrides) {
+    getBlockchainRawAccount(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getRawAccountRaw(requestParameters, initOverrides);
+            const response = yield this.getBlockchainRawAccountRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
      * Get transaction data
      */
-    getTransactionRaw(requestParameters, initOverrides) {
+    getBlockchainTransactionRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.transactionId === null || requestParameters.transactionId === undefined) {
-                throw new runtime.RequiredError('transactionId', 'Required parameter requestParameters.transactionId was null or undefined when calling getTransaction.');
+                throw new runtime.RequiredError('transactionId', 'Required parameter requestParameters.transactionId was null or undefined when calling getBlockchainTransaction.');
             }
             const queryParameters = {};
             const headerParameters = {};
@@ -256,19 +256,19 @@ class BlockchainApi extends runtime.BaseAPI {
     /**
      * Get transaction data
      */
-    getTransaction(requestParameters, initOverrides) {
+    getBlockchainTransaction(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getTransactionRaw(requestParameters, initOverrides);
+            const response = yield this.getBlockchainTransactionRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
      * Get transaction data by message hash
      */
-    getTransactionByMessageHashRaw(requestParameters, initOverrides) {
+    getBlockchainTransactionByMessageHashRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             if (requestParameters.msgId === null || requestParameters.msgId === undefined) {
-                throw new runtime.RequiredError('msgId', 'Required parameter requestParameters.msgId was null or undefined when calling getTransactionByMessageHash.');
+                throw new runtime.RequiredError('msgId', 'Required parameter requestParameters.msgId was null or undefined when calling getBlockchainTransactionByMessageHash.');
             }
             const queryParameters = {};
             const headerParameters = {};
@@ -284,16 +284,16 @@ class BlockchainApi extends runtime.BaseAPI {
     /**
      * Get transaction data by message hash
      */
-    getTransactionByMessageHash(requestParameters, initOverrides) {
+    getBlockchainTransactionByMessageHash(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getTransactionByMessageHashRaw(requestParameters, initOverrides);
+            const response = yield this.getBlockchainTransactionByMessageHashRaw(requestParameters, initOverrides);
             return yield response.value();
         });
     }
     /**
-     * Get validators
+     * Get blockchain validators
      */
-    getValidatorsRaw(initOverrides) {
+    getBlockchainValidatorsRaw(initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
             const queryParameters = {};
             const headerParameters = {};
@@ -307,21 +307,21 @@ class BlockchainApi extends runtime.BaseAPI {
         });
     }
     /**
-     * Get validators
+     * Get blockchain validators
      */
-    getValidators(initOverrides) {
+    getBlockchainValidators(initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.getValidatorsRaw(initOverrides);
+            const response = yield this.getBlockchainValidatorsRaw(initOverrides);
             return yield response.value();
         });
     }
     /**
      * Send message to blockchain
      */
-    sendMessageRaw(requestParameters, initOverrides) {
+    sendBlockchainMessageRaw(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (requestParameters.sendMessageRequest === null || requestParameters.sendMessageRequest === undefined) {
-                throw new runtime.RequiredError('sendMessageRequest', 'Required parameter requestParameters.sendMessageRequest was null or undefined when calling sendMessage.');
+            if (requestParameters.sendBlockchainMessageRequest === null || requestParameters.sendBlockchainMessageRequest === undefined) {
+                throw new runtime.RequiredError('sendBlockchainMessageRequest', 'Required parameter requestParameters.sendBlockchainMessageRequest was null or undefined when calling sendBlockchainMessage.');
             }
             const queryParameters = {};
             const headerParameters = {};
@@ -331,7 +331,7 @@ class BlockchainApi extends runtime.BaseAPI {
                 method: 'POST',
                 headers: headerParameters,
                 query: queryParameters,
-                body: (0, index_1.SendMessageRequestToJSON)(requestParameters.sendMessageRequest),
+                body: (0, index_1.SendBlockchainMessageRequestToJSON)(requestParameters.sendBlockchainMessageRequest),
             }, initOverrides);
             return new runtime.VoidApiResponse(response);
         });
@@ -339,9 +339,9 @@ class BlockchainApi extends runtime.BaseAPI {
     /**
      * Send message to blockchain
      */
-    sendMessage(requestParameters, initOverrides) {
+    sendBlockchainMessage(requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.sendMessageRaw(requestParameters, initOverrides);
+            yield this.sendBlockchainMessageRaw(requestParameters, initOverrides);
         });
     }
 }

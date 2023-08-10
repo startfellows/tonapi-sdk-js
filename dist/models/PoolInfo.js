@@ -39,6 +39,8 @@ function instanceOfPoolInfo(value) {
     isInstance = isInstance && "verified" in value;
     isInstance = isInstance && "currentNominators" in value;
     isInstance = isInstance && "maxNominators" in value;
+    isInstance = isInstance && "nominatorsStake" in value;
+    isInstance = isInstance && "validatorStake" in value;
     return isInstance;
 }
 exports.instanceOfPoolInfo = instanceOfPoolInfo;
@@ -63,6 +65,8 @@ function PoolInfoFromJSONTyped(json, ignoreDiscriminator) {
         'currentNominators': json['current_nominators'],
         'maxNominators': json['max_nominators'],
         'liquidJettonMaster': !(0, runtime_1.exists)(json, 'liquid_jetton_master') ? undefined : json['liquid_jetton_master'],
+        'nominatorsStake': json['nominators_stake'],
+        'validatorStake': json['validator_stake'],
     };
 }
 exports.PoolInfoFromJSONTyped = PoolInfoFromJSONTyped;
@@ -86,6 +90,8 @@ function PoolInfoToJSON(value) {
         'current_nominators': value.currentNominators,
         'max_nominators': value.maxNominators,
         'liquid_jetton_master': value.liquidJettonMaster,
+        'nominators_stake': value.nominatorsStake,
+        'validator_stake': value.validatorStake,
     };
 }
 exports.PoolInfoToJSON = PoolInfoToJSON;

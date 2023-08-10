@@ -87,6 +87,18 @@ export interface PoolInfo {
      * @memberof PoolInfo
      */
     liquidJettonMaster?: string;
+    /**
+     * total stake of all nominators
+     * @type {number}
+     * @memberof PoolInfo
+     */
+    nominatorsStake: number;
+    /**
+     * stake of validator
+     * @type {number}
+     * @memberof PoolInfo
+     */
+    validatorStake: number;
 }
 /**
  * @export

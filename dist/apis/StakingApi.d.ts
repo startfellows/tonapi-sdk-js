@@ -10,18 +10,18 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { AccountStaking, StakingPoolHistory200Response, StakingPoolInfo200Response, StakingPools200Response } from '../models/index';
-export interface PoolsByNominatorsRequest {
+import type { AccountStaking, GetStakingPoolHistory200Response, GetStakingPoolInfo200Response, GetStakingPools200Response } from '../models/index';
+export interface GetAccountNominatorsPoolsRequest {
     accountId: string;
 }
-export interface StakingPoolHistoryRequest {
+export interface GetStakingPoolHistoryRequest {
     accountId: string;
 }
-export interface StakingPoolInfoRequest {
+export interface GetStakingPoolInfoRequest {
     accountId: string;
     acceptLanguage?: string;
 }
-export interface StakingPoolsRequest {
+export interface GetStakingPoolsRequest {
     availableFor?: string;
     includeUnverified?: boolean;
     acceptLanguage?: string;
@@ -40,36 +40,36 @@ export interface StakingApiInterface {
      * @throws {RequiredError}
      * @memberof StakingApiInterface
      */
-    poolsByNominatorsRaw(requestParameters: PoolsByNominatorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountStaking>>;
+    getAccountNominatorsPoolsRaw(requestParameters: GetAccountNominatorsPoolsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountStaking>>;
     /**
      * All pools where account participates
      */
-    poolsByNominators(requestParameters: PoolsByNominatorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountStaking>;
+    getAccountNominatorsPools(requestParameters: GetAccountNominatorsPoolsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountStaking>;
     /**
-     * Pool info
+     * Pool history
      * @param {string} accountId account ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StakingApiInterface
      */
-    stakingPoolHistoryRaw(requestParameters: StakingPoolHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StakingPoolHistory200Response>>;
+    getStakingPoolHistoryRaw(requestParameters: GetStakingPoolHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetStakingPoolHistory200Response>>;
     /**
-     * Pool info
+     * Pool history
      */
-    stakingPoolHistory(requestParameters: StakingPoolHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StakingPoolHistory200Response>;
+    getStakingPoolHistory(requestParameters: GetStakingPoolHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetStakingPoolHistory200Response>;
     /**
-     * Pool info
+     * Stacking pool info
      * @param {string} accountId account ID
      * @param {string} [acceptLanguage]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StakingApiInterface
      */
-    stakingPoolInfoRaw(requestParameters: StakingPoolInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StakingPoolInfo200Response>>;
+    getStakingPoolInfoRaw(requestParameters: GetStakingPoolInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetStakingPoolInfo200Response>>;
     /**
-     * Pool info
+     * Stacking pool info
      */
-    stakingPoolInfo(requestParameters: StakingPoolInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StakingPoolInfo200Response>;
+    getStakingPoolInfo(requestParameters: GetStakingPoolInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetStakingPoolInfo200Response>;
     /**
      * All pools available in network
      * @param {string} [availableFor] account ID
@@ -79,11 +79,11 @@ export interface StakingApiInterface {
      * @throws {RequiredError}
      * @memberof StakingApiInterface
      */
-    stakingPoolsRaw(requestParameters: StakingPoolsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StakingPools200Response>>;
+    getStakingPoolsRaw(requestParameters: GetStakingPoolsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetStakingPools200Response>>;
     /**
      * All pools available in network
      */
-    stakingPools(requestParameters: StakingPoolsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StakingPools200Response>;
+    getStakingPools(requestParameters: GetStakingPoolsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetStakingPools200Response>;
 }
 /**
  *
@@ -92,33 +92,33 @@ export declare class StakingApi extends runtime.BaseAPI implements StakingApiInt
     /**
      * All pools where account participates
      */
-    poolsByNominatorsRaw(requestParameters: PoolsByNominatorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountStaking>>;
+    getAccountNominatorsPoolsRaw(requestParameters: GetAccountNominatorsPoolsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountStaking>>;
     /**
      * All pools where account participates
      */
-    poolsByNominators(requestParameters: PoolsByNominatorsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountStaking>;
+    getAccountNominatorsPools(requestParameters: GetAccountNominatorsPoolsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountStaking>;
     /**
-     * Pool info
+     * Pool history
      */
-    stakingPoolHistoryRaw(requestParameters: StakingPoolHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StakingPoolHistory200Response>>;
+    getStakingPoolHistoryRaw(requestParameters: GetStakingPoolHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetStakingPoolHistory200Response>>;
     /**
-     * Pool info
+     * Pool history
      */
-    stakingPoolHistory(requestParameters: StakingPoolHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StakingPoolHistory200Response>;
+    getStakingPoolHistory(requestParameters: GetStakingPoolHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetStakingPoolHistory200Response>;
     /**
-     * Pool info
+     * Stacking pool info
      */
-    stakingPoolInfoRaw(requestParameters: StakingPoolInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StakingPoolInfo200Response>>;
+    getStakingPoolInfoRaw(requestParameters: GetStakingPoolInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetStakingPoolInfo200Response>>;
     /**
-     * Pool info
+     * Stacking pool info
      */
-    stakingPoolInfo(requestParameters: StakingPoolInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StakingPoolInfo200Response>;
-    /**
-     * All pools available in network
-     */
-    stakingPoolsRaw(requestParameters: StakingPoolsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<StakingPools200Response>>;
+    getStakingPoolInfo(requestParameters: GetStakingPoolInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetStakingPoolInfo200Response>;
     /**
      * All pools available in network
      */
-    stakingPools(requestParameters?: StakingPoolsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<StakingPools200Response>;
+    getStakingPoolsRaw(requestParameters: GetStakingPoolsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetStakingPools200Response>>;
+    /**
+     * All pools available in network
+     */
+    getStakingPools(requestParameters?: GetStakingPoolsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetStakingPools200Response>;
 }

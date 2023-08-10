@@ -18,7 +18,7 @@ import type {
   AccountEvent,
   EmulateMessageToEventRequest,
   Event,
-  GetBlockDefaultResponse,
+  GetBlockchainBlockDefaultResponse,
   MessageConsequences,
   Trace,
 } from '../models/index';
@@ -29,8 +29,8 @@ import {
     EmulateMessageToEventRequestToJSON,
     EventFromJSON,
     EventToJSON,
-    GetBlockDefaultResponseFromJSON,
-    GetBlockDefaultResponseToJSON,
+    GetBlockchainBlockDefaultResponseFromJSON,
+    GetBlockchainBlockDefaultResponseToJSON,
     MessageConsequencesFromJSON,
     MessageConsequencesToJSON,
     TraceFromJSON,
@@ -52,7 +52,7 @@ export interface EmulateMessageToTraceRequest {
     emulateMessageToEventRequest: EmulateMessageToEventRequest;
 }
 
-export interface EmulateWalletMessageRequest {
+export interface EmulateMessageToWalletRequest {
     emulateMessageToEventRequest: EmulateMessageToEventRequest;
     acceptLanguage?: string;
 }
@@ -117,12 +117,12 @@ export interface EmulationApiInterface {
      * @throws {RequiredError}
      * @memberof EmulationApiInterface
      */
-    emulateWalletMessageRaw(requestParameters: EmulateWalletMessageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageConsequences>>;
+    emulateMessageToWalletRaw(requestParameters: EmulateMessageToWalletRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageConsequences>>;
 
     /**
      * Emulate sending message to blockchain
      */
-    emulateWalletMessage(requestParameters: EmulateWalletMessageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageConsequences>;
+    emulateMessageToWallet(requestParameters: EmulateMessageToWalletRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageConsequences>;
 
 }
 
@@ -245,9 +245,9 @@ export class EmulationApi extends runtime.BaseAPI implements EmulationApiInterfa
     /**
      * Emulate sending message to blockchain
      */
-    async emulateWalletMessageRaw(requestParameters: EmulateWalletMessageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageConsequences>> {
+    async emulateMessageToWalletRaw(requestParameters: EmulateMessageToWalletRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MessageConsequences>> {
         if (requestParameters.emulateMessageToEventRequest === null || requestParameters.emulateMessageToEventRequest === undefined) {
-            throw new runtime.RequiredError('emulateMessageToEventRequest','Required parameter requestParameters.emulateMessageToEventRequest was null or undefined when calling emulateWalletMessage.');
+            throw new runtime.RequiredError('emulateMessageToEventRequest','Required parameter requestParameters.emulateMessageToEventRequest was null or undefined when calling emulateMessageToWallet.');
         }
 
         const queryParameters: any = {};
@@ -274,8 +274,8 @@ export class EmulationApi extends runtime.BaseAPI implements EmulationApiInterfa
     /**
      * Emulate sending message to blockchain
      */
-    async emulateWalletMessage(requestParameters: EmulateWalletMessageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageConsequences> {
-        const response = await this.emulateWalletMessageRaw(requestParameters, initOverrides);
+    async emulateMessageToWallet(requestParameters: EmulateMessageToWalletRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MessageConsequences> {
+        const response = await this.emulateMessageToWalletRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

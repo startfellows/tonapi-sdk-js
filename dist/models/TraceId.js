@@ -13,22 +13,22 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TraceIdToJSON = exports.TraceIdFromJSONTyped = exports.TraceIdFromJSON = exports.instanceOfTraceId = void 0;
+exports.TraceIDToJSON = exports.TraceIDFromJSONTyped = exports.TraceIDFromJSON = exports.instanceOfTraceID = void 0;
 /**
- * Check if a given object implements the TraceId interface.
+ * Check if a given object implements the TraceID interface.
  */
-function instanceOfTraceId(value) {
+function instanceOfTraceID(value) {
     let isInstance = true;
     isInstance = isInstance && "id" in value;
     isInstance = isInstance && "utime" in value;
     return isInstance;
 }
-exports.instanceOfTraceId = instanceOfTraceId;
-function TraceIdFromJSON(json) {
-    return TraceIdFromJSONTyped(json, false);
+exports.instanceOfTraceID = instanceOfTraceID;
+function TraceIDFromJSON(json) {
+    return TraceIDFromJSONTyped(json, false);
 }
-exports.TraceIdFromJSON = TraceIdFromJSON;
-function TraceIdFromJSONTyped(json, ignoreDiscriminator) {
+exports.TraceIDFromJSON = TraceIDFromJSON;
+function TraceIDFromJSONTyped(json, ignoreDiscriminator) {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -37,8 +37,8 @@ function TraceIdFromJSONTyped(json, ignoreDiscriminator) {
         'utime': json['utime'],
     };
 }
-exports.TraceIdFromJSONTyped = TraceIdFromJSONTyped;
-function TraceIdToJSON(value) {
+exports.TraceIDFromJSONTyped = TraceIDFromJSONTyped;
+function TraceIDToJSON(value) {
     if (value === undefined) {
         return undefined;
     }
@@ -50,4 +50,4 @@ function TraceIdToJSON(value) {
         'utime': value.utime,
     };
 }
-exports.TraceIdToJSON = TraceIdToJSON;
+exports.TraceIDToJSON = TraceIDToJSON;

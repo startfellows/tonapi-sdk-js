@@ -10,21 +10,24 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { Account, AccountEvents, Accounts, DnsExpiring, DomainNames, FoundAccounts, GetAccountsRequest, GetPublicKeyByAccountID200Response, JettonsBalances, NftItems, Subscriptions, TraceIds } from '../models/index';
-export interface DnsBackResolveRequest {
+import type { Account, AccountEvent, AccountEvents, Accounts, DnsExpiring, DomainNames, FoundAccounts, GetAccountPublicKey200Response, GetAccountsRequest, JettonsBalances, NftItems, Subscriptions, TraceIDs } from '../models/index';
+export interface AccountDnsBackResolveRequest {
     accountId: string;
 }
 export interface GetAccountRequest {
     accountId: string;
 }
-export interface GetAccountsOperationRequest {
-    getAccountsRequest?: GetAccountsRequest;
-}
-export interface GetDnsExpiringRequest {
+export interface GetAccountDnsExpiringRequest {
     accountId: string;
     period?: number;
 }
-export interface GetEventsByAccountRequest {
+export interface GetAccountEventRequest {
+    accountId: string;
+    eventId: string;
+    acceptLanguage?: string;
+    subjectOnly?: boolean;
+}
+export interface GetAccountEventsRequest {
     accountId: string;
     limit: number;
     acceptLanguage?: string;
@@ -33,18 +36,7 @@ export interface GetEventsByAccountRequest {
     startDate?: number;
     endDate?: number;
 }
-export interface GetJettonsBalancesRequest {
-    accountId: string;
-}
-export interface GetJettonsHistoryRequest {
-    accountId: string;
-    limit: number;
-    acceptLanguage?: string;
-    beforeLt?: number;
-    startDate?: number;
-    endDate?: number;
-}
-export interface GetJettonsHistoryByIDRequest {
+export interface GetAccountJettonHistoryByIDRequest {
     accountId: string;
     jettonId: string;
     limit: number;
@@ -53,28 +45,42 @@ export interface GetJettonsHistoryByIDRequest {
     startDate?: number;
     endDate?: number;
 }
-export interface GetNftItemsByOwnerRequest {
+export interface GetAccountJettonsBalancesRequest {
+    accountId: string;
+}
+export interface GetAccountJettonsHistoryRequest {
+    accountId: string;
+    limit: number;
+    acceptLanguage?: string;
+    beforeLt?: number;
+    startDate?: number;
+    endDate?: number;
+}
+export interface GetAccountNftItemsRequest {
     accountId: string;
     collection?: string;
     limit?: number;
     offset?: number;
     indirectOwnership?: boolean;
 }
-export interface GetPublicKeyByAccountIDRequest {
+export interface GetAccountPublicKeyRequest {
     accountId: string;
 }
-export interface GetSearchAccountsRequest {
-    name: string;
-}
-export interface GetSubscriptionsByAccountRequest {
+export interface GetAccountSubscriptionsRequest {
     accountId: string;
 }
-export interface GetTracesByAccountRequest {
+export interface GetAccountTracesRequest {
     accountId: string;
     limit?: number;
 }
+export interface GetAccountsOperationRequest {
+    getAccountsRequest?: GetAccountsRequest;
+}
 export interface ReindexAccountRequest {
     accountId: string;
+}
+export interface SearchAccountsRequest {
+    name: string;
 }
 /**
  * AccountsApi - interface
@@ -84,17 +90,17 @@ export interface ReindexAccountRequest {
  */
 export interface AccountsApiInterface {
     /**
-     * Get domains for wallet account
+     * Get account\'s domains
      * @param {string} accountId account ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountsApiInterface
      */
-    dnsBackResolveRaw(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>>;
+    accountDnsBackResolveRaw(requestParameters: AccountDnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>>;
     /**
-     * Get domains for wallet account
+     * Get account\'s domains
      */
-    dnsBackResolve(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames>;
+    accountDnsBackResolve(requestParameters: AccountDnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames>;
     /**
      * Get human-friendly information about an account without low-level details.
      * @param {string} accountId account ID
@@ -107,6 +113,152 @@ export interface AccountsApiInterface {
      * Get human-friendly information about an account without low-level details.
      */
     getAccount(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account>;
+    /**
+     * Get expiring account .ton dns
+     * @param {string} accountId account ID
+     * @param {number} [period] number of days before expiration
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    getAccountDnsExpiringRaw(requestParameters: GetAccountDnsExpiringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DnsExpiring>>;
+    /**
+     * Get expiring account .ton dns
+     */
+    getAccountDnsExpiring(requestParameters: GetAccountDnsExpiringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DnsExpiring>;
+    /**
+     * Get event for an account by event_id
+     * @param {string} accountId account ID
+     * @param {string} eventId event ID or transaction hash in hex (without 0x) or base64url format
+     * @param {string} [acceptLanguage]
+     * @param {boolean} [subjectOnly] filter actions where requested account is not real subject (for example sender or receiver jettons)
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    getAccountEventRaw(requestParameters: GetAccountEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvent>>;
+    /**
+     * Get event for an account by event_id
+     */
+    getAccountEvent(requestParameters: GetAccountEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvent>;
+    /**
+     * Get events for an account. Each event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
+     * @param {string} accountId account ID
+     * @param {number} limit
+     * @param {string} [acceptLanguage]
+     * @param {boolean} [subjectOnly] filter actions where requested account is not real subject (for example sender or receiver jettons)
+     * @param {number} [beforeLt] omit this parameter to get last events
+     * @param {number} [startDate]
+     * @param {number} [endDate]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    getAccountEventsRaw(requestParameters: GetAccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
+    /**
+     * Get events for an account. Each event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
+     */
+    getAccountEvents(requestParameters: GetAccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
+    /**
+     * Get the transfer jetton history for account and jetton
+     * @param {string} accountId account ID
+     * @param {string} jettonId jetton ID
+     * @param {number} limit
+     * @param {string} [acceptLanguage]
+     * @param {number} [beforeLt] omit this parameter to get last events
+     * @param {number} [startDate]
+     * @param {number} [endDate]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    getAccountJettonHistoryByIDRaw(requestParameters: GetAccountJettonHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
+    /**
+     * Get the transfer jetton history for account and jetton
+     */
+    getAccountJettonHistoryByID(requestParameters: GetAccountJettonHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
+    /**
+     * Get all Jettons balances by owner address
+     * @param {string} accountId account ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    getAccountJettonsBalancesRaw(requestParameters: GetAccountJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonsBalances>>;
+    /**
+     * Get all Jettons balances by owner address
+     */
+    getAccountJettonsBalances(requestParameters: GetAccountJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonsBalances>;
+    /**
+     * Get the transfer jettons history for account
+     * @param {string} accountId account ID
+     * @param {number} limit
+     * @param {string} [acceptLanguage]
+     * @param {number} [beforeLt] omit this parameter to get last events
+     * @param {number} [startDate]
+     * @param {number} [endDate]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    getAccountJettonsHistoryRaw(requestParameters: GetAccountJettonsHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
+    /**
+     * Get the transfer jettons history for account
+     */
+    getAccountJettonsHistory(requestParameters: GetAccountJettonsHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
+    /**
+     * Get all NFT items by owner address
+     * @param {string} accountId account ID
+     * @param {string} [collection] nft collection
+     * @param {number} [limit]
+     * @param {number} [offset]
+     * @param {boolean} [indirectOwnership] Selling nft items in ton implemented usually via transfer items to special selling account. This option enables including items which owned not directly.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    getAccountNftItemsRaw(requestParameters: GetAccountNftItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>>;
+    /**
+     * Get all NFT items by owner address
+     */
+    getAccountNftItems(requestParameters: GetAccountNftItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems>;
+    /**
+     * Get public key by account id
+     * @param {string} accountId account ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    getAccountPublicKeyRaw(requestParameters: GetAccountPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAccountPublicKey200Response>>;
+    /**
+     * Get public key by account id
+     */
+    getAccountPublicKey(requestParameters: GetAccountPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetAccountPublicKey200Response>;
+    /**
+     * Get all subscriptions by wallet address
+     * @param {string} accountId account ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    getAccountSubscriptionsRaw(requestParameters: GetAccountSubscriptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Subscriptions>>;
+    /**
+     * Get all subscriptions by wallet address
+     */
+    getAccountSubscriptions(requestParameters: GetAccountSubscriptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Subscriptions>;
+    /**
+     * Get traces for account
+     * @param {string} accountId account ID
+     * @param {number} [limit]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    getAccountTracesRaw(requestParameters: GetAccountTracesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TraceIDs>>;
+    /**
+     * Get traces for account
+     */
+    getAccountTraces(requestParameters: GetAccountTracesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TraceIDs>;
     /**
      * Get human-friendly information about several accounts without low-level details.
      * @param {GetAccountsRequest} [getAccountsRequest] a list of account ids
@@ -120,149 +272,6 @@ export interface AccountsApiInterface {
      */
     getAccounts(requestParameters: GetAccountsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Accounts>;
     /**
-     * Get expiring .ton dns
-     * @param {string} accountId account ID
-     * @param {number} [period] number of days before expiration
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    getDnsExpiringRaw(requestParameters: GetDnsExpiringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DnsExpiring>>;
-    /**
-     * Get expiring .ton dns
-     */
-    getDnsExpiring(requestParameters: GetDnsExpiringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DnsExpiring>;
-    /**
-     * Get events for an account. Each event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
-     * @param {string} accountId account ID
-     * @param {number} limit
-     * @param {string} [acceptLanguage]
-     * @param {boolean} [subjectOnly] filter actions where requested account is not real subject (for example sender or reciver jettons)
-     * @param {number} [beforeLt] omit this parameter to get last events
-     * @param {number} [startDate]
-     * @param {number} [endDate]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    getEventsByAccountRaw(requestParameters: GetEventsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
-    /**
-     * Get events for an account. Each event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
-     */
-    getEventsByAccount(requestParameters: GetEventsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
-    /**
-     * Get all Jettons balances by owner address
-     * @param {string} accountId account ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    getJettonsBalancesRaw(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonsBalances>>;
-    /**
-     * Get all Jettons balances by owner address
-     */
-    getJettonsBalances(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonsBalances>;
-    /**
-     * Get the transfer jettons history for account_id
-     * @param {string} accountId account ID
-     * @param {number} limit
-     * @param {string} [acceptLanguage]
-     * @param {number} [beforeLt] omit this parameter to get last events
-     * @param {number} [startDate]
-     * @param {number} [endDate]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    getJettonsHistoryRaw(requestParameters: GetJettonsHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
-    /**
-     * Get the transfer jettons history for account_id
-     */
-    getJettonsHistory(requestParameters: GetJettonsHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
-    /**
-     * Get the transfer jetton history for account_id and jetton_id
-     * @param {string} accountId account ID
-     * @param {string} jettonId jetton ID
-     * @param {number} limit
-     * @param {string} [acceptLanguage]
-     * @param {number} [beforeLt] omit this parameter to get last events
-     * @param {number} [startDate]
-     * @param {number} [endDate]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    getJettonsHistoryByIDRaw(requestParameters: GetJettonsHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
-    /**
-     * Get the transfer jetton history for account_id and jetton_id
-     */
-    getJettonsHistoryByID(requestParameters: GetJettonsHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
-    /**
-     * Get all NFT items by owner address
-     * @param {string} accountId account ID
-     * @param {string} [collection] nft collection
-     * @param {number} [limit]
-     * @param {number} [offset]
-     * @param {boolean} [indirectOwnership] Selling nft items in ton implemented usually via transfer items to special selling account. This option enables including items which owned not directly.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    getNftItemsByOwnerRaw(requestParameters: GetNftItemsByOwnerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>>;
-    /**
-     * Get all NFT items by owner address
-     */
-    getNftItemsByOwner(requestParameters: GetNftItemsByOwnerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems>;
-    /**
-     * Get public key by account id
-     * @param {string} accountId account ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    getPublicKeyByAccountIDRaw(requestParameters: GetPublicKeyByAccountIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPublicKeyByAccountID200Response>>;
-    /**
-     * Get public key by account id
-     */
-    getPublicKeyByAccountID(requestParameters: GetPublicKeyByAccountIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPublicKeyByAccountID200Response>;
-    /**
-     * Search for accounts by name. You can find the account by the first characters of the domain.
-     * @param {string} name
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    getSearchAccountsRaw(requestParameters: GetSearchAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FoundAccounts>>;
-    /**
-     * Search for accounts by name. You can find the account by the first characters of the domain.
-     */
-    getSearchAccounts(requestParameters: GetSearchAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FoundAccounts>;
-    /**
-     * Get all subscriptions by wallet address
-     * @param {string} accountId account ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    getSubscriptionsByAccountRaw(requestParameters: GetSubscriptionsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Subscriptions>>;
-    /**
-     * Get all subscriptions by wallet address
-     */
-    getSubscriptionsByAccount(requestParameters: GetSubscriptionsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Subscriptions>;
-    /**
-     * Get traces for account
-     * @param {string} accountId account ID
-     * @param {number} [limit]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountsApiInterface
-     */
-    getTracesByAccountRaw(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TraceIds>>;
-    /**
-     * Get traces for account
-     */
-    getTracesByAccount(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TraceIds>;
-    /**
      * Update internal cache for a particular account
      * @param {string} accountId account ID
      * @param {*} [options] Override http request option.
@@ -274,19 +283,31 @@ export interface AccountsApiInterface {
      * Update internal cache for a particular account
      */
     reindexAccount(requestParameters: ReindexAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+    /**
+     * Search by account domain name
+     * @param {string} name
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    searchAccountsRaw(requestParameters: SearchAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FoundAccounts>>;
+    /**
+     * Search by account domain name
+     */
+    searchAccounts(requestParameters: SearchAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FoundAccounts>;
 }
 /**
  *
  */
 export declare class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface {
     /**
-     * Get domains for wallet account
+     * Get account\'s domains
      */
-    dnsBackResolveRaw(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>>;
+    accountDnsBackResolveRaw(requestParameters: AccountDnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DomainNames>>;
     /**
-     * Get domains for wallet account
+     * Get account\'s domains
      */
-    dnsBackResolve(requestParameters: DnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames>;
+    accountDnsBackResolve(requestParameters: AccountDnsBackResolveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DomainNames>;
     /**
      * Get human-friendly information about an account without low-level details.
      */
@@ -296,6 +317,86 @@ export declare class AccountsApi extends runtime.BaseAPI implements AccountsApiI
      */
     getAccount(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account>;
     /**
+     * Get expiring account .ton dns
+     */
+    getAccountDnsExpiringRaw(requestParameters: GetAccountDnsExpiringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DnsExpiring>>;
+    /**
+     * Get expiring account .ton dns
+     */
+    getAccountDnsExpiring(requestParameters: GetAccountDnsExpiringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DnsExpiring>;
+    /**
+     * Get event for an account by event_id
+     */
+    getAccountEventRaw(requestParameters: GetAccountEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvent>>;
+    /**
+     * Get event for an account by event_id
+     */
+    getAccountEvent(requestParameters: GetAccountEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvent>;
+    /**
+     * Get events for an account. Each event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
+     */
+    getAccountEventsRaw(requestParameters: GetAccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
+    /**
+     * Get events for an account. Each event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
+     */
+    getAccountEvents(requestParameters: GetAccountEventsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
+    /**
+     * Get the transfer jetton history for account and jetton
+     */
+    getAccountJettonHistoryByIDRaw(requestParameters: GetAccountJettonHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
+    /**
+     * Get the transfer jetton history for account and jetton
+     */
+    getAccountJettonHistoryByID(requestParameters: GetAccountJettonHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
+    /**
+     * Get all Jettons balances by owner address
+     */
+    getAccountJettonsBalancesRaw(requestParameters: GetAccountJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonsBalances>>;
+    /**
+     * Get all Jettons balances by owner address
+     */
+    getAccountJettonsBalances(requestParameters: GetAccountJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonsBalances>;
+    /**
+     * Get the transfer jettons history for account
+     */
+    getAccountJettonsHistoryRaw(requestParameters: GetAccountJettonsHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
+    /**
+     * Get the transfer jettons history for account
+     */
+    getAccountJettonsHistory(requestParameters: GetAccountJettonsHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
+    /**
+     * Get all NFT items by owner address
+     */
+    getAccountNftItemsRaw(requestParameters: GetAccountNftItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>>;
+    /**
+     * Get all NFT items by owner address
+     */
+    getAccountNftItems(requestParameters: GetAccountNftItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems>;
+    /**
+     * Get public key by account id
+     */
+    getAccountPublicKeyRaw(requestParameters: GetAccountPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAccountPublicKey200Response>>;
+    /**
+     * Get public key by account id
+     */
+    getAccountPublicKey(requestParameters: GetAccountPublicKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetAccountPublicKey200Response>;
+    /**
+     * Get all subscriptions by wallet address
+     */
+    getAccountSubscriptionsRaw(requestParameters: GetAccountSubscriptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Subscriptions>>;
+    /**
+     * Get all subscriptions by wallet address
+     */
+    getAccountSubscriptions(requestParameters: GetAccountSubscriptionsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Subscriptions>;
+    /**
+     * Get traces for account
+     */
+    getAccountTracesRaw(requestParameters: GetAccountTracesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TraceIDs>>;
+    /**
+     * Get traces for account
+     */
+    getAccountTraces(requestParameters: GetAccountTracesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TraceIDs>;
+    /**
      * Get human-friendly information about several accounts without low-level details.
      */
     getAccountsRaw(requestParameters: GetAccountsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Accounts>>;
@@ -304,86 +405,6 @@ export declare class AccountsApi extends runtime.BaseAPI implements AccountsApiI
      */
     getAccounts(requestParameters?: GetAccountsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Accounts>;
     /**
-     * Get expiring .ton dns
-     */
-    getDnsExpiringRaw(requestParameters: GetDnsExpiringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DnsExpiring>>;
-    /**
-     * Get expiring .ton dns
-     */
-    getDnsExpiring(requestParameters: GetDnsExpiringRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DnsExpiring>;
-    /**
-     * Get events for an account. Each event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
-     */
-    getEventsByAccountRaw(requestParameters: GetEventsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
-    /**
-     * Get events for an account. Each event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time.
-     */
-    getEventsByAccount(requestParameters: GetEventsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
-    /**
-     * Get all Jettons balances by owner address
-     */
-    getJettonsBalancesRaw(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonsBalances>>;
-    /**
-     * Get all Jettons balances by owner address
-     */
-    getJettonsBalances(requestParameters: GetJettonsBalancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonsBalances>;
-    /**
-     * Get the transfer jettons history for account_id
-     */
-    getJettonsHistoryRaw(requestParameters: GetJettonsHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
-    /**
-     * Get the transfer jettons history for account_id
-     */
-    getJettonsHistory(requestParameters: GetJettonsHistoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
-    /**
-     * Get the transfer jetton history for account_id and jetton_id
-     */
-    getJettonsHistoryByIDRaw(requestParameters: GetJettonsHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AccountEvents>>;
-    /**
-     * Get the transfer jetton history for account_id and jetton_id
-     */
-    getJettonsHistoryByID(requestParameters: GetJettonsHistoryByIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AccountEvents>;
-    /**
-     * Get all NFT items by owner address
-     */
-    getNftItemsByOwnerRaw(requestParameters: GetNftItemsByOwnerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<NftItems>>;
-    /**
-     * Get all NFT items by owner address
-     */
-    getNftItemsByOwner(requestParameters: GetNftItemsByOwnerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<NftItems>;
-    /**
-     * Get public key by account id
-     */
-    getPublicKeyByAccountIDRaw(requestParameters: GetPublicKeyByAccountIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetPublicKeyByAccountID200Response>>;
-    /**
-     * Get public key by account id
-     */
-    getPublicKeyByAccountID(requestParameters: GetPublicKeyByAccountIDRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetPublicKeyByAccountID200Response>;
-    /**
-     * Search for accounts by name. You can find the account by the first characters of the domain.
-     */
-    getSearchAccountsRaw(requestParameters: GetSearchAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FoundAccounts>>;
-    /**
-     * Search for accounts by name. You can find the account by the first characters of the domain.
-     */
-    getSearchAccounts(requestParameters: GetSearchAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FoundAccounts>;
-    /**
-     * Get all subscriptions by wallet address
-     */
-    getSubscriptionsByAccountRaw(requestParameters: GetSubscriptionsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Subscriptions>>;
-    /**
-     * Get all subscriptions by wallet address
-     */
-    getSubscriptionsByAccount(requestParameters: GetSubscriptionsByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Subscriptions>;
-    /**
-     * Get traces for account
-     */
-    getTracesByAccountRaw(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TraceIds>>;
-    /**
-     * Get traces for account
-     */
-    getTracesByAccount(requestParameters: GetTracesByAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TraceIds>;
-    /**
      * Update internal cache for a particular account
      */
     reindexAccountRaw(requestParameters: ReindexAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
@@ -391,4 +412,12 @@ export declare class AccountsApi extends runtime.BaseAPI implements AccountsApiI
      * Update internal cache for a particular account
      */
     reindexAccount(requestParameters: ReindexAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
+    /**
+     * Search by account domain name
+     */
+    searchAccountsRaw(requestParameters: SearchAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FoundAccounts>>;
+    /**
+     * Search by account domain name
+     */
+    searchAccounts(requestParameters: SearchAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FoundAccounts>;
 }

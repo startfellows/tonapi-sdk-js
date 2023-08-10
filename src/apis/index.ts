@@ -14,4 +14,3 @@ export * from './StakingApi';
 export * from './StorageApi';
 export * from './TracesApi';
 export * from './WalletApi';
-export * from './WalletsApi';

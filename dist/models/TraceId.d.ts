@@ -12,26 +12,26 @@
 /**
  *
  * @export
- * @interface TraceId
+ * @interface TraceID
  */
-export interface TraceId {
+export interface TraceID {
     /**
      *
      * @type {string}
-     * @memberof TraceId
+     * @memberof TraceID
      */
     id: string;
     /**
      *
      * @type {number}
-     * @memberof TraceId
+     * @memberof TraceID
      */
     utime: number;
 }
 /**
- * Check if a given object implements the TraceId interface.
+ * Check if a given object implements the TraceID interface.
  */
-export declare function instanceOfTraceId(value: object): boolean;
-export declare function TraceIdFromJSON(json: any): TraceId;
-export declare function TraceIdFromJSONTyped(json: any, ignoreDiscriminator: boolean): TraceId;
-export declare function TraceIdToJSON(value?: TraceId | null): any;
+export declare function instanceOfTraceID(value: object): boolean;
+export declare function TraceIDFromJSON(json: any): TraceID;
+export declare function TraceIDFromJSONTyped(json: any, ignoreDiscriminator: boolean): TraceID;
+export declare function TraceIDToJSON(value?: TraceID | null): any;

@@ -15,13 +15,13 @@
 
 import * as runtime from '../runtime';
 import type {
-  GetBlockDefaultResponse,
+  GetBlockchainBlockDefaultResponse,
   GetChartRates200Response,
   GetRates200Response,
 } from '../models/index';
 import {
-    GetBlockDefaultResponseFromJSON,
-    GetBlockDefaultResponseToJSON,
+    GetBlockchainBlockDefaultResponseFromJSON,
+    GetBlockchainBlockDefaultResponseToJSON,
     GetChartRates200ResponseFromJSON,
     GetChartRates200ResponseToJSON,
     GetRates200ResponseFromJSON,
