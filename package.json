@@ -8,7 +8,8 @@
     "/dist"
   ],
   "scripts": {
-    "generate:sdk": "docker build . -t tonapisdk && docker run --rm -v $PWD:/local tonapisdk && tsc"
+    "rm:old": "rm -rf src/apis && rm -rf src/models && rm -rf dist",
+    "generate:sdk": "yarn rm:old && docker build . -t tonapisdk && docker run --rm -v $PWD:/local tonapisdk && tsc"
   },
   "license": "GPL-3.0",
   "bugs": {
