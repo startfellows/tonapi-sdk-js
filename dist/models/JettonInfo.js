@@ -25,6 +25,7 @@ function instanceOfJettonInfo(value) {
     isInstance = isInstance && "totalSupply" in value;
     isInstance = isInstance && "metadata" in value;
     isInstance = isInstance && "verification" in value;
+    isInstance = isInstance && "holdersCount" in value;
     return isInstance;
 }
 exports.instanceOfJettonInfo = instanceOfJettonInfo;
@@ -41,6 +42,7 @@ function JettonInfoFromJSONTyped(json, ignoreDiscriminator) {
         'totalSupply': json['total_supply'],
         'metadata': (0, JettonMetadata_1.JettonMetadataFromJSON)(json['metadata']),
         'verification': (0, JettonVerificationType_1.JettonVerificationTypeFromJSON)(json['verification']),
+        'holdersCount': json['holders_count'],
     };
 }
 exports.JettonInfoFromJSONTyped = JettonInfoFromJSONTyped;
@@ -56,6 +58,7 @@ function JettonInfoToJSON(value) {
         'total_supply': value.totalSupply,
         'metadata': (0, JettonMetadata_1.JettonMetadataToJSON)(value.metadata),
         'verification': (0, JettonVerificationType_1.JettonVerificationTypeToJSON)(value.verification),
+        'holders_count': value.holdersCount,
     };
 }
 exports.JettonInfoToJSON = JettonInfoToJSON;

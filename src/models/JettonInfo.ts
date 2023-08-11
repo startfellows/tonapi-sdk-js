@@ -56,6 +56,12 @@ export interface JettonInfo {
      * @memberof JettonInfo
      */
     verification: JettonVerificationType;
+    /**
+     * 
+     * @type {number}
+     * @memberof JettonInfo
+     */
+    holdersCount: number;
 }
 
 /**
@@ -67,6 +73,7 @@ export function instanceOfJettonInfo(value: object): boolean {
     isInstance = isInstance && "totalSupply" in value;
     isInstance = isInstance && "metadata" in value;
     isInstance = isInstance && "verification" in value;
+    isInstance = isInstance && "holdersCount" in value;
 
     return isInstance;
 }
@@ -85,6 +92,7 @@ export function JettonInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'totalSupply': json['total_supply'],
         'metadata': JettonMetadataFromJSON(json['metadata']),
         'verification': JettonVerificationTypeFromJSON(json['verification']),
+        'holdersCount': json['holders_count'],
     };
 }
 
@@ -101,6 +109,7 @@ export function JettonInfoToJSON(value?: JettonInfo | null): any {
         'total_supply': value.totalSupply,
         'metadata': JettonMetadataToJSON(value.metadata),
         'verification': JettonVerificationTypeToJSON(value.verification),
+        'holders_count': value.holdersCount,
     };
 }
 

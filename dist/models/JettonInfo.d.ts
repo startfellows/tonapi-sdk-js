@@ -41,6 +41,12 @@ export interface JettonInfo {
      * @memberof JettonInfo
      */
     verification: JettonVerificationType;
+    /**
+     *
+     * @type {number}
+     * @memberof JettonInfo
+     */
+    holdersCount: number;
 }
 /**
  * Check if a given object implements the JettonInfo interface.
