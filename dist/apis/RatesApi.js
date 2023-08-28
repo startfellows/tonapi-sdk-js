@@ -44,6 +44,12 @@ class RatesApi extends runtime.BaseAPI {
             if (requestParameters.currency !== undefined) {
                 queryParameters['currency'] = requestParameters.currency;
             }
+            if (requestParameters.startDate !== undefined) {
+                queryParameters['start_date'] = requestParameters.startDate;
+            }
+            if (requestParameters.endDate !== undefined) {
+                queryParameters['end_date'] = requestParameters.endDate;
+            }
             const headerParameters = {};
             const response = yield this.request({
                 path: `/v2/rates/chart`,

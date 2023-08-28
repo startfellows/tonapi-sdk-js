@@ -13,6 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { BlockchainConfig44 } from './BlockchainConfig44';
+import {
+    BlockchainConfig44FromJSON,
+    BlockchainConfig44FromJSONTyped,
+    BlockchainConfig44ToJSON,
+} from './BlockchainConfig44';
 import type { ValidatorsSet } from './ValidatorsSet';
 import {
     ValidatorsSetFromJSON,
@@ -92,6 +98,12 @@ export interface BlockchainConfig {
      * @memberof BlockchainConfig
      */
     _37?: ValidatorsSet;
+    /**
+     * 
+     * @type {BlockchainConfig44}
+     * @memberof BlockchainConfig
+     */
+    _44: BlockchainConfig44;
 }
 
 /**
@@ -104,6 +116,7 @@ export function instanceOfBlockchainConfig(value: object): boolean {
     isInstance = isInstance && "_1" in value;
     isInstance = isInstance && "_2" in value;
     isInstance = isInstance && "_4" in value;
+    isInstance = isInstance && "_44" in value;
 
     return isInstance;
 }
@@ -129,6 +142,7 @@ export function BlockchainConfigFromJSONTyped(json: any, ignoreDiscriminator: bo
         '_35': !exists(json, '35') ? undefined : ValidatorsSetFromJSON(json['35']),
         '_36': !exists(json, '36') ? undefined : ValidatorsSetFromJSON(json['36']),
         '_37': !exists(json, '37') ? undefined : ValidatorsSetFromJSON(json['37']),
+        '_44': BlockchainConfig44FromJSON(json['44']),
     };
 }
 
@@ -152,6 +166,7 @@ export function BlockchainConfigToJSON(value?: BlockchainConfig | null): any {
         '35': ValidatorsSetToJSON(value._35),
         '36': ValidatorsSetToJSON(value._36),
         '37': ValidatorsSetToJSON(value._37),
+        '44': BlockchainConfig44ToJSON(value._44),
     };
 }
 

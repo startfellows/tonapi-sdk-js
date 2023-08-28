@@ -94,7 +94,8 @@ export interface JettonSwapAction {
  */
 export const JettonSwapActionDexEnum = {
     Stonfi: 'stonfi',
-    Dedust: 'dedust'
+    Dedust: 'dedust',
+    Megatonfi: 'megatonfi'
 } as const;
 export type JettonSwapActionDexEnum = typeof JettonSwapActionDexEnum[keyof typeof JettonSwapActionDexEnum];
 

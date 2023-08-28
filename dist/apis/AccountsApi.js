@@ -86,6 +86,46 @@ class AccountsApi extends runtime.BaseAPI {
         });
     }
     /**
+     * Get account\'s balance change
+     */
+    getAccountDiffRaw(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling getAccountDiff.');
+            }
+            if (requestParameters.startDate === null || requestParameters.startDate === undefined) {
+                throw new runtime.RequiredError('startDate', 'Required parameter requestParameters.startDate was null or undefined when calling getAccountDiff.');
+            }
+            if (requestParameters.endDate === null || requestParameters.endDate === undefined) {
+                throw new runtime.RequiredError('endDate', 'Required parameter requestParameters.endDate was null or undefined when calling getAccountDiff.');
+            }
+            const queryParameters = {};
+            if (requestParameters.startDate !== undefined) {
+                queryParameters['start_date'] = requestParameters.startDate;
+            }
+            if (requestParameters.endDate !== undefined) {
+                queryParameters['end_date'] = requestParameters.endDate;
+            }
+            const headerParameters = {};
+            const response = yield this.request({
+                path: `/v2/accounts/{account_id}/diff`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.GetAccountDiff200ResponseFromJSON)(jsonValue));
+        });
+    }
+    /**
+     * Get account\'s balance change
+     */
+    getAccountDiff(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.getAccountDiffRaw(requestParameters, initOverrides);
+            return yield response.value();
+        });
+    }
+    /**
      * Get expiring account .ton dns
      */
     getAccountDnsExpiringRaw(requestParameters, initOverrides) {

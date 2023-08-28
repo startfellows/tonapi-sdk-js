@@ -21,7 +21,8 @@ const JettonPreview_1 = require("./JettonPreview");
  */
 exports.JettonSwapActionDexEnum = {
     Stonfi: 'stonfi',
-    Dedust: 'dedust'
+    Dedust: 'dedust',
+    Megatonfi: 'megatonfi'
 };
 /**
  * Check if a given object implements the JettonSwapAction interface.

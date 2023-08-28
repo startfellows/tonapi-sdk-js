@@ -33,8 +33,11 @@ models/Auction.ts
 models/AuctionBidAction.ts
 models/Auctions.ts
 models/BlockRaw.ts
+models/BlockchainAccountInspect.ts
+models/BlockchainAccountInspectMethodsInner.ts
 models/BlockchainBlock.ts
 models/BlockchainConfig.ts
+models/BlockchainConfig44.ts
 models/BlockchainRawAccount.ts
 models/BouncePhaseType.ts
 models/ComputePhase.ts
@@ -54,6 +57,7 @@ models/EncryptedComment.ts
 models/Event.ts
 models/FoundAccounts.ts
 models/FoundAccountsAddressesInner.ts
+models/GetAccountDiff200Response.ts
 models/GetAccountInfoByStateInitRequest.ts
 models/GetAccountPublicKey200Response.ts
 models/GetAccountsRequest.ts

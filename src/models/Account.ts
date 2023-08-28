@@ -79,6 +79,12 @@ export interface Account {
      * @memberof Account
      */
     getMethods: Array<string>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Account
+     */
+    isSuspended?: boolean;
 }
 
 /**
@@ -115,6 +121,7 @@ export function AccountFromJSONTyped(json: any, ignoreDiscriminator: boolean): A
         'icon': !exists(json, 'icon') ? undefined : json['icon'],
         'memoRequired': !exists(json, 'memo_required') ? undefined : json['memo_required'],
         'getMethods': json['get_methods'],
+        'isSuspended': !exists(json, 'is_suspended') ? undefined : json['is_suspended'],
     };
 }
 
@@ -137,6 +144,7 @@ export function AccountToJSON(value?: Account | null): any {
         'icon': value.icon,
         'memo_required': value.memoRequired,
         'get_methods': value.getMethods,
+        'is_suspended': value.isSuspended,
     };
 }
 

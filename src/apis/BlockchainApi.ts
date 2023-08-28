@@ -15,6 +15,7 @@
 
 import * as runtime from '../runtime';
 import type {
+  BlockchainAccountInspect,
   BlockchainBlock,
   BlockchainConfig,
   BlockchainRawAccount,
@@ -26,6 +27,8 @@ import type {
   Validators,
 } from '../models/index';
 import {
+    BlockchainAccountInspectFromJSON,
+    BlockchainAccountInspectToJSON,
     BlockchainBlockFromJSON,
     BlockchainBlockToJSON,
     BlockchainConfigFromJSON,
@@ -45,6 +48,10 @@ import {
     ValidatorsFromJSON,
     ValidatorsToJSON,
 } from '../models/index';
+
+export interface BlockchainAccountInspectRequest {
+    accountId: string;
+}
 
 export interface ExecGetMethodForBlockchainAccountRequest {
     accountId: string;
@@ -90,6 +97,20 @@ export interface SendBlockchainMessageOperationRequest {
  * @interface BlockchainApiInterface
  */
 export interface BlockchainApiInterface {
+    /**
+     * Blockchain account inspect
+     * @param {string} accountId account ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlockchainApiInterface
+     */
+    blockchainAccountInspectRaw(requestParameters: BlockchainAccountInspectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlockchainAccountInspect>>;
+
+    /**
+     * Blockchain account inspect
+     */
+    blockchainAccountInspect(requestParameters: BlockchainAccountInspectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlockchainAccountInspect>;
+
     /**
      * Execute get method for account
      * @param {string} accountId account ID
@@ -252,6 +273,36 @@ export interface BlockchainApiInterface {
  * 
  */
 export class BlockchainApi extends runtime.BaseAPI implements BlockchainApiInterface {
+
+    /**
+     * Blockchain account inspect
+     */
+    async blockchainAccountInspectRaw(requestParameters: BlockchainAccountInspectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlockchainAccountInspect>> {
+        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling blockchainAccountInspect.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v2/blockchain/accounts/{account_id}/inspect`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => BlockchainAccountInspectFromJSON(jsonValue));
+    }
+
+    /**
+     * Blockchain account inspect
+     */
+    async blockchainAccountInspect(requestParameters: BlockchainAccountInspectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlockchainAccountInspect> {
+        const response = await this.blockchainAccountInspectRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Execute get method for account

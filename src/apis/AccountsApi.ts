@@ -22,6 +22,7 @@ import type {
   DnsExpiring,
   DomainNames,
   FoundAccounts,
+  GetAccountDiff200Response,
   GetAccountPublicKey200Response,
   GetAccountsRequest,
   GetBlockchainBlockDefaultResponse,
@@ -45,6 +46,8 @@ import {
     DomainNamesToJSON,
     FoundAccountsFromJSON,
     FoundAccountsToJSON,
+    GetAccountDiff200ResponseFromJSON,
+    GetAccountDiff200ResponseToJSON,
     GetAccountPublicKey200ResponseFromJSON,
     GetAccountPublicKey200ResponseToJSON,
     GetAccountsRequestFromJSON,
@@ -67,6 +70,12 @@ export interface AccountDnsBackResolveRequest {
 
 export interface GetAccountRequest {
     accountId: string;
+}
+
+export interface GetAccountDiffRequest {
+    accountId: string;
+    startDate: number;
+    endDate: number;
 }
 
 export interface GetAccountDnsExpiringRequest {
@@ -181,6 +190,22 @@ export interface AccountsApiInterface {
      * Get human-friendly information about an account without low-level details.
      */
     getAccount(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account>;
+
+    /**
+     * Get account\'s balance change
+     * @param {string} accountId account ID
+     * @param {number} startDate 
+     * @param {number} endDate 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    getAccountDiffRaw(requestParameters: GetAccountDiffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAccountDiff200Response>>;
+
+    /**
+     * Get account\'s balance change
+     */
+    getAccountDiff(requestParameters: GetAccountDiffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetAccountDiff200Response>;
 
     /**
      * Get expiring account .ton dns
@@ -454,6 +479,52 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
      */
     async getAccount(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account> {
         const response = await this.getAccountRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get account\'s balance change
+     */
+    async getAccountDiffRaw(requestParameters: GetAccountDiffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAccountDiff200Response>> {
+        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getAccountDiff.');
+        }
+
+        if (requestParameters.startDate === null || requestParameters.startDate === undefined) {
+            throw new runtime.RequiredError('startDate','Required parameter requestParameters.startDate was null or undefined when calling getAccountDiff.');
+        }
+
+        if (requestParameters.endDate === null || requestParameters.endDate === undefined) {
+            throw new runtime.RequiredError('endDate','Required parameter requestParameters.endDate was null or undefined when calling getAccountDiff.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.startDate !== undefined) {
+            queryParameters['start_date'] = requestParameters.startDate;
+        }
+
+        if (requestParameters.endDate !== undefined) {
+            queryParameters['end_date'] = requestParameters.endDate;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v2/accounts/{account_id}/diff`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetAccountDiff200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get account\'s balance change
+     */
+    async getAccountDiff(requestParameters: GetAccountDiffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetAccountDiff200Response> {
+        const response = await this.getAccountDiffRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

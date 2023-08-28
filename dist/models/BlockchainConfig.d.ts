@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import type { BlockchainConfig44 } from './BlockchainConfig44';
 import type { ValidatorsSet } from './ValidatorsSet';
 /**
  *
@@ -82,6 +83,12 @@ export interface BlockchainConfig {
      * @memberof BlockchainConfig
      */
     _37?: ValidatorsSet;
+    /**
+     *
+     * @type {BlockchainConfig44}
+     * @memberof BlockchainConfig
+     */
+    _44: BlockchainConfig44;
 }
 /**
  * Check if a given object implements the BlockchainConfig interface.

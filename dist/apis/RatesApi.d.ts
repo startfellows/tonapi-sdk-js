@@ -14,6 +14,8 @@ import type { GetChartRates200Response, GetRates200Response } from '../models/in
 export interface GetChartRatesRequest {
     token: string;
     currency?: string;
+    startDate?: number;
+    endDate?: number;
 }
 export interface GetRatesRequest {
     tokens: string;
@@ -30,6 +32,8 @@ export interface RatesApiInterface {
      * Get chart by token
      * @param {string} token accept jetton master address
      * @param {string} [currency]
+     * @param {number} [startDate]
+     * @param {number} [endDate]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RatesApiInterface

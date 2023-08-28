@@ -31,6 +31,8 @@ import {
 export interface GetChartRatesRequest {
     token: string;
     currency?: string;
+    startDate?: number;
+    endDate?: number;
 }
 
 export interface GetRatesRequest {
@@ -49,6 +51,8 @@ export interface RatesApiInterface {
      * Get chart by token
      * @param {string} token accept jetton master address
      * @param {string} [currency] 
+     * @param {number} [startDate] 
+     * @param {number} [endDate] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RatesApiInterface
@@ -98,6 +102,14 @@ export class RatesApi extends runtime.BaseAPI implements RatesApiInterface {
 
         if (requestParameters.currency !== undefined) {
             queryParameters['currency'] = requestParameters.currency;
+        }
+
+        if (requestParameters.startDate !== undefined) {
+            queryParameters['start_date'] = requestParameters.startDate;
+        }
+
+        if (requestParameters.endDate !== undefined) {
+            queryParameters['end_date'] = requestParameters.endDate;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

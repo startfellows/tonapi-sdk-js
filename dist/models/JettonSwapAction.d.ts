@@ -78,6 +78,7 @@ export interface JettonSwapAction {
 export declare const JettonSwapActionDexEnum: {
     readonly Stonfi: "stonfi";
     readonly Dedust: "dedust";
+    readonly Megatonfi: "megatonfi";
 };
 export declare type JettonSwapActionDexEnum = typeof JettonSwapActionDexEnum[keyof typeof JettonSwapActionDexEnum];
 /**

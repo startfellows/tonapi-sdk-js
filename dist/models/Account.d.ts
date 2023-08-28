@@ -75,6 +75,12 @@ export interface Account {
      * @memberof Account
      */
     getMethods: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof Account
+     */
+    isSuspended?: boolean;
 }
 /**
  * Check if a given object implements the Account interface.

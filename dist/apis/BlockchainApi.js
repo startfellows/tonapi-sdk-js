@@ -30,6 +30,34 @@ const index_1 = require("../models/index");
  */
 class BlockchainApi extends runtime.BaseAPI {
     /**
+     * Blockchain account inspect
+     */
+    blockchainAccountInspectRaw(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling blockchainAccountInspect.');
+            }
+            const queryParameters = {};
+            const headerParameters = {};
+            const response = yield this.request({
+                path: `/v2/blockchain/accounts/{account_id}/inspect`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.BlockchainAccountInspectFromJSON)(jsonValue));
+        });
+    }
+    /**
+     * Blockchain account inspect
+     */
+    blockchainAccountInspect(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.blockchainAccountInspectRaw(requestParameters, initOverrides);
+            return yield response.value();
+        });
+    }
+    /**
      * Execute get method for account
      */
     execGetMethodForBlockchainAccountRaw(requestParameters, initOverrides) {

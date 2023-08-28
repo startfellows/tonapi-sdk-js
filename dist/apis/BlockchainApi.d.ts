@@ -10,7 +10,10 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { BlockchainBlock, BlockchainConfig, BlockchainRawAccount, MethodExecutionResult, SendBlockchainMessageRequest, Transaction, Transactions, Validators } from '../models/index';
+import type { BlockchainAccountInspect, BlockchainBlock, BlockchainConfig, BlockchainRawAccount, MethodExecutionResult, SendBlockchainMessageRequest, Transaction, Transactions, Validators } from '../models/index';
+export interface BlockchainAccountInspectRequest {
+    accountId: string;
+}
 export interface ExecGetMethodForBlockchainAccountRequest {
     accountId: string;
     methodName: string;
@@ -47,6 +50,18 @@ export interface SendBlockchainMessageOperationRequest {
  * @interface BlockchainApiInterface
  */
 export interface BlockchainApiInterface {
+    /**
+     * Blockchain account inspect
+     * @param {string} accountId account ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BlockchainApiInterface
+     */
+    blockchainAccountInspectRaw(requestParameters: BlockchainAccountInspectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlockchainAccountInspect>>;
+    /**
+     * Blockchain account inspect
+     */
+    blockchainAccountInspect(requestParameters: BlockchainAccountInspectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlockchainAccountInspect>;
     /**
      * Execute get method for account
      * @param {string} accountId account ID
@@ -186,6 +201,14 @@ export interface BlockchainApiInterface {
  *
  */
 export declare class BlockchainApi extends runtime.BaseAPI implements BlockchainApiInterface {
+    /**
+     * Blockchain account inspect
+     */
+    blockchainAccountInspectRaw(requestParameters: BlockchainAccountInspectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<BlockchainAccountInspect>>;
+    /**
+     * Blockchain account inspect
+     */
+    blockchainAccountInspect(requestParameters: BlockchainAccountInspectRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<BlockchainAccountInspect>;
     /**
      * Execute get method for account
      */

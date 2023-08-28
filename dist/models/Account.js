@@ -47,6 +47,7 @@ function AccountFromJSONTyped(json, ignoreDiscriminator) {
         'icon': !(0, runtime_1.exists)(json, 'icon') ? undefined : json['icon'],
         'memoRequired': !(0, runtime_1.exists)(json, 'memo_required') ? undefined : json['memo_required'],
         'getMethods': json['get_methods'],
+        'isSuspended': !(0, runtime_1.exists)(json, 'is_suspended') ? undefined : json['is_suspended'],
     };
 }
 exports.AccountFromJSONTyped = AccountFromJSONTyped;
@@ -68,6 +69,7 @@ function AccountToJSON(value) {
         'icon': value.icon,
         'memo_required': value.memoRequired,
         'get_methods': value.getMethods,
+        'is_suspended': value.isSuspended,
     };
 }
 exports.AccountToJSON = AccountToJSON;

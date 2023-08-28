@@ -15,6 +15,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BlockchainConfigToJSON = exports.BlockchainConfigFromJSONTyped = exports.BlockchainConfigFromJSON = exports.instanceOfBlockchainConfig = void 0;
 const runtime_1 = require("../runtime");
+const BlockchainConfig44_1 = require("./BlockchainConfig44");
 const ValidatorsSet_1 = require("./ValidatorsSet");
 /**
  * Check if a given object implements the BlockchainConfig interface.
@@ -26,6 +27,7 @@ function instanceOfBlockchainConfig(value) {
     isInstance = isInstance && "_1" in value;
     isInstance = isInstance && "_2" in value;
     isInstance = isInstance && "_4" in value;
+    isInstance = isInstance && "_44" in value;
     return isInstance;
 }
 exports.instanceOfBlockchainConfig = instanceOfBlockchainConfig;
@@ -49,6 +51,7 @@ function BlockchainConfigFromJSONTyped(json, ignoreDiscriminator) {
         '_35': !(0, runtime_1.exists)(json, '35') ? undefined : (0, ValidatorsSet_1.ValidatorsSetFromJSON)(json['35']),
         '_36': !(0, runtime_1.exists)(json, '36') ? undefined : (0, ValidatorsSet_1.ValidatorsSetFromJSON)(json['36']),
         '_37': !(0, runtime_1.exists)(json, '37') ? undefined : (0, ValidatorsSet_1.ValidatorsSetFromJSON)(json['37']),
+        '_44': (0, BlockchainConfig44_1.BlockchainConfig44FromJSON)(json['44']),
     };
 }
 exports.BlockchainConfigFromJSONTyped = BlockchainConfigFromJSONTyped;
@@ -71,6 +74,7 @@ function BlockchainConfigToJSON(value) {
         '35': (0, ValidatorsSet_1.ValidatorsSetToJSON)(value._35),
         '36': (0, ValidatorsSet_1.ValidatorsSetToJSON)(value._36),
         '37': (0, ValidatorsSet_1.ValidatorsSetToJSON)(value._37),
+        '44': (0, BlockchainConfig44_1.BlockchainConfig44ToJSON)(value._44),
     };
 }
 exports.BlockchainConfigToJSON = BlockchainConfigToJSON;

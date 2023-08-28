@@ -10,12 +10,17 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { Account, AccountEvent, AccountEvents, Accounts, DnsExpiring, DomainNames, FoundAccounts, GetAccountPublicKey200Response, GetAccountsRequest, JettonsBalances, NftItems, Subscriptions, TraceIDs } from '../models/index';
+import type { Account, AccountEvent, AccountEvents, Accounts, DnsExpiring, DomainNames, FoundAccounts, GetAccountDiff200Response, GetAccountPublicKey200Response, GetAccountsRequest, JettonsBalances, NftItems, Subscriptions, TraceIDs } from '../models/index';
 export interface AccountDnsBackResolveRequest {
     accountId: string;
 }
 export interface GetAccountRequest {
     accountId: string;
+}
+export interface GetAccountDiffRequest {
+    accountId: string;
+    startDate: number;
+    endDate: number;
 }
 export interface GetAccountDnsExpiringRequest {
     accountId: string;
@@ -113,6 +118,20 @@ export interface AccountsApiInterface {
      * Get human-friendly information about an account without low-level details.
      */
     getAccount(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account>;
+    /**
+     * Get account\'s balance change
+     * @param {string} accountId account ID
+     * @param {number} startDate
+     * @param {number} endDate
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountsApiInterface
+     */
+    getAccountDiffRaw(requestParameters: GetAccountDiffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAccountDiff200Response>>;
+    /**
+     * Get account\'s balance change
+     */
+    getAccountDiff(requestParameters: GetAccountDiffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetAccountDiff200Response>;
     /**
      * Get expiring account .ton dns
      * @param {string} accountId account ID
@@ -316,6 +335,14 @@ export declare class AccountsApi extends runtime.BaseAPI implements AccountsApiI
      * Get human-friendly information about an account without low-level details.
      */
     getAccount(requestParameters: GetAccountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Account>;
+    /**
+     * Get account\'s balance change
+     */
+    getAccountDiffRaw(requestParameters: GetAccountDiffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetAccountDiff200Response>>;
+    /**
+     * Get account\'s balance change
+     */
+    getAccountDiff(requestParameters: GetAccountDiffRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetAccountDiff200Response>;
     /**
      * Get expiring account .ton dns
      */
