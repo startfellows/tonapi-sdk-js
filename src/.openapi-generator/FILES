@@ -52,6 +52,8 @@ models/DomainBid.ts
 models/DomainBids.ts
 models/DomainInfo.ts
 models/DomainNames.ts
+models/ElectionsDepositStakeAction.ts
+models/ElectionsRecoverStakeAction.ts
 models/EmulateMessageToEventRequest.ts
 models/EncryptedComment.ts
 models/Event.ts
@@ -94,8 +96,12 @@ models/GetWalletBackup200Response.ts
 models/ImagePreview.ts
 models/InitStateRaw.ts
 models/JettonBalance.ts
+models/JettonBurnAction.ts
+models/JettonHolders.ts
+models/JettonHoldersAddressesInner.ts
 models/JettonInfo.ts
 models/JettonMetadata.ts
+models/JettonMintAction.ts
 models/JettonPreview.ts
 models/JettonQuantity.ts
 models/JettonSwapAction.ts
@@ -117,7 +123,6 @@ models/NftPurchaseAction.ts
 models/PoolImplementation.ts
 models/PoolInfo.ts
 models/Price.ts
-models/RecoverStakeAction.ts
 models/Refund.ts
 models/Risk.ts
 models/Sale.ts
@@ -152,5 +157,7 @@ models/ValidatorsSetListInner.ts
 models/ValueFlow.ts
 models/ValueFlowJettonsInner.ts
 models/WalletDNS.ts
+models/WithdrawStakeAction.ts
+models/WithdrawStakeRequestAction.ts
 models/index.ts
 runtime.ts

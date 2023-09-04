@@ -30,6 +30,34 @@ const index_1 = require("../models/index");
  */
 class JettonsApi extends runtime.BaseAPI {
     /**
+     * Get jetton\'s holders
+     */
+    getJettonHoldersRaw(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+                throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling getJettonHolders.');
+            }
+            const queryParameters = {};
+            const headerParameters = {};
+            const response = yield this.request({
+                path: `/v2/jettons/{account_id}/holders`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.JettonHoldersFromJSON)(jsonValue));
+        });
+    }
+    /**
+     * Get jetton\'s holders
+     */
+    getJettonHolders(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.getJettonHoldersRaw(requestParameters, initOverrides);
+            return yield response.value();
+        });
+    }
+    /**
      * Get jetton metadata by jetton master address
      */
     getJettonInfoRaw(requestParameters, initOverrides) {

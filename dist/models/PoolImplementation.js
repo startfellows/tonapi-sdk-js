@@ -22,6 +22,7 @@ function instanceOfPoolImplementation(value) {
     isInstance = isInstance && "name" in value;
     isInstance = isInstance && "description" in value;
     isInstance = isInstance && "url" in value;
+    isInstance = isInstance && "socials" in value;
     return isInstance;
 }
 exports.instanceOfPoolImplementation = instanceOfPoolImplementation;
@@ -37,6 +38,7 @@ function PoolImplementationFromJSONTyped(json, ignoreDiscriminator) {
         'name': json['name'],
         'description': json['description'],
         'url': json['url'],
+        'socials': json['socials'],
     };
 }
 exports.PoolImplementationFromJSONTyped = PoolImplementationFromJSONTyped;
@@ -51,6 +53,7 @@ function PoolImplementationToJSON(value) {
         'name': value.name,
         'description': value.description,
         'url': value.url,
+        'socials': value.socials,
     };
 }
 exports.PoolImplementationToJSON = PoolImplementationToJSON;

@@ -13,35 +13,35 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DepositStakeActionToJSON = exports.DepositStakeActionFromJSONTyped = exports.DepositStakeActionFromJSON = exports.instanceOfDepositStakeAction = void 0;
+exports.WithdrawStakeRequestActionToJSON = exports.WithdrawStakeRequestActionFromJSONTyped = exports.WithdrawStakeRequestActionFromJSON = exports.instanceOfWithdrawStakeRequestAction = void 0;
+const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
 /**
- * Check if a given object implements the DepositStakeAction interface.
+ * Check if a given object implements the WithdrawStakeRequestAction interface.
  */
-function instanceOfDepositStakeAction(value) {
+function instanceOfWithdrawStakeRequestAction(value) {
     let isInstance = true;
-    isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "staker" in value;
     isInstance = isInstance && "pool" in value;
     return isInstance;
 }
-exports.instanceOfDepositStakeAction = instanceOfDepositStakeAction;
-function DepositStakeActionFromJSON(json) {
-    return DepositStakeActionFromJSONTyped(json, false);
+exports.instanceOfWithdrawStakeRequestAction = instanceOfWithdrawStakeRequestAction;
+function WithdrawStakeRequestActionFromJSON(json) {
+    return WithdrawStakeRequestActionFromJSONTyped(json, false);
 }
-exports.DepositStakeActionFromJSON = DepositStakeActionFromJSON;
-function DepositStakeActionFromJSONTyped(json, ignoreDiscriminator) {
+exports.WithdrawStakeRequestActionFromJSON = WithdrawStakeRequestActionFromJSON;
+function WithdrawStakeRequestActionFromJSONTyped(json, ignoreDiscriminator) {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
-        'amount': json['amount'],
+        'amount': !(0, runtime_1.exists)(json, 'amount') ? undefined : json['amount'],
         'staker': (0, AccountAddress_1.AccountAddressFromJSON)(json['staker']),
         'pool': (0, AccountAddress_1.AccountAddressFromJSON)(json['pool']),
     };
 }
-exports.DepositStakeActionFromJSONTyped = DepositStakeActionFromJSONTyped;
-function DepositStakeActionToJSON(value) {
+exports.WithdrawStakeRequestActionFromJSONTyped = WithdrawStakeRequestActionFromJSONTyped;
+function WithdrawStakeRequestActionToJSON(value) {
     if (value === undefined) {
         return undefined;
     }
@@ -54,4 +54,4 @@ function DepositStakeActionToJSON(value) {
         'pool': (0, AccountAddress_1.AccountAddressToJSON)(value.pool),
     };
 }
-exports.DepositStakeActionToJSON = DepositStakeActionToJSON;
+exports.WithdrawStakeRequestActionToJSON = WithdrawStakeRequestActionToJSON;

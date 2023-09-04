@@ -10,7 +10,10 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import type { JettonInfo, Jettons } from '../models/index';
+import type { JettonHolders, JettonInfo, Jettons } from '../models/index';
+export interface GetJettonHoldersRequest {
+    accountId: string;
+}
 export interface GetJettonInfoRequest {
     accountId: string;
 }
@@ -25,6 +28,18 @@ export interface GetJettonsRequest {
  * @interface JettonsApiInterface
  */
 export interface JettonsApiInterface {
+    /**
+     * Get jetton\'s holders
+     * @param {string} accountId account ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JettonsApiInterface
+     */
+    getJettonHoldersRaw(requestParameters: GetJettonHoldersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonHolders>>;
+    /**
+     * Get jetton\'s holders
+     */
+    getJettonHolders(requestParameters: GetJettonHoldersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonHolders>;
     /**
      * Get jetton metadata by jetton master address
      * @param {string} accountId account ID
@@ -55,6 +70,14 @@ export interface JettonsApiInterface {
  *
  */
 export declare class JettonsApi extends runtime.BaseAPI implements JettonsApiInterface {
+    /**
+     * Get jetton\'s holders
+     */
+    getJettonHoldersRaw(requestParameters: GetJettonHoldersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonHolders>>;
+    /**
+     * Get jetton\'s holders
+     */
+    getJettonHolders(requestParameters: GetJettonHoldersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonHolders>;
     /**
      * Get jetton metadata by jetton master address
      */

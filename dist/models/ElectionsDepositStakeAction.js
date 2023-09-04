@@ -13,35 +13,33 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DepositStakeActionToJSON = exports.DepositStakeActionFromJSONTyped = exports.DepositStakeActionFromJSON = exports.instanceOfDepositStakeAction = void 0;
+exports.ElectionsDepositStakeActionToJSON = exports.ElectionsDepositStakeActionFromJSONTyped = exports.ElectionsDepositStakeActionFromJSON = exports.instanceOfElectionsDepositStakeAction = void 0;
 const AccountAddress_1 = require("./AccountAddress");
 /**
- * Check if a given object implements the DepositStakeAction interface.
+ * Check if a given object implements the ElectionsDepositStakeAction interface.
  */
-function instanceOfDepositStakeAction(value) {
+function instanceOfElectionsDepositStakeAction(value) {
     let isInstance = true;
     isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "staker" in value;
-    isInstance = isInstance && "pool" in value;
     return isInstance;
 }
-exports.instanceOfDepositStakeAction = instanceOfDepositStakeAction;
-function DepositStakeActionFromJSON(json) {
-    return DepositStakeActionFromJSONTyped(json, false);
+exports.instanceOfElectionsDepositStakeAction = instanceOfElectionsDepositStakeAction;
+function ElectionsDepositStakeActionFromJSON(json) {
+    return ElectionsDepositStakeActionFromJSONTyped(json, false);
 }
-exports.DepositStakeActionFromJSON = DepositStakeActionFromJSON;
-function DepositStakeActionFromJSONTyped(json, ignoreDiscriminator) {
+exports.ElectionsDepositStakeActionFromJSON = ElectionsDepositStakeActionFromJSON;
+function ElectionsDepositStakeActionFromJSONTyped(json, ignoreDiscriminator) {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         'amount': json['amount'],
         'staker': (0, AccountAddress_1.AccountAddressFromJSON)(json['staker']),
-        'pool': (0, AccountAddress_1.AccountAddressFromJSON)(json['pool']),
     };
 }
-exports.DepositStakeActionFromJSONTyped = DepositStakeActionFromJSONTyped;
-function DepositStakeActionToJSON(value) {
+exports.ElectionsDepositStakeActionFromJSONTyped = ElectionsDepositStakeActionFromJSONTyped;
+function ElectionsDepositStakeActionToJSON(value) {
     if (value === undefined) {
         return undefined;
     }
@@ -51,7 +49,6 @@ function DepositStakeActionToJSON(value) {
     return {
         'amount': value.amount,
         'staker': (0, AccountAddress_1.AccountAddressToJSON)(value.staker),
-        'pool': (0, AccountAddress_1.AccountAddressToJSON)(value.pool),
     };
 }
-exports.DepositStakeActionToJSON = DepositStakeActionToJSON;
+exports.ElectionsDepositStakeActionToJSON = ElectionsDepositStakeActionToJSON;

@@ -16,17 +16,24 @@
 import * as runtime from '../runtime';
 import type {
   GetBlockchainBlockDefaultResponse,
+  JettonHolders,
   JettonInfo,
   Jettons,
 } from '../models/index';
 import {
     GetBlockchainBlockDefaultResponseFromJSON,
     GetBlockchainBlockDefaultResponseToJSON,
+    JettonHoldersFromJSON,
+    JettonHoldersToJSON,
     JettonInfoFromJSON,
     JettonInfoToJSON,
     JettonsFromJSON,
     JettonsToJSON,
 } from '../models/index';
+
+export interface GetJettonHoldersRequest {
+    accountId: string;
+}
 
 export interface GetJettonInfoRequest {
     accountId: string;
@@ -44,6 +51,20 @@ export interface GetJettonsRequest {
  * @interface JettonsApiInterface
  */
 export interface JettonsApiInterface {
+    /**
+     * Get jetton\'s holders
+     * @param {string} accountId account ID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JettonsApiInterface
+     */
+    getJettonHoldersRaw(requestParameters: GetJettonHoldersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonHolders>>;
+
+    /**
+     * Get jetton\'s holders
+     */
+    getJettonHolders(requestParameters: GetJettonHoldersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonHolders>;
+
     /**
      * Get jetton metadata by jetton master address
      * @param {string} accountId account ID
@@ -79,6 +100,36 @@ export interface JettonsApiInterface {
  * 
  */
 export class JettonsApi extends runtime.BaseAPI implements JettonsApiInterface {
+
+    /**
+     * Get jetton\'s holders
+     */
+    async getJettonHoldersRaw(requestParameters: GetJettonHoldersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<JettonHolders>> {
+        if (requestParameters.accountId === null || requestParameters.accountId === undefined) {
+            throw new runtime.RequiredError('accountId','Required parameter requestParameters.accountId was null or undefined when calling getJettonHolders.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/v2/jettons/{account_id}/holders`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => JettonHoldersFromJSON(jsonValue));
+    }
+
+    /**
+     * Get jetton\'s holders
+     */
+    async getJettonHolders(requestParameters: GetJettonHoldersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<JettonHolders> {
+        const response = await this.getJettonHoldersRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Get jetton metadata by jetton master address

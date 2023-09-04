@@ -23,58 +23,57 @@ import {
 /**
  * validator's participation in elections
  * @export
- * @interface DepositStakeAction
+ * @interface WithdrawStakeRequestAction
  */
-export interface DepositStakeAction {
+export interface WithdrawStakeRequestAction {
     /**
      * 
      * @type {number}
-     * @memberof DepositStakeAction
+     * @memberof WithdrawStakeRequestAction
      */
-    amount: number;
+    amount?: number;
     /**
      * 
      * @type {AccountAddress}
-     * @memberof DepositStakeAction
+     * @memberof WithdrawStakeRequestAction
      */
     staker: AccountAddress;
     /**
      * 
      * @type {AccountAddress}
-     * @memberof DepositStakeAction
+     * @memberof WithdrawStakeRequestAction
      */
     pool: AccountAddress;
 }
 
 /**
- * Check if a given object implements the DepositStakeAction interface.
+ * Check if a given object implements the WithdrawStakeRequestAction interface.
  */
-export function instanceOfDepositStakeAction(value: object): boolean {
+export function instanceOfWithdrawStakeRequestAction(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "staker" in value;
     isInstance = isInstance && "pool" in value;
 
     return isInstance;
 }
 
-export function DepositStakeActionFromJSON(json: any): DepositStakeAction {
-    return DepositStakeActionFromJSONTyped(json, false);
+export function WithdrawStakeRequestActionFromJSON(json: any): WithdrawStakeRequestAction {
+    return WithdrawStakeRequestActionFromJSONTyped(json, false);
 }
 
-export function DepositStakeActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): DepositStakeAction {
+export function WithdrawStakeRequestActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): WithdrawStakeRequestAction {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'amount': json['amount'],
+        'amount': !exists(json, 'amount') ? undefined : json['amount'],
         'staker': AccountAddressFromJSON(json['staker']),
         'pool': AccountAddressFromJSON(json['pool']),
     };
 }
 
-export function DepositStakeActionToJSON(value?: DepositStakeAction | null): any {
+export function WithdrawStakeRequestActionToJSON(value?: WithdrawStakeRequestAction | null): any {
     if (value === undefined) {
         return undefined;
     }

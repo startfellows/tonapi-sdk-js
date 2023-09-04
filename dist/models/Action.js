@@ -19,21 +19,28 @@ const ActionSimplePreview_1 = require("./ActionSimplePreview");
 const AuctionBidAction_1 = require("./AuctionBidAction");
 const ContractDeployAction_1 = require("./ContractDeployAction");
 const DepositStakeAction_1 = require("./DepositStakeAction");
+const ElectionsDepositStakeAction_1 = require("./ElectionsDepositStakeAction");
+const ElectionsRecoverStakeAction_1 = require("./ElectionsRecoverStakeAction");
+const JettonBurnAction_1 = require("./JettonBurnAction");
+const JettonMintAction_1 = require("./JettonMintAction");
 const JettonSwapAction_1 = require("./JettonSwapAction");
 const JettonTransferAction_1 = require("./JettonTransferAction");
 const NftItemTransferAction_1 = require("./NftItemTransferAction");
 const NftPurchaseAction_1 = require("./NftPurchaseAction");
-const RecoverStakeAction_1 = require("./RecoverStakeAction");
 const SmartContractAction_1 = require("./SmartContractAction");
 const SubscriptionAction_1 = require("./SubscriptionAction");
 const TonTransferAction_1 = require("./TonTransferAction");
 const UnSubscriptionAction_1 = require("./UnSubscriptionAction");
+const WithdrawStakeAction_1 = require("./WithdrawStakeAction");
+const WithdrawStakeRequestAction_1 = require("./WithdrawStakeRequestAction");
 /**
  * @export
  */
 exports.ActionTypeEnum = {
     TonTransfer: 'TonTransfer',
     JettonTransfer: 'JettonTransfer',
+    JettonBurn: 'JettonBurn',
+    JettonMint: 'JettonMint',
     NftItemTransfer: 'NftItemTransfer',
     ContractDeploy: 'ContractDeploy',
     Subscribe: 'Subscribe',
@@ -41,9 +48,12 @@ exports.ActionTypeEnum = {
     AuctionBid: 'AuctionBid',
     NftPurchase: 'NftPurchase',
     DepositStake: 'DepositStake',
-    RecoverStake: 'RecoverStake',
+    WithdrawStake: 'WithdrawStake',
+    WithdrawStakeRequest: 'WithdrawStakeRequest',
     JettonSwap: 'JettonSwap',
     SmartContractExec: 'SmartContractExec',
+    ElectionsRecoverStake: 'ElectionsRecoverStake',
+    ElectionsDepositStake: 'ElectionsDepositStake',
     Unknown: 'Unknown'
 };
 /**
@@ -78,13 +88,18 @@ function ActionFromJSONTyped(json, ignoreDiscriminator) {
         'tonTransfer': !(0, runtime_1.exists)(json, 'TonTransfer') ? undefined : (0, TonTransferAction_1.TonTransferActionFromJSON)(json['TonTransfer']),
         'contractDeploy': !(0, runtime_1.exists)(json, 'ContractDeploy') ? undefined : (0, ContractDeployAction_1.ContractDeployActionFromJSON)(json['ContractDeploy']),
         'jettonTransfer': !(0, runtime_1.exists)(json, 'JettonTransfer') ? undefined : (0, JettonTransferAction_1.JettonTransferActionFromJSON)(json['JettonTransfer']),
+        'jettonBurn': !(0, runtime_1.exists)(json, 'JettonBurn') ? undefined : (0, JettonBurnAction_1.JettonBurnActionFromJSON)(json['JettonBurn']),
+        'jettonMint': !(0, runtime_1.exists)(json, 'JettonMint') ? undefined : (0, JettonMintAction_1.JettonMintActionFromJSON)(json['JettonMint']),
         'nftItemTransfer': !(0, runtime_1.exists)(json, 'NftItemTransfer') ? undefined : (0, NftItemTransferAction_1.NftItemTransferActionFromJSON)(json['NftItemTransfer']),
         'subscribe': !(0, runtime_1.exists)(json, 'Subscribe') ? undefined : (0, SubscriptionAction_1.SubscriptionActionFromJSON)(json['Subscribe']),
         'unSubscribe': !(0, runtime_1.exists)(json, 'UnSubscribe') ? undefined : (0, UnSubscriptionAction_1.UnSubscriptionActionFromJSON)(json['UnSubscribe']),
         'auctionBid': !(0, runtime_1.exists)(json, 'AuctionBid') ? undefined : (0, AuctionBidAction_1.AuctionBidActionFromJSON)(json['AuctionBid']),
         'nftPurchase': !(0, runtime_1.exists)(json, 'NftPurchase') ? undefined : (0, NftPurchaseAction_1.NftPurchaseActionFromJSON)(json['NftPurchase']),
         'depositStake': !(0, runtime_1.exists)(json, 'DepositStake') ? undefined : (0, DepositStakeAction_1.DepositStakeActionFromJSON)(json['DepositStake']),
-        'recoverStake': !(0, runtime_1.exists)(json, 'RecoverStake') ? undefined : (0, RecoverStakeAction_1.RecoverStakeActionFromJSON)(json['RecoverStake']),
+        'withdrawStake': !(0, runtime_1.exists)(json, 'WithdrawStake') ? undefined : (0, WithdrawStakeAction_1.WithdrawStakeActionFromJSON)(json['WithdrawStake']),
+        'withdrawStakeRequest': !(0, runtime_1.exists)(json, 'WithdrawStakeRequest') ? undefined : (0, WithdrawStakeRequestAction_1.WithdrawStakeRequestActionFromJSON)(json['WithdrawStakeRequest']),
+        'electionsDepositStake': !(0, runtime_1.exists)(json, 'ElectionsDepositStake') ? undefined : (0, ElectionsDepositStakeAction_1.ElectionsDepositStakeActionFromJSON)(json['ElectionsDepositStake']),
+        'electionsRecoverStake': !(0, runtime_1.exists)(json, 'ElectionsRecoverStake') ? undefined : (0, ElectionsRecoverStakeAction_1.ElectionsRecoverStakeActionFromJSON)(json['ElectionsRecoverStake']),
         'jettonSwap': !(0, runtime_1.exists)(json, 'JettonSwap') ? undefined : (0, JettonSwapAction_1.JettonSwapActionFromJSON)(json['JettonSwap']),
         'smartContractExec': !(0, runtime_1.exists)(json, 'SmartContractExec') ? undefined : (0, SmartContractAction_1.SmartContractActionFromJSON)(json['SmartContractExec']),
         'simplePreview': (0, ActionSimplePreview_1.ActionSimplePreviewFromJSON)(json['simple_preview']),
@@ -104,13 +119,18 @@ function ActionToJSON(value) {
         'TonTransfer': (0, TonTransferAction_1.TonTransferActionToJSON)(value.tonTransfer),
         'ContractDeploy': (0, ContractDeployAction_1.ContractDeployActionToJSON)(value.contractDeploy),
         'JettonTransfer': (0, JettonTransferAction_1.JettonTransferActionToJSON)(value.jettonTransfer),
+        'JettonBurn': (0, JettonBurnAction_1.JettonBurnActionToJSON)(value.jettonBurn),
+        'JettonMint': (0, JettonMintAction_1.JettonMintActionToJSON)(value.jettonMint),
         'NftItemTransfer': (0, NftItemTransferAction_1.NftItemTransferActionToJSON)(value.nftItemTransfer),
         'Subscribe': (0, SubscriptionAction_1.SubscriptionActionToJSON)(value.subscribe),
         'UnSubscribe': (0, UnSubscriptionAction_1.UnSubscriptionActionToJSON)(value.unSubscribe),
         'AuctionBid': (0, AuctionBidAction_1.AuctionBidActionToJSON)(value.auctionBid),
         'NftPurchase': (0, NftPurchaseAction_1.NftPurchaseActionToJSON)(value.nftPurchase),
         'DepositStake': (0, DepositStakeAction_1.DepositStakeActionToJSON)(value.depositStake),
-        'RecoverStake': (0, RecoverStakeAction_1.RecoverStakeActionToJSON)(value.recoverStake),
+        'WithdrawStake': (0, WithdrawStakeAction_1.WithdrawStakeActionToJSON)(value.withdrawStake),
+        'WithdrawStakeRequest': (0, WithdrawStakeRequestAction_1.WithdrawStakeRequestActionToJSON)(value.withdrawStakeRequest),
+        'ElectionsDepositStake': (0, ElectionsDepositStakeAction_1.ElectionsDepositStakeActionToJSON)(value.electionsDepositStake),
+        'ElectionsRecoverStake': (0, ElectionsRecoverStakeAction_1.ElectionsRecoverStakeActionToJSON)(value.electionsRecoverStake),
         'JettonSwap': (0, JettonSwapAction_1.JettonSwapActionToJSON)(value.jettonSwap),
         'SmartContractExec': (0, SmartContractAction_1.SmartContractActionToJSON)(value.smartContractExec),
         'simple_preview': (0, ActionSimplePreview_1.ActionSimplePreviewToJSON)(value.simplePreview),

@@ -13,15 +13,20 @@ import type { ActionSimplePreview } from './ActionSimplePreview';
 import type { AuctionBidAction } from './AuctionBidAction';
 import type { ContractDeployAction } from './ContractDeployAction';
 import type { DepositStakeAction } from './DepositStakeAction';
+import type { ElectionsDepositStakeAction } from './ElectionsDepositStakeAction';
+import type { ElectionsRecoverStakeAction } from './ElectionsRecoverStakeAction';
+import type { JettonBurnAction } from './JettonBurnAction';
+import type { JettonMintAction } from './JettonMintAction';
 import type { JettonSwapAction } from './JettonSwapAction';
 import type { JettonTransferAction } from './JettonTransferAction';
 import type { NftItemTransferAction } from './NftItemTransferAction';
 import type { NftPurchaseAction } from './NftPurchaseAction';
-import type { RecoverStakeAction } from './RecoverStakeAction';
 import type { SmartContractAction } from './SmartContractAction';
 import type { SubscriptionAction } from './SubscriptionAction';
 import type { TonTransferAction } from './TonTransferAction';
 import type { UnSubscriptionAction } from './UnSubscriptionAction';
+import type { WithdrawStakeAction } from './WithdrawStakeAction';
+import type { WithdrawStakeRequestAction } from './WithdrawStakeRequestAction';
 /**
  *
  * @export
@@ -60,6 +65,18 @@ export interface Action {
     jettonTransfer?: JettonTransferAction;
     /**
      *
+     * @type {JettonBurnAction}
+     * @memberof Action
+     */
+    jettonBurn?: JettonBurnAction;
+    /**
+     *
+     * @type {JettonMintAction}
+     * @memberof Action
+     */
+    jettonMint?: JettonMintAction;
+    /**
+     *
      * @type {NftItemTransferAction}
      * @memberof Action
      */
@@ -96,10 +113,28 @@ export interface Action {
     depositStake?: DepositStakeAction;
     /**
      *
-     * @type {RecoverStakeAction}
+     * @type {WithdrawStakeAction}
      * @memberof Action
      */
-    recoverStake?: RecoverStakeAction;
+    withdrawStake?: WithdrawStakeAction;
+    /**
+     *
+     * @type {WithdrawStakeRequestAction}
+     * @memberof Action
+     */
+    withdrawStakeRequest?: WithdrawStakeRequestAction;
+    /**
+     *
+     * @type {ElectionsDepositStakeAction}
+     * @memberof Action
+     */
+    electionsDepositStake?: ElectionsDepositStakeAction;
+    /**
+     *
+     * @type {ElectionsRecoverStakeAction}
+     * @memberof Action
+     */
+    electionsRecoverStake?: ElectionsRecoverStakeAction;
     /**
      *
      * @type {JettonSwapAction}
@@ -125,6 +160,8 @@ export interface Action {
 export declare const ActionTypeEnum: {
     readonly TonTransfer: "TonTransfer";
     readonly JettonTransfer: "JettonTransfer";
+    readonly JettonBurn: "JettonBurn";
+    readonly JettonMint: "JettonMint";
     readonly NftItemTransfer: "NftItemTransfer";
     readonly ContractDeploy: "ContractDeploy";
     readonly Subscribe: "Subscribe";
@@ -132,9 +169,12 @@ export declare const ActionTypeEnum: {
     readonly AuctionBid: "AuctionBid";
     readonly NftPurchase: "NftPurchase";
     readonly DepositStake: "DepositStake";
-    readonly RecoverStake: "RecoverStake";
+    readonly WithdrawStake: "WithdrawStake";
+    readonly WithdrawStakeRequest: "WithdrawStakeRequest";
     readonly JettonSwap: "JettonSwap";
     readonly SmartContractExec: "SmartContractExec";
+    readonly ElectionsRecoverStake: "ElectionsRecoverStake";
+    readonly ElectionsDepositStake: "ElectionsDepositStake";
     readonly Unknown: "Unknown";
 };
 export declare type ActionTypeEnum = typeof ActionTypeEnum[keyof typeof ActionTypeEnum];

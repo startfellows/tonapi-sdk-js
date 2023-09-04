@@ -33,6 +33,12 @@ export interface PoolImplementation {
      * @memberof PoolImplementation
      */
     url: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof PoolImplementation
+     */
+    socials: Array<string>;
 }
 /**
  * Check if a given object implements the PoolImplementation interface.

@@ -37,6 +37,12 @@ export interface PoolImplementation {
      * @memberof PoolImplementation
      */
     url: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof PoolImplementation
+     */
+    socials: Array<string>;
 }
 
 /**
@@ -47,6 +53,7 @@ export function instanceOfPoolImplementation(value: object): boolean {
     isInstance = isInstance && "name" in value;
     isInstance = isInstance && "description" in value;
     isInstance = isInstance && "url" in value;
+    isInstance = isInstance && "socials" in value;
 
     return isInstance;
 }
@@ -64,6 +71,7 @@ export function PoolImplementationFromJSONTyped(json: any, ignoreDiscriminator: 
         'name': json['name'],
         'description': json['description'],
         'url': json['url'],
+        'socials': json['socials'],
     };
 }
 
@@ -79,6 +87,7 @@ export function PoolImplementationToJSON(value?: PoolImplementation | null): any
         'name': value.name,
         'description': value.description,
         'url': value.url,
+        'socials': value.socials,
     };
 }
 

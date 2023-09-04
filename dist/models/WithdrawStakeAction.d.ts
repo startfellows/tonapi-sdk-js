@@ -13,32 +13,32 @@ import type { AccountAddress } from './AccountAddress';
 /**
  * validator's participation in elections
  * @export
- * @interface DepositStakeAction
+ * @interface WithdrawStakeAction
  */
-export interface DepositStakeAction {
+export interface WithdrawStakeAction {
     /**
      *
      * @type {number}
-     * @memberof DepositStakeAction
+     * @memberof WithdrawStakeAction
      */
     amount: number;
     /**
      *
      * @type {AccountAddress}
-     * @memberof DepositStakeAction
+     * @memberof WithdrawStakeAction
      */
     staker: AccountAddress;
     /**
      *
      * @type {AccountAddress}
-     * @memberof DepositStakeAction
+     * @memberof WithdrawStakeAction
      */
     pool: AccountAddress;
 }
 /**
- * Check if a given object implements the DepositStakeAction interface.
+ * Check if a given object implements the WithdrawStakeAction interface.
  */
-export declare function instanceOfDepositStakeAction(value: object): boolean;
-export declare function DepositStakeActionFromJSON(json: any): DepositStakeAction;
-export declare function DepositStakeActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): DepositStakeAction;
-export declare function DepositStakeActionToJSON(value?: DepositStakeAction | null): any;
+export declare function instanceOfWithdrawStakeAction(value: object): boolean;
+export declare function WithdrawStakeActionFromJSON(json: any): WithdrawStakeAction;
+export declare function WithdrawStakeActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): WithdrawStakeAction;
+export declare function WithdrawStakeActionToJSON(value?: WithdrawStakeAction | null): any;

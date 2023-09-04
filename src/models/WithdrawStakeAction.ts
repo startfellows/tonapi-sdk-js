@@ -21,41 +21,48 @@ import {
 } from './AccountAddress';
 
 /**
- * 
+ * validator's participation in elections
  * @export
- * @interface RecoverStakeAction
+ * @interface WithdrawStakeAction
  */
-export interface RecoverStakeAction {
+export interface WithdrawStakeAction {
     /**
      * 
      * @type {number}
-     * @memberof RecoverStakeAction
+     * @memberof WithdrawStakeAction
      */
     amount: number;
     /**
      * 
      * @type {AccountAddress}
-     * @memberof RecoverStakeAction
+     * @memberof WithdrawStakeAction
      */
     staker: AccountAddress;
+    /**
+     * 
+     * @type {AccountAddress}
+     * @memberof WithdrawStakeAction
+     */
+    pool: AccountAddress;
 }
 
 /**
- * Check if a given object implements the RecoverStakeAction interface.
+ * Check if a given object implements the WithdrawStakeAction interface.
  */
-export function instanceOfRecoverStakeAction(value: object): boolean {
+export function instanceOfWithdrawStakeAction(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "staker" in value;
+    isInstance = isInstance && "pool" in value;
 
     return isInstance;
 }
 
-export function RecoverStakeActionFromJSON(json: any): RecoverStakeAction {
-    return RecoverStakeActionFromJSONTyped(json, false);
+export function WithdrawStakeActionFromJSON(json: any): WithdrawStakeAction {
+    return WithdrawStakeActionFromJSONTyped(json, false);
 }
 
-export function RecoverStakeActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): RecoverStakeAction {
+export function WithdrawStakeActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): WithdrawStakeAction {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -63,10 +70,11 @@ export function RecoverStakeActionFromJSONTyped(json: any, ignoreDiscriminator: 
         
         'amount': json['amount'],
         'staker': AccountAddressFromJSON(json['staker']),
+        'pool': AccountAddressFromJSON(json['pool']),
     };
 }
 
-export function RecoverStakeActionToJSON(value?: RecoverStakeAction | null): any {
+export function WithdrawStakeActionToJSON(value?: WithdrawStakeAction | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -77,6 +85,7 @@ export function RecoverStakeActionToJSON(value?: RecoverStakeAction | null): any
         
         'amount': value.amount,
         'staker': AccountAddressToJSON(value.staker),
+        'pool': AccountAddressToJSON(value.pool),
     };
 }
 

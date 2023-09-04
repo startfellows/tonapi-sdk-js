@@ -13,33 +13,35 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RecoverStakeActionToJSON = exports.RecoverStakeActionFromJSONTyped = exports.RecoverStakeActionFromJSON = exports.instanceOfRecoverStakeAction = void 0;
+exports.WithdrawStakeActionToJSON = exports.WithdrawStakeActionFromJSONTyped = exports.WithdrawStakeActionFromJSON = exports.instanceOfWithdrawStakeAction = void 0;
 const AccountAddress_1 = require("./AccountAddress");
 /**
- * Check if a given object implements the RecoverStakeAction interface.
+ * Check if a given object implements the WithdrawStakeAction interface.
  */
-function instanceOfRecoverStakeAction(value) {
+function instanceOfWithdrawStakeAction(value) {
     let isInstance = true;
     isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "staker" in value;
+    isInstance = isInstance && "pool" in value;
     return isInstance;
 }
-exports.instanceOfRecoverStakeAction = instanceOfRecoverStakeAction;
-function RecoverStakeActionFromJSON(json) {
-    return RecoverStakeActionFromJSONTyped(json, false);
+exports.instanceOfWithdrawStakeAction = instanceOfWithdrawStakeAction;
+function WithdrawStakeActionFromJSON(json) {
+    return WithdrawStakeActionFromJSONTyped(json, false);
 }
-exports.RecoverStakeActionFromJSON = RecoverStakeActionFromJSON;
-function RecoverStakeActionFromJSONTyped(json, ignoreDiscriminator) {
+exports.WithdrawStakeActionFromJSON = WithdrawStakeActionFromJSON;
+function WithdrawStakeActionFromJSONTyped(json, ignoreDiscriminator) {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         'amount': json['amount'],
         'staker': (0, AccountAddress_1.AccountAddressFromJSON)(json['staker']),
+        'pool': (0, AccountAddress_1.AccountAddressFromJSON)(json['pool']),
     };
 }
-exports.RecoverStakeActionFromJSONTyped = RecoverStakeActionFromJSONTyped;
-function RecoverStakeActionToJSON(value) {
+exports.WithdrawStakeActionFromJSONTyped = WithdrawStakeActionFromJSONTyped;
+function WithdrawStakeActionToJSON(value) {
     if (value === undefined) {
         return undefined;
     }
@@ -49,6 +51,7 @@ function RecoverStakeActionToJSON(value) {
     return {
         'amount': value.amount,
         'staker': (0, AccountAddress_1.AccountAddressToJSON)(value.staker),
+        'pool': (0, AccountAddress_1.AccountAddressToJSON)(value.pool),
     };
 }
-exports.RecoverStakeActionToJSON = RecoverStakeActionToJSON;
+exports.WithdrawStakeActionToJSON = WithdrawStakeActionToJSON;
