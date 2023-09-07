@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import type { AccountAddress } from './AccountAddress';
+import type { ImagePreview } from './ImagePreview';
 /**
  *
  * @export
@@ -48,6 +49,12 @@ export interface NftCollection {
     metadata?: {
         [key: string]: any;
     };
+    /**
+     *
+     * @type {Array<ImagePreview>}
+     * @memberof NftCollection
+     */
+    previews?: Array<ImagePreview>;
 }
 /**
  * Check if a given object implements the NftCollection interface.

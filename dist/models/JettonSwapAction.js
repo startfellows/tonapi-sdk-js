@@ -14,6 +14,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JettonSwapActionToJSON = exports.JettonSwapActionFromJSONTyped = exports.JettonSwapActionFromJSON = exports.instanceOfJettonSwapAction = exports.JettonSwapActionDexEnum = void 0;
+const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
 const JettonPreview_1 = require("./JettonPreview");
 /**
@@ -34,10 +35,6 @@ function instanceOfJettonSwapAction(value) {
     isInstance = isInstance && "amountOut" in value;
     isInstance = isInstance && "userWallet" in value;
     isInstance = isInstance && "router" in value;
-    isInstance = isInstance && "jettonWalletIn" in value;
-    isInstance = isInstance && "jettonMasterIn" in value;
-    isInstance = isInstance && "jettonWalletOut" in value;
-    isInstance = isInstance && "jettonMasterOut" in value;
     return isInstance;
 }
 exports.instanceOfJettonSwapAction = instanceOfJettonSwapAction;
@@ -53,12 +50,12 @@ function JettonSwapActionFromJSONTyped(json, ignoreDiscriminator) {
         'dex': json['dex'],
         'amountIn': json['amount_in'],
         'amountOut': json['amount_out'],
+        'tonIn': !(0, runtime_1.exists)(json, 'ton_in') ? undefined : json['ton_in'],
+        'tonOut': !(0, runtime_1.exists)(json, 'ton_out') ? undefined : json['ton_out'],
         'userWallet': (0, AccountAddress_1.AccountAddressFromJSON)(json['user_wallet']),
         'router': (0, AccountAddress_1.AccountAddressFromJSON)(json['router']),
-        'jettonWalletIn': json['jetton_wallet_in'],
-        'jettonMasterIn': (0, JettonPreview_1.JettonPreviewFromJSON)(json['jetton_master_in']),
-        'jettonWalletOut': json['jetton_wallet_out'],
-        'jettonMasterOut': (0, JettonPreview_1.JettonPreviewFromJSON)(json['jetton_master_out']),
+        'jettonMasterIn': !(0, runtime_1.exists)(json, 'jetton_master_in') ? undefined : (0, JettonPreview_1.JettonPreviewFromJSON)(json['jetton_master_in']),
+        'jettonMasterOut': !(0, runtime_1.exists)(json, 'jetton_master_out') ? undefined : (0, JettonPreview_1.JettonPreviewFromJSON)(json['jetton_master_out']),
     };
 }
 exports.JettonSwapActionFromJSONTyped = JettonSwapActionFromJSONTyped;
@@ -73,11 +70,11 @@ function JettonSwapActionToJSON(value) {
         'dex': value.dex,
         'amount_in': value.amountIn,
         'amount_out': value.amountOut,
+        'ton_in': value.tonIn,
+        'ton_out': value.tonOut,
         'user_wallet': (0, AccountAddress_1.AccountAddressToJSON)(value.userWallet),
         'router': (0, AccountAddress_1.AccountAddressToJSON)(value.router),
-        'jetton_wallet_in': value.jettonWalletIn,
         'jetton_master_in': (0, JettonPreview_1.JettonPreviewToJSON)(value.jettonMasterIn),
-        'jetton_wallet_out': value.jettonWalletOut,
         'jetton_master_out': (0, JettonPreview_1.JettonPreviewToJSON)(value.jettonMasterOut),
     };
 }

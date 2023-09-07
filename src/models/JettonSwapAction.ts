@@ -52,6 +52,18 @@ export interface JettonSwapAction {
     amountOut: string;
     /**
      * 
+     * @type {number}
+     * @memberof JettonSwapAction
+     */
+    tonIn?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof JettonSwapAction
+     */
+    tonOut?: number;
+    /**
+     * 
      * @type {AccountAddress}
      * @memberof JettonSwapAction
      */
@@ -64,28 +76,16 @@ export interface JettonSwapAction {
     router: AccountAddress;
     /**
      * 
-     * @type {string}
+     * @type {JettonPreview}
      * @memberof JettonSwapAction
      */
-    jettonWalletIn: string;
+    jettonMasterIn?: JettonPreview;
     /**
      * 
      * @type {JettonPreview}
      * @memberof JettonSwapAction
      */
-    jettonMasterIn: JettonPreview;
-    /**
-     * 
-     * @type {string}
-     * @memberof JettonSwapAction
-     */
-    jettonWalletOut: string;
-    /**
-     * 
-     * @type {JettonPreview}
-     * @memberof JettonSwapAction
-     */
-    jettonMasterOut: JettonPreview;
+    jettonMasterOut?: JettonPreview;
 }
 
 
@@ -110,10 +110,6 @@ export function instanceOfJettonSwapAction(value: object): boolean {
     isInstance = isInstance && "amountOut" in value;
     isInstance = isInstance && "userWallet" in value;
     isInstance = isInstance && "router" in value;
-    isInstance = isInstance && "jettonWalletIn" in value;
-    isInstance = isInstance && "jettonMasterIn" in value;
-    isInstance = isInstance && "jettonWalletOut" in value;
-    isInstance = isInstance && "jettonMasterOut" in value;
 
     return isInstance;
 }
@@ -131,12 +127,12 @@ export function JettonSwapActionFromJSONTyped(json: any, ignoreDiscriminator: bo
         'dex': json['dex'],
         'amountIn': json['amount_in'],
         'amountOut': json['amount_out'],
+        'tonIn': !exists(json, 'ton_in') ? undefined : json['ton_in'],
+        'tonOut': !exists(json, 'ton_out') ? undefined : json['ton_out'],
         'userWallet': AccountAddressFromJSON(json['user_wallet']),
         'router': AccountAddressFromJSON(json['router']),
-        'jettonWalletIn': json['jetton_wallet_in'],
-        'jettonMasterIn': JettonPreviewFromJSON(json['jetton_master_in']),
-        'jettonWalletOut': json['jetton_wallet_out'],
-        'jettonMasterOut': JettonPreviewFromJSON(json['jetton_master_out']),
+        'jettonMasterIn': !exists(json, 'jetton_master_in') ? undefined : JettonPreviewFromJSON(json['jetton_master_in']),
+        'jettonMasterOut': !exists(json, 'jetton_master_out') ? undefined : JettonPreviewFromJSON(json['jetton_master_out']),
     };
 }
 
@@ -152,11 +148,11 @@ export function JettonSwapActionToJSON(value?: JettonSwapAction | null): any {
         'dex': value.dex,
         'amount_in': value.amountIn,
         'amount_out': value.amountOut,
+        'ton_in': value.tonIn,
+        'ton_out': value.tonOut,
         'user_wallet': AccountAddressToJSON(value.userWallet),
         'router': AccountAddressToJSON(value.router),
-        'jetton_wallet_in': value.jettonWalletIn,
         'jetton_master_in': JettonPreviewToJSON(value.jettonMasterIn),
-        'jetton_wallet_out': value.jettonWalletOut,
         'jetton_master_out': JettonPreviewToJSON(value.jettonMasterOut),
     };
 }

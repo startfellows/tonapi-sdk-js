@@ -31,6 +31,12 @@ export interface FoundAccountsAddressesInner {
      * @memberof FoundAccountsAddressesInner
      */
     name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FoundAccountsAddressesInner
+     */
+    preview: string;
 }
 
 /**
@@ -40,6 +46,7 @@ export function instanceOfFoundAccountsAddressesInner(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "address" in value;
     isInstance = isInstance && "name" in value;
+    isInstance = isInstance && "preview" in value;
 
     return isInstance;
 }
@@ -56,6 +63,7 @@ export function FoundAccountsAddressesInnerFromJSONTyped(json: any, ignoreDiscri
         
         'address': json['address'],
         'name': json['name'],
+        'preview': json['preview'],
     };
 }
 
@@ -70,6 +78,7 @@ export function FoundAccountsAddressesInnerToJSON(value?: FoundAccountsAddresses
         
         'address': value.address,
         'name': value.name,
+        'preview': value.preview,
     };
 }
 

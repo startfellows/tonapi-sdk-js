@@ -19,6 +19,12 @@ import {
     AccountAddressFromJSONTyped,
     AccountAddressToJSON,
 } from './AccountAddress';
+import type { ImagePreview } from './ImagePreview';
+import {
+    ImagePreviewFromJSON,
+    ImagePreviewFromJSONTyped,
+    ImagePreviewToJSON,
+} from './ImagePreview';
 
 /**
  * 
@@ -56,6 +62,12 @@ export interface NftCollection {
      * @memberof NftCollection
      */
     metadata?: { [key: string]: any; };
+    /**
+     * 
+     * @type {Array<ImagePreview>}
+     * @memberof NftCollection
+     */
+    previews?: Array<ImagePreview>;
 }
 
 /**
@@ -85,6 +97,7 @@ export function NftCollectionFromJSONTyped(json: any, ignoreDiscriminator: boole
         'owner': !exists(json, 'owner') ? undefined : AccountAddressFromJSON(json['owner']),
         'rawCollectionContent': json['raw_collection_content'],
         'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
+        'previews': !exists(json, 'previews') ? undefined : ((json['previews'] as Array<any>).map(ImagePreviewFromJSON)),
     };
 }
 
@@ -102,6 +115,7 @@ export function NftCollectionToJSON(value?: NftCollection | null): any {
         'owner': AccountAddressToJSON(value.owner),
         'raw_collection_content': value.rawCollectionContent,
         'metadata': value.metadata,
+        'previews': value.previews === undefined ? undefined : ((value.previews as Array<any>).map(ImagePreviewToJSON)),
     };
 }
 

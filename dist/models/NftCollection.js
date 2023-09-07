@@ -16,6 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NftCollectionToJSON = exports.NftCollectionFromJSONTyped = exports.NftCollectionFromJSON = exports.instanceOfNftCollection = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
+const ImagePreview_1 = require("./ImagePreview");
 /**
  * Check if a given object implements the NftCollection interface.
  */
@@ -41,6 +42,7 @@ function NftCollectionFromJSONTyped(json, ignoreDiscriminator) {
         'owner': !(0, runtime_1.exists)(json, 'owner') ? undefined : (0, AccountAddress_1.AccountAddressFromJSON)(json['owner']),
         'rawCollectionContent': json['raw_collection_content'],
         'metadata': !(0, runtime_1.exists)(json, 'metadata') ? undefined : json['metadata'],
+        'previews': !(0, runtime_1.exists)(json, 'previews') ? undefined : (json['previews'].map(ImagePreview_1.ImagePreviewFromJSON)),
     };
 }
 exports.NftCollectionFromJSONTyped = NftCollectionFromJSONTyped;
@@ -57,6 +59,7 @@ function NftCollectionToJSON(value) {
         'owner': (0, AccountAddress_1.AccountAddressToJSON)(value.owner),
         'raw_collection_content': value.rawCollectionContent,
         'metadata': value.metadata,
+        'previews': value.previews === undefined ? undefined : (value.previews.map(ImagePreview_1.ImagePreviewToJSON)),
     };
 }
 exports.NftCollectionToJSON = NftCollectionToJSON;

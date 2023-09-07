@@ -21,6 +21,7 @@ function instanceOfFoundAccountsAddressesInner(value) {
     let isInstance = true;
     isInstance = isInstance && "address" in value;
     isInstance = isInstance && "name" in value;
+    isInstance = isInstance && "preview" in value;
     return isInstance;
 }
 exports.instanceOfFoundAccountsAddressesInner = instanceOfFoundAccountsAddressesInner;
@@ -35,6 +36,7 @@ function FoundAccountsAddressesInnerFromJSONTyped(json, ignoreDiscriminator) {
     return {
         'address': json['address'],
         'name': json['name'],
+        'preview': json['preview'],
     };
 }
 exports.FoundAccountsAddressesInnerFromJSONTyped = FoundAccountsAddressesInnerFromJSONTyped;
@@ -48,6 +50,7 @@ function FoundAccountsAddressesInnerToJSON(value) {
     return {
         'address': value.address,
         'name': value.name,
+        'preview': value.preview,
     };
 }
 exports.FoundAccountsAddressesInnerToJSON = FoundAccountsAddressesInnerToJSON;

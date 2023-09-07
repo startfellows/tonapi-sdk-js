@@ -37,6 +37,18 @@ export interface JettonSwapAction {
     amountOut: string;
     /**
      *
+     * @type {number}
+     * @memberof JettonSwapAction
+     */
+    tonIn?: number;
+    /**
+     *
+     * @type {number}
+     * @memberof JettonSwapAction
+     */
+    tonOut?: number;
+    /**
+     *
      * @type {AccountAddress}
      * @memberof JettonSwapAction
      */
@@ -49,28 +61,16 @@ export interface JettonSwapAction {
     router: AccountAddress;
     /**
      *
-     * @type {string}
+     * @type {JettonPreview}
      * @memberof JettonSwapAction
      */
-    jettonWalletIn: string;
+    jettonMasterIn?: JettonPreview;
     /**
      *
      * @type {JettonPreview}
      * @memberof JettonSwapAction
      */
-    jettonMasterIn: JettonPreview;
-    /**
-     *
-     * @type {string}
-     * @memberof JettonSwapAction
-     */
-    jettonWalletOut: string;
-    /**
-     *
-     * @type {JettonPreview}
-     * @memberof JettonSwapAction
-     */
-    jettonMasterOut: JettonPreview;
+    jettonMasterOut?: JettonPreview;
 }
 /**
  * @export

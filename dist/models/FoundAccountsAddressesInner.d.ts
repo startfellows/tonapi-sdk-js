@@ -27,6 +27,12 @@ export interface FoundAccountsAddressesInner {
      * @memberof FoundAccountsAddressesInner
      */
     name: string;
+    /**
+     *
+     * @type {string}
+     * @memberof FoundAccountsAddressesInner
+     */
+    preview: string;
 }
 /**
  * Check if a given object implements the FoundAccountsAddressesInner interface.
