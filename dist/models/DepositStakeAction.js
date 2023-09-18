@@ -15,6 +15,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DepositStakeActionToJSON = exports.DepositStakeActionFromJSONTyped = exports.DepositStakeActionFromJSON = exports.instanceOfDepositStakeAction = void 0;
 const AccountAddress_1 = require("./AccountAddress");
+const PoolImplementationType_1 = require("./PoolImplementationType");
 /**
  * Check if a given object implements the DepositStakeAction interface.
  */
@@ -23,6 +24,7 @@ function instanceOfDepositStakeAction(value) {
     isInstance = isInstance && "amount" in value;
     isInstance = isInstance && "staker" in value;
     isInstance = isInstance && "pool" in value;
+    isInstance = isInstance && "implementation" in value;
     return isInstance;
 }
 exports.instanceOfDepositStakeAction = instanceOfDepositStakeAction;
@@ -38,6 +40,7 @@ function DepositStakeActionFromJSONTyped(json, ignoreDiscriminator) {
         'amount': json['amount'],
         'staker': (0, AccountAddress_1.AccountAddressFromJSON)(json['staker']),
         'pool': (0, AccountAddress_1.AccountAddressFromJSON)(json['pool']),
+        'implementation': (0, PoolImplementationType_1.PoolImplementationTypeFromJSON)(json['implementation']),
     };
 }
 exports.DepositStakeActionFromJSONTyped = DepositStakeActionFromJSONTyped;
@@ -52,6 +55,7 @@ function DepositStakeActionToJSON(value) {
         'amount': value.amount,
         'staker': (0, AccountAddress_1.AccountAddressToJSON)(value.staker),
         'pool': (0, AccountAddress_1.AccountAddressToJSON)(value.pool),
+        'implementation': (0, PoolImplementationType_1.PoolImplementationTypeToJSON)(value.implementation),
     };
 }
 exports.DepositStakeActionToJSON = DepositStakeActionToJSON;

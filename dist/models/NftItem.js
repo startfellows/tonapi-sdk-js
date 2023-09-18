@@ -24,7 +24,8 @@ const Sale_1 = require("./Sale");
  */
 exports.NftItemApprovedByEnum = {
     Getgems: 'getgems',
-    Tonkeeper: 'tonkeeper'
+    Tonkeeper: 'tonkeeper',
+    TonDiamonds: 'ton.diamonds'
 };
 /**
  * Check if a given object implements the NftItem interface.

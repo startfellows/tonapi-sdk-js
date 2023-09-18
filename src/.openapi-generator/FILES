@@ -121,6 +121,7 @@ models/NftItemTransferAction.ts
 models/NftItems.ts
 models/NftPurchaseAction.ts
 models/PoolImplementation.ts
+models/PoolImplementationType.ts
 models/PoolInfo.ts
 models/Price.ts
 models/Refund.ts

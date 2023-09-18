@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import type { AccountAddress } from './AccountAddress';
+import type { PoolImplementationType } from './PoolImplementationType';
 /**
  * validator's participation in elections
  * @export
@@ -34,6 +35,12 @@ export interface DepositStakeAction {
      * @memberof DepositStakeAction
      */
     pool: AccountAddress;
+    /**
+     *
+     * @type {PoolImplementationType}
+     * @memberof DepositStakeAction
+     */
+    implementation: PoolImplementationType;
 }
 /**
  * Check if a given object implements the DepositStakeAction interface.

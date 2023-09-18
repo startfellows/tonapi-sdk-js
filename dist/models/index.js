@@ -123,6 +123,7 @@ __exportStar(require("./NftItemTransferAction"), exports);
 __exportStar(require("./NftItems"), exports);
 __exportStar(require("./NftPurchaseAction"), exports);
 __exportStar(require("./PoolImplementation"), exports);
+__exportStar(require("./PoolImplementationType"), exports);
 __exportStar(require("./PoolInfo"), exports);
 __exportStar(require("./Price"), exports);
 __exportStar(require("./Refund"), exports);

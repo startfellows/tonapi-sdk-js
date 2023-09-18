@@ -88,6 +88,7 @@ export interface NftItem {
 export declare const NftItemApprovedByEnum: {
     readonly Getgems: "getgems";
     readonly Tonkeeper: "tonkeeper";
+    readonly TonDiamonds: "ton.diamonds";
 };
 export declare type NftItemApprovedByEnum = typeof NftItemApprovedByEnum[keyof typeof NftItemApprovedByEnum];
 /**

@@ -13,16 +13,9 @@
  * Do not edit the class manually.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PoolInfoToJSON = exports.PoolInfoFromJSONTyped = exports.PoolInfoFromJSON = exports.instanceOfPoolInfo = exports.PoolInfoImplementationEnum = void 0;
+exports.PoolInfoToJSON = exports.PoolInfoFromJSONTyped = exports.PoolInfoFromJSON = exports.instanceOfPoolInfo = void 0;
 const runtime_1 = require("../runtime");
-/**
- * @export
- */
-exports.PoolInfoImplementationEnum = {
-    Whales: 'whales',
-    Tf: 'tf',
-    LiquidTf: 'liquidTF'
-};
+const PoolImplementationType_1 = require("./PoolImplementationType");
 /**
  * Check if a given object implements the PoolInfo interface.
  */
@@ -56,7 +49,7 @@ function PoolInfoFromJSONTyped(json, ignoreDiscriminator) {
         'address': json['address'],
         'name': json['name'],
         'totalAmount': json['total_amount'],
-        'implementation': json['implementation'],
+        'implementation': (0, PoolImplementationType_1.PoolImplementationTypeFromJSON)(json['implementation']),
         'apy': json['apy'],
         'minStake': json['min_stake'],
         'cycleStart': json['cycle_start'],
@@ -81,7 +74,7 @@ function PoolInfoToJSON(value) {
         'address': value.address,
         'name': value.name,
         'total_amount': value.totalAmount,
-        'implementation': value.implementation,
+        'implementation': (0, PoolImplementationType_1.PoolImplementationTypeToJSON)(value.implementation),
         'apy': value.apy,
         'min_stake': value.minStake,
         'cycle_start': value.cycleStart,

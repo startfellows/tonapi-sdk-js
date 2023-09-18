@@ -105,6 +105,7 @@ export * from './NftItemTransferAction';
 export * from './NftItems';
 export * from './NftPurchaseAction';
 export * from './PoolImplementation';
+export * from './PoolImplementationType';
 export * from './PoolInfo';
 export * from './Price';
 export * from './Refund';

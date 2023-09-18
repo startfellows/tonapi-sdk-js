@@ -16,6 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.WithdrawStakeRequestActionToJSON = exports.WithdrawStakeRequestActionFromJSONTyped = exports.WithdrawStakeRequestActionFromJSON = exports.instanceOfWithdrawStakeRequestAction = void 0;
 const runtime_1 = require("../runtime");
 const AccountAddress_1 = require("./AccountAddress");
+const PoolImplementationType_1 = require("./PoolImplementationType");
 /**
  * Check if a given object implements the WithdrawStakeRequestAction interface.
  */
@@ -23,6 +24,7 @@ function instanceOfWithdrawStakeRequestAction(value) {
     let isInstance = true;
     isInstance = isInstance && "staker" in value;
     isInstance = isInstance && "pool" in value;
+    isInstance = isInstance && "implementation" in value;
     return isInstance;
 }
 exports.instanceOfWithdrawStakeRequestAction = instanceOfWithdrawStakeRequestAction;
@@ -38,6 +40,7 @@ function WithdrawStakeRequestActionFromJSONTyped(json, ignoreDiscriminator) {
         'amount': !(0, runtime_1.exists)(json, 'amount') ? undefined : json['amount'],
         'staker': (0, AccountAddress_1.AccountAddressFromJSON)(json['staker']),
         'pool': (0, AccountAddress_1.AccountAddressFromJSON)(json['pool']),
+        'implementation': (0, PoolImplementationType_1.PoolImplementationTypeFromJSON)(json['implementation']),
     };
 }
 exports.WithdrawStakeRequestActionFromJSONTyped = WithdrawStakeRequestActionFromJSONTyped;
@@ -52,6 +55,7 @@ function WithdrawStakeRequestActionToJSON(value) {
         'amount': value.amount,
         'staker': (0, AccountAddress_1.AccountAddressToJSON)(value.staker),
         'pool': (0, AccountAddress_1.AccountAddressToJSON)(value.pool),
+        'implementation': (0, PoolImplementationType_1.PoolImplementationTypeToJSON)(value.implementation),
     };
 }
 exports.WithdrawStakeRequestActionToJSON = WithdrawStakeRequestActionToJSON;

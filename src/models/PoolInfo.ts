@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { PoolImplementationType } from './PoolImplementationType';
+import {
+    PoolImplementationTypeFromJSON,
+    PoolImplementationTypeFromJSONTyped,
+    PoolImplementationTypeToJSON,
+} from './PoolImplementationType';
+
 /**
  * 
  * @export
@@ -39,10 +46,10 @@ export interface PoolInfo {
     totalAmount: number;
     /**
      * 
-     * @type {string}
+     * @type {PoolImplementationType}
      * @memberof PoolInfo
      */
-    implementation: PoolInfoImplementationEnum;
+    implementation: PoolImplementationType;
     /**
      * APY in percent
      * @type {number}
@@ -105,18 +112,6 @@ export interface PoolInfo {
     validatorStake: number;
 }
 
-
-/**
- * @export
- */
-export const PoolInfoImplementationEnum = {
-    Whales: 'whales',
-    Tf: 'tf',
-    LiquidTf: 'liquidTF'
-} as const;
-export type PoolInfoImplementationEnum = typeof PoolInfoImplementationEnum[keyof typeof PoolInfoImplementationEnum];
-
-
 /**
  * Check if a given object implements the PoolInfo interface.
  */
@@ -152,7 +147,7 @@ export function PoolInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'address': json['address'],
         'name': json['name'],
         'totalAmount': json['total_amount'],
-        'implementation': json['implementation'],
+        'implementation': PoolImplementationTypeFromJSON(json['implementation']),
         'apy': json['apy'],
         'minStake': json['min_stake'],
         'cycleStart': json['cycle_start'],
@@ -178,7 +173,7 @@ export function PoolInfoToJSON(value?: PoolInfo | null): any {
         'address': value.address,
         'name': value.name,
         'total_amount': value.totalAmount,
-        'implementation': value.implementation,
+        'implementation': PoolImplementationTypeToJSON(value.implementation),
         'apy': value.apy,
         'min_stake': value.minStake,
         'cycle_start': value.cycleStart,

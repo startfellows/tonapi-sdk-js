@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import type { AccountAddress } from './AccountAddress';
+import type { JettonPreview } from './JettonPreview';
 /**
  *
  * @export
@@ -22,6 +23,12 @@ export interface ValueFlowJettonsInner {
      * @memberof ValueFlowJettonsInner
      */
     account: AccountAddress;
+    /**
+     *
+     * @type {JettonPreview}
+     * @memberof ValueFlowJettonsInner
+     */
+    jetton: JettonPreview;
     /**
      *
      * @type {number}

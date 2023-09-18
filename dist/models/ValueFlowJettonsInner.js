@@ -15,12 +15,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ValueFlowJettonsInnerToJSON = exports.ValueFlowJettonsInnerFromJSONTyped = exports.ValueFlowJettonsInnerFromJSON = exports.instanceOfValueFlowJettonsInner = void 0;
 const AccountAddress_1 = require("./AccountAddress");
+const JettonPreview_1 = require("./JettonPreview");
 /**
  * Check if a given object implements the ValueFlowJettonsInner interface.
  */
 function instanceOfValueFlowJettonsInner(value) {
     let isInstance = true;
     isInstance = isInstance && "account" in value;
+    isInstance = isInstance && "jetton" in value;
     isInstance = isInstance && "quantity" in value;
     return isInstance;
 }
@@ -35,6 +37,7 @@ function ValueFlowJettonsInnerFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'account': (0, AccountAddress_1.AccountAddressFromJSON)(json['account']),
+        'jetton': (0, JettonPreview_1.JettonPreviewFromJSON)(json['jetton']),
         'quantity': json['quantity'],
     };
 }
@@ -48,6 +51,7 @@ function ValueFlowJettonsInnerToJSON(value) {
     }
     return {
         'account': (0, AccountAddress_1.AccountAddressToJSON)(value.account),
+        'jetton': (0, JettonPreview_1.JettonPreviewToJSON)(value.jetton),
         'quantity': value.quantity,
     };
 }

@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import type { PoolImplementationType } from './PoolImplementationType';
 /**
  *
  * @export
@@ -35,10 +36,10 @@ export interface PoolInfo {
     totalAmount: number;
     /**
      *
-     * @type {string}
+     * @type {PoolImplementationType}
      * @memberof PoolInfo
      */
-    implementation: PoolInfoImplementationEnum;
+    implementation: PoolImplementationType;
     /**
      * APY in percent
      * @type {number}
@@ -100,15 +101,6 @@ export interface PoolInfo {
      */
     validatorStake: number;
 }
-/**
- * @export
- */
-export declare const PoolInfoImplementationEnum: {
-    readonly Whales: "whales";
-    readonly Tf: "tf";
-    readonly LiquidTf: "liquidTF";
-};
-export declare type PoolInfoImplementationEnum = typeof PoolInfoImplementationEnum[keyof typeof PoolInfoImplementationEnum];
 /**
  * Check if a given object implements the PoolInfo interface.
  */
