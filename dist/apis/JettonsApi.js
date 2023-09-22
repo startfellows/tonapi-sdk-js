@@ -38,6 +38,12 @@ class JettonsApi extends runtime.BaseAPI {
                 throw new runtime.RequiredError('accountId', 'Required parameter requestParameters.accountId was null or undefined when calling getJettonHolders.');
             }
             const queryParameters = {};
+            if (requestParameters.limit !== undefined) {
+                queryParameters['limit'] = requestParameters.limit;
+            }
+            if (requestParameters.offset !== undefined) {
+                queryParameters['offset'] = requestParameters.offset;
+            }
             const headerParameters = {};
             const response = yield this.request({
                 path: `/v2/jettons/{account_id}/holders`.replace(`{${"account_id"}}`, encodeURIComponent(String(requestParameters.accountId))),

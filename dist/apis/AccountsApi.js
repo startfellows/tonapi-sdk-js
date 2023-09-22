@@ -205,6 +205,9 @@ class AccountsApi extends runtime.BaseAPI {
                 throw new runtime.RequiredError('limit', 'Required parameter requestParameters.limit was null or undefined when calling getAccountEvents.');
             }
             const queryParameters = {};
+            if (requestParameters.initiator !== undefined) {
+                queryParameters['initiator'] = requestParameters.initiator;
+            }
             if (requestParameters.subjectOnly !== undefined) {
                 queryParameters['subject_only'] = requestParameters.subjectOnly;
             }

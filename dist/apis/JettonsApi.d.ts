@@ -13,6 +13,8 @@ import * as runtime from '../runtime';
 import type { JettonHolders, JettonInfo, Jettons } from '../models/index';
 export interface GetJettonHoldersRequest {
     accountId: string;
+    limit?: number;
+    offset?: number;
 }
 export interface GetJettonInfoRequest {
     accountId: string;
@@ -31,6 +33,8 @@ export interface JettonsApiInterface {
     /**
      * Get jetton\'s holders
      * @param {string} accountId account ID
+     * @param {number} [limit]
+     * @param {number} [offset]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof JettonsApiInterface

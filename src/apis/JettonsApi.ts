@@ -33,6 +33,8 @@ import {
 
 export interface GetJettonHoldersRequest {
     accountId: string;
+    limit?: number;
+    offset?: number;
 }
 
 export interface GetJettonInfoRequest {
@@ -54,6 +56,8 @@ export interface JettonsApiInterface {
     /**
      * Get jetton\'s holders
      * @param {string} accountId account ID
+     * @param {number} [limit] 
+     * @param {number} [offset] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof JettonsApiInterface
@@ -110,6 +114,14 @@ export class JettonsApi extends runtime.BaseAPI implements JettonsApiInterface {
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.limit !== undefined) {
+            queryParameters['limit'] = requestParameters.limit;
+        }
+
+        if (requestParameters.offset !== undefined) {
+            queryParameters['offset'] = requestParameters.offset;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 

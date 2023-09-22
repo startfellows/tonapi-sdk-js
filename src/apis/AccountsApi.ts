@@ -94,6 +94,7 @@ export interface GetAccountEventsRequest {
     accountId: string;
     limit: number;
     acceptLanguage?: string;
+    initiator?: boolean;
     subjectOnly?: boolean;
     beforeLt?: number;
     startDate?: number;
@@ -244,6 +245,7 @@ export interface AccountsApiInterface {
      * @param {string} accountId account ID
      * @param {number} limit 
      * @param {string} [acceptLanguage] 
+     * @param {boolean} [initiator] Show only events that are initiated by this account
      * @param {boolean} [subjectOnly] filter actions where requested account is not real subject (for example sender or receiver jettons)
      * @param {number} [beforeLt] omit this parameter to get last events
      * @param {number} [startDate] 
@@ -617,6 +619,10 @@ export class AccountsApi extends runtime.BaseAPI implements AccountsApiInterface
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.initiator !== undefined) {
+            queryParameters['initiator'] = requestParameters.initiator;
+        }
 
         if (requestParameters.subjectOnly !== undefined) {
             queryParameters['subject_only'] = requestParameters.subjectOnly;
