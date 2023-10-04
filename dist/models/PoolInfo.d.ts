@@ -100,6 +100,12 @@ export interface PoolInfo {
      * @memberof PoolInfo
      */
     validatorStake: number;
+    /**
+     *
+     * @type {number}
+     * @memberof PoolInfo
+     */
+    cycleLength?: number;
 }
 /**
  * Check if a given object implements the PoolInfo interface.

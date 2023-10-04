@@ -110,6 +110,12 @@ export interface PoolInfo {
      * @memberof PoolInfo
      */
     validatorStake: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PoolInfo
+     */
+    cycleLength?: number;
 }
 
 /**
@@ -158,6 +164,7 @@ export function PoolInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'liquidJettonMaster': !exists(json, 'liquid_jetton_master') ? undefined : json['liquid_jetton_master'],
         'nominatorsStake': json['nominators_stake'],
         'validatorStake': json['validator_stake'],
+        'cycleLength': !exists(json, 'cycle_length') ? undefined : json['cycle_length'],
     };
 }
 
@@ -184,6 +191,7 @@ export function PoolInfoToJSON(value?: PoolInfo | null): any {
         'liquid_jetton_master': value.liquidJettonMaster,
         'nominators_stake': value.nominatorsStake,
         'validator_stake': value.validatorStake,
+        'cycle_length': value.cycleLength,
     };
 }
 

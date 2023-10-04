@@ -122,5 +122,36 @@ class JettonsApi extends runtime.BaseAPI {
             return yield response.value();
         });
     }
+    /**
+     * Get only jetton transfers in the event
+     */
+    getJettonsEventsRaw(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (requestParameters.eventId === null || requestParameters.eventId === undefined) {
+                throw new runtime.RequiredError('eventId', 'Required parameter requestParameters.eventId was null or undefined when calling getJettonsEvents.');
+            }
+            const queryParameters = {};
+            const headerParameters = {};
+            if (requestParameters.acceptLanguage !== undefined && requestParameters.acceptLanguage !== null) {
+                headerParameters['Accept-Language'] = String(requestParameters.acceptLanguage);
+            }
+            const response = yield this.request({
+                path: `/v2/events/{event_id}/jettons`.replace(`{${"event_id"}}`, encodeURIComponent(String(requestParameters.eventId))),
+                method: 'GET',
+                headers: headerParameters,
+                query: queryParameters,
+            }, initOverrides);
+            return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.EventFromJSON)(jsonValue));
+        });
+    }
+    /**
+     * Get only jetton transfers in the event
+     */
+    getJettonsEvents(requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.getJettonsEventsRaw(requestParameters, initOverrides);
+            return yield response.value();
+        });
+    }
 }
 exports.JettonsApi = JettonsApi;

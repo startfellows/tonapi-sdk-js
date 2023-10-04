@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import type { AccountAddress } from './AccountAddress';
 /**
  *
  * @export
@@ -21,6 +22,12 @@ export interface JettonHoldersAddressesInner {
      * @memberof JettonHoldersAddressesInner
      */
     address: string;
+    /**
+     *
+     * @type {AccountAddress}
+     * @memberof JettonHoldersAddressesInner
+     */
+    owner: AccountAddress;
     /**
      *
      * @type {string}

@@ -14,12 +14,14 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JettonHoldersAddressesInnerToJSON = exports.JettonHoldersAddressesInnerFromJSONTyped = exports.JettonHoldersAddressesInnerFromJSON = exports.instanceOfJettonHoldersAddressesInner = void 0;
+const AccountAddress_1 = require("./AccountAddress");
 /**
  * Check if a given object implements the JettonHoldersAddressesInner interface.
  */
 function instanceOfJettonHoldersAddressesInner(value) {
     let isInstance = true;
     isInstance = isInstance && "address" in value;
+    isInstance = isInstance && "owner" in value;
     isInstance = isInstance && "balance" in value;
     return isInstance;
 }
@@ -34,6 +36,7 @@ function JettonHoldersAddressesInnerFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'address': json['address'],
+        'owner': (0, AccountAddress_1.AccountAddressFromJSON)(json['owner']),
         'balance': json['balance'],
     };
 }
@@ -47,6 +50,7 @@ function JettonHoldersAddressesInnerToJSON(value) {
     }
     return {
         'address': value.address,
+        'owner': (0, AccountAddress_1.AccountAddressToJSON)(value.owner),
         'balance': value.balance,
     };
 }

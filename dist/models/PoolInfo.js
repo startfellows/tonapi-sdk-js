@@ -60,6 +60,7 @@ function PoolInfoFromJSONTyped(json, ignoreDiscriminator) {
         'liquidJettonMaster': !(0, runtime_1.exists)(json, 'liquid_jetton_master') ? undefined : json['liquid_jetton_master'],
         'nominatorsStake': json['nominators_stake'],
         'validatorStake': json['validator_stake'],
+        'cycleLength': !(0, runtime_1.exists)(json, 'cycle_length') ? undefined : json['cycle_length'],
     };
 }
 exports.PoolInfoFromJSONTyped = PoolInfoFromJSONTyped;
@@ -85,6 +86,7 @@ function PoolInfoToJSON(value) {
         'liquid_jetton_master': value.liquidJettonMaster,
         'nominators_stake': value.nominatorsStake,
         'validator_stake': value.validatorStake,
+        'cycle_length': value.cycleLength,
     };
 }
 exports.PoolInfoToJSON = PoolInfoToJSON;
