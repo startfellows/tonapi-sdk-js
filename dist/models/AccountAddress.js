@@ -22,6 +22,7 @@ function instanceOfAccountAddress(value) {
     let isInstance = true;
     isInstance = isInstance && "address" in value;
     isInstance = isInstance && "isScam" in value;
+    isInstance = isInstance && "isWallet" in value;
     return isInstance;
 }
 exports.instanceOfAccountAddress = instanceOfAccountAddress;
@@ -38,6 +39,7 @@ function AccountAddressFromJSONTyped(json, ignoreDiscriminator) {
         'name': !(0, runtime_1.exists)(json, 'name') ? undefined : json['name'],
         'isScam': json['is_scam'],
         'icon': !(0, runtime_1.exists)(json, 'icon') ? undefined : json['icon'],
+        'isWallet': json['is_wallet'],
     };
 }
 exports.AccountAddressFromJSONTyped = AccountAddressFromJSONTyped;
@@ -53,6 +55,7 @@ function AccountAddressToJSON(value) {
         'name': value.name,
         'is_scam': value.isScam,
         'icon': value.icon,
+        'is_wallet': value.isWallet,
     };
 }
 exports.AccountAddressToJSON = AccountAddressToJSON;

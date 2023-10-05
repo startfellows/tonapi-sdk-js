@@ -81,6 +81,12 @@ export interface Account {
      * @memberof Account
      */
     isSuspended?: boolean;
+    /**
+     *
+     * @type {boolean}
+     * @memberof Account
+     */
+    isWallet: boolean;
 }
 /**
  * Check if a given object implements the Account interface.

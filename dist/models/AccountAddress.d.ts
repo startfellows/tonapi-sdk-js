@@ -39,6 +39,12 @@ export interface AccountAddress {
      * @memberof AccountAddress
      */
     icon?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof AccountAddress
+     */
+    isWallet: boolean;
 }
 /**
  * Check if a given object implements the AccountAddress interface.
