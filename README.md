@@ -26,7 +26,7 @@ import { HttpClient, Api } from 'tonapi-sdk-js';
 
 // Configure the HTTP client with your host and token
 const httpClient = new HttpClient({
-    baseUrl: host,
+    baseUrl: 'https://tonapi.io/',
     baseApiParams: {
         headers: {
             Authorization: `Bearer ${YOUR_TOKEN}`,
