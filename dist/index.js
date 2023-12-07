@@ -232,6 +232,76 @@ export class Api {
         ...params,
       }),
     /**
+     * @description Get blockchain block shards
+     *
+     * @tags Blockchain
+     * @name GetBlockchainMasterchainShards
+     * @request GET:/v2/blockchain/masterchain/{masterchain_seqno}/shards
+     */
+    getBlockchainMasterchainShards: (masterchainSeqno, params = {}) =>
+      this.http.request({
+        path: `/v2/blockchain/masterchain/${masterchainSeqno}/shards`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+    /**
+     * @description Get all blocks in all shards and workchains between target and previous masterchain block according to shards last blocks snapshot in masterchain.  We don't recommend to build your app around this method because it has problem with scalability and will work very slow in the future.
+     *
+     * @tags Blockchain
+     * @name GetBlockchainMasterchainBlocks
+     * @request GET:/v2/blockchain/masterchain/{masterchain_seqno}/blocks
+     */
+    getBlockchainMasterchainBlocks: (masterchainSeqno, params = {}) =>
+      this.http.request({
+        path: `/v2/blockchain/masterchain/${masterchainSeqno}/blocks`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+    /**
+     * @description Get all transactions in all shards and workchains between target and previous masterchain block according to shards last blocks snapshot in masterchain. We don't recommend to build your app around this method because it has problem with scalability and will work very slow in the future.
+     *
+     * @tags Blockchain
+     * @name GetBlockchainMasterchainTransactions
+     * @request GET:/v2/blockchain/masterchain/{masterchain_seqno}/transactions
+     */
+    getBlockchainMasterchainTransactions: (masterchainSeqno, params = {}) =>
+      this.http.request({
+        path: `/v2/blockchain/masterchain/${masterchainSeqno}/transactions`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+    /**
+     * @description Get blockchain config from a specific block, if present.
+     *
+     * @tags Blockchain
+     * @name GetBlockchainConfigFromBlock
+     * @request GET:/v2/blockchain/masterchain/{masterchain_seqno}/config
+     */
+    getBlockchainConfigFromBlock: (masterchainSeqno, params = {}) =>
+      this.http.request({
+        path: `/v2/blockchain/masterchain/${masterchainSeqno}/config`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+    /**
+     * @description Get raw blockchain config from a specific block, if present.
+     *
+     * @tags Blockchain
+     * @name GetRawBlockchainConfigFromBlock
+     * @request GET:/v2/blockchain/masterchain/{masterchain_seqno}/config/raw
+     */
+    getRawBlockchainConfigFromBlock: (masterchainSeqno, params = {}) =>
+      this.http.request({
+        path: `/v2/blockchain/masterchain/${masterchainSeqno}/config/raw`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+    /**
      * @description Get transactions from block
      *
      * @tags Blockchain
@@ -374,6 +444,20 @@ export class Api {
         ...params,
       }),
     /**
+     * @description Get raw blockchain config
+     *
+     * @tags Blockchain
+     * @name GetRawBlockchainConfig
+     * @request GET:/v2/blockchain/config/raw
+     */
+    getRawBlockchainConfig: (params = {}) =>
+      this.http.request({
+        path: `/v2/blockchain/config/raw`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+    /**
      * @description Blockchain account inspect
      *
      * @tags Blockchain
@@ -390,16 +474,32 @@ export class Api {
   };
   emulation = {
     /**
+     * @description Decode a given message. Only external incoming messages can be decoded currently.
+     *
+     * @tags Emulation
+     * @name DecodeMessage
+     * @request POST:/v2/message/decode
+     */
+    decodeMessage: (data, params = {}) =>
+      this.http.request({
+        path: `/v2/message/decode`,
+        method: "POST",
+        body: data,
+        format: "json",
+        ...params,
+      }),
+    /**
      * @description Emulate sending message to blockchain
      *
      * @tags Emulation
      * @name EmulateMessageToEvent
      * @request POST:/v2/events/emulate
      */
-    emulateMessageToEvent: (data, params = {}) =>
+    emulateMessageToEvent: (data, query, params = {}) =>
       this.http.request({
         path: `/v2/events/emulate`,
         method: "POST",
+        query: query,
         body: data,
         format: "json",
         ...params,
@@ -411,10 +511,11 @@ export class Api {
      * @name EmulateMessageToTrace
      * @request POST:/v2/traces/emulate
      */
-    emulateMessageToTrace: (data, params = {}) =>
+    emulateMessageToTrace: (data, query, params = {}) =>
       this.http.request({
         path: `/v2/traces/emulate`,
         method: "POST",
+        query: query,
         body: data,
         format: "json",
         ...params,
@@ -451,6 +552,20 @@ export class Api {
       }),
   };
   accounts = {
+    /**
+     * @description parse address and display in all formats
+     *
+     * @tags Accounts
+     * @name AddressParse
+     * @request GET:/v2/address/{account_id}/parse
+     */
+    addressParse: (accountId, params = {}) =>
+      this.http.request({
+        path: `/v2/address/${accountId}/parse`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
     /**
      * @description Get human-friendly information about several accounts without low-level details.
      *
@@ -501,10 +616,11 @@ export class Api {
      * @name GetAccountJettonsBalances
      * @request GET:/v2/accounts/{account_id}/jettons
      */
-    getAccountJettonsBalances: (accountId, params = {}) =>
+    getAccountJettonsBalances: (accountId, query, params = {}) =>
       this.http.request({
         path: `/v2/accounts/${accountId}/jettons`,
         method: "GET",
+        query: query,
         format: "json",
         ...params,
       }),
@@ -1261,10 +1377,11 @@ export class Api {
      * @name GetRawAccountState
      * @request GET:/v2/liteserver/get_account_state/{account_id}
      */
-    getRawAccountState: (accountId, params = {}) =>
+    getRawAccountState: (accountId, query, params = {}) =>
       this.http.request({
         path: `/v2/liteserver/get_account_state/${accountId}`,
         method: "GET",
+        query: query,
         format: "json",
         ...params,
       }),
