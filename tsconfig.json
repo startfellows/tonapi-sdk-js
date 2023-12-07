@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "ES2015",
+    "moduleResolution": "node",
+    "target": "ES2022",
+    "allowJs": true,
     "declaration": true,
-    "outDir": "./dist"
+    "outDir": "dist"
   },
   "include": [
-    "dist/**/*"
+    "src/**/*"
   ]
 }
