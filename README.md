@@ -1,7 +1,7 @@
 # tonapi-sdk-js
 
 ## Overview
-This SDK, automatically generated via open-api, facilitates access to endpoints provided by tonapi.io. For detailed API information, visit the [swagger documentation](https://docs.tonconsole.com/tonapi).
+This SDK, automatically generated, facilitates access to endpoints provided by tonapi.io. For detailed API information, visit the [swagger documentation](https://docs.tonconsole.com/tonapi).
 
 To utilize tonapi, please set up an [account](https://tonconsole.com/).
 
