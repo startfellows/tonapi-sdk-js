@@ -217,6 +217,19 @@ class Api {
     }
     blockchain = {
         /**
+         * @description Reduce indexing latency
+         *
+         * @tags Blockchain
+         * @name ReduceIndexingLatency
+         * @request GET:/v2/status
+         */
+        reduceIndexingLatency: (params = {}) => this.http.request({
+            path: `/v2/status`,
+            method: "GET",
+            format: "json",
+            ...params,
+        }),
+        /**
          * @description Get blockchain block data
          *
          * @tags Blockchain
@@ -939,6 +952,64 @@ class Api {
         getEvent: (eventId, params = {}) => this.http.request({
             path: `/v2/events/${eventId}`,
             method: "GET",
+            format: "json",
+            ...params,
+        }),
+    };
+    inscriptions = {
+        /**
+         * @description Get all inscriptions by owner address. It's experimental API and can be dropped in the future.
+         *
+         * @tags Inscriptions
+         * @name GetAccountInscriptions
+         * @request GET:/v2/experimental/accounts/{account_id}/inscriptions
+         */
+        getAccountInscriptions: (accountId, query, params = {}) => this.http.request({
+            path: `/v2/experimental/accounts/${accountId}/inscriptions`,
+            method: "GET",
+            query: query,
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Get the transfer inscriptions history for account. It's experimental API and can be dropped in the future.
+         *
+         * @tags Inscriptions
+         * @name GetAccountInscriptionsHistory
+         * @request GET:/v2/experimental/accounts/{account_id}/inscriptions/history
+         */
+        getAccountInscriptionsHistory: (accountId, query, params = {}) => this.http.request({
+            path: `/v2/experimental/accounts/${accountId}/inscriptions/history`,
+            method: "GET",
+            query: query,
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Get the transfer inscriptions history for account. It's experimental API and can be dropped in the future.
+         *
+         * @tags Inscriptions
+         * @name GetAccountInscriptionsHistoryByTicker
+         * @request GET:/v2/experimental/accounts/{account_id}/inscriptions/{ticker}/history
+         */
+        getAccountInscriptionsHistoryByTicker: (accountId, ticker, query, params = {}) => this.http.request({
+            path: `/v2/experimental/accounts/${accountId}/inscriptions/${ticker}/history`,
+            method: "GET",
+            query: query,
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description return comment for making operation with inscription. please don't use it if you don't know what you are doing
+         *
+         * @tags Inscriptions
+         * @name GetInscriptionOpTemplate
+         * @request GET:/v2/experimental/inscriptions/op-template
+         */
+        getInscriptionOpTemplate: (query, params = {}) => this.http.request({
+            path: `/v2/experimental/inscriptions/op-template`,
+            method: "GET",
+            query: query,
             format: "json",
             ...params,
         }),

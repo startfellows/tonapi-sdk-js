@@ -48,6 +48,12 @@ export interface BlockValueFlow {
     created: BlockCurrencyCollection;
     minted: BlockCurrencyCollection;
 }
+export interface ServiceStatus {
+    /** @default true */
+    rest_online: boolean;
+    /** @example 100 */
+    indexing_latency: number;
+}
 export interface BlockchainBlock {
     /** @example 130 */
     tx_quantity: number;
@@ -309,6 +315,11 @@ export interface CreditPhase {
 export interface ActionPhase {
     /** @example true */
     success: boolean;
+    /**
+     * @format int32
+     * @example 5
+     */
+    result_code: number;
     /**
      * @format int32
      * @example 5
@@ -628,8 +639,8 @@ export interface ValidatorsSet {
     utime_until: number;
     total: number;
     main: number;
-    /** @format int64 */
-    total_weight?: number;
+    /** @example "1152921504606846800" */
+    total_weight?: string;
     list: {
         public_key: string;
         /** @format int64 */
@@ -757,8 +768,9 @@ export interface BlockchainRawAccount {
      * @example 123456789
      */
     last_transaction_lt: number;
-    /** @example "active" */
-    status: string;
+    /** @example "088b436a846d92281734236967970612f87fbd64a2cd3573107948379e8e4161" */
+    last_transaction_hash?: string;
+    status: AccountStatus;
     storage: AccountStorageInfo;
 }
 export interface Account {
@@ -775,8 +787,7 @@ export interface Account {
      * @example 123456789
      */
     last_activity: number;
-    /** @example "active" */
-    status: string;
+    status: AccountStatus;
     interfaces?: string[];
     /** @example "Ton foundation" */
     name?: string;
@@ -1264,7 +1275,7 @@ export interface ValueFlow {
 }
 export interface Action {
     /** @example "TonTransfer" */
-    type: "TonTransfer" | "JettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "ContractDeploy" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "JettonSwap" | "SmartContractExec" | "ElectionsRecoverStake" | "ElectionsDepositStake" | "DomainRenew" | "Unknown";
+    type: "TonTransfer" | "JettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "ContractDeploy" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "JettonSwap" | "SmartContractExec" | "ElectionsRecoverStake" | "ElectionsDepositStake" | "DomainRenew" | "InscriptionTransfer" | "InscriptionMint" | "Unknown";
     /** @example "ok" */
     status: "ok" | "failed";
     TonTransfer?: TonTransferAction;
@@ -1288,6 +1299,8 @@ export interface Action {
     JettonSwap?: JettonSwapAction;
     SmartContractExec?: SmartContractAction;
     DomainRenew?: DomainRenewAction;
+    InscriptionTransfer?: InscriptionTransferAction;
+    InscriptionMint?: InscriptionMintAction;
     /** shortly describes what this action is about. */
     simple_preview: ActionSimplePreview;
 }
@@ -1328,6 +1341,40 @@ export interface DomainRenewAction {
     /** @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf" */
     contract_address: string;
     renewer: AccountAddress;
+}
+export interface InscriptionMintAction {
+    recipient: AccountAddress;
+    /**
+     * amount in minimal particles
+     * @example "123456789"
+     */
+    amount: string;
+    /** @example "ton20" */
+    type: "ton20" | "gram20";
+    /** @example "nano" */
+    ticker: string;
+    /** @example 9 */
+    decimals: number;
+}
+export interface InscriptionTransferAction {
+    sender: AccountAddress;
+    recipient: AccountAddress;
+    /**
+     * amount in minimal particles
+     * @example "123456789"
+     */
+    amount: string;
+    /**
+     * @example "Hi! This is your salary.
+     * From accounting with love."
+     */
+    comment?: string;
+    /** @example "ton20" */
+    type: "ton20" | "gram20";
+    /** @example "nano" */
+    ticker: string;
+    /** @example 9 */
+    decimals: number;
 }
 export interface NftItemTransferAction {
     sender?: AccountAddress;
@@ -1850,6 +1897,19 @@ export interface JettonMetadata {
     websites?: string[];
     catalogs?: string[];
 }
+export interface InscriptionBalances {
+    inscriptions: InscriptionBalance[];
+}
+export interface InscriptionBalance {
+    /** @example "ton20" */
+    type: "ton20" | "gram20";
+    /** @example "nano" */
+    ticker: string;
+    /** @example "1000000000" */
+    balance: string;
+    /** @example 9 */
+    decimals: number;
+}
 export interface Jettons {
     jettons: JettonInfo[];
 }
@@ -2169,6 +2229,14 @@ export declare class Api<SecurityDataType extends unknown> {
     constructor(http: HttpClient<SecurityDataType>);
     blockchain: {
         /**
+         * @description Reduce indexing latency
+         *
+         * @tags Blockchain
+         * @name ReduceIndexingLatency
+         * @request GET:/v2/status
+         */
+        reduceIndexingLatency: (params?: RequestParams) => Promise<ServiceStatus>;
+        /**
          * @description Get blockchain block data
          *
          * @tags Blockchain
@@ -2286,6 +2354,7 @@ export declare class Api<SecurityDataType extends unknown> {
             before_lt?: number;
             /**
              * @format int32
+             * @min 1
              * @max 1000
              * @default 100
              * @example 100
@@ -2301,7 +2370,14 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         execGetMethodForBlockchainAccount: (accountId: string, methodName: string, query?: {
             /**
-             * Supported values: NaN, Null, 10-base digits for tiny int, 0x-prefixed hex digits for int257, all forms of addresses for slice, single-root base64-encoded BOC for cell
+             * Supported values:
+             * "NaN" for NaN type,
+             * "Null" for Null type,
+             * 10-base digits for tiny int type (Example: 100500),
+             * 0x-prefixed hex digits for int257 (Example: 0xfa01d78381ae32),
+             * all forms of addresses for slice type (Example: 0:6e731f2e28b73539a7f85ac47ca104d5840b229351189977bb6151d36b5e3f5e),
+             * single-root base64-encoded BOC for cell (Example: "te6ccgEBAQEAAgAAAA=="),
+             * single-root hex-encoded BOC for slice (Example: b5ee9c72010101010002000000)
              * @example ["0:9a33970f617bcd71acf2cd28357c067aa31859c02820d8f01d74c88063a8f4d8"]
              */
             args?: string[];
@@ -2473,9 +2549,9 @@ export declare class Api<SecurityDataType extends unknown> {
         getAccountJettonsBalances: (accountId: string, query?: {
             /**
              * accept ton and all possible fiat currencies, separated by commas
-             * @example "ton,usd,rub"
+             * @example ["ton","usd","rub"]
              */
-            currencies?: string;
+            currencies?: string[];
         }, params?: RequestParams) => Promise<JettonsBalances>;
         /**
          * @description Get the transfer jettons history for account
@@ -2492,6 +2568,7 @@ export declare class Api<SecurityDataType extends unknown> {
              */
             before_lt?: number;
             /**
+             * @min 1
              * @max 1000
              * @example 100
              */
@@ -2522,6 +2599,7 @@ export declare class Api<SecurityDataType extends unknown> {
              */
             before_lt?: number;
             /**
+             * @min 1
              * @max 1000
              * @example 100
              */
@@ -2551,11 +2629,15 @@ export declare class Api<SecurityDataType extends unknown> {
              */
             collection?: string;
             /**
+             * @min 1
              * @max 1000
              * @default 1000
              */
             limit?: number;
-            /** @default 0 */
+            /**
+             * @min 0
+             * @default 0
+             */
             offset?: number;
             /**
              * Selling nft items in ton implemented usually via transfer items to special selling account. This option enables including items which owned not directly.
@@ -2588,8 +2670,9 @@ export declare class Api<SecurityDataType extends unknown> {
              */
             before_lt?: number;
             /**
-             * @max 1000
-             * @example 100
+             * @min 1
+             * @max 100
+             * @example 20
              */
             limit: number;
             /**
@@ -2626,6 +2709,7 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         getAccountTraces: (accountId: string, query?: {
             /**
+             * @min 1
              * @max 1000
              * @default 100
              * @example 100
@@ -2730,6 +2814,7 @@ export declare class Api<SecurityDataType extends unknown> {
              */
             before_lt?: number;
             /**
+             * @min 1
              * @max 1000
              * @example 100
              */
@@ -2755,6 +2840,7 @@ export declare class Api<SecurityDataType extends unknown> {
         getNftCollections: (query?: {
             /**
              * @format int32
+             * @min 1
              * @max 1000
              * @default 100
              * @example 15
@@ -2762,6 +2848,7 @@ export declare class Api<SecurityDataType extends unknown> {
             limit?: number;
             /**
              * @format int32
+             * @min 0
              * @default 0
              * @example 10
              */
@@ -2784,11 +2871,15 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         getItemsFromCollection: (accountId: string, query?: {
             /**
+             * @min 1
              * @max 1000
              * @default 1000
              */
             limit?: number;
-            /** @default 0 */
+            /**
+             * @min 0
+             * @default 0
+             */
             offset?: number;
         }, params?: RequestParams) => Promise<NftItems>;
         /**
@@ -2824,6 +2915,7 @@ export declare class Api<SecurityDataType extends unknown> {
              */
             before_lt?: number;
             /**
+             * @min 1
              * @max 1000
              * @example 100
              */
@@ -2900,6 +2992,98 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         getEvent: (eventId: string, params?: RequestParams) => Promise<Event>;
     };
+    inscriptions: {
+        /**
+         * @description Get all inscriptions by owner address. It's experimental API and can be dropped in the future.
+         *
+         * @tags Inscriptions
+         * @name GetAccountInscriptions
+         * @request GET:/v2/experimental/accounts/{account_id}/inscriptions
+         */
+        getAccountInscriptions: (accountId: string, query?: {
+            /**
+             * @min 1
+             * @max 1000
+             * @default 1000
+             */
+            limit?: number;
+            /**
+             * @min 0
+             * @default 0
+             */
+            offset?: number;
+        }, params?: RequestParams) => Promise<InscriptionBalances>;
+        /**
+         * @description Get the transfer inscriptions history for account. It's experimental API and can be dropped in the future.
+         *
+         * @tags Inscriptions
+         * @name GetAccountInscriptionsHistory
+         * @request GET:/v2/experimental/accounts/{account_id}/inscriptions/history
+         */
+        getAccountInscriptionsHistory: (accountId: string, query?: {
+            /**
+             * omit this parameter to get last events
+             * @format int64
+             * @example 25758317000002
+             */
+            before_lt?: number;
+            /**
+             * @min 1
+             * @max 1000
+             * @default 100
+             * @example 100
+             */
+            limit?: number;
+        }, params?: RequestParams) => Promise<AccountEvents>;
+        /**
+         * @description Get the transfer inscriptions history for account. It's experimental API and can be dropped in the future.
+         *
+         * @tags Inscriptions
+         * @name GetAccountInscriptionsHistoryByTicker
+         * @request GET:/v2/experimental/accounts/{account_id}/inscriptions/{ticker}/history
+         */
+        getAccountInscriptionsHistoryByTicker: (accountId: string, ticker: string, query?: {
+            /**
+             * omit this parameter to get last events
+             * @format int64
+             * @example 25758317000002
+             */
+            before_lt?: number;
+            /**
+             * @min 1
+             * @max 1000
+             * @default 100
+             * @example 100
+             */
+            limit?: number;
+        }, params?: RequestParams) => Promise<AccountEvents>;
+        /**
+         * @description return comment for making operation with inscription. please don't use it if you don't know what you are doing
+         *
+         * @tags Inscriptions
+         * @name GetInscriptionOpTemplate
+         * @request GET:/v2/experimental/inscriptions/op-template
+         */
+        getInscriptionOpTemplate: (query: {
+            /** @example "ton20" */
+            type: "ton20" | "gram20";
+            destination?: string;
+            comment?: string;
+            /** @example "transfer" */
+            operation: "transfer";
+            /** @example "1000000000" */
+            amount: string;
+            /** @example "nano" */
+            ticker: string;
+            /** @example "UQAs87W4yJHlF8mt29ocA4agnMrLsOP69jC1HPyBUjJay7Mg" */
+            who: string;
+        }, params?: RequestParams) => Promise<{
+            /** @example "comment" */
+            comment: string;
+            /** @example "0:0000000000000" */
+            destination: string;
+        }>;
+    };
     jettons: {
         /**
          * @description Get a list of all indexed jetton masters in the blockchain.
@@ -2911,6 +3095,7 @@ export declare class Api<SecurityDataType extends unknown> {
         getJettons: (query?: {
             /**
              * @format int32
+             * @min 1
              * @max 1000
              * @default 100
              * @example 15
@@ -2918,6 +3103,7 @@ export declare class Api<SecurityDataType extends unknown> {
             limit?: number;
             /**
              * @format int32
+             * @min 0
              * @default 0
              * @example 10
              */
@@ -2940,11 +3126,15 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         getJettonHolders: (accountId: string, query?: {
             /**
+             * @min 1
              * @max 1000
              * @default 1000
              */
             limit?: number;
-            /** @default 0 */
+            /**
+             * @min 0
+             * @default 0
+             */
             offset?: number;
         }, params?: RequestParams) => Promise<JettonHolders>;
         /**
@@ -3032,14 +3222,16 @@ export declare class Api<SecurityDataType extends unknown> {
         getRates: (query: {
             /**
              * accept ton and jetton master addresses, separated by commas
-             * @example "ton"
+             * @maxItems 100
+             * @example ["ton"]
              */
-            tokens: string;
+            tokens: string[];
             /**
              * accept ton and all possible fiat currencies, separated by commas
-             * @example "ton,usd,rub"
+             * @maxItems 50
+             * @example ["ton","usd","rub"]
              */
-            currencies: string;
+            currencies: string[];
         }, params?: RequestParams) => Promise<{
             rates: Record<string, TokenRates>;
         }>;
@@ -3065,6 +3257,13 @@ export declare class Api<SecurityDataType extends unknown> {
              * @example 1668436763
              */
             end_date?: number;
+            /**
+             * @format int
+             * @min 0
+             * @max 200
+             * @default 200
+             */
+            points_count?: number;
         }, params?: RequestParams) => Promise<{
             /** @example {} */
             points: any;
