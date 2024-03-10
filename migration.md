@@ -50,7 +50,7 @@ In **v1**, you now only need to create a single instance of the API:
 import { HttpClient, Api } from 'tonapi-sdk-js';
 
 const httpClient = new HttpClient({
-    baseUrl: 'https://tonapi.io/',
+    baseUrl: 'https://tonapi.io',
     baseApiParams: {
         headers: {
             Authorization: `Bearer ${YOUR_TOKEN}`,
