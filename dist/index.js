@@ -532,9 +532,10 @@ class Api {
          * @name EmulateMessageToAccountEvent
          * @request POST:/v2/accounts/{account_id}/events/emulate
          */
-        emulateMessageToAccountEvent: (accountId, data, params = {}) => this.http.request({
+        emulateMessageToAccountEvent: (accountId, data, query, params = {}) => this.http.request({
             path: `/v2/accounts/${accountId}/events/emulate`,
             method: "POST",
+            query: query,
             body: data,
             format: "json",
             ...params,
@@ -1166,6 +1167,19 @@ class Api {
             path: `/v2/rates/chart`,
             method: "GET",
             query: query,
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Get the TON price from markets
+         *
+         * @tags Rates
+         * @name GetMarketsRates
+         * @request GET:/v2/rates/markets
+         */
+        getMarketsRates: (params = {}) => this.http.request({
+            path: `/v2/rates/markets`,
+            method: "GET",
             format: "json",
             ...params,
         }),
