@@ -340,6 +340,7 @@ export interface ActionPhase {
      * @example 1000
      */
     total_fees: number;
+    exit_code_description?: string;
 }
 export interface Transaction {
     /** @example "55e8809519cd3c49098c9ee45afdafcea7a894a74d0f628d94a115a50e045122" */
@@ -1198,6 +1199,15 @@ export interface JettonBalance {
     price?: TokenRates;
     wallet_address: AccountAddress;
     jetton: JettonPreview;
+    lock?: {
+        /** @example 597968399 */
+        amount: string;
+        /**
+         * @format int64
+         * @example 1678223064
+         */
+        till: number;
+    };
 }
 export interface JettonsBalances {
     balances: JettonBalance[];
