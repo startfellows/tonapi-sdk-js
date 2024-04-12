@@ -1935,6 +1935,7 @@ export interface JettonInfo {
     mintable: boolean;
     /** @example 311500000000000 */
     total_supply: string;
+    admin?: AccountAddress;
     metadata: JettonMetadata;
     verification: JettonVerificationType;
     /**
