@@ -365,6 +365,11 @@ export interface Transaction {
      * @example 25713146000001
      */
     total_fees: number;
+    /**
+     * @format int64
+     * @example 25713146000001
+     */
+    end_balance: number;
     transaction_type: TransactionType;
     /** @example "55e8809519cd3c49098c9ee45afdafcea7a894a74d0f628d94a115a50e045122" */
     state_update_old: string;
@@ -1320,6 +1325,7 @@ export interface Action {
     InscriptionMint?: InscriptionMintAction;
     /** shortly describes what this action is about. */
     simple_preview: ActionSimplePreview;
+    base_transactions: string[];
 }
 export interface TonTransferAction {
     sender: AccountAddress;
