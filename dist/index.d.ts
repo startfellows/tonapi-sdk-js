@@ -341,6 +341,7 @@ export interface ActionPhase {
      * @example 1000
      */
     total_fees: number;
+    result_code_description?: string;
 }
 export interface Transaction {
     /** @example "55e8809519cd3c49098c9ee45afdafcea7a894a74d0f628d94a115a50e045122" */
