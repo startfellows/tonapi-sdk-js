@@ -217,13 +217,13 @@ class Api {
     }
     blockchain = {
         /**
-         * @description Reduce indexing latency
+         * @description Status
          *
          * @tags Blockchain
-         * @name ReduceIndexingLatency
+         * @name Status
          * @request GET:/v2/status
          */
-        reduceIndexingLatency: (params = {}) => this.http.request({
+        status: (params = {}) => this.http.request({
             path: `/v2/status`,
             method: "GET",
             format: "json",

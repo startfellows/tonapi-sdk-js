@@ -1724,6 +1724,7 @@ export interface Auctions {
 export interface WalletDNS {
     /** @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf" */
     address: string;
+    account: AccountAddress;
     /** @example true */
     is_wallet: boolean;
     /** @example true */
@@ -1959,6 +1960,11 @@ export interface JettonHolders {
         /** @example 1000000000 */
         balance: string;
     }[];
+    /**
+     * @format int64
+     * @example 2000
+     */
+    total: number;
 }
 export interface AccountStaking {
     pools: AccountStakingInfo[];
@@ -2262,13 +2268,13 @@ export declare class Api<SecurityDataType extends unknown> {
     constructor(http: HttpClient<SecurityDataType>);
     blockchain: {
         /**
-         * @description Reduce indexing latency
+         * @description Status
          *
          * @tags Blockchain
-         * @name ReduceIndexingLatency
+         * @name Status
          * @request GET:/v2/status
          */
-        reduceIndexingLatency: (params?: RequestParams) => Promise<ServiceStatus>;
+        status: (params?: RequestParams) => Promise<ServiceStatus>;
         /**
          * @description Get blockchain block data
          *
