@@ -10,7 +10,7 @@
  * ---------------------------------------------------------------
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Api = exports.HttpClient = exports.ContentType = exports.PoolImplementationType = exports.JettonVerificationType = exports.BouncePhaseType = exports.ComputeSkipReason = exports.AccStatusChange = exports.TransactionType = exports.AccountStatus = void 0;
+exports.Api = exports.HttpClient = exports.ContentType = exports.PoolImplementationType = exports.TrustType = exports.JettonVerificationType = exports.BouncePhaseType = exports.ComputeSkipReason = exports.AccStatusChange = exports.TransactionType = exports.AccountStatus = void 0;
 /** @example "active" */
 var AccountStatus;
 (function (AccountStatus) {
@@ -57,6 +57,13 @@ var JettonVerificationType;
     JettonVerificationType["Blacklist"] = "blacklist";
     JettonVerificationType["None"] = "none";
 })(JettonVerificationType || (exports.JettonVerificationType = JettonVerificationType = {}));
+/** @example "whitelist" */
+var TrustType;
+(function (TrustType) {
+    TrustType["Whitelist"] = "whitelist";
+    TrustType["Blacklist"] = "blacklist";
+    TrustType["None"] = "none";
+})(TrustType || (exports.TrustType = TrustType = {}));
 var PoolImplementationType;
 (function (PoolImplementationType) {
     PoolImplementationType["Whales"] = "whales";
@@ -1482,6 +1489,19 @@ class Api {
          */
         getRawShardBlockProof: (blockId, params = {}) => this.http.request({
             path: `/v2/liteserver/get_shard_block_proof/${blockId}`,
+            method: "GET",
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Get out msg queue sizes
+         *
+         * @tags Lite Server
+         * @name GetOutMsgQueueSizes
+         * @request GET:/v2/liteserver/get_out_msg_queue_sizes
+         */
+        getOutMsgQueueSizes: (params = {}) => this.http.request({
+            path: `/v2/liteserver/get_out_msg_queue_sizes`,
             method: "GET",
             format: "json",
             ...params,

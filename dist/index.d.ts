@@ -166,6 +166,7 @@ export interface BlockchainBlockShards {
     shards: {
         /** @example "(0,8000000000000000,4234234)" */
         last_known_block_id: string;
+        last_known_block: BlockchainBlock;
     }[];
 }
 /** @example "active" */
@@ -1231,6 +1232,12 @@ export interface ImagePreview {
     url: string;
 }
 export type NftApprovedBy = ("getgems" | "tonkeeper" | "ton.diamonds")[];
+/** @example "whitelist" */
+export declare enum TrustType {
+    Whitelist = "whitelist",
+    Blacklist = "blacklist",
+    None = "none"
+}
 export interface Sale {
     /** @example "0:10C1073837B93FDAAD594284CE8B8EFF7B9CF25427440EB2FC682762E1471365" */
     address: string;
@@ -1264,6 +1271,9 @@ export interface NftItem {
     /** @example "crypto.ton" */
     dns?: string;
     approved_by: NftApprovedBy;
+    /** @example false */
+    include_cnft?: boolean;
+    trust: TrustType;
 }
 export interface NftItems {
     nft_items: NftItem[];
@@ -2399,6 +2409,11 @@ export declare class Api<SecurityDataType extends unknown> {
              * @example 100
              */
             limit?: number;
+            /**
+             * used to sort the result-set in ascending or descending order by lt.
+             * @default "desc"
+             */
+            sort_order?: "desc" | "asc";
         }, params?: RequestParams) => Promise<Transactions>;
         /**
          * @description Execute get method for account
@@ -2749,6 +2764,12 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request GET:/v2/accounts/{account_id}/traces
          */
         getAccountTraces: (accountId: string, query?: {
+            /**
+             * omit this parameter to get last events
+             * @format int64
+             * @example 25758317000002
+             */
+            before_lt?: number;
             /**
              * @min 1
              * @max 1000
@@ -3811,6 +3832,22 @@ export declare class Api<SecurityDataType extends unknown> {
                 id: BlockRaw;
                 /** @example "131D0C65055F04E9C19D687B51BC70F952FD9CA6F02C2801D3B89964A779DF85" */
                 proof: string;
+            }[];
+        }>;
+        /**
+         * @description Get out msg queue sizes
+         *
+         * @tags Lite Server
+         * @name GetOutMsgQueueSizes
+         * @request GET:/v2/liteserver/get_out_msg_queue_sizes
+         */
+        getOutMsgQueueSizes: (params?: RequestParams) => Promise<{
+            /** @format uint32 */
+            ext_msg_queue_size_limit: number;
+            shards: {
+                id: BlockRaw;
+                /** @format uint32 */
+                size: number;
             }[];
         }>;
     };
