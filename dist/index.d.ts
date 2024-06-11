@@ -820,6 +820,44 @@ export interface Account {
 export interface Accounts {
     accounts: Account[];
 }
+export interface GaslessConfig {
+    /**
+     * sending excess to this address decreases the commission of a gasless transfer
+     * @example "0:dfbd5be8497fdc0c9fcbdfc676864840ddf8ad6423d6d5657d9b0e8270d6c8ac"
+     */
+    relay_address: string;
+    /** list of jettons, any of them can be used to pay for gas */
+    gas_jettons: {
+        master_id: string;
+    }[];
+}
+export interface SignRawMessage {
+    /** @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf" */
+    address: string;
+    /** Number of nanocoins to send. Decimal string. */
+    amount: string;
+    /** Raw one-cell BoC encoded in Base64. */
+    payload?: string;
+    /** Raw once-cell BoC encoded in Base64. */
+    stateInit?: string;
+}
+export interface SignRawParams {
+    /** @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf" */
+    relay_address: string;
+    /**
+     * Commission for the transaction. In nanocoins.
+     * @example "1000000"
+     */
+    commission: string;
+    /** @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf" */
+    from: string;
+    /**
+     * @format int64
+     * @example 1717397217
+     */
+    valid_until: number;
+    messages: SignRawMessage[];
+}
 export interface MethodExecutionResult {
     /** @example true */
     success: boolean;
@@ -1235,6 +1273,7 @@ export type NftApprovedBy = ("getgems" | "tonkeeper" | "ton.diamonds")[];
 /** @example "whitelist" */
 export declare enum TrustType {
     Whitelist = "whitelist",
+    Graylist = "graylist",
     Blacklist = "blacklist",
     None = "none"
 }
@@ -2610,6 +2649,20 @@ export declare class Api<SecurityDataType extends unknown> {
             currencies?: string[];
         }, params?: RequestParams) => Promise<JettonsBalances>;
         /**
+         * @description Get Jetton balance by owner address
+         *
+         * @tags Accounts
+         * @name GetAccountJettonBalance
+         * @request GET:/v2/accounts/{account_id}/jettons/{jetton_id}
+         */
+        getAccountJettonBalance: (accountId: string, jettonId: string, query?: {
+            /**
+             * accept ton and all possible fiat currencies, separated by commas
+             * @example ["ton","usd","rub"]
+             */
+            currencies?: string[];
+        }, params?: RequestParams) => Promise<JettonBalance>;
+        /**
          * @description Get the transfer jettons history for account
          *
          * @tags Accounts
@@ -3429,6 +3482,44 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request GET:/v2/wallet/{account_id}/seqno
          */
         getAccountSeqno: (accountId: string, params?: RequestParams) => Promise<Seqno>;
+    };
+    gasless: {
+        /**
+         * @description Returns configuration of gasless transfers
+         *
+         * @tags Gasless
+         * @name GaslessConfig
+         * @request GET:/v2/gasless/config
+         */
+        gaslessConfig: (params?: RequestParams) => Promise<GaslessConfig>;
+        /**
+         * @description Estimates the cost of the given messages and returns a payload to sign.
+         *
+         * @tags Gasless
+         * @name GaslessEstimate
+         * @request POST:/v2/gasless/estimate/{master_id}
+         */
+        gaslessEstimate: (masterId: string, data: {
+            wallet_address: string;
+            wallet_public_key: string;
+            messages: {
+                /** @example "B5EE9C7201010101001100001D00048656C6C6F2C20776F726C64218" */
+                boc: string;
+            }[];
+        }, params?: RequestParams) => Promise<SignRawParams>;
+        /**
+         * No description
+         *
+         * @tags Gasless
+         * @name GaslessSend
+         * @request POST:/v2/gasless/send
+         */
+        gaslessSend: (data: {
+            /** hex encoded public key */
+            wallet_public_key: string;
+            /** @example "te6ccgECBQEAARUAAkWIAWTtae+KgtbrX26Bep8JSq8lFLfGOoyGR/xwdjfvpvEaHg" */
+            boc: string;
+        }, params?: RequestParams) => Promise<void>;
     };
     liteServer: {
         /**

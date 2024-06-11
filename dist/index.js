@@ -61,6 +61,7 @@ var JettonVerificationType;
 var TrustType;
 (function (TrustType) {
     TrustType["Whitelist"] = "whitelist";
+    TrustType["Graylist"] = "graylist";
     TrustType["Blacklist"] = "blacklist";
     TrustType["None"] = "none";
 })(TrustType || (exports.TrustType = TrustType = {}));
@@ -611,6 +612,20 @@ class Api {
          */
         getAccountJettonsBalances: (accountId, query, params = {}) => this.http.request({
             path: `/v2/accounts/${accountId}/jettons`,
+            method: "GET",
+            query: query,
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Get Jetton balance by owner address
+         *
+         * @tags Accounts
+         * @name GetAccountJettonBalance
+         * @request GET:/v2/accounts/{account_id}/jettons/{jetton_id}
+         */
+        getAccountJettonBalance: (accountId, jettonId, query, params = {}) => this.http.request({
+            path: `/v2/accounts/${accountId}/jettons/${jettonId}`,
             method: "GET",
             query: query,
             format: "json",
@@ -1285,6 +1300,48 @@ class Api {
             path: `/v2/wallet/${accountId}/seqno`,
             method: "GET",
             format: "json",
+            ...params,
+        }),
+    };
+    gasless = {
+        /**
+         * @description Returns configuration of gasless transfers
+         *
+         * @tags Gasless
+         * @name GaslessConfig
+         * @request GET:/v2/gasless/config
+         */
+        gaslessConfig: (params = {}) => this.http.request({
+            path: `/v2/gasless/config`,
+            method: "GET",
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Estimates the cost of the given messages and returns a payload to sign.
+         *
+         * @tags Gasless
+         * @name GaslessEstimate
+         * @request POST:/v2/gasless/estimate/{master_id}
+         */
+        gaslessEstimate: (masterId, data, params = {}) => this.http.request({
+            path: `/v2/gasless/estimate/${masterId}`,
+            method: "POST",
+            body: data,
+            format: "json",
+            ...params,
+        }),
+        /**
+         * No description
+         *
+         * @tags Gasless
+         * @name GaslessSend
+         * @request POST:/v2/gasless/send
+         */
+        gaslessSend: (data, params = {}) => this.http.request({
+            path: `/v2/gasless/send`,
+            method: "POST",
+            body: data,
             ...params,
         }),
     };
