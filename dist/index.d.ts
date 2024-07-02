@@ -54,6 +54,30 @@ export interface ServiceStatus {
     /** @example 100 */
     indexing_latency: number;
 }
+export interface ReducedBlock {
+    /**
+     * @format int32
+     * @example 0
+     */
+    workchain_id: number;
+    /** @example 8000000000000000 */
+    shard: string;
+    /**
+     * @format int32
+     * @example 21734019
+     */
+    seqno: number;
+    /** @example "(-1,4234234,8000000000000000)" */
+    master_ref?: string;
+    /** @example 130 */
+    tx_quantity: number;
+    /**
+     * @format int64
+     * @example 23814011000000
+     */
+    utime: number;
+    shards_blocks: string[];
+}
 export interface BlockchainBlock {
     /** @example 130 */
     tx_quantity: number;
@@ -162,6 +186,9 @@ export interface BlockchainBlock {
 export interface BlockchainBlocks {
     blocks: BlockchainBlock[];
 }
+export interface ReducedBlocks {
+    blocks: ReducedBlock[];
+}
 export interface BlockchainBlockShards {
     shards: {
         /** @example "(0,8000000000000000,4234234)" */
@@ -224,6 +251,8 @@ export interface Message {
     /** @example "0xdeadbeaf" */
     op_code?: string;
     init?: StateInit;
+    /** @example "1219de582369ac80ee1afe12147930f458a54ff1eea612611a8bc6bd31581a6c" */
+    hash: string;
     /**
      * hex-encoded BoC with raw message body
      * @example "B5EE9C7201010101001100001D00048656C6C6F2C20776F726C64218"
@@ -397,6 +426,11 @@ export interface Transaction {
     aborted: boolean;
     /** @example true */
     destroyed: boolean;
+    /**
+     * hex encoded boc with raw transaction
+     * @example "b5ee9c72410206010001380003b372cf3b5b8c891e517c9addbda1c0386a09ccacbb0e3faf630b51cfc8152325acb00002ac5795c0e41fdf79135cb7da03cc623b165d614b562a51eeccd8a5e097f405abf6b37f4e73000002ac5629732c1666887ed000144030480102030101a004008272abc8f2971aa4404ac6da1597720f348b2e1247b1ad9f55cbd3b6812f0a5f08b269bb65039fb1f6074d00f794e857f6dfd01131d299df456af10a8a4943d4d165000d0c80608840492001ab48015581f575c3b8c6ab3d6"
+     */
+    raw: string;
 }
 export interface Transactions {
     transactions: Transaction[];
@@ -1316,6 +1350,41 @@ export interface NftItem {
 }
 export interface NftItems {
     nft_items: NftItem[];
+}
+export interface Multisigs {
+    multisigs: Multisig[];
+}
+export interface Multisig {
+    /** @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf" */
+    address: string;
+    /**
+     * @format int64
+     * @example 1
+     */
+    seqno: number;
+    /** @format int32 */
+    threshold: number;
+    signers: string[];
+    proposers: string[];
+    orders: MultisigOrder[];
+}
+export interface MultisigOrder {
+    /** @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf" */
+    address: string;
+    /**
+     * @format int64
+     * @example 1
+     */
+    order_seqno: number;
+    /** @format int32 */
+    threshold: number;
+    /** @example false */
+    sent_for_execution: boolean;
+    signers: string[];
+    /** @format int32 */
+    approvals_num: number;
+    /** @format int64 */
+    expiration_date: number;
 }
 export interface Refund {
     /** @example "DNS.ton" */
@@ -2325,6 +2394,19 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         status: (params?: RequestParams) => Promise<ServiceStatus>;
         /**
+         * @description Get reduced blockchain blocks data
+         *
+         * @tags Blockchain
+         * @name GetReducedBlockchainBlocks
+         * @request GET:/v2/blockchain/reduced/blocks
+         */
+        getReducedBlockchainBlocks: (query: {
+            /** @format int64 */
+            from: number;
+            /** @format int64 */
+            to: number;
+        }, params?: RequestParams) => Promise<ReducedBlocks>;
+        /**
          * @description Get blockchain block data
          *
          * @tags Blockchain
@@ -2887,6 +2969,14 @@ export declare class Api<SecurityDataType extends unknown> {
             /** @example "NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQ3..." */
             public_key: string;
         }>;
+        /**
+         * @description Get account's multisigs
+         *
+         * @tags Accounts
+         * @name GetAccountMultisigs
+         * @request GET:/v2/accounts/{account_id}/multisigs
+         */
+        getAccountMultisigs: (accountId: string, params?: RequestParams) => Promise<Multisigs>;
         /**
          * @description Get account's balance change
          *
@@ -3941,6 +4031,16 @@ export declare class Api<SecurityDataType extends unknown> {
                 size: number;
             }[];
         }>;
+    };
+    multisig: {
+        /**
+         * @description Get multisig account info
+         *
+         * @tags Multisig
+         * @name GetMultisigAccount
+         * @request GET:/v2/multisig/{account_id}
+         */
+        getMultisigAccount: (accountId: string, params?: RequestParams) => Promise<Multisig>;
     };
 }
 export {};

@@ -238,6 +238,20 @@ class Api {
             ...params,
         }),
         /**
+         * @description Get reduced blockchain blocks data
+         *
+         * @tags Blockchain
+         * @name GetReducedBlockchainBlocks
+         * @request GET:/v2/blockchain/reduced/blocks
+         */
+        getReducedBlockchainBlocks: (query, params = {}) => this.http.request({
+            path: `/v2/blockchain/reduced/blocks`,
+            method: "GET",
+            query: query,
+            format: "json",
+            ...params,
+        }),
+        /**
          * @description Get blockchain block data
          *
          * @tags Blockchain
@@ -777,6 +791,19 @@ class Api {
          */
         getAccountPublicKey: (accountId, params = {}) => this.http.request({
             path: `/v2/accounts/${accountId}/publickey`,
+            method: "GET",
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Get account's multisigs
+         *
+         * @tags Accounts
+         * @name GetAccountMultisigs
+         * @request GET:/v2/accounts/{account_id}/multisigs
+         */
+        getAccountMultisigs: (accountId, params = {}) => this.http.request({
+            path: `/v2/accounts/${accountId}/multisigs`,
             method: "GET",
             format: "json",
             ...params,
@@ -1559,6 +1586,21 @@ class Api {
          */
         getOutMsgQueueSizes: (params = {}) => this.http.request({
             path: `/v2/liteserver/get_out_msg_queue_sizes`,
+            method: "GET",
+            format: "json",
+            ...params,
+        }),
+    };
+    multisig = {
+        /**
+         * @description Get multisig account info
+         *
+         * @tags Multisig
+         * @name GetMultisigAccount
+         * @request GET:/v2/multisig/{account_id}
+         */
+        getMultisigAccount: (accountId, params = {}) => this.http.request({
+            path: `/v2/multisig/${accountId}`,
             method: "GET",
             format: "json",
             ...params,
