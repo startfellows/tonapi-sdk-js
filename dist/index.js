@@ -584,9 +584,10 @@ class Api {
          * @name GetAccounts
          * @request POST:/v2/accounts/_bulk
          */
-        getAccounts: (data, params = {}) => this.http.request({
+        getAccounts: (data, query, params = {}) => this.http.request({
             path: `/v2/accounts/_bulk`,
             method: "POST",
+            query: query,
             body: data,
             format: "json",
             ...params,

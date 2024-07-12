@@ -831,6 +831,11 @@ export interface Account {
      */
     balance: number;
     /**
+     * {'USD': 1, 'IDR': 1000}
+     * @example {}
+     */
+    currencies_balance?: Record<string, any>;
+    /**
      * unix timestamp
      * @format int64
      * @example 123456789
@@ -2699,6 +2704,9 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         getAccounts: (data: {
             account_ids: string[];
+        }, query?: {
+            /** @example "usd" */
+            currency?: string;
         }, params?: RequestParams) => Promise<Accounts>;
         /**
          * @description Get human-friendly information about an account without low-level details.
