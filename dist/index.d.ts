@@ -3,7 +3,10 @@ export interface Error {
     error: string;
 }
 export interface AccountAddress {
-    /** @example "0:10C1073837B93FDAAD594284CE8B8EFF7B9CF25427440EB2FC682762E1471365" */
+    /**
+     * @format address
+     * @example "0:10C1073837B93FDAAD594284CE8B8EFF7B9CF25427440EB2FC682762E1471365"
+     */
     address: string;
     /**
      * Display name. Data collected from different sources like moderation lists, dns, collections names and over.
@@ -77,6 +80,7 @@ export interface ReducedBlock {
      */
     utime: number;
     shards_blocks: string[];
+    parent: string[];
 }
 export interface BlockchainBlock {
     /** @example 130 */
@@ -204,8 +208,12 @@ export declare enum AccountStatus {
     Frozen = "frozen"
 }
 export interface StateInit {
-    /** @example "te6ccgEBBgEARAABFP8A9KQT9LzyyAsBAgEgAgMCAUgEBQAE8jAAONBsIdMfMO1E0NM/MAHAAZekyMs/ye1UkzDyBuIAEaE0MdqJoaZ+YQ==" */
+    /**
+     * @format cell
+     * @example "b5ee9c72010106010044000114ff00f4a413f4bcf2c80b01020120020302014804050004f2300038d06c21d31f30ed44d0d33f3001c00197a4c8cb3fc9ed549330f206e20011a13431da89a1a67e61"
+     */
     boc: string;
+    interfaces: string[];
 }
 export interface Message {
     /** @example "int_msg" */
@@ -255,6 +263,7 @@ export interface Message {
     hash: string;
     /**
      * hex-encoded BoC with raw message body
+     * @format cell
      * @example "B5EE9C7201010101001100001D00048656C6C6F2C20776F726C64218"
      */
     raw_body?: string;
@@ -428,6 +437,7 @@ export interface Transaction {
     destroyed: boolean;
     /**
      * hex encoded boc with raw transaction
+     * @format cell
      * @example "b5ee9c72410206010001380003b372cf3b5b8c891e517c9addbda1c0386a09ccacbb0e3faf630b51cfc8152325acb00002ac5795c0e41fdf79135cb7da03cc623b165d614b562a51eeccd8a5e097f405abf6b37f4e73000002ac5629732c1666887ed000144030480102030101a004008272abc8f2971aa4404ac6da1597720f348b2e1247b1ad9f55cbd3b6812f0a5f08b269bb65039fb1f6074d00f794e857f6dfd01131d299df456af10a8a4943d4d165000d0c80608840492001ab48015581f575c3b8c6ab3d6"
      */
     raw: string;
@@ -691,13 +701,18 @@ export interface ValidatorsSet {
     }[];
 }
 export interface Oracle {
-    /** @example "0:55e8809519cd3c49098c9ee45afdafcea7a894a74d0f628d94a115a50e045122" */
+    /**
+     * @format address
+     * @example "0:55e8809519cd3c49098c9ee45afdafcea7a894a74d0f628d94a115a50e045122"
+     */
     address: string;
     /** @example "00000000000000000000000017dcab1b1481610f6c7a7a98cf0370dc0ec704a6" */
     secp_pubkey: string;
 }
 export interface OracleBridgeParams {
+    /** @format address */
     bridge_addr: string;
+    /** @format address */
     oracle_multisig_address: string;
     external_chain_address: string;
     oracles: Oracle[];
@@ -717,7 +732,9 @@ export interface JettonBridgePrices {
     discover_gas_consumption: number;
 }
 export interface JettonBridgeParams {
+    /** @format address */
     bridge_address: string;
+    /** @format address */
     oracles_address: string;
     state_flags: number;
     /** @format int64 */
@@ -727,7 +744,10 @@ export interface JettonBridgeParams {
     prices?: JettonBridgePrices;
 }
 export interface Validator {
-    /** @example "0:55e8809519cd3c49098c9ee45afdafcea7a894a74d0f628d94a115a50e045122" */
+    /**
+     * @format address
+     * @example "0:55e8809519cd3c49098c9ee45afdafcea7a894a74d0f628d94a115a50e045122"
+     */
     address: string;
     /** @example "10C1073837B93FDAAD594284CE8B8EFF7B9CF25427440EB2FC682762E1471365" */
     adnl_address: string;
@@ -793,7 +813,10 @@ export interface AccountStorageInfo {
     due_payment: number;
 }
 export interface BlockchainRawAccount {
-    /** @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf" */
+    /**
+     * @format address
+     * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+     */
     address: string;
     /**
      * @format int64
@@ -801,9 +824,15 @@ export interface BlockchainRawAccount {
      */
     balance: number;
     extra_balance?: Record<string, string>;
-    /** @example "b5ee9c72410104010087000114ff00f4a413f4a0f2c80b0102012002030002d200dfa5ffff76a268698fe9ffe8e42c5267858f90e785ffe4f6aa6467c444ffb365ffc10802faf0807d014035e7a064b87d804077e7857fc10803dfd2407d014035e7a064b86467cd8903a32b9ba4410803ade68afd014035e7a045ea432b6363796103bb7b9363210c678b64b87d807d8040c249b3e4" */
+    /**
+     * @format cell
+     * @example "b5ee9c72410104010087000114ff00f4a413f4a0f2c80b0102012002030002d200dfa5ffff76a268698fe9ffe8e42c5267858f90e785ffe4f6aa6467c444ffb365ffc10802faf0807d014035e7a064b87d804077e7857fc10803dfd2407d014035e7a064b86467cd8903a32b9ba4410803ade68afd014035e7a045ea432b6363796103bb7b9363210c678b64b87d807d8040c249b3e4"
+     */
     code?: string;
-    /** @example "b5ee9c7241010101002600004811fd096c0000000000000000000000000000000000000000000000000000000000000000cb78264d" */
+    /**
+     * @format cell
+     * @example "b5ee9c7241010101002600004811fd096c0000000000000000000000000000000000000000000000000000000000000000cb78264d"
+     */
     data?: string;
     /**
      * @format int64
@@ -819,11 +848,15 @@ export interface BlockchainRawAccount {
     libraries?: {
         /** @example true */
         public: boolean;
+        /** @format cell */
         root: string;
     }[];
 }
 export interface Account {
-    /** @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf" */
+    /**
+     * @format address
+     * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+     */
     address: string;
     /**
      * @format int64
@@ -862,33 +895,50 @@ export interface Accounts {
 export interface GaslessConfig {
     /**
      * sending excess to this address decreases the commission of a gasless transfer
+     * @format address
      * @example "0:dfbd5be8497fdc0c9fcbdfc676864840ddf8ad6423d6d5657d9b0e8270d6c8ac"
      */
     relay_address: string;
     /** list of jettons, any of them can be used to pay for gas */
     gas_jettons: {
+        /** @format address */
         master_id: string;
     }[];
 }
 export interface SignRawMessage {
-    /** @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf" */
+    /**
+     * @format address
+     * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+     */
     address: string;
     /** Number of nanocoins to send. Decimal string. */
     amount: string;
-    /** Raw one-cell BoC encoded in Base64. */
+    /**
+     * Raw one-cell BoC encoded in hex.
+     * @format cell
+     */
     payload?: string;
-    /** Raw once-cell BoC encoded in Base64. */
+    /**
+     * Raw once-cell BoC encoded in hex.
+     * @format cell
+     */
     stateInit?: string;
 }
 export interface SignRawParams {
-    /** @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf" */
+    /**
+     * @format address
+     * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+     */
     relay_address: string;
     /**
      * Commission for the transaction. In nanocoins.
      * @example "1000000"
      */
     commission: string;
-    /** @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf" */
+    /**
+     * @format address
+     * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+     */
     from: string;
     /**
      * @format int64
@@ -908,12 +958,13 @@ export interface MethodExecutionResult {
     stack: TvmStackRecord[];
     decoded?: any;
 }
+/** @format tuple-item */
 export interface TvmStackRecord {
     /** @example "cell" */
     type: "cell" | "num" | "nan" | "null" | "tuple";
-    /** @example "te6cckEBAQEAJAAAQ4ARPeUceMlv4l12d6jdLpIzzbAV6amYXNZeZK2aicQdC/Apj8aJ" */
+    /** @format cell */
     cell?: string;
-    /** @example "" */
+    /** @format cell */
     slice?: string;
     /** @example "" */
     num?: string;
@@ -925,17 +976,33 @@ export interface RawBlockchainConfig {
     config: Record<string, any>;
 }
 export interface BlockchainConfig {
-    /** config address */
+    /**
+     * config address
+     * @format address
+     */
     "0": string;
-    /** elector address */
+    /**
+     * elector address
+     * @format address
+     */
     "1": string;
-    /** minter address */
+    /**
+     * minter address
+     * @format address
+     */
     "2": string;
-    /** The address of the transaction fee collector. */
+    /**
+     * The address of the transaction fee collector.
+     * @format address
+     */
     "3"?: string;
-    /** dns root address */
+    /**
+     * dns root address
+     * @format address
+     */
     "4": string;
     "5"?: {
+        /** @format address */
         blackhole_addr?: string;
         /** @format int64 */
         fee_burn_nom: number;
@@ -1228,8 +1295,8 @@ export interface BlockchainConfig {
         jetton_bridge_params: JettonBridgeParams;
     };
     /**
-     * config boc in base64 format
-     * @example "te6ccgEBBgEARAABFP8A9KQT9LzyyAsBAgEgAgMCAUgEBQAE8jAAONBsIdMfMO1E0NM/MAHAAZekyMs/ye1UkzDyBuIAEaE0MdqJoaZ+YQ=="
+     * config boc in hex format
+     * @format cell
      */
     raw: string;
 }
@@ -1265,7 +1332,10 @@ export declare enum JettonVerificationType {
     None = "none"
 }
 export interface JettonPreview {
-    /** @example "0:0BB5A9F69043EEBDDA5AD2E946EB953242BD8F603FE795D90698CEEC6BFC60A0" */
+    /**
+     * @format address
+     * @example "0:0BB5A9F69043EEBDDA5AD2E946EB953242BD8F603FE795D90698CEEC6BFC60A0"
+     */
     address: string;
     /** @example "Wrapped TON" */
     name: string;
@@ -1317,14 +1387,20 @@ export declare enum TrustType {
     None = "none"
 }
 export interface Sale {
-    /** @example "0:10C1073837B93FDAAD594284CE8B8EFF7B9CF25427440EB2FC682762E1471365" */
+    /**
+     * @format address
+     * @example "0:10C1073837B93FDAAD594284CE8B8EFF7B9CF25427440EB2FC682762E1471365"
+     */
     address: string;
     market: AccountAddress;
     owner?: AccountAddress;
     price: Price;
 }
 export interface NftItem {
-    /** @example "0:E93E7D444180608B8520C00DC664383A387356FB6E16FDDF99DBE5E1415A574B" */
+    /**
+     * @format address
+     * @example "0:E93E7D444180608B8520C00DC664383A387356FB6E16FDDF99DBE5E1415A574B"
+     */
     address: string;
     /**
      * @format int64
@@ -1333,7 +1409,10 @@ export interface NftItem {
     index: number;
     owner?: AccountAddress;
     collection?: {
-        /** @example "0:E93E7D444180608B8520C00DC664383A387356FB6E16FDDF99DBE5E1415A574B" */
+        /**
+         * @format address
+         * @example "0:E93E7D444180608B8520C00DC664383A387356FB6E16FDDF99DBE5E1415A574B"
+         */
         address: string;
         /** @example "TON Diamonds" */
         name: string;
@@ -1360,7 +1439,10 @@ export interface Multisigs {
     multisigs: Multisig[];
 }
 export interface Multisig {
-    /** @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf" */
+    /**
+     * @format address
+     * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+     */
     address: string;
     /**
      * @format int64
@@ -1374,7 +1456,10 @@ export interface Multisig {
     orders: MultisigOrder[];
 }
 export interface MultisigOrder {
-    /** @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf" */
+    /**
+     * @format address
+     * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+     */
     address: string;
     /**
      * @format int64
@@ -1485,7 +1570,10 @@ export interface SmartContractAction {
 export interface DomainRenewAction {
     /** @example "vasya.ton" */
     domain: string;
-    /** @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf" */
+    /**
+     * @format address
+     * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+     */
     contract_address: string;
     renewer: AccountAddress;
 }
@@ -1544,9 +1632,15 @@ export interface NftItemTransferAction {
 export interface JettonTransferAction {
     sender?: AccountAddress;
     recipient?: AccountAddress;
-    /** @example "0:E93E7D444180608B8520C00DC664383A387356FB6E16FDDF99DBE5E1415A574B" */
+    /**
+     * @format address
+     * @example "0:E93E7D444180608B8520C00DC664383A387356FB6E16FDDF99DBE5E1415A574B"
+     */
     senders_wallet: string;
-    /** @example "0:E93E7D444180608B8520C00DC664383A387356FB6E16FDDF99DBE5E1415A574B" */
+    /**
+     * @format address
+     * @example "0:E93E7D444180608B8520C00DC664383A387356FB6E16FDDF99DBE5E1415A574B"
+     */
     recipients_wallet: string;
     /**
      * amount in quanta of tokens
@@ -1564,7 +1658,10 @@ export interface JettonTransferAction {
 }
 export interface JettonBurnAction {
     sender: AccountAddress;
-    /** @example "0:E93E7D444180608B8520C00DC664383A387356FB6E16FDDF99DBE5E1415A574B" */
+    /**
+     * @format address
+     * @example "0:E93E7D444180608B8520C00DC664383A387356FB6E16FDDF99DBE5E1415A574B"
+     */
     senders_wallet: string;
     /**
      * amount in quanta of tokens
@@ -1575,7 +1672,10 @@ export interface JettonBurnAction {
 }
 export interface JettonMintAction {
     recipient: AccountAddress;
-    /** @example "0:E93E7D444180608B8520C00DC664383A387356FB6E16FDDF99DBE5E1415A574B" */
+    /**
+     * @format address
+     * @example "0:E93E7D444180608B8520C00DC664383A387356FB6E16FDDF99DBE5E1415A574B"
+     */
     recipients_wallet: string;
     /**
      * amount in quanta of tokens
@@ -1585,14 +1685,20 @@ export interface JettonMintAction {
     jetton: JettonPreview;
 }
 export interface ContractDeployAction {
-    /** @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf" */
+    /**
+     * @format address
+     * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+     */
     address: string;
     /** @example ["nft_item","nft_royalty"] */
     interfaces: string[];
 }
 export interface SubscriptionAction {
     subscriber: AccountAddress;
-    /** @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf" */
+    /**
+     * @format address
+     * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+     */
     subscription: string;
     beneficiary: AccountAddress;
     /**
@@ -1605,7 +1711,10 @@ export interface SubscriptionAction {
 }
 export interface UnSubscriptionAction {
     subscriber: AccountAddress;
-    /** @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf" */
+    /**
+     * @format address
+     * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+     */
     subscription: string;
     beneficiary: AccountAddress;
 }
@@ -1765,11 +1874,20 @@ export interface ApyHistory {
     time: number;
 }
 export interface Subscription {
-    /** @example "0:dea8f638b789172ce36d10a20318125e52c649aa84893cd77858224fe2b9b0ee" */
+    /**
+     * @format address
+     * @example "0:dea8f638b789172ce36d10a20318125e52c649aa84893cd77858224fe2b9b0ee"
+     */
     address: string;
-    /** @example "0:567DE86AF2B6A557D7085807CF7C26338124987A5179344F0D0FA2657EB710F1" */
+    /**
+     * @format address
+     * @example "0:567DE86AF2B6A557D7085807CF7C26338124987A5179344F0D0FA2657EB710F1"
+     */
     wallet_address: string;
-    /** @example "0:c704dadfabac88eab58e340de03080df81ff76636431f48624ad6e26fb2da0a4" */
+    /**
+     * @format address
+     * @example "0:c704dadfabac88eab58e340de03080df81ff76636431f48624ad6e26fb2da0a4"
+     */
     beneficiary_address: string;
     /**
      * @format int64
@@ -1818,7 +1936,10 @@ export interface Subscriptions {
 export interface Auction {
     /** @example "wallet.ton" */
     domain: string;
-    /** @example "owner" */
+    /**
+     * @format address
+     * @example "0:c704dadfabac88eab58e340de03080df81ff76636431f48624ad6e26fb2da0a4"
+     */
     owner: string;
     /**
      * @format int64
@@ -1845,7 +1966,10 @@ export interface Auctions {
     total: number;
 }
 export interface WalletDNS {
-    /** @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf" */
+    /**
+     * @format address
+     * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+     */
     address: string;
     account: AccountAddress;
     /** @example true */
@@ -1867,7 +1991,10 @@ export interface DomainInfo {
 }
 export interface DnsRecord {
     wallet?: WalletDNS;
-    /** @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf" */
+    /**
+     * @format address
+     * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+     */
     next_resolver?: string;
     sites: string[];
     /**
@@ -1877,7 +2004,10 @@ export interface DnsRecord {
     storage?: string;
 }
 export interface NftCollection {
-    /** @example "0:FD595F36B4C1535BEC8461490D38EBB9AE3C38DD6ACE17CA63ABE2C6608BE159" */
+    /**
+     * @format address
+     * @example "0:FD595F36B4C1535BEC8461490D38EBB9AE3C38DD6ACE17CA63ABE2C6608BE159"
+     */
     address: string;
     /**
      * @format int64
@@ -1885,7 +2015,7 @@ export interface NftCollection {
      */
     next_item_index: number;
     owner?: AccountAddress;
-    /** @example "697066733a2f2f516d596e437861746f5178433571584b79773971656768415853626f3544644e6a32387631487669437a47355359" */
+    /** @format cell */
     raw_collection_content: string;
     /** @example {} */
     metadata?: Record<string, any>;
@@ -1991,7 +2121,7 @@ export interface DecodedMessage {
 }
 export interface DecodedRawMessage {
     message: {
-        /** @example "te6ccgEBAQEABgAACCiAmCMBAgEABwA=" */
+        /** @format cell */
         boc: string;
         /** @example "nft_transfer" */
         decoded_op_name?: string;
@@ -2029,7 +2159,10 @@ export interface Event {
     in_progress: boolean;
 }
 export interface JettonMetadata {
-    /** @example "0:0BB5A9F69043EEBDDA5AD2E946EB953242BD8F603FE795D90698CEEC6BFC60A0" */
+    /**
+     * @format address
+     * @example "0:0BB5A9F69043EEBDDA5AD2E946EB953242BD8F603FE795D90698CEEC6BFC60A0"
+     */
     address: string;
     /** @example "Wrapped TON" */
     name: string;
@@ -2077,7 +2210,10 @@ export interface JettonInfo {
 }
 export interface JettonHolders {
     addresses: {
-        /** @example "0:10C1073837B93FDAAD594284CE8B8EFF7B9CF25427440EB2FC682762E1471365" */
+        /**
+         * @format address
+         * @example "0:10C1073837B93FDAAD594284CE8B8EFF7B9CF25427440EB2FC682762E1471365"
+         */
         address: string;
         owner: AccountAddress;
         /** @example 1000000000 */
@@ -2117,7 +2253,10 @@ export interface AccountStakingInfo {
     ready_withdraw: number;
 }
 export interface PoolInfo {
-    /** @example "0:48fb0195a7fc7454512377b9bd704503ded27f6e7c4c4a9d136fdab3ef9ec04c" */
+    /**
+     * @format address
+     * @example "0:48fb0195a7fc7454512377b9bd704503ded27f6e7c4c4a9d136fdab3ef9ec04c"
+     */
     address: string;
     /** @example "Tonkeeper pool" */
     name: string;
@@ -2163,6 +2302,7 @@ export interface PoolInfo {
     max_nominators: number;
     /**
      * for liquid staking master account of jetton
+     * @format address
      * @example "0:4a91d32d0289bda9813ae00ff7640e6c38fdce76e4583dd6afc463b70c7d767c"
      */
     liquid_jetton_master?: string;
@@ -2191,7 +2331,10 @@ export interface PoolImplementation {
     socials: string[];
 }
 export interface StorageProvider {
-    /** @example "0:FD595F36B4C1535BEC8461490D38EBB9AE3C38DD6ACE17CA63ABE2C6608BE159" */
+    /**
+     * @format address
+     * @example "0:FD595F36B4C1535BEC8461490D38EBB9AE3C38DD6ACE17CA63ABE2C6608BE159"
+     */
     address: string;
     /** @example true */
     accept_new_contracts: boolean;
@@ -2218,7 +2361,7 @@ export interface StorageProvider {
 }
 export interface FoundAccounts {
     addresses: {
-        /** @example "0:010cеeac44fad23417a5c55e4071796868771082с9a61e8c195a8d57508b8471" */
+        /** @format address */
         address: string;
         /** @example "blah_blah.ton" */
         name: string;
@@ -2241,7 +2384,10 @@ export interface DnsExpiring {
 export interface AccountInfoByStateInit {
     /** @example "NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQ3..." */
     public_key: string;
-    /** @example "0:97146a46acc2654y27947f14c4a4b14273e954f78bc017790b41208b0043200b" */
+    /**
+     * @format address
+     * @example "0:97146a46acc2654y27947f14c4a4b14273e954f78bc017790b41208b0043200b"
+     */
     address: string;
 }
 export interface Seqno {
@@ -2284,6 +2430,7 @@ export interface EncryptedComment {
     cipher_text: string;
 }
 export interface BlockchainAccountInspect {
+    /** @format cell */
     code: string;
     code_hash: string;
     methods: {
@@ -2570,7 +2717,7 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request POST:/v2/blockchain/message
          */
         sendBlockchainMessage: (data: {
-            /** @example "te6ccgECBQEAARUAAkWIAWTtae+KgtbrX26Bep8JSq8lFLfGOoyGR/xwdjfvpvEaHg" */
+            /** @format cell */
             boc?: string;
             /** @maxItems 10 */
             batch?: string[];
@@ -2609,7 +2756,7 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request POST:/v2/message/decode
          */
         decodeMessage: (data: {
-            /** @example "te6ccgECBQEAARUAAkWIAWTtae+KgtbrX26Bep8JSq8lFLfGOoyGR/xwdjfvpvEaHg" */
+            /** @format cell */
             boc: string;
         }, params?: RequestParams) => Promise<DecodedMessage>;
         /**
@@ -2620,7 +2767,7 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request POST:/v2/events/emulate
          */
         emulateMessageToEvent: (data: {
-            /** @example "te6ccgECBQEAARUAAkWIAWTtae+KgtbrX26Bep8JSq8lFLfGOoyGR/xwdjfvpvEaHg" */
+            /** @format cell */
             boc: string;
         }, query?: {
             ignore_signature_check?: boolean;
@@ -2633,7 +2780,7 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request POST:/v2/traces/emulate
          */
         emulateMessageToTrace: (data: {
-            /** @example "te6ccgECBQEAARUAAkWIAWTtae+KgtbrX26Bep8JSq8lFLfGOoyGR/xwdjfvpvEaHg" */
+            /** @format cell */
             boc: string;
         }, query?: {
             ignore_signature_check?: boolean;
@@ -2646,11 +2793,14 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request POST:/v2/wallet/emulate
          */
         emulateMessageToWallet: (data: {
-            /** @example "te6ccgECBQEAARUAAkWIAWTtae+KgtbrX26Bep8JSq8lFLfGOoyGR/xwdjfvpvEaHg" */
+            /** @format cell */
             boc: string;
             /** additional per account configuration */
             params?: {
-                /** @example "0:97146a46acc2654y27947f14c4a4b14273e954f78bc017790b41208b0043200b" */
+                /**
+                 * @format address
+                 * @example "0:97146a46acc2654y27947f14c4a4b14273e954f78bc017790b41208b0043200b"
+                 */
                 address: string;
                 /**
                  * @format int64
@@ -2667,7 +2817,7 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request POST:/v2/accounts/{account_id}/events/emulate
          */
         emulateMessageToAccountEvent: (accountId: string, data: {
-            /** @example "te6ccgECBQEAARUAAkWIAWTtae+KgtbrX26Bep8JSq8lFLfGOoyGR/xwdjfvpvEaHg" */
+            /** @format cell */
             boc: string;
         }, query?: {
             ignore_signature_check?: boolean;
@@ -2682,7 +2832,10 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request GET:/v2/address/{account_id}/parse
          */
         addressParse: (accountId: string, params?: RequestParams) => Promise<{
-            /** @example "0:6e731f2e28b73539a7f85ac47ca104d5840b229351189977bb6151d36b5e3f5e" */
+            /**
+             * @format address
+             * @example "0:6e731f2e28b73539a7f85ac47ca104d5840b229351189977bb6151d36b5e3f5e"
+             */
             raw_form: string;
             bounceable: {
                 b64: string;
@@ -2824,6 +2977,7 @@ export declare class Api<SecurityDataType extends unknown> {
         getAccountNftItems: (accountId: string, query?: {
             /**
              * nft collection
+             * @format address
              * @example "0:06d811f426598591b32b2c49f29f66c821368e4acb1de16762b04e0174532465"
              */
             collection?: string;
@@ -3399,6 +3553,7 @@ export declare class Api<SecurityDataType extends unknown> {
         getStakingPools: (query?: {
             /**
              * account ID
+             * @format address
              * @example "0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621"
              */
             available_for?: string;
@@ -3512,6 +3667,7 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request POST:/v2/tonconnect/stateinit
          */
         getAccountInfoByStateInit: (data: {
+            /** @format cell-base64 */
             state_init: string;
         }, params?: RequestParams) => Promise<AccountInfoByStateInit>;
     };
@@ -3542,7 +3698,10 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request POST:/v2/wallet/auth/proof
          */
         tonConnectProof: (data: {
-            /** @example "0:97146a46acc2654y27947f14c4a4b14273e954f78bc017790b41208b0043200b" */
+            /**
+             * @format address
+             * @example "0:97146a46acc2654y27947f14c4a4b14273e954f78bc017790b41208b0043200b"
+             */
             address: string;
             proof: {
                 /**
@@ -3558,6 +3717,7 @@ export declare class Api<SecurityDataType extends unknown> {
                 signature: string;
                 /** @example "84jHVNLQmZsAAAAAZB0Zryi2wqVJI-KaKNXOvCijEi46YyYzkaSHyJrMPBMOkVZa" */
                 payload: string;
+                /** @format cell-base64 */
                 state_init?: string;
             };
         }, params?: RequestParams) => Promise<{
@@ -3598,10 +3758,11 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request POST:/v2/gasless/estimate/{master_id}
          */
         gaslessEstimate: (masterId: string, data: {
+            /** @format address */
             wallet_address: string;
             wallet_public_key: string;
             messages: {
-                /** @example "B5EE9C7201010101001100001D00048656C6C6F2C20776F726C64218" */
+                /** @format cell */
                 boc: string;
             }[];
         }, params?: RequestParams) => Promise<SignRawParams>;
@@ -3615,7 +3776,7 @@ export declare class Api<SecurityDataType extends unknown> {
         gaslessSend: (data: {
             /** hex encoded public key */
             wallet_public_key: string;
-            /** @example "te6ccgECBQEAARUAAkWIAWTtae+KgtbrX26Bep8JSq8lFLfGOoyGR/xwdjfvpvEaHg" */
+            /** @format cell */
             boc: string;
         }, params?: RequestParams) => Promise<void>;
     };
@@ -3752,6 +3913,7 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request POST:/v2/liteserver/send_message
          */
         sendRawMessage: (data: {
+            /** @format cell-base64 */
             body: string;
         }, params?: RequestParams) => Promise<{
             /**
@@ -3882,6 +4044,7 @@ export declare class Api<SecurityDataType extends unknown> {
             count: number;
             /**
              * account ID
+             * @format address
              * @example "0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621"
              */
             account_id?: string;
