@@ -56,6 +56,11 @@ export interface ServiceStatus {
     rest_online: boolean;
     /** @example 100 */
     indexing_latency: number;
+    /**
+     * @format int32
+     * @example 123456
+     */
+    last_known_masterchain_seqno: number;
 }
 export interface ReducedBlock {
     /**
@@ -802,8 +807,9 @@ export interface AccountStorageInfo {
      */
     used_public_cells: number;
     /**
+     * time of the last payment
      * @format int64
-     * @example 567
+     * @example 1720860269
      */
     last_paid: number;
     /**
@@ -871,7 +877,7 @@ export interface Account {
     /**
      * unix timestamp
      * @format int64
-     * @example 123456789
+     * @example 1720860269
      */
     last_activity: number;
     status: AccountStatus;
@@ -1353,6 +1359,8 @@ export interface JettonBalance {
     price?: TokenRates;
     wallet_address: AccountAddress;
     jetton: JettonPreview;
+    /** @example ["custom_payload","non_transferable"] */
+    extensions?: string[];
     lock?: {
         /** @example 597968399 */
         amount: string;
@@ -1367,7 +1375,7 @@ export interface JettonsBalances {
     balances: JettonBalance[];
 }
 export interface Price {
-    /** @example 123000000000 */
+    /** @example "123000000000" */
     value: string;
     /** @example "TON" */
     token_name: string;
@@ -2056,7 +2064,7 @@ export interface Risk {
     nfts: NftItem[];
 }
 export interface JettonQuantity {
-    /** @example 597968399 */
+    /** @example "597968399" */
     quantity: string;
     wallet_address: AccountAddress;
     jetton: JettonPreview;
@@ -2197,7 +2205,7 @@ export interface Jettons {
 export interface JettonInfo {
     /** @example true */
     mintable: boolean;
-    /** @example 311500000000000 */
+    /** @example "5887105890579978" */
     total_supply: string;
     admin?: AccountAddress;
     metadata: JettonMetadata;
@@ -2216,14 +2224,30 @@ export interface JettonHolders {
          */
         address: string;
         owner: AccountAddress;
-        /** @example 1000000000 */
+        /**
+         * balance in the smallest jetton's units
+         * @example "168856200518084"
+         */
         balance: string;
     }[];
     /**
+     * total number of holders
      * @format int64
      * @example 2000
      */
     total: number;
+}
+export interface JettonTransferPayload {
+    /**
+     * hex-encoded BoC
+     * @example "b5ee9c72410212010001b40009460395b521c9251151ae7987e03c544bd275d6cd42c2d157f840beb14d5454b96718000d012205817002020328480101fd7f6a648d4f771d7f0abc1707e4e806b19de1801f65eb8c133a4cfb0c33d847000b22012004052848010147da975b922d89192f4c9b68a640daa6764ec398c93cec025e17f0c1852a711a0009220120061122012007082848010170d9fb0423cbef6c2cf1f3811a2f640daf8c9a326b6f8816c1b993e90d88e2100006220120090a28480101f6df1d75f6b9e45f224b2cb4fc2286d927d47b468b6dbf1fedc4316290ec2ae900042201200b102201200c0f2201200d"
+     */
+    custom_payload?: string;
+    /**
+     * hex-encoded BoC
+     * @example "b5ee9c72410212010001b40009460395b521c9251151ae7987e03c544bd275d6cd42c2d157f840beb14d5454b96718000d012205817002020328480101fd7f6a648d4f771d7f0abc1707e4e806b19de1801f65eb8c133a4cfb0c33d847000b22012004052848010147da975b922d89192f4c9b68a640daa6764ec398c93cec025e17f0c1852a711a0009220120061122012007082848010170d9fb0423cbef6c2cf1f3811a2f640daf8c9a326b6f8816c1b993e90d88e2100006220120090a28480101f6df1d75f6b9e45f224b2cb4fc2286d927d47b468b6dbf1fedc4316290ec2ae900042201200b102201200c0f2201200d"
+     */
+    state_init?: string;
 }
 export interface AccountStaking {
     pools: AccountStakingInfo[];
@@ -2373,7 +2397,7 @@ export interface DnsExpiring {
     items: {
         /**
          * @format int64
-         * @example "1678275313"
+         * @example 1678275313
          */
         expiring_at: number;
         /** @example "blah_blah.ton" */
@@ -3504,6 +3528,14 @@ export declare class Api<SecurityDataType extends unknown> {
              */
             offset?: number;
         }, params?: RequestParams) => Promise<JettonHolders>;
+        /**
+         * @description Get jetton's custom payload and state init required for transfer
+         *
+         * @tags Jettons
+         * @name GetJettonTransferPayload
+         * @request GET:/v2/jettons/{jetton_id}/transfer/{account_id}/payload
+         */
+        getJettonTransferPayload: (accountId: string, jettonId: string, params?: RequestParams) => Promise<JettonTransferPayload>;
         /**
          * @description Get only jetton transfers in the event
          *

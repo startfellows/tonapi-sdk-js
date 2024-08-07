@@ -1108,6 +1108,19 @@ class Api {
             ...params,
         }),
         /**
+         * @description Get jetton's custom payload and state init required for transfer
+         *
+         * @tags Jettons
+         * @name GetJettonTransferPayload
+         * @request GET:/v2/jettons/{jetton_id}/transfer/{account_id}/payload
+         */
+        getJettonTransferPayload: (accountId, jettonId, params = {}) => this.http.request({
+            path: `/v2/jettons/${jettonId}/transfer/${accountId}/payload`,
+            method: "GET",
+            format: "json",
+            ...params,
+        }),
+        /**
          * @description Get only jetton transfers in the event
          *
          * @tags Jettons
