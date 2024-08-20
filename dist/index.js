@@ -1206,7 +1206,7 @@ class Api {
     };
     rates = {
         /**
-         * @description Get the token price to the currency
+         * @description Get the token price in the chosen currency for display only. Don’t use this for financial transactions.
          *
          * @tags Rates
          * @name GetRates

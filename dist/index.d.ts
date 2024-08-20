@@ -1483,6 +1483,8 @@ export interface MultisigOrder {
     approvals_num: number;
     /** @format int64 */
     expiration_date: number;
+    /** Risk specifies assets that could be lost if a message would be sent to a malicious smart contract. It makes sense to understand the risk BEFORE sending a message to the blockchain. */
+    risk: Risk;
 }
 export interface Refund {
     /** @example "DNS.ton" */
@@ -2914,6 +2916,11 @@ export declare class Api<SecurityDataType extends unknown> {
              * @example ["ton","usd","rub"]
              */
             currencies?: string[];
+            /**
+             * comma separated list supported extensions
+             * @example ["custom_payload"]
+             */
+            supported_extensions?: string[];
         }, params?: RequestParams) => Promise<JettonsBalances>;
         /**
          * @description Get Jetton balance by owner address
@@ -3613,7 +3620,7 @@ export declare class Api<SecurityDataType extends unknown> {
     };
     rates: {
         /**
-         * @description Get the token price to the currency
+         * @description Get the token price in the chosen currency for display only. Don’t use this for financial transactions.
          *
          * @tags Rates
          * @name GetRates
