@@ -48,8 +48,8 @@ const generateApiParams = {
     onPrepareConfig(config) {
       // Fall back to previous version of the schema
       const data = {
-        // accounts: ["addressParse"],
-        // blockchain: ["status"],
+        accounts: ["addressParse"],
+        blockchain: ["status"],
       };
       return applyFallbackRoutes(config, data);
     },

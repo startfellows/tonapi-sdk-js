@@ -2798,6 +2798,15 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request GET:/v2/blockchain/accounts/{account_id}/inspect
          */
         blockchainAccountInspect: (accountId: string, params?: RequestParams) => Promise<BlockchainAccountInspect>;
+        /**
+         * @description Status
+         *
+         * @tags Utilities
+         * @name Status
+         * @request GET:/v2/status
+         * @deprecated
+         */
+        status: (requestParams?: RequestParams) => Promise<ServiceStatus>;
     };
     accounts: {
         /**
@@ -3120,6 +3129,31 @@ export declare class Api<SecurityDataType extends unknown> {
              * @example 1000000000
              */
             balance_change: number;
+        }>;
+        /**
+         * @description parse address and display in all formats
+         *
+         * @tags Utilities
+         * @name AddressParse
+         * @request GET:/v2/address/{account_id}/parse
+         * @deprecated
+         */
+        addressParse: (accountId: string, requestParams?: RequestParams) => Promise<{
+            /**
+             * @format address
+             * @example "0:6e731f2e28b73539a7f85ac47ca104d5840b229351189977bb6151d36b5e3f5e"
+             */
+            raw_form: string;
+            bounceable: {
+                b64: string;
+                b64url: string;
+            };
+            non_bounceable: {
+                b64: string;
+                b64url: string;
+            };
+            given_type: string;
+            test_only: boolean;
         }>;
     };
     nft: {

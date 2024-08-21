@@ -502,6 +502,20 @@ class Api {
             format: "json",
             ...params,
         }),
+        /**
+         * @description Status
+         *
+         * @tags Utilities
+         * @name Status
+         * @request GET:/v2/status
+         * @deprecated
+         */
+        status: (requestParams = {}) => this.http.request({
+            path: `/v2/status`,
+            method: "GET",
+            format: "json",
+            ...requestParams,
+        }),
     };
     accounts = {
         /**
@@ -749,6 +763,20 @@ class Api {
             query: query,
             format: "json",
             ...params,
+        }),
+        /**
+         * @description parse address and display in all formats
+         *
+         * @tags Utilities
+         * @name AddressParse
+         * @request GET:/v2/address/{account_id}/parse
+         * @deprecated
+         */
+        addressParse: (accountId, requestParams = {}) => this.http.request({
+            path: `/v2/address/${accountId}/parse`,
+            method: "GET",
+            format: "json",
+            ...requestParams,
         }),
     };
     nft = {
