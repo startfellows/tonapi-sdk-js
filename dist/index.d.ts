@@ -2562,15 +2562,41 @@ export declare class HttpClient<SecurityDataType = unknown> {
 export declare class Api<SecurityDataType extends unknown> {
     http: HttpClient<SecurityDataType>;
     constructor(http: HttpClient<SecurityDataType>);
-    blockchain: {
+    utilities: {
         /**
          * @description Status
          *
-         * @tags Blockchain
+         * @tags Utilities
          * @name Status
          * @request GET:/v2/status
          */
         status: (params?: RequestParams) => Promise<ServiceStatus>;
+        /**
+         * @description parse address and display in all formats
+         *
+         * @tags Utilities
+         * @name AddressParse
+         * @request GET:/v2/address/{account_id}/parse
+         */
+        addressParse: (accountId: string, params?: RequestParams) => Promise<{
+            /**
+             * @format address
+             * @example "0:6e731f2e28b73539a7f85ac47ca104d5840b229351189977bb6151d36b5e3f5e"
+             */
+            raw_form: string;
+            bounceable: {
+                b64: string;
+                b64url: string;
+            };
+            non_bounceable: {
+                b64: string;
+                b64url: string;
+            };
+            given_type: string;
+            test_only: boolean;
+        }>;
+    };
+    blockchain: {
         /**
          * @description Get reduced blockchain blocks data
          *
@@ -2773,107 +2799,7 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         blockchainAccountInspect: (accountId: string, params?: RequestParams) => Promise<BlockchainAccountInspect>;
     };
-    emulation: {
-        /**
-         * @description Decode a given message. Only external incoming messages can be decoded currently.
-         *
-         * @tags Emulation
-         * @name DecodeMessage
-         * @request POST:/v2/message/decode
-         */
-        decodeMessage: (data: {
-            /** @format cell */
-            boc: string;
-        }, params?: RequestParams) => Promise<DecodedMessage>;
-        /**
-         * @description Emulate sending message to blockchain
-         *
-         * @tags Emulation
-         * @name EmulateMessageToEvent
-         * @request POST:/v2/events/emulate
-         */
-        emulateMessageToEvent: (data: {
-            /** @format cell */
-            boc: string;
-        }, query?: {
-            ignore_signature_check?: boolean;
-        }, params?: RequestParams) => Promise<Event>;
-        /**
-         * @description Emulate sending message to blockchain
-         *
-         * @tags Emulation
-         * @name EmulateMessageToTrace
-         * @request POST:/v2/traces/emulate
-         */
-        emulateMessageToTrace: (data: {
-            /** @format cell */
-            boc: string;
-        }, query?: {
-            ignore_signature_check?: boolean;
-        }, params?: RequestParams) => Promise<Trace>;
-        /**
-         * @description Emulate sending message to blockchain
-         *
-         * @tags Emulation
-         * @name EmulateMessageToWallet
-         * @request POST:/v2/wallet/emulate
-         */
-        emulateMessageToWallet: (data: {
-            /** @format cell */
-            boc: string;
-            /** additional per account configuration */
-            params?: {
-                /**
-                 * @format address
-                 * @example "0:97146a46acc2654y27947f14c4a4b14273e954f78bc017790b41208b0043200b"
-                 */
-                address: string;
-                /**
-                 * @format int64
-                 * @example 10000000000
-                 */
-                balance?: number;
-            }[];
-        }, params?: RequestParams) => Promise<MessageConsequences>;
-        /**
-         * @description Emulate sending message to blockchain
-         *
-         * @tags Emulation
-         * @name EmulateMessageToAccountEvent
-         * @request POST:/v2/accounts/{account_id}/events/emulate
-         */
-        emulateMessageToAccountEvent: (accountId: string, data: {
-            /** @format cell */
-            boc: string;
-        }, query?: {
-            ignore_signature_check?: boolean;
-        }, params?: RequestParams) => Promise<AccountEvent>;
-    };
     accounts: {
-        /**
-         * @description parse address and display in all formats
-         *
-         * @tags Accounts
-         * @name AddressParse
-         * @request GET:/v2/address/{account_id}/parse
-         */
-        addressParse: (accountId: string, params?: RequestParams) => Promise<{
-            /**
-             * @format address
-             * @example "0:6e731f2e28b73539a7f85ac47ca104d5840b229351189977bb6151d36b5e3f5e"
-             */
-            raw_form: string;
-            bounceable: {
-                b64: string;
-                b64url: string;
-            };
-            non_bounceable: {
-                b64: string;
-                b64url: string;
-            };
-            given_type: string;
-            test_only: boolean;
-        }>;
         /**
          * @description Get human-friendly information about several accounts without low-level details.
          *
@@ -3764,6 +3690,14 @@ export declare class Api<SecurityDataType extends unknown> {
             token: string;
         }>;
         /**
+         * @description Get account seqno
+         *
+         * @tags Wallet
+         * @name GetAccountSeqno
+         * @request GET:/v2/wallet/{account_id}/seqno
+         */
+        getAccountSeqno: (accountId: string, params?: RequestParams) => Promise<Seqno>;
+        /**
          * @description Get wallets by public key
          *
          * @tags Wallet
@@ -3772,13 +3706,29 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         getWalletsByPublicKey: (publicKey: string, params?: RequestParams) => Promise<Accounts>;
         /**
-         * @description Get account seqno
+         * @description Emulate sending message to blockchain
          *
-         * @tags Wallet
-         * @name GetAccountSeqno
-         * @request GET:/v2/wallet/{account_id}/seqno
+         * @tags Wallet, Emulation
+         * @name EmulateMessageToWallet
+         * @request POST:/v2/wallet/emulate
          */
-        getAccountSeqno: (accountId: string, params?: RequestParams) => Promise<Seqno>;
+        emulateMessageToWallet: (data: {
+            /** @format cell */
+            boc: string;
+            /** additional per account configuration */
+            params?: {
+                /**
+                 * @format address
+                 * @example "0:97146a46acc2654y27947f14c4a4b14273e954f78bc017790b41208b0043200b"
+                 */
+                address: string;
+                /**
+                 * @format int64
+                 * @example 10000000000
+                 */
+                balance?: number;
+            }[];
+        }, params?: RequestParams) => Promise<MessageConsequences>;
     };
     gasless: {
         /**
@@ -3790,7 +3740,7 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         gaslessConfig: (params?: RequestParams) => Promise<GaslessConfig>;
         /**
-         * @description Estimates the cost of the given messages and returns a payload to sign.
+         * @description Estimates the cost of the given messages and returns a payload to sign
          *
          * @tags Gasless
          * @name GaslessEstimate
@@ -3806,7 +3756,7 @@ export declare class Api<SecurityDataType extends unknown> {
             }[];
         }, params?: RequestParams) => Promise<SignRawParams>;
         /**
-         * No description
+         * @description Submits the signed gasless transaction message to the network
          *
          * @tags Gasless
          * @name GaslessSend
@@ -4251,6 +4201,58 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request GET:/v2/multisig/{account_id}
          */
         getMultisigAccount: (accountId: string, params?: RequestParams) => Promise<Multisig>;
+    };
+    emulation: {
+        /**
+         * @description Decode a given message. Only external incoming messages can be decoded currently.
+         *
+         * @tags Emulation
+         * @name DecodeMessage
+         * @request POST:/v2/message/decode
+         */
+        decodeMessage: (data: {
+            /** @format cell */
+            boc: string;
+        }, params?: RequestParams) => Promise<DecodedMessage>;
+        /**
+         * @description Emulate sending message to blockchain
+         *
+         * @tags Emulation, Events
+         * @name EmulateMessageToEvent
+         * @request POST:/v2/events/emulate
+         */
+        emulateMessageToEvent: (data: {
+            /** @format cell */
+            boc: string;
+        }, query?: {
+            ignore_signature_check?: boolean;
+        }, params?: RequestParams) => Promise<Event>;
+        /**
+         * @description Emulate sending message to blockchain
+         *
+         * @tags Emulation, Traces
+         * @name EmulateMessageToTrace
+         * @request POST:/v2/traces/emulate
+         */
+        emulateMessageToTrace: (data: {
+            /** @format cell */
+            boc: string;
+        }, query?: {
+            ignore_signature_check?: boolean;
+        }, params?: RequestParams) => Promise<Trace>;
+        /**
+         * @description Emulate sending message to blockchain
+         *
+         * @tags Emulation, Accounts
+         * @name EmulateMessageToAccountEvent
+         * @request POST:/v2/accounts/{account_id}/events/emulate
+         */
+        emulateMessageToAccountEvent: (accountId: string, data: {
+            /** @format cell */
+            boc: string;
+        }, query?: {
+            ignore_signature_check?: boolean;
+        }, params?: RequestParams) => Promise<AccountEvent>;
     };
 }
 export {};

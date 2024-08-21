@@ -223,11 +223,11 @@ class Api {
     constructor(http) {
         this.http = http;
     }
-    blockchain = {
+    utilities = {
         /**
          * @description Status
          *
-         * @tags Blockchain
+         * @tags Utilities
          * @name Status
          * @request GET:/v2/status
          */
@@ -237,6 +237,21 @@ class Api {
             format: "json",
             ...params,
         }),
+        /**
+         * @description parse address and display in all formats
+         *
+         * @tags Utilities
+         * @name AddressParse
+         * @request GET:/v2/address/{account_id}/parse
+         */
+        addressParse: (accountId, params = {}) => this.http.request({
+            path: `/v2/address/${accountId}/parse`,
+            method: "GET",
+            format: "json",
+            ...params,
+        }),
+    };
+    blockchain = {
         /**
          * @description Get reduced blockchain blocks data
          *
@@ -488,95 +503,7 @@ class Api {
             ...params,
         }),
     };
-    emulation = {
-        /**
-         * @description Decode a given message. Only external incoming messages can be decoded currently.
-         *
-         * @tags Emulation
-         * @name DecodeMessage
-         * @request POST:/v2/message/decode
-         */
-        decodeMessage: (data, params = {}) => this.http.request({
-            path: `/v2/message/decode`,
-            method: "POST",
-            body: data,
-            format: "json",
-            ...params,
-        }),
-        /**
-         * @description Emulate sending message to blockchain
-         *
-         * @tags Emulation
-         * @name EmulateMessageToEvent
-         * @request POST:/v2/events/emulate
-         */
-        emulateMessageToEvent: (data, query, params = {}) => this.http.request({
-            path: `/v2/events/emulate`,
-            method: "POST",
-            query: query,
-            body: data,
-            format: "json",
-            ...params,
-        }),
-        /**
-         * @description Emulate sending message to blockchain
-         *
-         * @tags Emulation
-         * @name EmulateMessageToTrace
-         * @request POST:/v2/traces/emulate
-         */
-        emulateMessageToTrace: (data, query, params = {}) => this.http.request({
-            path: `/v2/traces/emulate`,
-            method: "POST",
-            query: query,
-            body: data,
-            format: "json",
-            ...params,
-        }),
-        /**
-         * @description Emulate sending message to blockchain
-         *
-         * @tags Emulation
-         * @name EmulateMessageToWallet
-         * @request POST:/v2/wallet/emulate
-         */
-        emulateMessageToWallet: (data, params = {}) => this.http.request({
-            path: `/v2/wallet/emulate`,
-            method: "POST",
-            body: data,
-            format: "json",
-            ...params,
-        }),
-        /**
-         * @description Emulate sending message to blockchain
-         *
-         * @tags Emulation
-         * @name EmulateMessageToAccountEvent
-         * @request POST:/v2/accounts/{account_id}/events/emulate
-         */
-        emulateMessageToAccountEvent: (accountId, data, query, params = {}) => this.http.request({
-            path: `/v2/accounts/${accountId}/events/emulate`,
-            method: "POST",
-            query: query,
-            body: data,
-            format: "json",
-            ...params,
-        }),
-    };
     accounts = {
-        /**
-         * @description parse address and display in all formats
-         *
-         * @tags Accounts
-         * @name AddressParse
-         * @request GET:/v2/address/{account_id}/parse
-         */
-        addressParse: (accountId, params = {}) => this.http.request({
-            path: `/v2/address/${accountId}/parse`,
-            method: "GET",
-            format: "json",
-            ...params,
-        }),
         /**
          * @description Get human-friendly information about several accounts without low-level details.
          *
@@ -1318,6 +1245,19 @@ class Api {
             ...params,
         }),
         /**
+         * @description Get account seqno
+         *
+         * @tags Wallet
+         * @name GetAccountSeqno
+         * @request GET:/v2/wallet/{account_id}/seqno
+         */
+        getAccountSeqno: (accountId, params = {}) => this.http.request({
+            path: `/v2/wallet/${accountId}/seqno`,
+            method: "GET",
+            format: "json",
+            ...params,
+        }),
+        /**
          * @description Get wallets by public key
          *
          * @tags Wallet
@@ -1331,15 +1271,16 @@ class Api {
             ...params,
         }),
         /**
-         * @description Get account seqno
+         * @description Emulate sending message to blockchain
          *
-         * @tags Wallet
-         * @name GetAccountSeqno
-         * @request GET:/v2/wallet/{account_id}/seqno
+         * @tags Wallet, Emulation
+         * @name EmulateMessageToWallet
+         * @request POST:/v2/wallet/emulate
          */
-        getAccountSeqno: (accountId, params = {}) => this.http.request({
-            path: `/v2/wallet/${accountId}/seqno`,
-            method: "GET",
+        emulateMessageToWallet: (data, params = {}) => this.http.request({
+            path: `/v2/wallet/emulate`,
+            method: "POST",
+            body: data,
             format: "json",
             ...params,
         }),
@@ -1359,7 +1300,7 @@ class Api {
             ...params,
         }),
         /**
-         * @description Estimates the cost of the given messages and returns a payload to sign.
+         * @description Estimates the cost of the given messages and returns a payload to sign
          *
          * @tags Gasless
          * @name GaslessEstimate
@@ -1373,7 +1314,7 @@ class Api {
             ...params,
         }),
         /**
-         * No description
+         * @description Submits the signed gasless transaction message to the network
          *
          * @tags Gasless
          * @name GaslessSend
@@ -1616,6 +1557,67 @@ class Api {
         getMultisigAccount: (accountId, params = {}) => this.http.request({
             path: `/v2/multisig/${accountId}`,
             method: "GET",
+            format: "json",
+            ...params,
+        }),
+    };
+    emulation = {
+        /**
+         * @description Decode a given message. Only external incoming messages can be decoded currently.
+         *
+         * @tags Emulation
+         * @name DecodeMessage
+         * @request POST:/v2/message/decode
+         */
+        decodeMessage: (data, params = {}) => this.http.request({
+            path: `/v2/message/decode`,
+            method: "POST",
+            body: data,
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Emulate sending message to blockchain
+         *
+         * @tags Emulation, Events
+         * @name EmulateMessageToEvent
+         * @request POST:/v2/events/emulate
+         */
+        emulateMessageToEvent: (data, query, params = {}) => this.http.request({
+            path: `/v2/events/emulate`,
+            method: "POST",
+            query: query,
+            body: data,
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Emulate sending message to blockchain
+         *
+         * @tags Emulation, Traces
+         * @name EmulateMessageToTrace
+         * @request POST:/v2/traces/emulate
+         */
+        emulateMessageToTrace: (data, query, params = {}) => this.http.request({
+            path: `/v2/traces/emulate`,
+            method: "POST",
+            query: query,
+            body: data,
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Emulate sending message to blockchain
+         *
+         * @tags Emulation, Accounts
+         * @name EmulateMessageToAccountEvent
+         * @request POST:/v2/accounts/{account_id}/events/emulate
+         */
+        emulateMessageToAccountEvent: (accountId, data, query, params = {}) => this.http.request({
+            path: `/v2/accounts/${accountId}/events/emulate`,
+            method: "POST",
+            query: query,
+            body: data,
             format: "json",
             ...params,
         }),
