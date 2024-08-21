@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "rm -rf src && rm -rf dist && yarn generate && yarn tsc && rm -rf src",
-    "generate": "swagger-typescript-api -p https://raw.githubusercontent.com/tonkeeper/opentonapi/master/api/openapi.yml --unwrap-response-data --module-name-first-tag --single-http-client -o ./src -n index"
+    "generate": "node generate.js"
   },
   "license": "MIT",
   "bugs": {
