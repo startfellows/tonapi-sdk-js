@@ -47,5 +47,3 @@ const collection = await client.nft.getNftCollection(address);
 // Obtain information about a specific jetton
 const jetton = await client.jettons.getJettonInfo(address);
 ```
-
-For those upgrading from v0 to v1, please refer to [the migration guide](/migration.md) for detailed instructions.
