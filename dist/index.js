@@ -1270,20 +1270,6 @@ class Api {
             format: "json",
             ...params,
         }),
-        /**
-         * @description Emulate sending message to blockchain
-         *
-         * @tags Wallet, Emulation
-         * @name EmulateMessageToWallet
-         * @request POST:/v2/wallet/emulate
-         */
-        emulateMessageToWallet: (data, params = {}) => this.http.request({
-            path: `/v2/wallet/emulate`,
-            method: "POST",
-            body: data,
-            format: "json",
-            ...params,
-        }),
     };
     gasless = {
         /**
@@ -1602,6 +1588,20 @@ class Api {
             path: `/v2/traces/emulate`,
             method: "POST",
             query: query,
+            body: data,
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Emulate sending message to blockchain
+         *
+         * @tags Emulation, Wallet
+         * @name EmulateMessageToWallet
+         * @request POST:/v2/wallet/emulate
+         */
+        emulateMessageToWallet: (data, params = {}) => this.http.request({
+            path: `/v2/wallet/emulate`,
+            method: "POST",
             body: data,
             format: "json",
             ...params,

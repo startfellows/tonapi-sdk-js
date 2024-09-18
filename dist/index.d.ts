@@ -1352,6 +1352,7 @@ export interface JettonPreview {
     /** @example "https://cache.tonapi.io/images/jetton.jpg" */
     image: string;
     verification: JettonVerificationType;
+    custom_payload_api_uri?: string;
 }
 export interface JettonBalance {
     /** @example 597968399 */
@@ -1485,6 +1486,9 @@ export interface MultisigOrder {
     expiration_date: number;
     /** Risk specifies assets that could be lost if a message would be sent to a malicious smart contract. It makes sense to understand the risk BEFORE sending a message to the blockchain. */
     risk: Risk;
+    /** @format int64 */
+    creation_date: number;
+    signed_by: string[];
 }
 export interface Refund {
     /** @example "DNS.ton" */
@@ -2187,6 +2191,8 @@ export interface JettonMetadata {
     social?: string[];
     websites?: string[];
     catalogs?: string[];
+    /** @example "https://claim-api.tonapi.io/jettons/TESTMINT" */
+    custom_payload_api_uri?: string;
 }
 export interface InscriptionBalances {
     inscriptions: InscriptionBalance[];
@@ -2861,6 +2867,11 @@ export declare class Api<SecurityDataType extends unknown> {
              * @example ["ton","usd","rub"]
              */
             currencies?: string[];
+            /**
+             * comma separated list supported extensions
+             * @example ["custom_payload"]
+             */
+            supported_extensions?: string[];
         }, params?: RequestParams) => Promise<JettonBalance>;
         /**
          * @description Get the transfer jettons history for account
@@ -3705,30 +3716,6 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request GET:/v2/pubkeys/{public_key}/wallets
          */
         getWalletsByPublicKey: (publicKey: string, params?: RequestParams) => Promise<Accounts>;
-        /**
-         * @description Emulate sending message to blockchain
-         *
-         * @tags Wallet, Emulation
-         * @name EmulateMessageToWallet
-         * @request POST:/v2/wallet/emulate
-         */
-        emulateMessageToWallet: (data: {
-            /** @format cell */
-            boc: string;
-            /** additional per account configuration */
-            params?: {
-                /**
-                 * @format address
-                 * @example "0:97146a46acc2654y27947f14c4a4b14273e954f78bc017790b41208b0043200b"
-                 */
-                address: string;
-                /**
-                 * @format int64
-                 * @example 10000000000
-                 */
-                balance?: number;
-            }[];
-        }, params?: RequestParams) => Promise<MessageConsequences>;
     };
     gasless: {
         /**
@@ -4240,6 +4227,30 @@ export declare class Api<SecurityDataType extends unknown> {
         }, query?: {
             ignore_signature_check?: boolean;
         }, params?: RequestParams) => Promise<Trace>;
+        /**
+         * @description Emulate sending message to blockchain
+         *
+         * @tags Emulation, Wallet
+         * @name EmulateMessageToWallet
+         * @request POST:/v2/wallet/emulate
+         */
+        emulateMessageToWallet: (data: {
+            /** @format cell */
+            boc: string;
+            /** additional per account configuration */
+            params?: {
+                /**
+                 * @format address
+                 * @example "0:97146a46acc2654y27947f14c4a4b14273e954f78bc017790b41208b0043200b"
+                 */
+                address: string;
+                /**
+                 * @format int64
+                 * @example 10000000000
+                 */
+                balance?: number;
+            }[];
+        }, params?: RequestParams) => Promise<MessageConsequences>;
         /**
          * @description Emulate sending message to blockchain
          *
