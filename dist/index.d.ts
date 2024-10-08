@@ -2895,11 +2895,13 @@ export declare class Api<SecurityDataType extends unknown> {
             limit: number;
             /**
              * @format int64
+             * @max 2114380800
              * @example 1668436763
              */
             start_date?: number;
             /**
              * @format int64
+             * @max 2114380800
              * @example 1668436763
              */
             end_date?: number;
@@ -2926,11 +2928,13 @@ export declare class Api<SecurityDataType extends unknown> {
             limit: number;
             /**
              * @format int64
+             * @max 2114380800
              * @example 1668436763
              */
             start_date?: number;
             /**
              * @format int64
+             * @max 2114380800
              * @example 1668436763
              */
             end_date?: number;
@@ -2998,11 +3002,13 @@ export declare class Api<SecurityDataType extends unknown> {
             limit: number;
             /**
              * @format int64
+             * @max 2114380800
              * @example 1668436763
              */
             start_date?: number;
             /**
              * @format int64
+             * @max 2114380800
              * @example 1668436763
              */
             end_date?: number;
@@ -3117,11 +3123,13 @@ export declare class Api<SecurityDataType extends unknown> {
         getAccountDiff: (accountId: string, query: {
             /**
              * @format int64
+             * @max 2114380800
              * @example 1668436763
              */
             start_date: number;
             /**
              * @format int64
+             * @max 2114380800
              * @example 1668436763
              */
             end_date: number;
@@ -3156,11 +3164,13 @@ export declare class Api<SecurityDataType extends unknown> {
             limit: number;
             /**
              * @format int64
+             * @max 2114380800
              * @example 1668436763
              */
             start_date?: number;
             /**
              * @format int64
+             * @max 2114380800
              * @example 1668436763
              */
             end_date?: number;
@@ -3197,6 +3207,16 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request GET:/v2/nfts/collections/{account_id}
          */
         getNftCollection: (accountId: string, params?: RequestParams) => Promise<NftCollection>;
+        /**
+         * @description Get NFT collection items by their addresses
+         *
+         * @tags NFT
+         * @name GetNftCollectionItemsByAddresses
+         * @request POST:/v2/nfts/collections/_bulk
+         */
+        getNftCollectionItemsByAddresses: (data: {
+            account_ids: string[];
+        }, params?: RequestParams) => Promise<NftCollections>;
         /**
          * @description Get NFT items from collection by collection address
          *
@@ -3257,11 +3277,13 @@ export declare class Api<SecurityDataType extends unknown> {
             limit: number;
             /**
              * @format int64
+             * @max 2114380800
              * @example 1668436763
              */
             start_date?: number;
             /**
              * @format int64
+             * @max 2114380800
              * @example 1668436763
              */
             end_date?: number;
@@ -3453,6 +3475,16 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         getJettonInfo: (accountId: string, params?: RequestParams) => Promise<JettonInfo>;
         /**
+         * @description Get jetton metadata items by jetton master addresses
+         *
+         * @tags Jettons
+         * @name GetJettonInfosByAddresses
+         * @request POST:/v2/jettons/_bulk
+         */
+        getJettonInfosByAddresses: (data: {
+            account_ids: string[];
+        }, params?: RequestParams) => Promise<Jettons>;
+        /**
          * @description Get jetton's holders
          *
          * @tags Jettons
@@ -3593,11 +3625,13 @@ export declare class Api<SecurityDataType extends unknown> {
             currency?: string;
             /**
              * @format int64
+             * @max 2114380800
              * @example 1668436763
              */
             start_date?: number;
             /**
              * @format int64
+             * @max 2114380800
              * @example 1668436763
              */
             end_date?: number;

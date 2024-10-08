@@ -794,6 +794,20 @@ class Api {
             ...params,
         }),
         /**
+         * @description Get NFT collection items by their addresses
+         *
+         * @tags NFT
+         * @name GetNftCollectionItemsByAddresses
+         * @request POST:/v2/nfts/collections/_bulk
+         */
+        getNftCollectionItemsByAddresses: (data, params = {}) => this.http.request({
+            path: `/v2/nfts/collections/_bulk`,
+            method: "POST",
+            body: data,
+            format: "json",
+            ...params,
+        }),
+        /**
          * @description Get NFT items from collection by collection address
          *
          * @tags NFT
@@ -1017,6 +1031,20 @@ class Api {
         getJettonInfo: (accountId, params = {}) => this.http.request({
             path: `/v2/jettons/${accountId}`,
             method: "GET",
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Get jetton metadata items by jetton master addresses
+         *
+         * @tags Jettons
+         * @name GetJettonInfosByAddresses
+         * @request POST:/v2/jettons/_bulk
+         */
+        getJettonInfosByAddresses: (data, params = {}) => this.http.request({
+            path: `/v2/jettons/_bulk`,
+            method: "POST",
+            body: data,
             format: "json",
             ...params,
         }),
