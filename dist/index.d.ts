@@ -68,7 +68,7 @@ export interface ReducedBlock {
      * @example 0
      */
     workchain_id: number;
-    /** @example 8000000000000000 */
+    /** @example "8000000000000000" */
     shard: string;
     /**
      * @format int32
@@ -96,7 +96,7 @@ export interface BlockchainBlock {
      * @example 0
      */
     workchain_id: number;
-    /** @example 8000000000000000 */
+    /** @example "8000000000000000" */
     shard: string;
     /**
      * @format int32
@@ -609,9 +609,9 @@ export interface WorkchainDescr {
      * @example 1000000
      */
     flags: number;
-    /** @example 1000000 */
+    /** @example "131D0C65055F04E9C19D687B51BC70F952FD9CA6F02C2801D3B89964A779DF85" */
     zerostate_root_hash: string;
-    /** @example 1000000 */
+    /** @example "A6A0BD6608672B11B79538A50B2204E748305C12AA0DED9C16CF0006CE3AF8DB" */
     zerostate_file_hash: string;
     /**
      * @format int64
@@ -702,6 +702,7 @@ export interface ValidatorsSet {
         public_key: string;
         /** @format int64 */
         weight: number;
+        /** @example "45061C1D4EC44A937D0318589E13C73D151D1CEF5D3C0E53AFBCF56A6C2FE2BD" */
         adnl_addr?: string;
     }[];
 }
@@ -1355,7 +1356,7 @@ export interface JettonPreview {
     custom_payload_api_uri?: string;
 }
 export interface JettonBalance {
-    /** @example 597968399 */
+    /** @example "597968399" */
     balance: string;
     price?: TokenRates;
     wallet_address: AccountAddress;
@@ -1363,7 +1364,7 @@ export interface JettonBalance {
     /** @example ["custom_payload","non_transferable"] */
     extensions?: string[];
     lock?: {
-        /** @example 597968399 */
+        /** @example "597968399" */
         amount: string;
         /**
          * @format int64
@@ -1387,7 +1388,7 @@ export interface ImagePreview {
     /** @example "https://site.com/pic1.jpg" */
     url: string;
 }
-export type NftApprovedBy = ("getgems" | "tonkeeper" | "ton.diamonds")[];
+export type NftApprovedBy = ("getgems" | "tonkeeper")[];
 /** @example "whitelist" */
 export declare enum TrustType {
     Whitelist = "whitelist",
@@ -1428,7 +1429,10 @@ export interface NftItem {
         /** @example "Best collection in TON network" */
         description: string;
     };
-    /** @example true */
+    /**
+     * Collection master contract confirmed that this item is part of collection
+     * @example true
+     */
     verified: boolean;
     /** @example {} */
     metadata: Record<string, any>;
@@ -1436,6 +1440,10 @@ export interface NftItem {
     previews?: ImagePreview[];
     /** @example "crypto.ton" */
     dns?: string;
+    /**
+     * please use trust field
+     * @deprecated
+     */
     approved_by: NftApprovedBy;
     /** @example false */
     include_cnft?: boolean;
@@ -1658,7 +1666,7 @@ export interface JettonTransferAction {
     recipients_wallet: string;
     /**
      * amount in quanta of tokens
-     * @example 1000000000
+     * @example "1000000000"
      */
     amount: string;
     /**
@@ -1679,7 +1687,7 @@ export interface JettonBurnAction {
     senders_wallet: string;
     /**
      * amount in quanta of tokens
-     * @example 1000000000
+     * @example "1000000000"
      */
     amount: string;
     jetton: JettonPreview;
@@ -1693,7 +1701,7 @@ export interface JettonMintAction {
     recipients_wallet: string;
     /**
      * amount in quanta of tokens
-     * @example 1000000000
+     * @example "1000000000"
      */
     amount: string;
     jetton: JettonPreview;
@@ -2121,6 +2129,14 @@ export interface DecodedMessage {
             op: number;
             raw_messages: DecodedRawMessage[];
         };
+        wallet_v5?: {
+            /**
+             * @format int64
+             * @example 1
+             */
+            valid_until: number;
+            raw_messages: DecodedRawMessage[];
+        };
         wallet_highload_v2?: {
             /**
              * @format int64
@@ -2413,6 +2429,8 @@ export interface DnsExpiring {
         dns_item?: NftItem;
     }[];
 }
+/** @example [1668436763,97.21323234] */
+export type ChartPoints = [number, number];
 export interface AccountInfoByStateInit {
     /** @example "NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQ3..." */
     public_key: string;
@@ -2432,7 +2450,7 @@ export interface BlockRaw {
      * @example 4294967295
      */
     workchain: number;
-    /** @example 800000000000000 */
+    /** @example "800000000000000" */
     shard: string;
     /**
      * @format int32
@@ -3619,7 +3637,10 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request GET:/v2/rates/chart
          */
         getChartRates: (query: {
-            /** accept jetton master address */
+            /**
+             * accept jetton master address
+             * @format address
+             */
             token: string;
             /** @example "usd" */
             currency?: string;
@@ -3643,8 +3664,7 @@ export declare class Api<SecurityDataType extends unknown> {
              */
             points_count?: number;
         }, params?: RequestParams) => Promise<{
-            /** @example {} */
-            points: any;
+            points: ChartPoints[];
         }>;
         /**
          * @description Get the TON price from markets
