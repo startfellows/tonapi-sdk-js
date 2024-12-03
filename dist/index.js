@@ -1233,32 +1233,6 @@ class Api {
     };
     wallet = {
         /**
-         * @description Get backup info
-         *
-         * @tags Wallet
-         * @name GetWalletBackup
-         * @request GET:/v2/wallet/backup
-         */
-        getWalletBackup: (params = {}) => this.http.request({
-            path: `/v2/wallet/backup`,
-            method: "GET",
-            format: "json",
-            ...params,
-        }),
-        /**
-         * @description Set backup info
-         *
-         * @tags Wallet
-         * @name SetWalletBackup
-         * @request PUT:/v2/wallet/backup
-         */
-        setWalletBackup: (data, params = {}) => this.http.request({
-            path: `/v2/wallet/backup`,
-            method: "PUT",
-            body: data,
-            ...params,
-        }),
-        /**
          * @description Account verification and token issuance
          *
          * @tags Wallet

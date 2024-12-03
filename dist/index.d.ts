@@ -1277,6 +1277,15 @@ export interface BlockchainConfig {
         accounts: string[];
         suspended_until: number;
     };
+    /** precompiled contracts */
+    "45"?: {
+        contracts: {
+            /** @format address */
+            code_hash: string;
+            /** @format int64 */
+            gas_usage: number;
+        }[];
+    };
     /** Bridge parameters for wrapping TON in other networks. */
     "71"?: {
         oracle_bridge_params: OracleBridgeParams;
@@ -2200,7 +2209,10 @@ export interface JettonMetadata {
     symbol: string;
     /** @example "9" */
     decimals: string;
-    /** @example "https://cache.tonapi.io/images/jetton.jpg" */
+    /**
+     * this field currently returns a cached image URL (e.g., "https://cache.tonapi.io/images/jetton.jpg"). In the future, this will be replaced with the original URL from the metadata. The cached image is already available in the `preview` field of `JettonInfo` and will remain there.
+     * @example "https://bitcoincash-example.github.io/website/logo.png"
+     */
     image?: string;
     /** @example "Wrapped Toncoin" */
     description?: string;
@@ -2233,6 +2245,8 @@ export interface JettonInfo {
     total_supply: string;
     admin?: AccountAddress;
     metadata: JettonMetadata;
+    /** @example "https://cache.tonapi.io/images/jetton.jpg" */
+    preview: string;
     verification: JettonVerificationType;
     /**
      * @format int32
@@ -3702,24 +3716,6 @@ export declare class Api<SecurityDataType extends unknown> {
         }, params?: RequestParams) => Promise<AccountInfoByStateInit>;
     };
     wallet: {
-        /**
-         * @description Get backup info
-         *
-         * @tags Wallet
-         * @name GetWalletBackup
-         * @request GET:/v2/wallet/backup
-         */
-        getWalletBackup: (params?: RequestParams) => Promise<{
-            dump: string;
-        }>;
-        /**
-         * @description Set backup info
-         *
-         * @tags Wallet
-         * @name SetWalletBackup
-         * @request PUT:/v2/wallet/backup
-         */
-        setWalletBackup: (data: File, params?: RequestParams) => Promise<void>;
         /**
          * @description Account verification and token issuance
          *
