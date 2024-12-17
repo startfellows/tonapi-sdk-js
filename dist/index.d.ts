@@ -239,6 +239,7 @@ export interface Message {
      * @example 60000000
      */
     value: number;
+    value_extra?: ExtraCurrency[];
     /**
      * @format int64
      * @example 5681002
@@ -870,6 +871,7 @@ export interface Account {
      * @example 123456789
      */
     balance: number;
+    extra_balance?: ExtraCurrency[];
     /**
      * {'USD': 1, 'IDR': 1000}
      * @example {}
@@ -1363,6 +1365,8 @@ export interface JettonPreview {
     image: string;
     verification: JettonVerificationType;
     custom_payload_api_uri?: string;
+    /** @format int32 */
+    score?: number;
 }
 export interface JettonBalance {
     /** @example "597968399" */
@@ -1537,10 +1541,11 @@ export interface ValueFlow {
 }
 export interface Action {
     /** @example "TonTransfer" */
-    type: "TonTransfer" | "JettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "ContractDeploy" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "JettonSwap" | "SmartContractExec" | "ElectionsRecoverStake" | "ElectionsDepositStake" | "DomainRenew" | "InscriptionTransfer" | "InscriptionMint" | "Unknown";
+    type: "TonTransfer" | "ExtraCurrencyTransfer" | "JettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "ContractDeploy" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "JettonSwap" | "SmartContractExec" | "ElectionsRecoverStake" | "ElectionsDepositStake" | "DomainRenew" | "InscriptionTransfer" | "InscriptionMint" | "Unknown";
     /** @example "ok" */
     status: "ok" | "failed";
     TonTransfer?: TonTransferAction;
+    ExtraCurrencyTransfer?: ExtraCurrencyTransferAction;
     ContractDeploy?: ContractDeployAction;
     JettonTransfer?: JettonTransferAction;
     JettonBurn?: JettonBurnAction;
@@ -1583,6 +1588,35 @@ export interface TonTransferAction {
     comment?: string;
     encrypted_comment?: EncryptedComment;
     refund?: Refund;
+}
+export interface EcPreview {
+    /**
+     * @format int32
+     * @example 239
+     */
+    id: number;
+    /** @example "FMS" */
+    symbol: string;
+    /** @example 5 */
+    decimals: number;
+    /** @example "https://cache.tonapi.io/images/extra.jpg" */
+    image: string;
+}
+export interface ExtraCurrencyTransferAction {
+    sender: AccountAddress;
+    recipient: AccountAddress;
+    /**
+     * amount in quanta of tokens
+     * @example "1000000000"
+     */
+    amount: string;
+    /**
+     * @example "Hi! This is your salary.
+     * From accounting with love."
+     */
+    comment?: string;
+    encrypted_comment?: EncryptedComment;
+    currency: EcPreview;
 }
 export interface SmartContractAction {
     executor: AccountAddress;
@@ -2253,6 +2287,8 @@ export interface JettonInfo {
      * @example 2000
      */
     holders_count: number;
+    /** @format int32 */
+    score?: number;
 }
 export interface JettonHolders {
     addresses: {
@@ -2497,13 +2533,9 @@ export interface BlockchainAccountInspect {
     /** @format cell */
     code: string;
     code_hash: string;
-    methods: {
-        /** @format int64 */
-        id: number;
-        /** @example "get_something" */
-        method: string;
-    }[];
-    compiler?: "func";
+    methods: Method[];
+    compiler: "func" | "fift" | "tact";
+    source?: Source;
 }
 export declare enum PoolImplementationType {
     Whales = "whales",
@@ -2530,6 +2562,30 @@ export interface MarketTonRates {
      * @example 1668436763
      */
     last_date_update: number;
+}
+export interface ExtraCurrency {
+    /** @example "1000000000" */
+    amount: string;
+    preview: EcPreview;
+}
+export interface SourceFile {
+    name: string;
+    content: string;
+    /** @example false */
+    is_entrypoint: boolean;
+    /** @example false */
+    is_std_lib: boolean;
+    /** @example false */
+    include_in_command: boolean;
+}
+export interface Source {
+    files: SourceFile[];
+}
+export interface Method {
+    /** @format int64 */
+    id: number;
+    /** @example "get_something" */
+    method: string;
 }
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
@@ -2600,6 +2656,24 @@ export declare class HttpClient<SecurityDataType = unknown> {
 export declare class Api<SecurityDataType extends unknown> {
     http: HttpClient<SecurityDataType>;
     constructor(http: HttpClient<SecurityDataType>);
+    openapi: {
+        /**
+         * @description Get the openapi.json file
+         *
+         * @tags Openapi
+         * @name GetOpenapiJson
+         * @request GET:/v2/openapi.json
+         */
+        getOpenapiJson: (params?: RequestParams) => Promise<any>;
+        /**
+         * @description Get the openapi.yml file
+         *
+         * @tags Openapi
+         * @name GetOpenapiYml
+         * @request GET:/v2/openapi.yml
+         */
+        getOpenapiYml: (params?: RequestParams) => Promise<File>;
+    };
     utilities: {
         /**
          * @description Status
@@ -2798,6 +2872,14 @@ export declare class Api<SecurityDataType extends unknown> {
              * @example ["0:9a33970f617bcd71acf2cd28357c067aa31859c02820d8f01d74c88063a8f4d8"]
              */
             args?: string[];
+            /**
+             * A temporary fix to switch to a scheme with direct ordering of arguments.
+             * If equal to false, then the method takes arguments in direct order,
+             * e.g. for get_nft_content(int index, cell individual_content) we pass a list of arguments [index, individual_content].
+             * If equal to true, then the method takes arguments in reverse order, e.g. [individual_content, index].
+             * @default true
+             */
+            fix_order?: boolean;
         }, params?: RequestParams) => Promise<MethodExecutionResult>;
         /**
          * @description Send message to blockchain
@@ -2811,6 +2893,7 @@ export declare class Api<SecurityDataType extends unknown> {
             boc?: string;
             /** @maxItems 10 */
             batch?: string[];
+            meta?: Record<string, string>;
         }, params?: RequestParams) => Promise<void>;
         /**
          * @description Get blockchain config

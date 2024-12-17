@@ -223,6 +223,33 @@ class Api {
     constructor(http) {
         this.http = http;
     }
+    openapi = {
+        /**
+         * @description Get the openapi.json file
+         *
+         * @tags Openapi
+         * @name GetOpenapiJson
+         * @request GET:/v2/openapi.json
+         */
+        getOpenapiJson: (params = {}) => this.http.request({
+            path: `/v2/openapi.json`,
+            method: "GET",
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Get the openapi.yml file
+         *
+         * @tags Openapi
+         * @name GetOpenapiYml
+         * @request GET:/v2/openapi.yml
+         */
+        getOpenapiYml: (params = {}) => this.http.request({
+            path: `/v2/openapi.yml`,
+            method: "GET",
+            ...params,
+        }),
+    };
     utilities = {
         /**
          * @description Status
