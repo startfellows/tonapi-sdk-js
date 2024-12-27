@@ -223,11 +223,11 @@ class Api {
     constructor(http) {
         this.http = http;
     }
-    openapi = {
+    utilities = {
         /**
          * @description Get the openapi.json file
          *
-         * @tags Openapi
+         * @tags Utilities
          * @name GetOpenapiJson
          * @request GET:/v2/openapi.json
          */
@@ -240,7 +240,7 @@ class Api {
         /**
          * @description Get the openapi.yml file
          *
-         * @tags Openapi
+         * @tags Utilities
          * @name GetOpenapiYml
          * @request GET:/v2/openapi.yml
          */
@@ -249,8 +249,6 @@ class Api {
             method: "GET",
             ...params,
         }),
-    };
-    utilities = {
         /**
          * @description Status
          *

@@ -1532,7 +1532,10 @@ export interface ValueFlow {
     jettons?: {
         account: AccountAddress;
         jetton: JettonPreview;
+        /** @example "200" */
+        qty: string;
         /**
+         * @deprecated
          * @format int64
          * @example 10
          */
@@ -2656,11 +2659,11 @@ export declare class HttpClient<SecurityDataType = unknown> {
 export declare class Api<SecurityDataType extends unknown> {
     http: HttpClient<SecurityDataType>;
     constructor(http: HttpClient<SecurityDataType>);
-    openapi: {
+    utilities: {
         /**
          * @description Get the openapi.json file
          *
-         * @tags Openapi
+         * @tags Utilities
          * @name GetOpenapiJson
          * @request GET:/v2/openapi.json
          */
@@ -2668,13 +2671,11 @@ export declare class Api<SecurityDataType extends unknown> {
         /**
          * @description Get the openapi.yml file
          *
-         * @tags Openapi
+         * @tags Utilities
          * @name GetOpenapiYml
          * @request GET:/v2/openapi.yml
          */
         getOpenapiYml: (params?: RequestParams) => Promise<File>;
-    };
-    utilities: {
         /**
          * @description Status
          *
