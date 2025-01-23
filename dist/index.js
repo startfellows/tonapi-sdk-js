@@ -775,6 +775,20 @@ class Api {
             format: "json",
             ...params,
         }),
+        /**
+         * @description Get the transfer history of extra currencies for an account.
+         *
+         * @tags Accounts
+         * @name GetAccountExtraCurrencyHistoryById
+         * @request GET:/v2/accounts/{account_id}/extra-currency/{id}/history
+         */
+        getAccountExtraCurrencyHistoryById: (accountId, id, query, params = {}) => this.http.request({
+            path: `/v2/accounts/${accountId}/extra-currency/${id}/history`,
+            method: "GET",
+            query: query,
+            format: "json",
+            ...params,
+        }),
     };
     nft = {
         /**
@@ -1109,6 +1123,21 @@ class Api {
          */
         getJettonsEvents: (eventId, params = {}) => this.http.request({
             path: `/v2/events/${eventId}/jettons`,
+            method: "GET",
+            format: "json",
+            ...params,
+        }),
+    };
+    extraCurrency = {
+        /**
+         * @description Get extra currency info by id
+         *
+         * @tags ExtraCurrency
+         * @name GetExtraCurrencyInfo
+         * @request GET:/v2/extra-currency/{id}
+         */
+        getExtraCurrencyInfo: (id, params = {}) => this.http.request({
+            path: `/v2/extra-currency/${id}`,
             method: "GET",
             format: "json",
             ...params,

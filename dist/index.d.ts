@@ -1366,7 +1366,7 @@ export interface JettonPreview {
     verification: JettonVerificationType;
     custom_payload_api_uri?: string;
     /** @format int32 */
-    score?: number;
+    score: number;
 }
 export interface JettonBalance {
     /** @example "597968399" */
@@ -1591,6 +1591,9 @@ export interface TonTransferAction {
     comment?: string;
     encrypted_comment?: EncryptedComment;
     refund?: Refund;
+}
+export interface ExtraCurrencies {
+    extra_currencies: EcPreview[];
 }
 export interface EcPreview {
     /**
@@ -2290,8 +2293,6 @@ export interface JettonInfo {
      * @example 2000
      */
     holders_count: number;
-    /** @format int32 */
-    score?: number;
 }
 export interface JettonHolders {
     addresses: {
@@ -2468,6 +2469,7 @@ export interface FoundAccounts {
         name: string;
         /** @example "https://cache.tonapi.io/images/media.jpg" */
         preview: string;
+        trust: TrustType;
     }[];
 }
 export interface DnsExpiring {
@@ -2892,7 +2894,7 @@ export declare class Api<SecurityDataType extends unknown> {
         sendBlockchainMessage: (data: {
             /** @format cell */
             boc?: string;
-            /** @maxItems 10 */
+            /** @maxItems 5 */
             batch?: string[];
             meta?: Record<string, string>;
         }, params?: RequestParams) => Promise<void>;
@@ -3256,6 +3258,39 @@ export declare class Api<SecurityDataType extends unknown> {
              */
             balance_change: number;
         }>;
+        /**
+         * @description Get the transfer history of extra currencies for an account.
+         *
+         * @tags Accounts
+         * @name GetAccountExtraCurrencyHistoryById
+         * @request GET:/v2/accounts/{account_id}/extra-currency/{id}/history
+         */
+        getAccountExtraCurrencyHistoryById: (accountId: string, id: number, query: {
+            /**
+             * omit this parameter to get last events
+             * @format int64
+             * @example 25758317000002
+             */
+            before_lt?: number;
+            /**
+             * @min 1
+             * @max 1000
+             * @example 100
+             */
+            limit: number;
+            /**
+             * @format int64
+             * @max 2114380800
+             * @example 1668436763
+             */
+            start_date?: number;
+            /**
+             * @format int64
+             * @max 2114380800
+             * @example 1668436763
+             */
+            end_date?: number;
+        }, params?: RequestParams) => Promise<AccountEvents>;
     };
     nft: {
         /**
@@ -3636,6 +3671,16 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request GET:/v2/events/{event_id}/jettons
          */
         getJettonsEvents: (eventId: string, params?: RequestParams) => Promise<Event>;
+    };
+    extraCurrency: {
+        /**
+         * @description Get extra currency info by id
+         *
+         * @tags ExtraCurrency
+         * @name GetExtraCurrencyInfo
+         * @request GET:/v2/extra-currency/{id}
+         */
+        getExtraCurrencyInfo: (id: number, params?: RequestParams) => Promise<EcPreview>;
     };
     staking: {
         /**
