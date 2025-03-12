@@ -297,7 +297,8 @@ export declare enum AccStatusChange {
 export declare enum ComputeSkipReason {
     CskipNoState = "cskip_no_state",
     CskipBadState = "cskip_bad_state",
-    CskipNoGas = "cskip_no_gas"
+    CskipNoGas = "cskip_no_gas",
+    CskipSuspended = "cskip_suspended"
 }
 /** @example "cskip_no_state" */
 export declare enum BouncePhaseType {
@@ -2537,6 +2538,7 @@ export interface EncryptedComment {
 export interface BlockchainAccountInspect {
     /** @format cell */
     code: string;
+    disassembled_code?: string;
     code_hash: string;
     methods: Method[];
     compiler: "func" | "fift" | "tact";
@@ -2875,14 +2877,6 @@ export declare class Api<SecurityDataType extends unknown> {
              * @example ["0:9a33970f617bcd71acf2cd28357c067aa31859c02820d8f01d74c88063a8f4d8"]
              */
             args?: string[];
-            /**
-             * A temporary fix to switch to a scheme with direct ordering of arguments.
-             * If equal to false, then the method takes arguments in direct order,
-             * e.g. for get_nft_content(int index, cell individual_content) we pass a list of arguments [index, individual_content].
-             * If equal to true, then the method takes arguments in reverse order, e.g. [individual_content, index].
-             * @default true
-             */
-            fix_order?: boolean;
         }, params?: RequestParams) => Promise<MethodExecutionResult>;
         /**
          * @description Send message to blockchain
@@ -4381,7 +4375,7 @@ export declare class Api<SecurityDataType extends unknown> {
             boc: string;
         }, params?: RequestParams) => Promise<DecodedMessage>;
         /**
-         * @description Emulate sending message to blockchain
+         * @description Emulate sending message to retrieve general blockchain events
          *
          * @tags Emulation, Events
          * @name EmulateMessageToEvent
@@ -4394,7 +4388,7 @@ export declare class Api<SecurityDataType extends unknown> {
             ignore_signature_check?: boolean;
         }, params?: RequestParams) => Promise<Event>;
         /**
-         * @description Emulate sending message to blockchain
+         * @description Emulate sending message to retrieve with a detailed execution trace
          *
          * @tags Emulation, Traces
          * @name EmulateMessageToTrace
@@ -4407,7 +4401,7 @@ export declare class Api<SecurityDataType extends unknown> {
             ignore_signature_check?: boolean;
         }, params?: RequestParams) => Promise<Trace>;
         /**
-         * @description Emulate sending message to blockchain
+         * @description Emulate sending message to retrieve the resulting wallet state
          *
          * @tags Emulation, Wallet
          * @name EmulateMessageToWallet
@@ -4431,7 +4425,7 @@ export declare class Api<SecurityDataType extends unknown> {
             }[];
         }, params?: RequestParams) => Promise<MessageConsequences>;
         /**
-         * @description Emulate sending message to blockchain
+         * @description Emulate sending message to retrieve account-specific events
          *
          * @tags Emulation, Accounts
          * @name EmulateMessageToAccountEvent

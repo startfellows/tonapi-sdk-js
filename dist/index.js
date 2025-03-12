@@ -43,6 +43,7 @@ var ComputeSkipReason;
     ComputeSkipReason["CskipNoState"] = "cskip_no_state";
     ComputeSkipReason["CskipBadState"] = "cskip_bad_state";
     ComputeSkipReason["CskipNoGas"] = "cskip_no_gas";
+    ComputeSkipReason["CskipSuspended"] = "cskip_suspended";
 })(ComputeSkipReason || (exports.ComputeSkipReason = ComputeSkipReason = {}));
 /** @example "cskip_no_state" */
 var BouncePhaseType;
@@ -1619,7 +1620,7 @@ class Api {
             ...params,
         }),
         /**
-         * @description Emulate sending message to blockchain
+         * @description Emulate sending message to retrieve general blockchain events
          *
          * @tags Emulation, Events
          * @name EmulateMessageToEvent
@@ -1634,7 +1635,7 @@ class Api {
             ...params,
         }),
         /**
-         * @description Emulate sending message to blockchain
+         * @description Emulate sending message to retrieve with a detailed execution trace
          *
          * @tags Emulation, Traces
          * @name EmulateMessageToTrace
@@ -1649,7 +1650,7 @@ class Api {
             ...params,
         }),
         /**
-         * @description Emulate sending message to blockchain
+         * @description Emulate sending message to retrieve the resulting wallet state
          *
          * @tags Emulation, Wallet
          * @name EmulateMessageToWallet
@@ -1663,7 +1664,7 @@ class Api {
             ...params,
         }),
         /**
-         * @description Emulate sending message to blockchain
+         * @description Emulate sending message to retrieve account-specific events
          *
          * @tags Emulation, Accounts
          * @name EmulateMessageToAccountEvent
