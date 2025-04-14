@@ -934,7 +934,11 @@ export interface SignRawMessage {
      */
     stateInit?: string;
 }
+export interface GaslessTx {
+    protocol_name: string;
+}
 export interface SignRawParams {
+    protocol_name: string;
     /**
      * @format address
      * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
@@ -956,6 +960,7 @@ export interface SignRawParams {
      */
     valid_until: number;
     messages: SignRawMessage[];
+    emulation?: MessageConsequences;
 }
 export interface MethodExecutionResult {
     /** @example true */
@@ -1545,7 +1550,7 @@ export interface ValueFlow {
 }
 export interface Action {
     /** @example "TonTransfer" */
-    type: "TonTransfer" | "ExtraCurrencyTransfer" | "JettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "ContractDeploy" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "JettonSwap" | "SmartContractExec" | "ElectionsRecoverStake" | "ElectionsDepositStake" | "DomainRenew" | "InscriptionTransfer" | "InscriptionMint" | "Unknown";
+    type: "TonTransfer" | "ExtraCurrencyTransfer" | "JettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "ContractDeploy" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "JettonSwap" | "SmartContractExec" | "ElectionsRecoverStake" | "ElectionsDepositStake" | "DomainRenew" | "Unknown";
     /** @example "ok" */
     status: "ok" | "failed";
     TonTransfer?: TonTransferAction;
@@ -1570,8 +1575,6 @@ export interface Action {
     JettonSwap?: JettonSwapAction;
     SmartContractExec?: SmartContractAction;
     DomainRenew?: DomainRenewAction;
-    InscriptionTransfer?: InscriptionTransferAction;
-    InscriptionMint?: InscriptionMintAction;
     /** shortly describes what this action is about. */
     simple_preview: ActionSimplePreview;
     base_transactions: string[];
@@ -1648,40 +1651,6 @@ export interface DomainRenewAction {
      */
     contract_address: string;
     renewer: AccountAddress;
-}
-export interface InscriptionMintAction {
-    recipient: AccountAddress;
-    /**
-     * amount in minimal particles
-     * @example "123456789"
-     */
-    amount: string;
-    /** @example "ton20" */
-    type: "ton20" | "gram20";
-    /** @example "nano" */
-    ticker: string;
-    /** @example 9 */
-    decimals: number;
-}
-export interface InscriptionTransferAction {
-    sender: AccountAddress;
-    recipient: AccountAddress;
-    /**
-     * amount in minimal particles
-     * @example "123456789"
-     */
-    amount: string;
-    /**
-     * @example "Hi! This is your salary.
-     * From accounting with love."
-     */
-    comment?: string;
-    /** @example "ton20" */
-    type: "ton20" | "gram20";
-    /** @example "nano" */
-    ticker: string;
-    /** @example 9 */
-    decimals: number;
 }
 export interface NftItemTransferAction {
     sender?: AccountAddress;
@@ -2263,19 +2232,6 @@ export interface JettonMetadata {
     /** @example "https://claim-api.tonapi.io/jettons/TESTMINT" */
     custom_payload_api_uri?: string;
 }
-export interface InscriptionBalances {
-    inscriptions: InscriptionBalance[];
-}
-export interface InscriptionBalance {
-    /** @example "ton20" */
-    type: "ton20" | "gram20";
-    /** @example "nano" */
-    ticker: string;
-    /** @example "1000000000" */
-    balance: string;
-    /** @example 9 */
-    decimals: number;
-}
 export interface Jettons {
     jettons: JettonInfo[];
 }
@@ -2735,6 +2691,14 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request GET:/v2/blockchain/blocks/{block_id}
          */
         getBlockchainBlock: (blockId: string, params?: RequestParams) => Promise<BlockchainBlock>;
+        /**
+         * @description Download blockchain block BOC
+         *
+         * @tags Blockchain
+         * @name DownloadBlockchainBlockBoc
+         * @request GET:/v2/blockchain/blocks/{block_id}/boc
+         */
+        downloadBlockchainBlockBoc: (blockId: string, params?: RequestParams) => Promise<File>;
         /**
          * @description Get blockchain block shards
          *
@@ -3494,98 +3458,6 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         getEvent: (eventId: string, params?: RequestParams) => Promise<Event>;
     };
-    inscriptions: {
-        /**
-         * @description Get all inscriptions by owner address. It's experimental API and can be dropped in the future.
-         *
-         * @tags Inscriptions
-         * @name GetAccountInscriptions
-         * @request GET:/v2/experimental/accounts/{account_id}/inscriptions
-         */
-        getAccountInscriptions: (accountId: string, query?: {
-            /**
-             * @min 1
-             * @max 1000
-             * @default 1000
-             */
-            limit?: number;
-            /**
-             * @min 0
-             * @default 0
-             */
-            offset?: number;
-        }, params?: RequestParams) => Promise<InscriptionBalances>;
-        /**
-         * @description Get the transfer inscriptions history for account. It's experimental API and can be dropped in the future.
-         *
-         * @tags Inscriptions
-         * @name GetAccountInscriptionsHistory
-         * @request GET:/v2/experimental/accounts/{account_id}/inscriptions/history
-         */
-        getAccountInscriptionsHistory: (accountId: string, query?: {
-            /**
-             * omit this parameter to get last events
-             * @format int64
-             * @example 25758317000002
-             */
-            before_lt?: number;
-            /**
-             * @min 1
-             * @max 1000
-             * @default 100
-             * @example 100
-             */
-            limit?: number;
-        }, params?: RequestParams) => Promise<AccountEvents>;
-        /**
-         * @description Get the transfer inscriptions history for account. It's experimental API and can be dropped in the future.
-         *
-         * @tags Inscriptions
-         * @name GetAccountInscriptionsHistoryByTicker
-         * @request GET:/v2/experimental/accounts/{account_id}/inscriptions/{ticker}/history
-         */
-        getAccountInscriptionsHistoryByTicker: (accountId: string, ticker: string, query?: {
-            /**
-             * omit this parameter to get last events
-             * @format int64
-             * @example 25758317000002
-             */
-            before_lt?: number;
-            /**
-             * @min 1
-             * @max 1000
-             * @default 100
-             * @example 100
-             */
-            limit?: number;
-        }, params?: RequestParams) => Promise<AccountEvents>;
-        /**
-         * @description return comment for making operation with inscription. please don't use it if you don't know what you are doing
-         *
-         * @tags Inscriptions
-         * @name GetInscriptionOpTemplate
-         * @request GET:/v2/experimental/inscriptions/op-template
-         */
-        getInscriptionOpTemplate: (query: {
-            /** @example "ton20" */
-            type: "ton20" | "gram20";
-            destination?: string;
-            comment?: string;
-            /** @example "transfer" */
-            operation: "transfer";
-            /** @example "1000000000" */
-            amount: string;
-            /** @example "nano" */
-            ticker: string;
-            /** @example "UQAs87W4yJHlF8mt29ocA4agnMrLsOP69jC1HPyBUjJay7Mg" */
-            who: string;
-        }, params?: RequestParams) => Promise<{
-            /** @example "comment" */
-            comment: string;
-            /** @example "0:0000000000000" */
-            destination: string;
-        }>;
-    };
     jettons: {
         /**
          * @description Get a list of all indexed jetton masters in the blockchain.
@@ -3907,6 +3779,13 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request POST:/v2/gasless/estimate/{master_id}
          */
         gaslessEstimate: (masterId: string, data: {
+            /**
+             * TONAPI verifies that the account has enough jettons to pay the commission and make a transfer.
+             * @default false
+             */
+            throw_error_if_not_enough_jettons?: boolean;
+            /** @default false */
+            return_emulation?: boolean;
             /** @format address */
             wallet_address: string;
             wallet_public_key: string;
@@ -3927,7 +3806,7 @@ export declare class Api<SecurityDataType extends unknown> {
             wallet_public_key: string;
             /** @format cell */
             boc: string;
-        }, params?: RequestParams) => Promise<void>;
+        }, params?: RequestParams) => Promise<GaslessTx>;
     };
     liteServer: {
         /**
