@@ -809,10 +809,10 @@ class Api {
          *
          * @tags NFT
          * @name GetAccountNftHistory
-         * @request GET:/v2/accounts/{account_id}/nfts/history
+         * @request GET:/v2/accounts/{account_id}/nfts/operations
          */
         getAccountNftHistory: (accountId, query, params = {}) => this.http.request({
-            path: `/v2/accounts/${accountId}/nfts/history`,
+            path: `/v2/accounts/${accountId}/nfts/operations`,
             method: "GET",
             query: query,
             format: "json",
@@ -1554,6 +1554,19 @@ class Api {
          */
         getMultisigAccount: (accountId, params = {}) => this.http.request({
             path: `/v2/multisig/${accountId}`,
+            method: "GET",
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Get multisig order
+         *
+         * @tags Multisig
+         * @name GetMultisigOrder
+         * @request GET:/v2/multisig/order/{account_id}
+         */
+        getMultisigOrder: (accountId, params = {}) => this.http.request({
+            path: `/v2/multisig/order/${accountId}`,
             method: "GET",
             format: "json",
             ...params,

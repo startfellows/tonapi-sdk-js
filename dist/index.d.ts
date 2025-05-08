@@ -1516,6 +1516,17 @@ export interface MultisigOrder {
     /** @format int64 */
     creation_date: number;
     signed_by: string[];
+    /**
+     * @format address
+     * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+     */
+    multisig_address: string;
+    changing_parameters?: {
+        /** @format int32 */
+        threshold: number;
+        signers: string[];
+        proposers: string[];
+    };
 }
 export interface Refund {
     /** @example "DNS.ton" */
@@ -2550,6 +2561,34 @@ export interface Method {
     /** @example "get_something" */
     method: string;
 }
+export interface NftOperations {
+    operations: NftOperation[];
+    /**
+     * @format int64
+     * @example 25713146000001
+     */
+    next_from?: number;
+}
+export interface NftOperation {
+    /** @example "transfer" */
+    operation: string;
+    /**
+     * @format int64
+     * @example 1234567890
+     */
+    utime: number;
+    /**
+     * @format int64
+     * @example 25713146000001
+     */
+    lt: number;
+    /** @example "0xdeadbeaf" */
+    transaction_hash: string;
+    source?: AccountAddress;
+    destination?: AccountAddress;
+    item_address: string;
+    item?: any;
+}
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
 export interface FullRequestParams extends Omit<RequestInit, "body"> {
@@ -3256,7 +3295,7 @@ export declare class Api<SecurityDataType extends unknown> {
          *
          * @tags NFT
          * @name GetAccountNftHistory
-         * @request GET:/v2/accounts/{account_id}/nfts/history
+         * @request GET:/v2/accounts/{account_id}/nfts/operations
          */
         getAccountNftHistory: (accountId: string, query: {
             /**
@@ -3271,19 +3310,7 @@ export declare class Api<SecurityDataType extends unknown> {
              * @example 100
              */
             limit: number;
-            /**
-             * @format int64
-             * @max 2114380800
-             * @example 1668436763
-             */
-            start_date?: number;
-            /**
-             * @format int64
-             * @max 2114380800
-             * @example 1668436763
-             */
-            end_date?: number;
-        }, params?: RequestParams) => Promise<AccountEvents>;
+        }, params?: RequestParams) => Promise<NftOperations>;
         /**
          * @description Get NFT collections
          *
@@ -4240,6 +4267,14 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request GET:/v2/multisig/{account_id}
          */
         getMultisigAccount: (accountId: string, params?: RequestParams) => Promise<Multisig>;
+        /**
+         * @description Get multisig order
+         *
+         * @tags Multisig
+         * @name GetMultisigOrder
+         * @request GET:/v2/multisig/order/{account_id}
+         */
+        getMultisigOrder: (accountId: string, params?: RequestParams) => Promise<MultisigOrder>;
     };
     emulation: {
         /**
