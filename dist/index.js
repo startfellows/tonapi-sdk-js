@@ -631,6 +631,7 @@ class Api {
          * @tags Accounts
          * @name GetAccountJettonHistoryById
          * @request GET:/v2/accounts/{account_id}/jettons/{jetton_id}/history
+         * @deprecated
          */
         getAccountJettonHistoryById: (accountId, jettonId, query, params = {}) => this.http.request({
             path: `/v2/accounts/${accountId}/jettons/${jettonId}/history`,
@@ -802,6 +803,20 @@ class Api {
             format: "json",
             ...params,
         }),
+        /**
+         * @description Get the transfer jetton history for account and jetton
+         *
+         * @tags Accounts
+         * @name GetJettonAccountHistoryById
+         * @request GET:/v2/jettons/{jetton_id}/accounts/{account_id}/history
+         */
+        getJettonAccountHistoryById: (accountId, jettonId, query, params = {}) => this.http.request({
+            path: `/v2/jettons/${jettonId}/accounts/${accountId}/history`,
+            method: "GET",
+            query: query,
+            format: "json",
+            ...params,
+        }),
     };
     nft = {
         /**
@@ -809,10 +824,10 @@ class Api {
          *
          * @tags NFT
          * @name GetAccountNftHistory
-         * @request GET:/v2/accounts/{account_id}/nfts/operations
+         * @request GET:/v2/accounts/{account_id}/nfts/history
          */
         getAccountNftHistory: (accountId, query, params = {}) => this.http.request({
-            path: `/v2/accounts/${accountId}/nfts/operations`,
+            path: `/v2/accounts/${accountId}/nfts/history`,
             method: "GET",
             query: query,
             format: "json",
@@ -906,6 +921,7 @@ class Api {
          * @tags NFT
          * @name GetNftHistoryById
          * @request GET:/v2/nfts/{account_id}/history
+         * @deprecated
          */
         getNftHistoryById: (accountId, query, params = {}) => this.http.request({
             path: `/v2/nfts/${accountId}/history`,
@@ -1264,6 +1280,19 @@ class Api {
          */
         getAccountSeqno: (accountId, params = {}) => this.http.request({
             path: `/v2/wallet/${accountId}/seqno`,
+            method: "GET",
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Get human-friendly information about a wallet without low-level details.
+         *
+         * @tags Wallet
+         * @name GetWalletInfo
+         * @request GET:/v2/wallet/{account_id}
+         */
+        getWalletInfo: (accountId, params = {}) => this.http.request({
+            path: `/v2/wallet/${accountId}`,
             method: "GET",
             format: "json",
             ...params,

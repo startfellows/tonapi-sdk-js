@@ -832,7 +832,7 @@ export interface BlockchainRawAccount {
      * @example 123456789
      */
     balance: number;
-    extra_balance?: Record<string, string>;
+    extra_balance?: ExtraCurrency[];
     /**
      * @format cell
      * @example "b5ee9c72410104010087000114ff00f4a413f4a0f2c80b0102012002030002d200dfa5ffff76a268698fe9ffe8e42c5267858f90e785ffe4f6aa6467c444ffb365ffc10802faf0807d014035e7a064b87d804077e7857fc10803dfd2407d014035e7a064b86467cd8903a32b9ba4410803ade68afd014035e7a045ea432b6363796103bb7b9363210c678b64b87d807d8040c249b3e4"
@@ -860,6 +860,56 @@ export interface BlockchainRawAccount {
         /** @format cell */
         root: string;
     }[];
+}
+export interface WalletStats {
+    /**
+     * @format int64
+     * @example 123456789
+     */
+    ton_balance: number;
+    /**
+     * @format int32
+     * @example 123456789
+     */
+    nfts_count: number;
+    /**
+     * @format int32
+     * @example 123456789
+     */
+    jettons_count: number;
+    /**
+     * @format int32
+     * @example 123456789
+     */
+    multisig_count: number;
+    /**
+     * @format int32
+     * @example 123456789
+     */
+    staking_count: number;
+}
+export interface WalletPlugin {
+    /**
+     * @format address
+     * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+     */
+    address: string;
+    /** @example "subscription_v1" */
+    type: string;
+}
+export interface Wallet {
+    /**
+     * @format address
+     * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+     */
+    address: string;
+    stats: WalletStats;
+    plugins: WalletPlugin[];
+    /** @example "Ton foundation" */
+    name?: string;
+    /** @example "https://ton.org/logo.png" */
+    icon?: string;
+    is_suspended?: boolean;
 }
 export interface Account {
     /**
@@ -2586,8 +2636,41 @@ export interface NftOperation {
     transaction_hash: string;
     source?: AccountAddress;
     destination?: AccountAddress;
-    item_address: string;
-    item?: any;
+    item: NftItem;
+}
+export interface JettonOperations {
+    operations: JettonOperation[];
+    /**
+     * @format int64
+     * @example 25713146000001
+     */
+    next_from?: number;
+}
+export interface JettonOperation {
+    /** @example "transfer" */
+    operation: string;
+    /**
+     * @format int64
+     * @example 1234567890
+     */
+    utime: number;
+    /**
+     * @format int64
+     * @example 25713146000001
+     */
+    lt: number;
+    /** @example "cbf3e3d70ecf6f69643dd430761cd6004de2cacbdbc3029b0abd30ca3cc1c67e" */
+    transaction_hash: string;
+    source?: AccountAddress;
+    destination?: AccountAddress;
+    /** @example "1000000000" */
+    amount: string;
+    jetton: JettonPreview;
+    /** @example "8fa19eec7bd6d00d0d76048cebe31e34082a859410c9fcf7d55ef4ff8f7fcb47" */
+    trace_id: string;
+    /** @example "17286061481122318000" */
+    query_id: string;
+    payload?: any;
 }
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
@@ -3008,25 +3091,14 @@ export declare class Api<SecurityDataType extends unknown> {
              * @example 100
              */
             limit: number;
-            /**
-             * @format int64
-             * @max 2114380800
-             * @example 1668436763
-             */
-            start_date?: number;
-            /**
-             * @format int64
-             * @max 2114380800
-             * @example 1668436763
-             */
-            end_date?: number;
-        }, params?: RequestParams) => Promise<AccountEvents>;
+        }, params?: RequestParams) => Promise<JettonOperations>;
         /**
          * @description Get the transfer jetton history for account and jetton
          *
          * @tags Accounts
          * @name GetAccountJettonHistoryById
          * @request GET:/v2/accounts/{account_id}/jettons/{jetton_id}/history
+         * @deprecated
          */
         getAccountJettonHistoryById: (accountId: string, jettonId: string, query: {
             /**
@@ -3288,6 +3360,39 @@ export declare class Api<SecurityDataType extends unknown> {
              */
             end_date?: number;
         }, params?: RequestParams) => Promise<AccountEvents>;
+        /**
+         * @description Get the transfer jetton history for account and jetton
+         *
+         * @tags Accounts
+         * @name GetJettonAccountHistoryById
+         * @request GET:/v2/jettons/{jetton_id}/accounts/{account_id}/history
+         */
+        getJettonAccountHistoryById: (accountId: string, jettonId: string, query: {
+            /**
+             * omit this parameter to get last events
+             * @format int64
+             * @example 25758317000002
+             */
+            before_lt?: number;
+            /**
+             * @min 1
+             * @max 1000
+             * @example 100
+             */
+            limit: number;
+            /**
+             * @format int64
+             * @max 2114380800
+             * @example 1668436763
+             */
+            start_date?: number;
+            /**
+             * @format int64
+             * @max 2114380800
+             * @example 1668436763
+             */
+            end_date?: number;
+        }, params?: RequestParams) => Promise<JettonOperations>;
     };
     nft: {
         /**
@@ -3295,7 +3400,7 @@ export declare class Api<SecurityDataType extends unknown> {
          *
          * @tags NFT
          * @name GetAccountNftHistory
-         * @request GET:/v2/accounts/{account_id}/nfts/operations
+         * @request GET:/v2/accounts/{account_id}/nfts/history
          */
         getAccountNftHistory: (accountId: string, query: {
             /**
@@ -3397,6 +3502,7 @@ export declare class Api<SecurityDataType extends unknown> {
          * @tags NFT
          * @name GetNftHistoryById
          * @request GET:/v2/nfts/{account_id}/history
+         * @deprecated
          */
         getNftHistoryById: (accountId: string, query: {
             /**
@@ -3544,6 +3650,7 @@ export declare class Api<SecurityDataType extends unknown> {
             limit?: number;
             /**
              * @min 0
+             * @max 9000
              * @default 0
              */
             offset?: number;
@@ -3780,6 +3887,14 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request GET:/v2/wallet/{account_id}/seqno
          */
         getAccountSeqno: (accountId: string, params?: RequestParams) => Promise<Seqno>;
+        /**
+         * @description Get human-friendly information about a wallet without low-level details.
+         *
+         * @tags Wallet
+         * @name GetWalletInfo
+         * @request GET:/v2/wallet/{account_id}
+         */
+        getWalletInfo: (accountId: string, params?: RequestParams) => Promise<Wallet>;
         /**
          * @description Get wallets by public key
          *
