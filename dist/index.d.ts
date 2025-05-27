@@ -2648,7 +2648,7 @@ export interface JettonOperations {
 }
 export interface JettonOperation {
     /** @example "transfer" */
-    operation: string;
+    operation: "transfer" | "mint" | "burn";
     /**
      * @format int64
      * @example 1234567890
