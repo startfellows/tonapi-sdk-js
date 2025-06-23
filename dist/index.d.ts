@@ -863,11 +863,6 @@ export interface BlockchainRawAccount {
 }
 export interface WalletStats {
     /**
-     * @format int64
-     * @example 123456789
-     */
-    ton_balance: number;
-    /**
      * @format int32
      * @example 123456789
      */
@@ -896,6 +891,10 @@ export interface WalletPlugin {
     address: string;
     /** @example "subscription_v1" */
     type: string;
+    status: AccountStatus;
+}
+export interface Wallets {
+    accounts: Wallet[];
 }
 export interface Wallet {
     /**
@@ -903,13 +902,38 @@ export interface Wallet {
      * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
      */
     address: string;
+    is_wallet: boolean;
+    /**
+     * @format int64
+     * @example 123456789
+     */
+    balance: number;
     stats: WalletStats;
     plugins: WalletPlugin[];
+    status: AccountStatus;
+    /**
+     * unix timestamp
+     * @format int64
+     * @example 1720860269
+     */
+    last_activity: number;
     /** @example "Ton foundation" */
     name?: string;
     /** @example "https://ton.org/logo.png" */
     icon?: string;
+    /**
+     * @deprecated
+     * @example ["get_item_data"]
+     */
+    get_methods: string[];
     is_suspended?: boolean;
+    signature_disabled?: boolean;
+    interfaces?: string[];
+    /**
+     * @format int64
+     * @example 25713146000001
+     */
+    last_lt: number;
 }
 export interface Account {
     /**
@@ -1445,11 +1469,29 @@ export interface JettonBalance {
 export interface JettonsBalances {
     balances: JettonBalance[];
 }
+/** @example "jetton" */
+export declare enum CurrencyType {
+    Native = "native",
+    ExtraCurrency = "extra_currency",
+    Jetton = "jetton",
+    Fiat = "fiat"
+}
 export interface Price {
+    currency_type: CurrencyType;
     /** @example "123000000000" */
     value: string;
+    /** @example 9 */
+    decimals: number;
     /** @example "TON" */
     token_name: string;
+    verification: TrustType;
+    /** @example "https://cache.tonapi.io/images/jetton.jpg" */
+    image: string;
+    /**
+     * @format address
+     * @example "0:0BB5A9F69043EEBDDA5AD2E946EB953242BD8F603FE795D90698CEEC6BFC60A0"
+     */
+    jetton?: string;
 }
 export interface ImagePreview {
     /** @example "100x100" */
@@ -1611,7 +1653,7 @@ export interface ValueFlow {
 }
 export interface Action {
     /** @example "TonTransfer" */
-    type: "TonTransfer" | "ExtraCurrencyTransfer" | "JettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "ContractDeploy" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "JettonSwap" | "SmartContractExec" | "ElectionsRecoverStake" | "ElectionsDepositStake" | "DomainRenew" | "Unknown";
+    type: "TonTransfer" | "ExtraCurrencyTransfer" | "JettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "ContractDeploy" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "JettonSwap" | "SmartContractExec" | "ElectionsRecoverStake" | "ElectionsDepositStake" | "DomainRenew" | "Purchase" | "Unknown";
     /** @example "ok" */
     status: "ok" | "failed";
     TonTransfer?: TonTransferAction;
@@ -1636,6 +1678,7 @@ export interface Action {
     JettonSwap?: JettonSwapAction;
     SmartContractExec?: SmartContractAction;
     DomainRenew?: DomainRenewAction;
+    Purchase?: PurchaseAction;
     /** shortly describes what this action is about. */
     simple_preview: ActionSimplePreview;
     base_transactions: string[];
@@ -1712,6 +1755,14 @@ export interface DomainRenewAction {
      */
     contract_address: string;
     renewer: AccountAddress;
+}
+export interface PurchaseAction {
+    source: AccountAddress;
+    destination: AccountAddress;
+    /** @example "03cfc582-b1c3-410a-a9a7-1f3afe326b3b" */
+    invoice_id: string;
+    amount: Price;
+    metadata: Metadata;
 }
 export interface NftItemTransferAction {
     sender?: AccountAddress;
@@ -1959,6 +2010,43 @@ export interface AccountEvents {
      */
     next_from: number;
 }
+export interface Purchase {
+    /** @example "e8b0e3fee4a26bd2317ac1f9952fcdc87dc08fdb617656b5202416323337372e" */
+    event_id: string;
+    /** @example "03cfc582-b1c3-410a-a9a7-1f3afe326b3b" */
+    invoice_id: string;
+    source: AccountAddress;
+    destination: AccountAddress;
+    /**
+     * @format int64
+     * @example 25713146000001
+     */
+    lt: number;
+    /**
+     * @format int64
+     * @example 1645544908
+     */
+    utime: number;
+    amount: Price;
+    metadata: Metadata;
+}
+export interface AccountPurchases {
+    purchases: Purchase[];
+    /**
+     * @format int64
+     * @example 25713146000001
+     */
+    next_from: number;
+}
+export interface Metadata {
+    /** hex encoded bytes */
+    encrypted_binary: string;
+    /**
+     * hex encoded bytes
+     * @example "dead.....beef"
+     */
+    decryption_key?: string;
+}
 export interface TraceID {
     /** @example "55e8809519cd3c49098c9ee45afdafcea7a894a74d0f628d94a115a50e045122" */
     id: string;
@@ -1977,60 +2065,33 @@ export interface ApyHistory {
 }
 export interface Subscription {
     /**
-     * @format address
-     * @example "0:dea8f638b789172ce36d10a20318125e52c649aa84893cd77858224fe2b9b0ee"
+     * type of subscription
+     * @example "v2"
      */
-    address: string;
+    type: string;
+    status: "not_ready" | "active" | "suspended" | "cancelled";
     /**
-     * @format address
-     * @example "0:567DE86AF2B6A557D7085807CF7C26338124987A5179344F0D0FA2657EB710F1"
-     */
-    wallet_address: string;
-    /**
-     * @format address
-     * @example "0:c704dadfabac88eab58e340de03080df81ff76636431f48624ad6e26fb2da0a4"
-     */
-    beneficiary_address: string;
-    /**
-     * @format int64
-     * @example 1000000000
-     */
-    amount: number;
-    /**
+     * payment period in seconds
      * @format int64
      * @example 2592000
      */
     period: number;
-    /**
-     * @format int64
-     * @example 1653996832
-     */
-    start_time: number;
-    /**
-     * @format int64
-     * @example 10800
-     */
-    timeout: number;
+    /** common identifier */
+    subscription_id: string;
+    payment_per_period: Price;
+    wallet: AccountAddress;
     /**
      * @format int64
      * @example 1653996834
      */
-    last_payment_time: number;
+    next_charge_at: number;
+    metadata: Metadata;
     /**
-     * @format int64
-     * @example 0
+     * @format address
+     * @example "0:dea8f638b789172ce36d10a20318125e52c649aa84893cd77858224fe2b9b0ee"
      */
-    last_request_time: number;
-    /**
-     * @format int64
-     * @example 217477
-     */
-    subscription_id: number;
-    /**
-     * @format int32
-     * @example 0
-     */
-    failed_attempts: number;
+    address?: string;
+    beneficiary?: AccountAddress;
 }
 export interface Subscriptions {
     subscriptions: Subscription[];
@@ -2672,6 +2733,44 @@ export interface JettonOperation {
     query_id: string;
     payload?: any;
 }
+/**
+ * Data type of the argument value:
+ * - `nan`: Not-a-Number value
+ * - `null`: Null value
+ * - `tinyint`: Decimal integer (e.g., `100500`)
+ * - `int257`: 257-bit integer in hex format with 0x prefix (e.g., `0xfa01d78381ae32`)
+ * - `slice`: TON blockchain address (e.g., `0:6e731f2e...`)
+ * - `cell_boc_base64`: Base64-encoded cell BOC (Binary Object Code) (e.g., `te6ccgEBAQEAAgAAAA==`)
+ * - `slice_boc_hex`: Hex-encoded slice BOC (e.g., `b5ee9c72...`)
+ * @example "int257"
+ */
+export declare enum ExecGetMethodArgType {
+    Nan = "nan",
+    Null = "null",
+    Tinyint = "tinyint",
+    Int257 = "int257",
+    Slice = "slice",
+    CellBocBase64 = "cell_boc_base64",
+    SliceBocHex = "slice_boc_hex"
+}
+export interface ExecGetMethodArg {
+    /**
+     * Data type of the argument value:
+     * - `nan`: Not-a-Number value
+     * - `null`: Null value
+     * - `tinyint`: Decimal integer (e.g., `100500`)
+     * - `int257`: 257-bit integer in hex format with 0x prefix (e.g., `0xfa01d78381ae32`)
+     * - `slice`: TON blockchain address (e.g., `0:6e731f2e...`)
+     * - `cell_boc_base64`: Base64-encoded cell BOC (Binary Object Code) (e.g., `te6ccgEBAQEAAgAAAA==`)
+     * - `slice_boc_hex`: Hex-encoded slice BOC (e.g., `b5ee9c72...`)
+     */
+    type: ExecGetMethodArgType;
+    /**
+     * String representation of the value according to the specified type
+     * @example "0xfa01d78381ae32"
+     */
+    value: string;
+}
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
 export interface FullRequestParams extends Omit<RequestInit, "body"> {
@@ -2910,40 +3009,6 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         getBlockchainRawAccount: (accountId: string, params?: RequestParams) => Promise<BlockchainRawAccount>;
         /**
-         * @description Get account transactions
-         *
-         * @tags Blockchain
-         * @name GetBlockchainAccountTransactions
-         * @request GET:/v2/blockchain/accounts/{account_id}/transactions
-         */
-        getBlockchainAccountTransactions: (accountId: string, query?: {
-            /**
-             * omit this parameter to get last transactions
-             * @format int64
-             * @example 39787624000003
-             */
-            after_lt?: number;
-            /**
-             * omit this parameter to get last transactions
-             * @format int64
-             * @example 39787624000003
-             */
-            before_lt?: number;
-            /**
-             * @format int32
-             * @min 1
-             * @max 1000
-             * @default 100
-             * @example 100
-             */
-            limit?: number;
-            /**
-             * used to sort the result-set in ascending or descending order by lt.
-             * @default "desc"
-             */
-            sort_order?: "desc" | "asc";
-        }, params?: RequestParams) => Promise<Transactions>;
-        /**
          * @description Execute get method for account
          *
          * @tags Blockchain
@@ -2952,17 +3017,27 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         execGetMethodForBlockchainAccount: (accountId: string, methodName: string, query?: {
             /**
-             * Supported values:
-             * "NaN" for NaN type,
-             * "Null" for Null type,
-             * 10-base digits for tiny int type (Example: 100500),
-             * 0x-prefixed hex digits for int257 (Example: 0xfa01d78381ae32),
-             * all forms of addresses for slice type (Example: 0:6e731f2e28b73539a7f85ac47ca104d5840b229351189977bb6151d36b5e3f5e),
-             * single-root base64-encoded BOC for cell (Example: "te6ccgEBAQEAAgAAAA=="),
-             * single-root hex-encoded BOC for slice (Example: b5ee9c72010101010002000000)
+             * Array of method arguments in string format. Supported value formats:
+             * - "NaN" for Not-a-Number type
+             * - "Null" for Null type
+             * - Decimal integers for tinyint type (e.g., "100500")
+             * - 0x-prefixed hex strings for int257 type (e.g., "0xfa01d78381ae32")
+             * - TON blockchain addresses for slice type (e.g., "0:6e731f2e28b73539a7f85ac47ca104d5840b229351189977bb6151d36b5e3f5e")
+             * - Base64-encoded BOC for cell type (e.g., "te6ccgEBAQEAAgAAAA==")
+             * - Hex-encoded BOC for slice type (e.g., "b5ee9c72010101010002000000")
              * @example ["0:9a33970f617bcd71acf2cd28357c067aa31859c02820d8f01d74c88063a8f4d8"]
              */
             args?: string[];
+        }, params?: RequestParams) => Promise<MethodExecutionResult>;
+        /**
+         * @description Execute get method for account
+         *
+         * @tags Blockchain
+         * @name ExecGetMethodWithBodyForBlockchainAccount
+         * @request POST:/v2/blockchain/accounts/{account_id}/methods/{method_name}
+         */
+        execGetMethodWithBodyForBlockchainAccount: (accountId: string, methodName: string, data: {
+            args: ExecGetMethodArg[];
         }, params?: RequestParams) => Promise<MethodExecutionResult>;
         /**
          * @description Send message to blockchain
@@ -3005,6 +3080,40 @@ export declare class Api<SecurityDataType extends unknown> {
     };
     accounts: {
         /**
+         * @description Get account transactions
+         *
+         * @tags Accounts, Blockchain
+         * @name GetBlockchainAccountTransactions
+         * @request GET:/v2/blockchain/accounts/{account_id}/transactions
+         */
+        getBlockchainAccountTransactions: (accountId: string, query?: {
+            /**
+             * omit this parameter to get last transactions
+             * @format int64
+             * @example 39787624000003
+             */
+            after_lt?: number;
+            /**
+             * omit this parameter to get last transactions
+             * @format int64
+             * @example 39787624000003
+             */
+            before_lt?: number;
+            /**
+             * @format int32
+             * @min 1
+             * @max 1000
+             * @default 100
+             * @example 100
+             */
+            limit?: number;
+            /**
+             * used to sort the result-set in ascending or descending order by lt.
+             * @default "desc"
+             */
+            sort_order?: "desc" | "asc";
+        }, params?: RequestParams) => Promise<Transactions>;
+        /**
          * @description Get human-friendly information about several accounts without low-level details.
          *
          * @tags Accounts
@@ -3036,7 +3145,7 @@ export declare class Api<SecurityDataType extends unknown> {
         /**
          * @description Get all Jettons balances by owner address
          *
-         * @tags Accounts
+         * @tags Accounts, Jettons
          * @name GetAccountJettonsBalances
          * @request GET:/v2/accounts/{account_id}/jettons
          */
@@ -3055,7 +3164,7 @@ export declare class Api<SecurityDataType extends unknown> {
         /**
          * @description Get Jetton balance by owner address
          *
-         * @tags Accounts
+         * @tags Accounts, Jettons
          * @name GetAccountJettonBalance
          * @request GET:/v2/accounts/{account_id}/jettons/{jetton_id}
          */
@@ -3902,7 +4011,7 @@ export declare class Api<SecurityDataType extends unknown> {
          * @name GetWalletsByPublicKey
          * @request GET:/v2/pubkeys/{public_key}/wallets
          */
-        getWalletsByPublicKey: (publicKey: string, params?: RequestParams) => Promise<Accounts>;
+        getWalletsByPublicKey: (publicKey: string, params?: RequestParams) => Promise<Wallets>;
     };
     gasless: {
         /**
@@ -4466,6 +4575,30 @@ export declare class Api<SecurityDataType extends unknown> {
         }, query?: {
             ignore_signature_check?: boolean;
         }, params?: RequestParams) => Promise<AccountEvent>;
+    };
+    purchases: {
+        /**
+         * @description Get history of purchases
+         *
+         * @tags Purchases
+         * @name GetPurchaseHistory
+         * @request GET:/v2/purchases/{account_id}/history
+         */
+        getPurchaseHistory: (accountId: string, query?: {
+            /**
+             * omit this parameter to get last invoices
+             * @format int64
+             * @example 25758317000002
+             */
+            before_lt?: number;
+            /**
+             * @min 1
+             * @max 1000
+             * @default 100
+             * @example 100
+             */
+            limit?: number;
+        }, params?: RequestParams) => Promise<AccountPurchases>;
     };
 }
 export {};

@@ -10,7 +10,7 @@
  * ---------------------------------------------------------------
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Api = exports.HttpClient = exports.ContentType = exports.PoolImplementationType = exports.TrustType = exports.JettonVerificationType = exports.BouncePhaseType = exports.ComputeSkipReason = exports.AccStatusChange = exports.TransactionType = exports.AccountStatus = void 0;
+exports.Api = exports.HttpClient = exports.ContentType = exports.ExecGetMethodArgType = exports.PoolImplementationType = exports.TrustType = exports.CurrencyType = exports.JettonVerificationType = exports.BouncePhaseType = exports.ComputeSkipReason = exports.AccStatusChange = exports.TransactionType = exports.AccountStatus = void 0;
 /** @example "active" */
 var AccountStatus;
 (function (AccountStatus) {
@@ -58,6 +58,14 @@ var JettonVerificationType;
     JettonVerificationType["Blacklist"] = "blacklist";
     JettonVerificationType["None"] = "none";
 })(JettonVerificationType || (exports.JettonVerificationType = JettonVerificationType = {}));
+/** @example "jetton" */
+var CurrencyType;
+(function (CurrencyType) {
+    CurrencyType["Native"] = "native";
+    CurrencyType["ExtraCurrency"] = "extra_currency";
+    CurrencyType["Jetton"] = "jetton";
+    CurrencyType["Fiat"] = "fiat";
+})(CurrencyType || (exports.CurrencyType = CurrencyType = {}));
 /** @example "whitelist" */
 var TrustType;
 (function (TrustType) {
@@ -72,6 +80,27 @@ var PoolImplementationType;
     PoolImplementationType["Tf"] = "tf";
     PoolImplementationType["LiquidTF"] = "liquidTF";
 })(PoolImplementationType || (exports.PoolImplementationType = PoolImplementationType = {}));
+/**
+ * Data type of the argument value:
+ * - `nan`: Not-a-Number value
+ * - `null`: Null value
+ * - `tinyint`: Decimal integer (e.g., `100500`)
+ * - `int257`: 257-bit integer in hex format with 0x prefix (e.g., `0xfa01d78381ae32`)
+ * - `slice`: TON blockchain address (e.g., `0:6e731f2e...`)
+ * - `cell_boc_base64`: Base64-encoded cell BOC (Binary Object Code) (e.g., `te6ccgEBAQEAAgAAAA==`)
+ * - `slice_boc_hex`: Hex-encoded slice BOC (e.g., `b5ee9c72...`)
+ * @example "int257"
+ */
+var ExecGetMethodArgType;
+(function (ExecGetMethodArgType) {
+    ExecGetMethodArgType["Nan"] = "nan";
+    ExecGetMethodArgType["Null"] = "null";
+    ExecGetMethodArgType["Tinyint"] = "tinyint";
+    ExecGetMethodArgType["Int257"] = "int257";
+    ExecGetMethodArgType["Slice"] = "slice";
+    ExecGetMethodArgType["CellBocBase64"] = "cell_boc_base64";
+    ExecGetMethodArgType["SliceBocHex"] = "slice_boc_hex";
+})(ExecGetMethodArgType || (exports.ExecGetMethodArgType = ExecGetMethodArgType = {}));
 var ContentType;
 (function (ContentType) {
     ContentType["Json"] = "application/json";
@@ -461,20 +490,6 @@ class Api {
             ...params,
         }),
         /**
-         * @description Get account transactions
-         *
-         * @tags Blockchain
-         * @name GetBlockchainAccountTransactions
-         * @request GET:/v2/blockchain/accounts/{account_id}/transactions
-         */
-        getBlockchainAccountTransactions: (accountId, query, params = {}) => this.http.request({
-            path: `/v2/blockchain/accounts/${accountId}/transactions`,
-            method: "GET",
-            query: query,
-            format: "json",
-            ...params,
-        }),
-        /**
          * @description Execute get method for account
          *
          * @tags Blockchain
@@ -485,6 +500,20 @@ class Api {
             path: `/v2/blockchain/accounts/${accountId}/methods/${methodName}`,
             method: "GET",
             query: query,
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Execute get method for account
+         *
+         * @tags Blockchain
+         * @name ExecGetMethodWithBodyForBlockchainAccount
+         * @request POST:/v2/blockchain/accounts/{account_id}/methods/{method_name}
+         */
+        execGetMethodWithBodyForBlockchainAccount: (accountId, methodName, data, params = {}) => this.http.request({
+            path: `/v2/blockchain/accounts/${accountId}/methods/${methodName}`,
+            method: "POST",
+            body: data,
             format: "json",
             ...params,
         }),
@@ -543,6 +572,20 @@ class Api {
     };
     accounts = {
         /**
+         * @description Get account transactions
+         *
+         * @tags Accounts, Blockchain
+         * @name GetBlockchainAccountTransactions
+         * @request GET:/v2/blockchain/accounts/{account_id}/transactions
+         */
+        getBlockchainAccountTransactions: (accountId, query, params = {}) => this.http.request({
+            path: `/v2/blockchain/accounts/${accountId}/transactions`,
+            method: "GET",
+            query: query,
+            format: "json",
+            ...params,
+        }),
+        /**
          * @description Get human-friendly information about several accounts without low-level details.
          *
          * @tags Accounts
@@ -586,7 +629,7 @@ class Api {
         /**
          * @description Get all Jettons balances by owner address
          *
-         * @tags Accounts
+         * @tags Accounts, Jettons
          * @name GetAccountJettonsBalances
          * @request GET:/v2/accounts/{account_id}/jettons
          */
@@ -600,7 +643,7 @@ class Api {
         /**
          * @description Get Jetton balance by owner address
          *
-         * @tags Accounts
+         * @tags Accounts, Jettons
          * @name GetAccountJettonBalance
          * @request GET:/v2/accounts/{account_id}/jettons/{jetton_id}
          */
@@ -1672,6 +1715,22 @@ class Api {
             method: "POST",
             query: query,
             body: data,
+            format: "json",
+            ...params,
+        }),
+    };
+    purchases = {
+        /**
+         * @description Get history of purchases
+         *
+         * @tags Purchases
+         * @name GetPurchaseHistory
+         * @request GET:/v2/purchases/{account_id}/history
+         */
+        getPurchaseHistory: (accountId, query, params = {}) => this.http.request({
+            path: `/v2/purchases/${accountId}/history`,
+            method: "GET",
+            query: query,
             format: "json",
             ...params,
         }),
