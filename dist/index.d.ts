@@ -1653,7 +1653,7 @@ export interface ValueFlow {
 }
 export interface Action {
     /** @example "TonTransfer" */
-    type: "TonTransfer" | "ExtraCurrencyTransfer" | "JettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "ContractDeploy" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "JettonSwap" | "SmartContractExec" | "ElectionsRecoverStake" | "ElectionsDepositStake" | "DomainRenew" | "Purchase" | "Unknown";
+    type: string;
     /** @example "ok" */
     status: "ok" | "failed";
     TonTransfer?: TonTransferAction;
@@ -1679,6 +1679,7 @@ export interface Action {
     SmartContractExec?: SmartContractAction;
     DomainRenew?: DomainRenewAction;
     Purchase?: PurchaseAction;
+    GasRelay?: GasRelayAction;
     /** shortly describes what this action is about. */
     simple_preview: ActionSimplePreview;
     base_transactions: string[];
@@ -1755,6 +1756,23 @@ export interface DomainRenewAction {
      */
     contract_address: string;
     renewer: AccountAddress;
+}
+export interface GasRelayAction {
+    /**
+     * @format int64
+     * @example 1000000000
+     */
+    amount: number;
+    /**
+     * @format address
+     * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+     */
+    relayer: string;
+    /**
+     * @format address
+     * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
+     */
+    target: string;
 }
 export interface PurchaseAction {
     source: AccountAddress;
