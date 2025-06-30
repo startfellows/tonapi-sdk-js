@@ -1763,16 +1763,8 @@ export interface GasRelayAction {
      * @example 1000000000
      */
     amount: number;
-    /**
-     * @format address
-     * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
-     */
-    relayer: string;
-    /**
-     * @format address
-     * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
-     */
-    target: string;
+    relayer: AccountAddress;
+    target: AccountAddress;
 }
 export interface PurchaseAction {
     source: AccountAddress;
