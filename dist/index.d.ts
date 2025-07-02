@@ -2011,6 +2011,13 @@ export interface AccountEvent {
      * @example 3
      */
     extra: number;
+    /**
+     * @format float
+     * @min 0
+     * @max 1
+     * @example 0.5
+     */
+    progress: number;
 }
 export interface AccountEvents {
     events: AccountEvent[];
@@ -2338,6 +2345,13 @@ export interface Event {
      * @example false
      */
     in_progress: boolean;
+    /**
+     * @format float
+     * @min 0
+     * @max 1
+     * @example 0.5
+     */
+    progress: number;
 }
 export interface JettonMetadata {
     /**
