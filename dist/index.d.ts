@@ -861,6 +861,13 @@ export interface BlockchainRawAccount {
         root: string;
     }[];
 }
+export interface BlockchainLibrary {
+    /**
+     * @format cell
+     * @example "b5ee9c7201010101005f0000baff0020dd2082014c97ba218201339cbab19c71b0ed44d0d31fd70bffe304e0a4f260810200d71820d70b1fed44d0d31fd3ffd15112baf2a122f901541044f910f2a2f80001d31f3120d74a96d307d402fb00ded1a4c8cb1fcbffc9ed54"
+     */
+    boc: string;
+}
 export interface WalletStats {
     /**
      * @format int32
@@ -1426,6 +1433,7 @@ export interface DomainBids {
 }
 export declare enum JettonVerificationType {
     Whitelist = "whitelist",
+    Graylist = "graylist",
     Blacklist = "blacklist",
     None = "none"
 }
@@ -1552,7 +1560,7 @@ export interface NftItem {
     /** @example "crypto.ton" */
     dns?: string;
     /**
-     * please use trust field
+     * Please use trust field
      * @deprecated
      */
     approved_by: NftApprovedBy;
@@ -1572,11 +1580,7 @@ export interface Multisig {
      * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
      */
     address: string;
-    /**
-     * @format int64
-     * @example 1
-     */
-    seqno: number;
+    seqno: string;
     /** @format int32 */
     threshold: number;
     signers: string[];
@@ -1589,11 +1593,7 @@ export interface MultisigOrder {
      * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
      */
     address: string;
-    /**
-     * @format int64
-     * @example 1
-     */
-    order_seqno: number;
+    order_seqno: string;
     /** @format int32 */
     threshold: number;
     /** @example false */
@@ -1653,7 +1653,7 @@ export interface ValueFlow {
 }
 export interface Action {
     /** @example "TonTransfer" */
-    type: string;
+    type: "TonTransfer" | "ExtraCurrencyTransfer" | "ContractDeploy" | "JettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "ElectionsDepositStake" | "ElectionsRecoverStake" | "JettonSwap" | "SmartContractExec" | "DomainRenew" | "Purchase" | "DepositTokenStake" | "WithdrawTokenStakeRequest" | "Unknown";
     /** @example "ok" */
     status: "ok" | "failed";
     TonTransfer?: TonTransferAction;
@@ -1679,7 +1679,12 @@ export interface Action {
     SmartContractExec?: SmartContractAction;
     DomainRenew?: DomainRenewAction;
     Purchase?: PurchaseAction;
+    AddExtension?: AddExtensionAction;
+    RemoveExtension?: RemoveExtensionAction;
+    SetSignatureAllowedAction?: SetSignatureAllowedAction;
     GasRelay?: GasRelayAction;
+    DepositTokenStake?: DepositTokenStakeAction;
+    WithdrawTokenStakeRequest?: WithdrawTokenStakeRequestAction;
     /** shortly describes what this action is about. */
     simple_preview: ActionSimplePreview;
     base_transactions: string[];
@@ -1774,6 +1779,26 @@ export interface PurchaseAction {
     amount: Price;
     metadata: Metadata;
 }
+export interface AddExtensionAction {
+    wallet: AccountAddress;
+    /**
+     * @format address
+     * @example "0:10C1073837B93FDAAD594284CE8B8EFF7B9CF25427440EB2FC682762E1471365"
+     */
+    extension: string;
+}
+export interface RemoveExtensionAction {
+    wallet: AccountAddress;
+    /**
+     * @format address
+     * @example "0:10C1073837B93FDAAD594284CE8B8EFF7B9CF25427440EB2FC682762E1471365"
+     */
+    extension: string;
+}
+export interface SetSignatureAllowedAction {
+    wallet: AccountAddress;
+    allowed: boolean;
+}
 export interface NftItemTransferAction {
     sender?: AccountAddress;
     recipient?: AccountAddress;
@@ -1864,11 +1889,14 @@ export interface SubscriptionAction {
      */
     subscription: string;
     beneficiary: AccountAddress;
+    admin: AccountAddress;
     /**
+     * @deprecated
      * @format int64
      * @example 1000000000
      */
-    amount: number;
+    amount?: number;
+    price: Price;
     /** @example false */
     initial: boolean;
 }
@@ -1880,6 +1908,7 @@ export interface UnSubscriptionAction {
      */
     subscription: string;
     beneficiary: AccountAddress;
+    admin: AccountAddress;
 }
 export interface AuctionBidAction {
     auction_type: "DNS.ton" | "DNS.tg" | "NUMBER.tg" | "getgems";
@@ -1938,7 +1967,8 @@ export interface ElectionsDepositStakeAction {
     staker: AccountAddress;
 }
 export interface JettonSwapAction {
-    dex: "stonfi" | "dedust" | "megatonfi";
+    /** @example "stonfi" */
+    dex: string;
     /** @example "1660050553" */
     amount_in: string;
     /** @example "1660050553" */
@@ -1964,6 +1994,16 @@ export interface NftPurchaseAction {
     nft: NftItem;
     seller: AccountAddress;
     buyer: AccountAddress;
+}
+export interface DepositTokenStakeAction {
+    staker: AccountAddress;
+    protocol: Protocol;
+    stake_meta?: Price;
+}
+export interface WithdrawTokenStakeRequestAction {
+    staker: AccountAddress;
+    protocol: Protocol;
+    stake_meta?: Price;
 }
 /** shortly describes what this action is about. */
 export interface ActionSimplePreview {
@@ -2109,6 +2149,7 @@ export interface Subscription {
      */
     address?: string;
     beneficiary?: AccountAddress;
+    admin?: AccountAddress;
 }
 export interface Subscriptions {
     subscriptions: Subscription[];
@@ -2587,8 +2628,13 @@ export interface DnsExpiring {
         dns_item?: NftItem;
     }[];
 }
-/** @example [1668436763,97.21323234] */
-export type ChartPoints = [number, number];
+/**
+ * Each inner array is a pair [timestamp, price]:
+ *   • index 0 — Unix timestamp (int64)
+ *   • index 1 — token price (decimal) in the requested currency.
+ * @example [[1668436763,97.21323234]]
+ */
+export type ChartPoints = number[][];
 export interface AccountInfoByStateInit {
     /** @example "NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODQ3..." */
     public_key: string;
@@ -2794,6 +2840,12 @@ export interface ExecGetMethodArg {
      * @example "0xfa01d78381ae32"
      */
     value: string;
+}
+export interface Protocol {
+    /** @example "Ethena" */
+    name: string;
+    /** @example "https://cache.tonapi.io/images/jetton.jpg" */
+    image?: string;
 }
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
@@ -3033,6 +3085,40 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         getBlockchainRawAccount: (accountId: string, params?: RequestParams) => Promise<BlockchainRawAccount>;
         /**
+         * @description Get account transactions
+         *
+         * @tags Blockchain
+         * @name GetBlockchainAccountTransactions
+         * @request GET:/v2/blockchain/accounts/{account_id}/transactions
+         */
+        getBlockchainAccountTransactions: (accountId: string, query?: {
+            /**
+             * omit this parameter to get last transactions
+             * @format int64
+             * @example 39787624000003
+             */
+            after_lt?: number;
+            /**
+             * omit this parameter to get last transactions
+             * @format int64
+             * @example 39787624000003
+             */
+            before_lt?: number;
+            /**
+             * @format int32
+             * @min 1
+             * @max 1000
+             * @default 100
+             * @example 100
+             */
+            limit?: number;
+            /**
+             * used to sort the result-set in ascending or descending order by lt.
+             * @default "desc"
+             */
+            sort_order?: "desc" | "asc";
+        }, params?: RequestParams) => Promise<Transactions>;
+        /**
          * @description Execute get method for account
          *
          * @tags Blockchain
@@ -3101,42 +3187,16 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request GET:/v2/blockchain/accounts/{account_id}/inspect
          */
         blockchainAccountInspect: (accountId: string, params?: RequestParams) => Promise<BlockchainAccountInspect>;
+        /**
+         * @description Get library cell
+         *
+         * @tags Blockchain
+         * @name GetLibraryByHash
+         * @request GET:/v2/blockchain/libraries/{hash}
+         */
+        getLibraryByHash: (hash: string, params?: RequestParams) => Promise<BlockchainLibrary>;
     };
     accounts: {
-        /**
-         * @description Get account transactions
-         *
-         * @tags Accounts, Blockchain
-         * @name GetBlockchainAccountTransactions
-         * @request GET:/v2/blockchain/accounts/{account_id}/transactions
-         */
-        getBlockchainAccountTransactions: (accountId: string, query?: {
-            /**
-             * omit this parameter to get last transactions
-             * @format int64
-             * @example 39787624000003
-             */
-            after_lt?: number;
-            /**
-             * omit this parameter to get last transactions
-             * @format int64
-             * @example 39787624000003
-             */
-            before_lt?: number;
-            /**
-             * @format int32
-             * @min 1
-             * @max 1000
-             * @default 100
-             * @example 100
-             */
-            limit?: number;
-            /**
-             * used to sort the result-set in ascending or descending order by lt.
-             * @default "desc"
-             */
-            sort_order?: "desc" | "asc";
-        }, params?: RequestParams) => Promise<Transactions>;
         /**
          * @description Get human-friendly information about several accounts without low-level details.
          *
@@ -3169,7 +3229,7 @@ export declare class Api<SecurityDataType extends unknown> {
         /**
          * @description Get all Jettons balances by owner address
          *
-         * @tags Accounts, Jettons
+         * @tags Accounts
          * @name GetAccountJettonsBalances
          * @request GET:/v2/accounts/{account_id}/jettons
          */
@@ -3188,7 +3248,7 @@ export declare class Api<SecurityDataType extends unknown> {
         /**
          * @description Get Jetton balance by owner address
          *
-         * @tags Accounts, Jettons
+         * @tags Accounts
          * @name GetAccountJettonBalance
          * @request GET:/v2/accounts/{account_id}/jettons/{jetton_id}
          */
@@ -3226,7 +3286,7 @@ export declare class Api<SecurityDataType extends unknown> {
             limit: number;
         }, params?: RequestParams) => Promise<JettonOperations>;
         /**
-         * @description Get the transfer jetton history for account and jetton
+         * @description Please use `getJettonAccountHistoryByID`` instead
          *
          * @tags Accounts
          * @name GetAccountJettonHistoryById
@@ -3630,7 +3690,7 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         getNftItemByAddress: (accountId: string, params?: RequestParams) => Promise<NftItem>;
         /**
-         * @description Get the transfer nfts history for account
+         * @description Please use `getAccountNftHistory`` instead
          *
          * @tags NFT
          * @name GetNftHistoryById
@@ -3680,7 +3740,10 @@ export declare class Api<SecurityDataType extends unknown> {
          * @name DnsResolve
          * @request GET:/v2/dns/{domain_name}/resolve
          */
-        dnsResolve: (domainName: string, params?: RequestParams) => Promise<DnsRecord>;
+        dnsResolve: (domainName: string, query?: {
+            /** @default false */
+            filter?: boolean;
+        }, params?: RequestParams) => Promise<DnsRecord>;
         /**
          * @description Get domain bids
          *
@@ -3940,7 +4003,12 @@ export declare class Api<SecurityDataType extends unknown> {
              */
             points_count?: number;
         }, params?: RequestParams) => Promise<{
-            points: ChartPoints[];
+            /**
+             * Each inner array is a pair [timestamp, price]:
+             *   • index 0 — Unix timestamp (int64)
+             *   • index 1 — token price (decimal) in the requested currency.
+             */
+            points: ChartPoints;
         }>;
         /**
          * @description Get the TON price from markets

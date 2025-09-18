@@ -55,6 +55,7 @@ var BouncePhaseType;
 var JettonVerificationType;
 (function (JettonVerificationType) {
     JettonVerificationType["Whitelist"] = "whitelist";
+    JettonVerificationType["Graylist"] = "graylist";
     JettonVerificationType["Blacklist"] = "blacklist";
     JettonVerificationType["None"] = "none";
 })(JettonVerificationType || (exports.JettonVerificationType = JettonVerificationType = {}));
@@ -490,6 +491,20 @@ class Api {
             ...params,
         }),
         /**
+         * @description Get account transactions
+         *
+         * @tags Blockchain
+         * @name GetBlockchainAccountTransactions
+         * @request GET:/v2/blockchain/accounts/{account_id}/transactions
+         */
+        getBlockchainAccountTransactions: (accountId, query, params = {}) => this.http.request({
+            path: `/v2/blockchain/accounts/${accountId}/transactions`,
+            method: "GET",
+            query: query,
+            format: "json",
+            ...params,
+        }),
+        /**
          * @description Execute get method for account
          *
          * @tags Blockchain
@@ -569,22 +584,21 @@ class Api {
             format: "json",
             ...params,
         }),
-    };
-    accounts = {
         /**
-         * @description Get account transactions
+         * @description Get library cell
          *
-         * @tags Accounts, Blockchain
-         * @name GetBlockchainAccountTransactions
-         * @request GET:/v2/blockchain/accounts/{account_id}/transactions
+         * @tags Blockchain
+         * @name GetLibraryByHash
+         * @request GET:/v2/blockchain/libraries/{hash}
          */
-        getBlockchainAccountTransactions: (accountId, query, params = {}) => this.http.request({
-            path: `/v2/blockchain/accounts/${accountId}/transactions`,
+        getLibraryByHash: (hash, params = {}) => this.http.request({
+            path: `/v2/blockchain/libraries/${hash}`,
             method: "GET",
-            query: query,
             format: "json",
             ...params,
         }),
+    };
+    accounts = {
         /**
          * @description Get human-friendly information about several accounts without low-level details.
          *
@@ -629,7 +643,7 @@ class Api {
         /**
          * @description Get all Jettons balances by owner address
          *
-         * @tags Accounts, Jettons
+         * @tags Accounts
          * @name GetAccountJettonsBalances
          * @request GET:/v2/accounts/{account_id}/jettons
          */
@@ -643,7 +657,7 @@ class Api {
         /**
          * @description Get Jetton balance by owner address
          *
-         * @tags Accounts, Jettons
+         * @tags Accounts
          * @name GetAccountJettonBalance
          * @request GET:/v2/accounts/{account_id}/jettons/{jetton_id}
          */
@@ -669,7 +683,7 @@ class Api {
             ...params,
         }),
         /**
-         * @description Get the transfer jetton history for account and jetton
+         * @description Please use `getJettonAccountHistoryByID`` instead
          *
          * @tags Accounts
          * @name GetAccountJettonHistoryById
@@ -959,7 +973,7 @@ class Api {
             ...params,
         }),
         /**
-         * @description Get the transfer nfts history for account
+         * @description Please use `getAccountNftHistory`` instead
          *
          * @tags NFT
          * @name GetNftHistoryById
@@ -995,9 +1009,10 @@ class Api {
          * @name DnsResolve
          * @request GET:/v2/dns/{domain_name}/resolve
          */
-        dnsResolve: (domainName, params = {}) => this.http.request({
+        dnsResolve: (domainName, query, params = {}) => this.http.request({
             path: `/v2/dns/${domainName}/resolve`,
             method: "GET",
+            query: query,
             format: "json",
             ...params,
         }),
