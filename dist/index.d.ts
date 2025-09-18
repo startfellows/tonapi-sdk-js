@@ -1653,7 +1653,7 @@ export interface ValueFlow {
 }
 export interface Action {
     /** @example "TonTransfer" */
-    type: "TonTransfer" | "ExtraCurrencyTransfer" | "ContractDeploy" | "JettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "ElectionsDepositStake" | "ElectionsRecoverStake" | "JettonSwap" | "SmartContractExec" | "DomainRenew" | "Purchase" | "DepositTokenStake" | "WithdrawTokenStakeRequest" | "Unknown";
+    type: "TonTransfer" | "ExtraCurrencyTransfer" | "ContractDeploy" | "JettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "ElectionsDepositStake" | "ElectionsRecoverStake" | "JettonSwap" | "SmartContractExec" | "DomainRenew" | "Purchase" | "AddExtension" | "RemoveExtension" | "SetSignatureAllowedAction" | "GasRelay" | "DepositTokenStake" | "WithdrawTokenStakeRequest" | "Unknown";
     /** @example "ok" */
     status: "ok" | "failed";
     TonTransfer?: TonTransferAction;
