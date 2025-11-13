@@ -1459,6 +1459,8 @@ export interface JettonPreview {
 export interface JettonBalance {
     /** @example "597968399" */
     balance: string;
+    /** @example "597968399" */
+    scaled_ui_balance?: string;
     price?: TokenRates;
     wallet_address: AccountAddress;
     jetton: JettonPreview;
@@ -1483,6 +1485,14 @@ export declare enum CurrencyType {
     ExtraCurrency = "extra_currency",
     Jetton = "jetton",
     Fiat = "fiat"
+}
+export interface VaultDepositInfo {
+    price: Price;
+    /**
+     * @format address
+     * @example "0:0BB5A9F69043EEBDDA5AD2E946EB953242BD8F603FE795D90698CEEC6BFC60A0"
+     */
+    vault: string;
 }
 export interface Price {
     currency_type: CurrencyType;
@@ -1653,7 +1663,7 @@ export interface ValueFlow {
 }
 export interface Action {
     /** @example "TonTransfer" */
-    type: "TonTransfer" | "ExtraCurrencyTransfer" | "ContractDeploy" | "JettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "ElectionsDepositStake" | "ElectionsRecoverStake" | "JettonSwap" | "SmartContractExec" | "DomainRenew" | "Purchase" | "AddExtension" | "RemoveExtension" | "SetSignatureAllowedAction" | "GasRelay" | "DepositTokenStake" | "WithdrawTokenStakeRequest" | "Unknown";
+    type: "TonTransfer" | "ExtraCurrencyTransfer" | "ContractDeploy" | "JettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "ElectionsDepositStake" | "ElectionsRecoverStake" | "JettonSwap" | "SmartContractExec" | "DomainRenew" | "Purchase" | "AddExtension" | "RemoveExtension" | "SetSignatureAllowedAction" | "GasRelay" | "DepositTokenStake" | "WithdrawTokenStakeRequest" | "LiquidityDeposit" | "Unknown";
     /** @example "ok" */
     status: "ok" | "failed";
     TonTransfer?: TonTransferAction;
@@ -1685,6 +1695,7 @@ export interface Action {
     GasRelay?: GasRelayAction;
     DepositTokenStake?: DepositTokenStakeAction;
     WithdrawTokenStakeRequest?: WithdrawTokenStakeRequestAction;
+    LiquidityDeposit?: LiquidityDepositAction;
     /** shortly describes what this action is about. */
     simple_preview: ActionSimplePreview;
     base_transactions: string[];
@@ -1835,6 +1846,8 @@ export interface JettonTransferAction {
      * @example "1000000000"
      */
     amount: string;
+    /** @example "1100000000" */
+    scaled_ui_amount?: string;
     /**
      * @example "Hi! This is your salary.
      * From accounting with love."
@@ -2004,6 +2017,11 @@ export interface WithdrawTokenStakeRequestAction {
     staker: AccountAddress;
     protocol: Protocol;
     stake_meta?: Price;
+}
+export interface LiquidityDepositAction {
+    protocol: Protocol;
+    from: AccountAddress;
+    tokens: VaultDepositInfo[];
 }
 /** shortly describes what this action is about. */
 export interface ActionSimplePreview {
@@ -2275,6 +2293,11 @@ export interface Risk {
     ton: number;
     jettons: JettonQuantity[];
     nfts: NftItem[];
+    /**
+     * Estimated equivalent value of all assets at risk in selected currency (for example USD)
+     * @format float
+     */
+    total_equivalent?: number;
 }
 export interface JettonQuantity {
     /** @example "597968399" */
@@ -4653,6 +4676,9 @@ export declare class Api<SecurityDataType extends unknown> {
                  */
                 balance?: number;
             }[];
+        }, query?: {
+            /** @example "usd" */
+            currency?: string;
         }, params?: RequestParams) => Promise<MessageConsequences>;
         /**
          * @description Emulate sending message to retrieve account-specific events

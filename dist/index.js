@@ -1711,9 +1711,10 @@ class Api {
          * @name EmulateMessageToWallet
          * @request POST:/v2/wallet/emulate
          */
-        emulateMessageToWallet: (data, params = {}) => this.http.request({
+        emulateMessageToWallet: (data, query, params = {}) => this.http.request({
             path: `/v2/wallet/emulate`,
             method: "POST",
+            query: query,
             body: data,
             format: "json",
             ...params,
