@@ -4,7 +4,7 @@ export interface Error {
 }
 export interface AccountAddress {
     /**
-     * @format address
+     * @format maybe-address
      * @example "0:10C1073837B93FDAAD594284CE8B8EFF7B9CF25427440EB2FC682762E1471365"
      */
     address: string;
@@ -1455,12 +1455,17 @@ export interface JettonPreview {
     custom_payload_api_uri?: string;
     /** @format int32 */
     score: number;
+    scaled_ui?: ScaledUI;
+}
+export interface ScaledUI {
+    /** @example "597968399" */
+    numerator: string;
+    /** @example "597968399" */
+    denominator: string;
 }
 export interface JettonBalance {
     /** @example "597968399" */
     balance: string;
-    /** @example "597968399" */
-    scaled_ui_balance?: string;
     price?: TokenRates;
     wallet_address: AccountAddress;
     jetton: JettonPreview;
@@ -1813,7 +1818,10 @@ export interface SetSignatureAllowedAction {
 export interface NftItemTransferAction {
     sender?: AccountAddress;
     recipient?: AccountAddress;
-    /** @example "" */
+    /**
+     * @format maybe-address
+     * @example ""
+     */
     nft: string;
     /**
      * @example "Hi! This is your salary.
@@ -1846,8 +1854,6 @@ export interface JettonTransferAction {
      * @example "1000000000"
      */
     amount: string;
-    /** @example "1100000000" */
-    scaled_ui_amount?: string;
     /**
      * @example "Hi! This is your salary.
      * From accounting with love."
@@ -2162,7 +2168,7 @@ export interface Subscription {
     next_charge_at: number;
     metadata: Metadata;
     /**
-     * @format address
+     * @format maybe-address
      * @example "0:dea8f638b789172ce36d10a20318125e52c649aa84893cd77858224fe2b9b0ee"
      */
     address?: string;
@@ -2231,7 +2237,7 @@ export interface DomainInfo {
 export interface DnsRecord {
     wallet?: WalletDNS;
     /**
-     * @format address
+     * @format maybe-address
      * @example "0:da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
      */
     next_resolver?: string;
@@ -2460,6 +2466,7 @@ export interface JettonInfo {
      * @example 2000
      */
     holders_count: number;
+    scaled_ui?: ScaledUI;
 }
 export interface JettonHolders {
     addresses: {
