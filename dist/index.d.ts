@@ -1675,6 +1675,7 @@ export interface Action {
     ExtraCurrencyTransfer?: ExtraCurrencyTransferAction;
     ContractDeploy?: ContractDeployAction;
     JettonTransfer?: JettonTransferAction;
+    FlawedJettonTransfer?: FlawedJettonTransferAction;
     JettonBurn?: JettonBurnAction;
     JettonMint?: JettonMintAction;
     NftItemTransfer?: NftItemTransferAction;
@@ -1854,6 +1855,38 @@ export interface JettonTransferAction {
      * @example "1000000000"
      */
     amount: string;
+    /**
+     * @example "Hi! This is your salary.
+     * From accounting with love."
+     */
+    comment?: string;
+    encrypted_comment?: EncryptedComment;
+    refund?: Refund;
+    jetton: JettonPreview;
+}
+export interface FlawedJettonTransferAction {
+    sender?: AccountAddress;
+    recipient?: AccountAddress;
+    /**
+     * @format address
+     * @example "0:E93E7D444180608B8520C00DC664383A387356FB6E16FDDF99DBE5E1415A574B"
+     */
+    senders_wallet: string;
+    /**
+     * @format address
+     * @example "0:E93E7D444180608B8520C00DC664383A387356FB6E16FDDF99DBE5E1415A574B"
+     */
+    recipients_wallet: string;
+    /**
+     * sent amount in quanta of tokens
+     * @example "1000000000"
+     */
+    sent_amount: string;
+    /**
+     * actually received amount in quanta of tokens
+     * @example "1000000000"
+     */
+    received_amount: string;
     /**
      * @example "Hi! This is your salary.
      * From accounting with love."
