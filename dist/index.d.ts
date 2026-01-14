@@ -1041,6 +1041,7 @@ export interface SignRawParams {
      */
     valid_until: number;
     messages: SignRawMessage[];
+    /** Result of emulating a wallet message on the current blockchain state: describes the expected on-chain consequences (trace, high-level AccountEvent, risk) for the signing wallet. For UI display only. */
     emulation?: MessageConsequences;
 }
 export interface MethodExecutionResult {
@@ -1369,7 +1370,6 @@ export interface BlockchainConfig {
     /** precompiled contracts */
     "45"?: {
         contracts: {
-            /** @format address */
             code_hash: string;
             /** @format int64 */
             gas_usage: number;
@@ -1618,7 +1618,7 @@ export interface MultisigOrder {
     approvals_num: number;
     /** @format int64 */
     expiration_date: number;
-    /** Risk specifies assets that could be lost if a message would be sent to a malicious smart contract. It makes sense to understand the risk BEFORE sending a message to the blockchain. */
+    /** Conservative upper bound on assets this wallet may lose if the emulated message is sent and the counterparty behaves maliciously. Values may exceed current balances (e.g. already-authorized future receipts). For UI display only. */
     risk: Risk;
     /** @format int64 */
     creation_date: number;
@@ -1668,7 +1668,7 @@ export interface ValueFlow {
 }
 export interface Action {
     /** @example "TonTransfer" */
-    type: "TonTransfer" | "ExtraCurrencyTransfer" | "ContractDeploy" | "JettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "ElectionsDepositStake" | "ElectionsRecoverStake" | "JettonSwap" | "SmartContractExec" | "DomainRenew" | "Purchase" | "AddExtension" | "RemoveExtension" | "SetSignatureAllowedAction" | "GasRelay" | "DepositTokenStake" | "WithdrawTokenStakeRequest" | "LiquidityDeposit" | "Unknown";
+    type: "TonTransfer" | "ExtraCurrencyTransfer" | "ContractDeploy" | "JettonTransfer" | "FlawedJettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "ElectionsDepositStake" | "ElectionsRecoverStake" | "JettonSwap" | "SmartContractExec" | "DomainRenew" | "Purchase" | "AddExtension" | "RemoveExtension" | "SetSignatureAllowedAction" | "GasRelay" | "DepositTokenStake" | "WithdrawTokenStakeRequest" | "LiquidityDeposit" | "Unknown";
     /** @example "ok" */
     status: "ok" | "failed";
     TonTransfer?: TonTransferAction;
@@ -2076,7 +2076,7 @@ export interface ActionSimplePreview {
     value_image?: string;
     accounts: AccountAddress[];
 }
-/** An event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time. */
+/** High-level view over a transaction trace caused by a single inbound message. TonAPI analyses the trace, detects known patterns and groups low-level transactions into user-facing actions (Jetton transfer, NFT purchase, etc.). Actions are a best-effort UI abstraction and may change; do not rely on them for protocol-critical logic. */
 export interface AccountEvent {
     /** @example "e8b0e3fee4a26bd2317ac1f9952fcdc87dc08fdb617656b5202416323337372e" */
     event_id: string;
@@ -2098,17 +2098,18 @@ export interface AccountEvent {
      */
     lt: number;
     /**
-     * Event is not finished yet. Transactions still happening
+     * Event trace is not finished yet. Transactions still happening.
      * @example false
      */
     in_progress: boolean;
     /**
-     * TODO
+     * Net TON change for this account not explained by actions, in nanotons: extra = final_balance - initial_balance - sum(explicit TON changes from actions). extra < 0 - implicit fee, extra > 0 - refund. For UI display only
      * @format int64
      * @example 3
      */
     extra: number;
     /**
+     * Event completion ratio in [0,1]
      * @format float
      * @min 0
      * @max 1
@@ -2116,6 +2117,7 @@ export interface AccountEvent {
      */
     progress: number;
 }
+/** Paginated list of events for a single account. */
 export interface AccountEvents {
     events: AccountEvent[];
     /**
@@ -2311,29 +2313,33 @@ export interface Trace {
     /** @example false */
     emulated?: boolean;
 }
+/** Result of emulating a wallet message on the current blockchain state: describes the expected on-chain consequences (trace, high-level AccountEvent, risk) for the signing wallet. For UI display only. */
 export interface MessageConsequences {
     trace: Trace;
-    /** Risk specifies assets that could be lost if a message would be sent to a malicious smart contract. It makes sense to understand the risk BEFORE sending a message to the blockchain. */
+    /** Conservative upper bound on assets this wallet may lose if the emulated message is sent and the counterparty behaves maliciously. Values may exceed current balances (e.g. already-authorized future receipts). For UI display only. */
     risk: Risk;
-    /** An event is built on top of a trace which is a series of transactions caused by one inbound message. TonAPI looks for known patterns inside the trace and splits the trace into actions, where a single action represents a meaningful high-level operation like a Jetton Transfer or an NFT Purchase. Actions are expected to be shown to users. It is advised not to build any logic on top of actions because actions can be changed at any time. */
+    /** High-level view over a transaction trace caused by a single inbound message. TonAPI analyses the trace, detects known patterns and groups low-level transactions into user-facing actions (Jetton transfer, NFT purchase, etc.). Actions are a best-effort UI abstraction and may change; do not rely on them for protocol-critical logic. */
     event: AccountEvent;
 }
-/** Risk specifies assets that could be lost if a message would be sent to a malicious smart contract. It makes sense to understand the risk BEFORE sending a message to the blockchain. */
+/** Conservative upper bound on assets this wallet may lose if the emulated message is sent and the counterparty behaves maliciously. Values may exceed current balances (e.g. already-authorized future receipts). For UI display only. */
 export interface Risk {
     /**
-     * transfer all the remaining balance of the wallet.
+     * True if the message semantics allow sweeping all current and future remaining TON balance of the wallet (e.g. “send all” / drain patterns).
      * @example true
      */
     transfer_all_remaining_balance: boolean;
     /**
+     * Maximum TON amount that may leave the wallet in the worst case, in nanotons.
      * @format int64
      * @example 500
      */
     ton: number;
+    /** Jetton positions that may be debited from the wallet in the worst case. */
     jettons: JettonQuantity[];
+    /** NFT items that may be transferred out of the wallet in the worst case. */
     nfts: NftItem[];
     /**
-     * Estimated equivalent value of all assets at risk in selected currency (for example USD)
+     * Estimated equivalent of all assets at risk (TON, jettons, NFTs) in the selected currency from currencyQuery (e.g. USD). Approximate, best-effort UI value.
      * @format float
      */
     total_equivalent?: number;
@@ -2444,7 +2450,7 @@ export interface Event {
      */
     lt: number;
     /**
-     * Event is not finished yet. Transactions still happening
+     * Event trace is not finished yet. Transactions still happening.
      * @example false
      */
     in_progress: boolean;
@@ -4694,7 +4700,7 @@ export declare class Api<SecurityDataType extends unknown> {
             ignore_signature_check?: boolean;
         }, params?: RequestParams) => Promise<Trace>;
         /**
-         * @description Emulate sending message to retrieve the resulting wallet state
+         * @description Emulates a wallet message on the current blockchain state and derives its consequences for the signing wallet
          *
          * @tags Emulation, Wallet
          * @name EmulateMessageToWallet

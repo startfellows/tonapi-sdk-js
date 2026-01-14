@@ -1705,7 +1705,7 @@ class Api {
             ...params,
         }),
         /**
-         * @description Emulate sending message to retrieve the resulting wallet state
+         * @description Emulates a wallet message on the current blockchain state and derives its consequences for the signing wallet
          *
          * @tags Emulation, Wallet
          * @name EmulateMessageToWallet
