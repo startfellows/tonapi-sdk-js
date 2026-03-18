@@ -903,6 +903,18 @@ export interface WalletPlugin {
 export interface Wallets {
     accounts: Wallet[];
 }
+export interface WalletsByPublicKeys {
+    /** Wallets grouped by the originating public key */
+    items: WalletsByPublicKey[];
+}
+export interface WalletsByPublicKey {
+    /**
+     * hex-encoded ed25519 public key
+     * @example "d8519b83d5b04b17a706ef6d04f3566422be47c2b676b0823235d67b1ef4b1b2"
+     */
+    public_key: string;
+    wallets: Wallet[];
+}
 export interface Wallet {
     /**
      * @format address
@@ -1456,6 +1468,7 @@ export interface JettonPreview {
     /** @format int32 */
     score: number;
     scaled_ui?: ScaledUI;
+    description?: string;
 }
 export interface ScaledUI {
     /** @example "597968399" */
@@ -1582,6 +1595,10 @@ export interface NftItem {
     /** @example false */
     include_cnft?: boolean;
     trust: TrustType;
+    /** Hash of the NFT item account code cell (hex) */
+    code_hash?: string;
+    /** Hash of the NFT item account data cell (hex) */
+    data_hash?: string;
 }
 export interface NftItems {
     nft_items: NftItem[];
@@ -2116,6 +2133,11 @@ export interface AccountEvent {
      * @example 0.5
      */
     progress: number;
+    /**
+     * Normalized hash of the root external inbound message (hex).
+     * @example "a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456"
+     */
+    ext_msg_hash?: string;
 }
 /** Paginated list of events for a single account. */
 export interface AccountEvents {
@@ -2282,6 +2304,16 @@ export interface DnsRecord {
      * @example "da6b1b6663a0e4d18cc8574ccd9db5296e367dd9324706f3bbd9eb1cd2caf0bf"
      */
     storage?: string;
+    picture?: PictureDNS;
+}
+export interface PictureDNS {
+    type: "url" | "bag_id";
+    /**
+     * WARNING! This is arbitrary url supplied by domain owner, use it very carefully.
+     * There is no guarantee that URL resolves to an image file and is not a phishing site.
+     */
+    url?: string;
+    bag_id?: string;
 }
 export interface NftCollection {
     /**
@@ -2461,6 +2493,17 @@ export interface Event {
      * @example 0.5
      */
     progress: number;
+    /**
+     * ID of the slice where this event was finalized. Null if not yet finalized.
+     * @format int64
+     * @example 12345678
+     */
+    last_slice_id?: number;
+    /**
+     * Normalized hash of the root external inbound message (hex).
+     * @example "a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456"
+     */
+    ext_msg_hash?: string;
 }
 export interface JettonMetadata {
     /**
@@ -2506,6 +2549,31 @@ export interface JettonInfo {
      */
     holders_count: number;
     scaled_ui?: ScaledUI;
+    /**
+     * base64-encoded hash of jetton master code cell
+     * @example "rOIINk/O5kGub/FI/RARmMN6SY7BLesBSOonmxrz5f4="
+     */
+    code_hash?: string;
+    /**
+     * base64-encoded hash of jetton master data cell
+     * @example "xd7cWaRQdVSysuG+WVJv9KRuRUGxnehLoByEcK5ukOE="
+     */
+    data_hash?: string;
+    /**
+     * last transaction lt of the jetton master account
+     * @example "26640202000003"
+     */
+    last_transaction_lt?: string;
+    /**
+     * DNS name resolving to this address (e.g. admin.ton)
+     * @example "admin.ton"
+     */
+    name?: string | null;
+    /**
+     * Contract interfaces implemented by the account (e.g. multisig_v2, wallet_v3r2)
+     * @example ["multisig_v2","wallet_v3r2"]
+     */
+    interfaces?: string[];
 }
 export interface JettonHolders {
     addresses: {
@@ -3313,6 +3381,17 @@ export declare class Api<SecurityDataType extends unknown> {
              * @example ["custom_payload"]
              */
             supported_extensions?: string[];
+            /**
+             * @min 1
+             * @max 1000
+             * @default 1000
+             */
+            limit?: number;
+            /**
+             * @min 0
+             * @default 0
+             */
+            offset?: number;
         }, params?: RequestParams) => Promise<JettonsBalances>;
         /**
          * @description Get Jetton balance by owner address
@@ -3442,6 +3521,12 @@ export declare class Api<SecurityDataType extends unknown> {
              * @format int64
              * @example 25758317000002
              */
+            after_lt?: number;
+            /**
+             * omit this parameter to get last events
+             * @format int64
+             * @example 25758317000002
+             */
             before_lt?: number;
             /**
              * @min 1
@@ -3461,6 +3546,11 @@ export declare class Api<SecurityDataType extends unknown> {
              * @example 1668436763
              */
             end_date?: number;
+            /**
+             * used to sort the result-set in ascending or descending order by lt.
+             * @default "desc"
+             */
+            sort_order?: "desc" | "asc";
         }, params?: RequestParams) => Promise<AccountEvents>;
         /**
          * @description Get event for an account by event_id
@@ -3974,7 +4064,22 @@ export declare class Api<SecurityDataType extends unknown> {
          * @name GetStakingPoolHistory
          * @request GET:/v2/staking/pool/{account_id}/history
          */
-        getStakingPoolHistory: (accountId: string, params?: RequestParams) => Promise<{
+        getStakingPoolHistory: (accountId: string, query?: {
+            /**
+             * omit this parameter to get last log entries
+             * @format int64
+             * @example 25758317000002
+             */
+            before_lt?: number;
+            /**
+             * @format int32
+             * @min 1
+             * @max 100
+             * @default 100
+             * @example 100
+             */
+            limit?: number;
+        }, params?: RequestParams) => Promise<{
             apy: ApyHistory[];
         }>;
         /**
@@ -4173,6 +4278,16 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request GET:/v2/pubkeys/{public_key}/wallets
          */
         getWalletsByPublicKey: (publicKey: string, params?: RequestParams) => Promise<Wallets>;
+        /**
+         * @description Get wallets by a list of public keys
+         *
+         * @tags Wallet
+         * @name GetWalletsByPublicKeyBulk
+         * @request POST:/v2/pubkeys/wallets/_bulk
+         */
+        getWalletsByPublicKeyBulk: (data: {
+            public_keys: string[];
+        }, params?: RequestParams) => Promise<WalletsByPublicKeys>;
     };
     gasless: {
         /**

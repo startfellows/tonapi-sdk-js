@@ -1206,9 +1206,10 @@ class Api {
          * @name GetStakingPoolHistory
          * @request GET:/v2/staking/pool/{account_id}/history
          */
-        getStakingPoolHistory: (accountId, params = {}) => this.http.request({
+        getStakingPoolHistory: (accountId, query, params = {}) => this.http.request({
             path: `/v2/staking/pool/${accountId}/history`,
             method: "GET",
+            query: query,
             format: "json",
             ...params,
         }),
@@ -1365,6 +1366,20 @@ class Api {
         getWalletsByPublicKey: (publicKey, params = {}) => this.http.request({
             path: `/v2/pubkeys/${publicKey}/wallets`,
             method: "GET",
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Get wallets by a list of public keys
+         *
+         * @tags Wallet
+         * @name GetWalletsByPublicKeyBulk
+         * @request POST:/v2/pubkeys/wallets/_bulk
+         */
+        getWalletsByPublicKeyBulk: (data, params = {}) => this.http.request({
+            path: `/v2/pubkeys/wallets/_bulk`,
+            method: "POST",
+            body: data,
             format: "json",
             ...params,
         }),
