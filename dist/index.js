@@ -380,9 +380,10 @@ class Api {
          * @name GetBlockchainMasterchainTransactions
          * @request GET:/v2/blockchain/masterchain/{masterchain_seqno}/transactions
          */
-        getBlockchainMasterchainTransactions: (masterchainSeqno, params = {}) => this.http.request({
+        getBlockchainMasterchainTransactions: (masterchainSeqno, query, params = {}) => this.http.request({
             path: `/v2/blockchain/masterchain/${masterchainSeqno}/transactions`,
             method: "GET",
+            query: query,
             format: "json",
             ...params,
         }),
@@ -1762,6 +1763,67 @@ class Api {
             path: `/v2/purchases/${accountId}/history`,
             method: "GET",
             query: query,
+            format: "json",
+            ...params,
+        }),
+    };
+    rewards = {
+        /**
+         * @description Returns all current validators with stakes, rewards, pool addresses, and (optionally) nominator breakdowns.
+         *
+         * @tags Rewards
+         * @name GetValidators
+         * @summary Get all current validators
+         * @request GET:/v2/rewards/validators
+         */
+        getValidators: (query, params = {}) => this.http.request({
+            path: `/v2/rewards/validators`,
+            method: "GET",
+            query: query,
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Returns past and current validation rounds with boundaries, stakes, and bonuses. Always uses the latest masterchain block.
+         *
+         * @tags Rewards
+         * @name GetValidationRounds
+         * @summary Get validation round metadata
+         * @request GET:/v2/rewards/validation-rounds
+         */
+        getValidationRounds: (query, params = {}) => this.http.request({
+            path: `/v2/rewards/validation-rounds`,
+            method: "GET",
+            query: query,
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Computes per-validator and per-nominator reward distribution for a finished validation round using the elector's bonuses value.
+         *
+         * @tags Rewards
+         * @name GetRoundRewards
+         * @summary Get per-validator reward distribution for a finished round
+         * @request GET:/v2/rewards/round-rewards
+         */
+        getRoundRewards: (query, params = {}) => this.http.request({
+            path: `/v2/rewards/round-rewards`,
+            method: "GET",
+            query: query,
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Returns time series of APY and total stake from past validation rounds.
+         *
+         * @tags Rewards
+         * @name GetRewardsStats
+         * @summary Get historical APY and stake statistics
+         * @request GET:/v2/rewards/stats
+         */
+        getRewardsStats: (params = {}) => this.http.request({
+            path: `/v2/rewards/stats`,
+            method: "GET",
             format: "json",
             ...params,
         }),

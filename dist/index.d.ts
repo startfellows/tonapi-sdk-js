@@ -1029,6 +1029,8 @@ export interface SignRawMessage {
 }
 export interface GaslessTx {
     protocol_name: string;
+    /** Normalized hash of the external message. */
+    external?: string;
 }
 export interface SignRawParams {
     protocol_name: string;
@@ -2984,6 +2986,321 @@ export interface Protocol {
     /** @example "https://cache.tonapi.io/images/jetton.jpg" */
     image?: string;
 }
+export interface BlockInfo {
+    /**
+     * Masterchain block sequence number.
+     * @format uint32
+     * @example 57486221
+     */
+    seqno: number;
+    /**
+     * @format int64
+     * @example 23814011000000
+     */
+    utime?: number;
+}
+export interface RoundInfo {
+    /**
+     * @format int64
+     * @example 23814011000000
+     */
+    start_utime?: number;
+    /**
+     * @format int64
+     * @example 23814011000000
+     */
+    end_utime?: number;
+    /**
+     * Masterchain block seqno at (or nearest to) validation round start.
+     * @format uint32
+     * @example 57480000
+     */
+    start_block: number;
+    /**
+     * Masterchain block seqno at (or nearest to) validation round end.
+     * @format uint32
+     * @example 57546000
+     */
+    end_block: number;
+}
+export interface ValidatorsResponse {
+    /**
+     * Server-side response time in milliseconds.
+     * @format int64
+     * @example 12345
+     */
+    response_time_ms: number;
+    block: BlockInfo;
+    validation_round: RoundInfo;
+    /**
+     * Current election ID (electAt timestamp).
+     * @format int64
+     * @example 1740053384
+     */
+    election_id: number;
+    /**
+     * Election ID of the round immediately before this one.
+     * @format int64
+     * @example 1772486024
+     */
+    prev_election_id?: number;
+    /**
+     * Election ID of the round immediately after this one. Omitted when the current round is not yet finished (next round not known).
+     * @format int64
+     * @example 1772658824
+     */
+    next_election_id?: number;
+    /**
+     * amount in nanotons
+     * @format int64
+     * @example 123456789
+     */
+    elector_balance: number;
+    /**
+     * amount in nanotons
+     * @format int64
+     * @example 123456789
+     */
+    total_stake: number;
+    /**
+     * amount in nanotons
+     * @format int64
+     * @example 123456789
+     */
+    reward_per_block: number;
+    validators: ValidatorRewardEntry[];
+}
+export interface ValidationRound {
+    /**
+     * Election ID (electAt timestamp).
+     * @format int64
+     * @example 1740053384
+     */
+    election_id: number;
+    /**
+     * @format int64
+     * @example 23814011000000
+     */
+    start_utime?: number;
+    /**
+     * @format int64
+     * @example 23814011000000
+     */
+    end_utime?: number;
+    /**
+     * Masterchain block seqno at (or nearest to) round start.
+     * @format uint32
+     * @example 57480000
+     */
+    start_block: number;
+    /**
+     * Masterchain block seqno at (or nearest to) round end. Omitted if round hasn't finished.
+     * @format uint32
+     * @example 57546000
+     */
+    end_block?: number;
+    /**
+     * Election ID of the round immediately before this one.
+     * @format int64
+     * @example 1772486024
+     */
+    prev_election_id?: number;
+    /**
+     * Election ID of the round immediately after this one. Omitted when this round is not yet finished (next round not known).
+     * @format int64
+     * @example 1772658824
+     */
+    next_election_id?: number;
+    /**
+     * Total stake locked in the round.
+     * @format int64
+     * @example 123456789
+     */
+    total_stake?: number;
+    /**
+     * Total rewards the elector pays for the round. Omitted if round hasn't finished.
+     * @format int64
+     * @example 123456789
+     */
+    bonuses?: number;
+    /**
+     * Whether the validation round is complete.
+     * @example true
+     */
+    finished: boolean;
+}
+export interface ValidationRoundsResponse {
+    /**
+     * Server-side response time in milliseconds.
+     * @format int64
+     * @example 1234
+     */
+    response_time_ms: number;
+    rounds: ValidationRound[];
+}
+export interface NominatorRewardEntry {
+    /**
+     * Nominator's wallet address (bounceable, base64url).
+     * @example "EQAqR4RYauq7p3jqKGnD-eSYVDoOCak9g8ZsSNVHI9fevCzB"
+     */
+    address: string;
+    /**
+     * Nominator's share of total nominators' deposit (0–1).
+     * @format double
+     * @example 0.15
+     */
+    weight: number;
+    /**
+     * amount in nanotons
+     * @format int64
+     * @example 123456789
+     */
+    reward: number;
+    /**
+     * amount in nanotons
+     * @format int64
+     * @example 123456789
+     */
+    effective_stake: number;
+    /**
+     * amount in nanotons
+     * @format int64
+     * @example 123456789
+     */
+    stake: number;
+}
+export interface ValidatorRewardEntry {
+    /**
+     * Position sorted by effective stake (descending).
+     * @example 1
+     */
+    rank: number;
+    /**
+     * Validator's public key (hex-encoded Ed25519).
+     * @example "e33f0e53552f951e0a27c8e5a461a1bd65975af369a2c85a06e51f7fbb8ae667"
+     */
+    public_key: string;
+    /**
+     * amount in nanotons
+     * @format int64
+     * @example 123456789
+     */
+    effective_stake: number;
+    /**
+     * Fraction of total effective stake (0–1).
+     * @format double
+     * @example 0.004648
+     */
+    weight: number;
+    /**
+     * amount in nanotons
+     * @format int64
+     * @example 123456789
+     */
+    reward: number;
+    /**
+     * Pool smart contract address (bounceable, base64url).
+     * @example "Ef_bmCmMPsrHKOC4hV8foWBs2TEUAggQ1Wfe6EAqjrI3sGNI"
+     */
+    pool?: string;
+    /** Contract type detected by code hash. */
+    pool_type?: "nominator-pool-v1.0" | "single-nominator-pool-v1.0" | "single-nominator-pool-v1.1" | "other";
+    owner_address?: string;
+    validator_address?: string;
+    /**
+     * amount in nanotons
+     * @format int64
+     * @example 123456789
+     */
+    validator_stake?: number;
+    /**
+     * amount in nanotons
+     * @format int64
+     * @example 123456789
+     */
+    nominators_stake?: number;
+    /**
+     * Total funds deposited by the pool: effective_stake + credit (leftover balance kept in the elector contract after election).
+     * @format int64
+     * @example 123456789
+     */
+    total_stake?: number;
+    /**
+     * Fraction of staking rewards kept by the validator (0.3 = 30%).
+     * @format double
+     * @example 0.3
+     */
+    validator_reward_share?: number;
+    /** @format uint32 */
+    nominators_count?: number;
+    nominators?: NominatorRewardEntry[];
+}
+export interface RoundRewardsResponse {
+    /**
+     * Server-side response time in milliseconds.
+     * @format int64
+     * @example 5432
+     */
+    response_time_ms: number;
+    /**
+     * Election ID (electAt timestamp).
+     * @format int64
+     * @example 1740053384
+     */
+    election_id: number;
+    /**
+     * Election ID of the round immediately before this one.
+     * @format int64
+     * @example 1772486024
+     */
+    prev_election_id?: number;
+    /**
+     * Election ID of the round immediately after this one.
+     * @format int64
+     * @example 1772658824
+     */
+    next_election_id?: number;
+    /**
+     * Validation round start time.
+     * @format date-time
+     */
+    round_start: string;
+    /**
+     * Validation round end time.
+     * @format date-time
+     */
+    round_end: string;
+    /**
+     * First masterchain block of the round.
+     * @format uint32
+     */
+    start_block: number;
+    /**
+     * Last masterchain block of the round.
+     * @format uint32
+     */
+    end_block: number;
+    /**
+     * amount in nanotons
+     * @format int64
+     * @example 123456789
+     */
+    total_bonuses: number;
+    /**
+     * amount in nanotons
+     * @format int64
+     * @example 123456789
+     */
+    total_stake: number;
+    validators: ValidatorRewardEntry[];
+    error?: string;
+}
+export interface RewardsStats {
+    /** Time series of APY values as [timestamp_ms, apy] pairs */
+    apy: number[][];
+    /** Time series of total stake in TON as [timestamp_ms, stake] pairs */
+    total_stake: number[][];
+}
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
 export interface FullRequestParams extends Omit<RequestInit, "body"> {
@@ -3156,7 +3473,18 @@ export declare class Api<SecurityDataType extends unknown> {
          * @name GetBlockchainMasterchainTransactions
          * @request GET:/v2/blockchain/masterchain/{masterchain_seqno}/transactions
          */
-        getBlockchainMasterchainTransactions: (masterchainSeqno: number, params?: RequestParams) => Promise<Transactions>;
+        getBlockchainMasterchainTransactions: (masterchainSeqno: number, query?: {
+            /**
+             * @min 0
+             * @default 0
+             */
+            offset?: number;
+            /**
+             * @min 1
+             * @example 100
+             */
+            limit?: number;
+        }, params?: RequestParams) => Promise<Transactions>;
         /**
          * @description Get blockchain config from a specific block, if present.
          *
@@ -4330,7 +4658,7 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         gaslessSend: (data: {
             /** hex encoded public key */
-            wallet_public_key: string;
+            wallet_public_key?: string;
             /** @format cell */
             boc: string;
         }, params?: RequestParams) => Promise<GaslessTx>;
@@ -4878,6 +5206,97 @@ export declare class Api<SecurityDataType extends unknown> {
              */
             limit?: number;
         }, params?: RequestParams) => Promise<AccountPurchases>;
+    };
+    rewards: {
+        /**
+         * @description Returns all current validators with stakes, rewards, pool addresses, and (optionally) nominator breakdowns.
+         *
+         * @tags Rewards
+         * @name GetValidators
+         * @summary Get all current validators
+         * @request GET:/v2/rewards/validators
+         */
+        getValidators: (query?: {
+            /**
+             * Masterchain block seqno. Defaults to latest. Mutually exclusive with `unixtime`.
+             * @format uint32
+             */
+            seqno?: number;
+            /**
+             * Unix timestamp (seconds). Looks up the masterchain block at this time and uses it as the anchor. Mutually exclusive with `seqno`.
+             * @format uint32
+             */
+            unixtime?: number;
+            /**
+             * Set to `1` to return only basic validator info (rank, pubkey, effective_stake, weight, reward, pool). Skips pool type detection, owner/validator addresses, nominator data, and returned-stake lookup — significantly faster.
+             * @default false
+             */
+            shallow?: boolean;
+        }, params?: RequestParams) => Promise<ValidatorsResponse>;
+        /**
+         * @description Returns past and current validation rounds with boundaries, stakes, and bonuses. Always uses the latest masterchain block.
+         *
+         * @tags Rewards
+         * @name GetValidationRounds
+         * @summary Get validation round metadata
+         * @request GET:/v2/rewards/validation-rounds
+         */
+        getValidationRounds: (query?: {
+            /**
+             * Return the single round matching this election ID. Mutually exclusive with `block` and `unixtime`.
+             * @format int64
+             */
+            election_id?: number;
+            /**
+             * Find the round containing this masterchain block seqno and return it plus up to `limit-1` older rounds. Mutually exclusive with `election_id` and `unixtime`.
+             * @format uint32
+             */
+            block?: number;
+            /**
+             * Unix timestamp (seconds). Looks up the masterchain block at this time and uses it as the anchor. Mutually exclusive with `election_id` and `block`.
+             * @format uint32
+             */
+            unixtime?: number;
+        }, params?: RequestParams) => Promise<ValidationRoundsResponse>;
+        /**
+         * @description Computes per-validator and per-nominator reward distribution for a finished validation round using the elector's bonuses value.
+         *
+         * @tags Rewards
+         * @name GetRoundRewards
+         * @summary Get per-validator reward distribution for a finished round
+         * @request GET:/v2/rewards/round-rewards
+         */
+        getRoundRewards: (query?: {
+            /**
+             * Election ID of the finished round. Mutually exclusive with `block` and `unixtime`.
+             * @format int64
+             */
+            election_id?: number;
+            /**
+             * Masterchain block seqno within the finished round. Mutually exclusive with `election_id` and `unixtime`.
+             * @format uint32
+             */
+            block?: number;
+            /**
+             * Unix timestamp (seconds). Looks up the masterchain block at this time and uses it as the anchor. Mutually exclusive with `election_id` and `block`.
+             * @format uint32
+             */
+            unixtime?: number;
+            /**
+             * Set to `1` to return only basic validator info (rank, pubkey, effective_stake, weight, reward, pool). Skips pool type detection, owner/validator addresses, nominator data, and returned-stake lookup — significantly faster.
+             * @default false
+             */
+            shallow?: boolean;
+        }, params?: RequestParams) => Promise<RoundRewardsResponse>;
+        /**
+         * @description Returns time series of APY and total stake from past validation rounds.
+         *
+         * @tags Rewards
+         * @name GetRewardsStats
+         * @summary Get historical APY and stake statistics
+         * @request GET:/v2/rewards/stats
+         */
+        getRewardsStats: (params?: RequestParams) => Promise<RewardsStats>;
     };
 }
 export {};
