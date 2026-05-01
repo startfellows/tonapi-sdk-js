@@ -861,6 +861,9 @@ export interface BlockchainRawAccount {
         root: string;
     }[];
 }
+export interface BlockchainRawAccounts {
+    accounts: BlockchainRawAccount[];
+}
 export interface BlockchainLibrary {
     /**
      * @format cell
@@ -3550,6 +3553,16 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         getBlockchainRawAccount: (accountId: string, params?: RequestParams) => Promise<BlockchainRawAccount>;
         /**
+         * @description Get low-level information about several accounts taken directly from the blockchain.
+         *
+         * @tags Blockchain
+         * @name GetBlockchainRawAccounts
+         * @request POST:/v2/blockchain/accounts/_bulk
+         */
+        getBlockchainRawAccounts: (data: {
+            account_ids: string[];
+        }, params?: RequestParams) => Promise<BlockchainRawAccounts>;
+        /**
          * @description Get account transactions
          *
          * @tags Blockchain
@@ -5297,6 +5310,15 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request GET:/v2/rewards/stats
          */
         getRewardsStats: (params?: RequestParams) => Promise<RewardsStats>;
+        /**
+         * @description Returns the current TON blockchain APY as a percent based on the latest completed validation round.
+         *
+         * @tags Rewards
+         * @name GetRewardsApy
+         * @summary Get current TON blockchain APY
+         * @request GET:/v2/rewards/apy
+         */
+        getRewardsApy: (params?: RequestParams) => Promise<number>;
     };
 }
 export {};

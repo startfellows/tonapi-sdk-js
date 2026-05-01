@@ -492,6 +492,20 @@ class Api {
             ...params,
         }),
         /**
+         * @description Get low-level information about several accounts taken directly from the blockchain.
+         *
+         * @tags Blockchain
+         * @name GetBlockchainRawAccounts
+         * @request POST:/v2/blockchain/accounts/_bulk
+         */
+        getBlockchainRawAccounts: (data, params = {}) => this.http.request({
+            path: `/v2/blockchain/accounts/_bulk`,
+            method: "POST",
+            body: data,
+            format: "json",
+            ...params,
+        }),
+        /**
          * @description Get account transactions
          *
          * @tags Blockchain
@@ -1823,6 +1837,20 @@ class Api {
          */
         getRewardsStats: (params = {}) => this.http.request({
             path: `/v2/rewards/stats`,
+            method: "GET",
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Returns the current TON blockchain APY as a percent based on the latest completed validation round.
+         *
+         * @tags Rewards
+         * @name GetRewardsApy
+         * @summary Get current TON blockchain APY
+         * @request GET:/v2/rewards/apy
+         */
+        getRewardsApy: (params = {}) => this.http.request({
+            path: `/v2/rewards/apy`,
             method: "GET",
             format: "json",
             ...params,
