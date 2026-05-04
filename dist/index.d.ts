@@ -693,6 +693,36 @@ export interface SizeLimitsConfig {
      */
     max_acc_state_bits?: number;
 }
+export interface NewConsensusConfig {
+    /**
+     * @format int
+     * @example 0
+     */
+    flags: number;
+    /** @example false */
+    use_quic: boolean;
+    /**
+     * @format int64
+     * @example 1000
+     */
+    target_rate_ms?: number;
+    /**
+     * @format int64
+     * @example 1
+     */
+    slots_per_leader_window: number;
+    /**
+     * @format int64
+     * @example 1000
+     */
+    first_block_timeout_ms?: number;
+    /**
+     * @format int64
+     * @example 4
+     */
+    max_leader_window_desync?: number;
+    noncritical_params?: Record<string, number>;
+}
 export interface ValidatorsSet {
     utime_since: number;
     utime_until: number;
@@ -1361,6 +1391,11 @@ export interface BlockchainConfig {
          */
         catchain_max_blocks_coeff?: number;
     };
+    /** The configuration for the new consensus protocol. Each chain can have its own optional configuration. */
+    "30"?: {
+        mc?: NewConsensusConfig;
+        shard?: NewConsensusConfig;
+    };
     /** The configuration for the consensus protocol above catchain. */
     "31"?: {
         fundamental_smc_addr: string[];
@@ -1690,7 +1725,7 @@ export interface ValueFlow {
 }
 export interface Action {
     /** @example "TonTransfer" */
-    type: "TonTransfer" | "ExtraCurrencyTransfer" | "ContractDeploy" | "JettonTransfer" | "FlawedJettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "ElectionsDepositStake" | "ElectionsRecoverStake" | "JettonSwap" | "SmartContractExec" | "DomainRenew" | "Purchase" | "AddExtension" | "RemoveExtension" | "SetSignatureAllowedAction" | "GasRelay" | "DepositTokenStake" | "WithdrawTokenStakeRequest" | "LiquidityDeposit" | "Unknown";
+    type: "TonTransfer" | "ExtraCurrencyTransfer" | "ContractDeploy" | "JettonTransfer" | "FlawedJettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "ElectionsDepositStake" | "ElectionsRecoverStake" | "JettonSwap" | "SmartContractExec" | "DomainRenew" | "Purchase" | "AddExtension" | "RemoveExtension" | "SetSignatureAllowedAction" | "GasRelay" | "DepositTokenStake" | "WithdrawTokenStakeRequest" | "LiquidityDeposit" | "OracleRequest" | "Unknown";
     /** @example "ok" */
     status: "ok" | "failed";
     TonTransfer?: TonTransferAction;
@@ -1724,6 +1759,7 @@ export interface Action {
     DepositTokenStake?: DepositTokenStakeAction;
     WithdrawTokenStakeRequest?: WithdrawTokenStakeRequestAction;
     LiquidityDeposit?: LiquidityDepositAction;
+    OracleRequest?: OracleRequestAction;
     /** shortly describes what this action is about. */
     simple_preview: ActionSimplePreview;
     base_transactions: string[];
@@ -1744,6 +1780,22 @@ export interface TonTransferAction {
     comment?: string;
     encrypted_comment?: EncryptedComment;
     refund?: Refund;
+}
+export interface OracleRequestAction {
+    requester: AccountAddress;
+    response_to: AccountAddress;
+    price_feeds: OraclePriceFeed[];
+}
+export interface OraclePriceFeed {
+    /** @example "e62df6c8b4a85fe1a67f1c4d1f1e1d4335c04d1d7e2c50e0d7da7ad911f2d4" */
+    id: string;
+    /** @example "TON/USD" */
+    display_symbol: string;
+    /**
+     * @format double
+     * @example 5.24
+     */
+    rate?: number;
 }
 export interface ExtraCurrencies {
     extra_currencies: EcPreview[];
@@ -2001,6 +2053,8 @@ export interface DepositStakeAction {
     staker: AccountAddress;
     pool: AccountAddress;
     implementation: PoolImplementationType;
+    /** If present, should be used instead of amount */
+    stake_meta?: Price;
 }
 /** validator's participation in elections */
 export interface WithdrawStakeAction {
@@ -2023,6 +2077,8 @@ export interface WithdrawStakeRequestAction {
     staker: AccountAddress;
     pool: AccountAddress;
     implementation: PoolImplementationType;
+    /** If present, should be used instead of amount */
+    stake_meta?: Price;
 }
 export interface ElectionsRecoverStakeAction {
     /**
@@ -2837,7 +2893,8 @@ export interface BlockchainAccountInspect {
 export declare enum PoolImplementationType {
     Whales = "whales",
     Tf = "tf",
-    LiquidTF = "liquidTF"
+    LiquidTF = "liquidTF",
+    Ffvault = "ffvault"
 }
 export interface TokenRates {
     /** @example {"TON":1.3710752873163712} */

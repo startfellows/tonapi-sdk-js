@@ -80,6 +80,7 @@ var PoolImplementationType;
     PoolImplementationType["Whales"] = "whales";
     PoolImplementationType["Tf"] = "tf";
     PoolImplementationType["LiquidTF"] = "liquidTF";
+    PoolImplementationType["Ffvault"] = "ffvault";
 })(PoolImplementationType || (exports.PoolImplementationType = PoolImplementationType = {}));
 /**
  * Data type of the argument value:
