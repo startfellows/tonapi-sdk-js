@@ -760,12 +760,24 @@ export interface JettonBridgePrices {
     bridge_burn_fee: number;
     /** @format int64 */
     bridge_mint_fee: number;
+    /**
+     * this field will gone after Sept. 2026, use wallet_min_gram_for_storage instead
+     * @deprecated
+     * @format int64
+     */
+    wallet_min_tons_for_storage?: number;
     /** @format int64 */
-    wallet_min_tons_for_storage: number;
+    wallet_min_gram_for_storage: number;
     /** @format int64 */
     wallet_gas_consumption: number;
+    /**
+     * this field will gone after Sept. 2026, use wallet_min_gram_for_storage instead
+     * @deprecated
+     * @format int64
+     */
+    minter_min_tons_for_storage?: number;
     /** @format int64 */
-    minter_min_tons_for_storage: number;
+    minter_min_gram_for_storage: number;
     /** @format int64 */
     discover_gas_consumption: number;
 }
@@ -1201,14 +1213,14 @@ export interface BlockchainConfig {
         /** @format int64 */
         cell_price: number;
     };
-    /** The reward in nanoTons for block creation in the TON blockchain. */
+    /** The reward in nanoGram for block creation in the TON blockchain. */
     "14"?: {
         /** @format int64 */
         masterchain_block_fee: number;
         /** @format int64 */
         basechain_block_fee: number;
     };
-    /** The reward in nanoTons for block creation in the TON blockchain. */
+    /** The reward in nanograms for block creation in the TON blockchain. */
     "15"?: {
         /**
          * @format int64
@@ -1406,7 +1418,7 @@ export interface BlockchainConfig {
     "35"?: ValidatorsSet;
     "36"?: ValidatorsSet;
     "37"?: ValidatorsSet;
-    /** The configuration for punishment for improper behavior (non-validation). In the absence of the parameter, the default fine size is 101 TON */
+    /** The configuration for punishment for improper behavior (non-validation). In the absence of the parameter, the default fine size is 101 Gram */
     "40"?: {
         misbehaviour_punishment_config: MisbehaviourPunishmentConfig;
     };
@@ -1509,6 +1521,11 @@ export interface JettonPreview {
     score: number;
     scaled_ui?: ScaledUI;
     description?: string;
+    asset_info?: JettonAssetInfo;
+}
+export interface JettonAssetInfo {
+    token_type: DefiAssetAssetType;
+    defi_provider: DefiProvider;
 }
 export interface ScaledUI {
     /** @example "597968399" */
@@ -1558,7 +1575,7 @@ export interface Price {
     value: string;
     /** @example 9 */
     decimals: number;
-    /** @example "TON" */
+    /** @example "Gram" */
     token_name: string;
     verification: TrustType;
     /** @example "https://cache.tonapi.io/images/jetton.jpg" */
@@ -1701,10 +1718,17 @@ export interface Refund {
 export interface ValueFlow {
     account: AccountAddress;
     /**
+     * this field will gone after Sept. 2026, use gram instead
+     * @deprecated
      * @format int64
      * @example 80
      */
-    ton: number;
+    ton?: number;
+    /**
+     * @format int64
+     * @example 80
+     */
+    gram: number;
     /**
      * @format int64
      * @example 10
@@ -1725,7 +1749,7 @@ export interface ValueFlow {
 }
 export interface Action {
     /** @example "TonTransfer" */
-    type: "TonTransfer" | "ExtraCurrencyTransfer" | "ContractDeploy" | "JettonTransfer" | "FlawedJettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "ElectionsDepositStake" | "ElectionsRecoverStake" | "JettonSwap" | "SmartContractExec" | "DomainRenew" | "Purchase" | "AddExtension" | "RemoveExtension" | "SetSignatureAllowedAction" | "GasRelay" | "DepositTokenStake" | "WithdrawTokenStakeRequest" | "LiquidityDeposit" | "OracleRequest" | "Unknown";
+    type: "TonTransfer" | "ExtraCurrencyTransfer" | "ContractDeploy" | "JettonTransfer" | "FlawedJettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "ElectionsDepositStake" | "ElectionsRecoverStake" | "JettonSwap" | "SmartContractExec" | "DomainRenew" | "Purchase" | "AddExtension" | "RemoveExtension" | "SetSignatureAllowedAction" | "GasRelay" | "DepositTokenStake" | "WithdrawTokenStakeRequest" | "LiquidityDeposit" | "OracleRequest" | "DepositXTR" | "WithdrawXTR" | "Unknown";
     /** @example "ok" */
     status: "ok" | "failed";
     TonTransfer?: TonTransferAction;
@@ -1760,6 +1784,8 @@ export interface Action {
     WithdrawTokenStakeRequest?: WithdrawTokenStakeRequestAction;
     LiquidityDeposit?: LiquidityDepositAction;
     OracleRequest?: OracleRequestAction;
+    WithdrawXTR?: WithdrawXTRAction;
+    DepositXTR?: DepositXTRAction;
     /** shortly describes what this action is about. */
     simple_preview: ActionSimplePreview;
     base_transactions: string[];
@@ -1768,7 +1794,7 @@ export interface TonTransferAction {
     sender: AccountAddress;
     recipient: AccountAddress;
     /**
-     * amount in nanotons
+     * amount in nanograms
      * @format int64
      * @example 123456789
      */
@@ -1789,13 +1815,23 @@ export interface OracleRequestAction {
 export interface OraclePriceFeed {
     /** @example "e62df6c8b4a85fe1a67f1c4d1f1e1d4335c04d1d7e2c50e0d7da7ad911f2d4" */
     id: string;
-    /** @example "TON/USD" */
+    /** @example "GRAM/USD" */
     display_symbol: string;
     /**
      * @format double
      * @example 5.24
      */
     rate?: number;
+}
+export interface DepositXTRAction {
+    recipient: AccountAddress;
+    /** @example "123000000000" */
+    amount: string;
+}
+export interface WithdrawXTRAction {
+    user: AccountAddress;
+    /** @example "123000000000" */
+    amount: string;
 }
 export interface ExtraCurrencies {
     extra_currencies: EcPreview[];
@@ -1833,11 +1869,18 @@ export interface SmartContractAction {
     executor: AccountAddress;
     contract: AccountAddress;
     /**
-     * amount in nanotons
+     * amount in nanograms
+     * @deprecated
      * @format int64
      * @example 123456789
      */
-    ton_attached: number;
+    ton_attached?: number;
+    /**
+     * amount in nanograms
+     * @format int64
+     * @example 123456789
+     */
+    gram_attached: number;
     /** @example "NftTransfer or 0x35d95a12" */
     operation: string;
     payload?: string;
@@ -2104,15 +2147,29 @@ export interface JettonSwapAction {
     /** @example "1660050553" */
     amount_out: string;
     /**
+     * this field will gone after Sept. 2026, use gram_in instead
+     * @deprecated
      * @format int64
      * @example 1000000000
      */
     ton_in?: number;
     /**
+     * this field will gone after Sept. 2026, use gram_out instead
+     * @deprecated
      * @format int64
      * @example 2000000000
      */
     ton_out?: number;
+    /**
+     * @format int64
+     * @example 1000000000
+     */
+    gram_in?: number;
+    /**
+     * @format int64
+     * @example 2000000000
+     */
+    gram_out?: number;
     user_wallet: AccountAddress;
     router: AccountAddress;
     jetton_master_in?: JettonPreview;
@@ -2142,13 +2199,13 @@ export interface LiquidityDepositAction {
 }
 /** shortly describes what this action is about. */
 export interface ActionSimplePreview {
-    /** @example "Ton Transfer" */
+    /** @example "Gram Transfer" */
     name: string;
-    /** @example "Transferring 5 Ton" */
+    /** @example "Transferring 5 Gram" */
     description: string;
     /** a link to an image for this particular action. */
     action_image?: string;
-    /** @example "5 Ton" */
+    /** @example "5 Gram" */
     value?: string;
     /** a link to an image that depicts this action's asset. */
     value_image?: string;
@@ -2181,7 +2238,7 @@ export interface AccountEvent {
      */
     in_progress: boolean;
     /**
-     * Net TON change for this account not explained by actions, in nanotons: extra = final_balance - initial_balance - sum(explicit TON changes from actions). extra < 0 - implicit fee, extra > 0 - refund. For UI display only
+     * Net Gram change for this account not explained by actions, in nanograms: extra = final_balance - initial_balance - sum(explicit Gram changes from actions). extra < 0 - implicit fee, extra > 0 - refund. For UI display only
      * @format int64
      * @example 3
      */
@@ -2417,22 +2474,29 @@ export interface MessageConsequences {
 /** Conservative upper bound on assets this wallet may lose if the emulated message is sent and the counterparty behaves maliciously. Values may exceed current balances (e.g. already-authorized future receipts). For UI display only. */
 export interface Risk {
     /**
-     * True if the message semantics allow sweeping all current and future remaining TON balance of the wallet (e.g. “send all” / drain patterns).
+     * True if the message semantics allow sweeping all current and future remaining Gram balance of the wallet (e.g. “send all” / drain patterns).
      * @example true
      */
     transfer_all_remaining_balance: boolean;
     /**
-     * Maximum TON amount that may leave the wallet in the worst case, in nanotons.
+     * this field will gone after Sept. 2026, use gram instead
+     * @deprecated
      * @format int64
      * @example 500
      */
-    ton: number;
+    ton?: number;
+    /**
+     * Maximum Gram amount that may leave the wallet in the worst case, in nanogram.
+     * @format int64
+     * @example 500
+     */
+    gram: number;
     /** Jetton positions that may be debited from the wallet in the worst case. */
     jettons: JettonQuantity[];
     /** NFT items that may be transferred out of the wallet in the worst case. */
     nfts: NftItem[];
     /**
-     * Estimated equivalent of all assets at risk (TON, jettons, NFTs) in the selected currency from currencyQuery (e.g. USD). Approximate, best-effort UI value.
+     * Estimated equivalent of all assets at risk (Gram, jettons, NFTs) in the selected currency from currencyQuery (e.g. USD). Approximate, best-effort UI value.
      * @format float
      */
     total_equivalent?: number;
@@ -2583,7 +2647,7 @@ export interface JettonMetadata {
      * @example "https://bitcoincash-example.github.io/website/logo.png"
      */
     image?: string;
-    /** @example "Wrapped Toncoin" */
+    /** @example "Wrapped Gram" */
     description?: string;
     social?: string[];
     websites?: string[];
@@ -2668,6 +2732,51 @@ export interface JettonTransferPayload {
      * @example "b5ee9c72410212010001b40009460395b521c9251151ae7987e03c544bd275d6cd42c2d157f840beb14d5454b96718000d012205817002020328480101fd7f6a648d4f771d7f0abc1707e4e806b19de1801f65eb8c133a4cfb0c33d847000b22012004052848010147da975b922d89192f4c9b68a640daa6764ec398c93cec025e17f0c1852a711a0009220120061122012007082848010170d9fb0423cbef6c2cf1f3811a2f640daf8c9a326b6f8816c1b993e90d88e2100006220120090a28480101f6df1d75f6b9e45f224b2cb4fc2286d927d47b468b6dbf1fedc4316290ec2ae900042201200b102201200c0f2201200d"
      */
     state_init?: string;
+}
+export interface DefiAssets {
+    assets: DefiAsset[];
+}
+export declare enum DefiAssetAssetType {
+    Staking = "staking",
+    LendingSupply = "lending_supply",
+    LendingBorrow = "lending_borrow",
+    LiquidStaking = "liquid_staking",
+    LiquidPool = "liquid_pool",
+    YieldToken = "yield_token"
+}
+export interface DefiAsset {
+    asset_type: DefiAssetAssetType;
+    /**
+     * amount in minimal units of the locked asset
+     * @example "1000000000"
+     */
+    amount: string;
+    /** @format address */
+    pool_address?: string;
+    /** @format address */
+    asset_address?: string;
+    defi_provider: DefiProvider;
+    locked_asset: DefiLockedAsset;
+}
+export interface DefiLockedAsset {
+    /** native Gram or jetton asset */
+    type: "native" | "jetton";
+    jetton?: JettonPreview;
+}
+export interface DefiProvider {
+    /** @example "Morpho" */
+    name: string;
+    /** @example "Earn up to 15% yield on your crypto" */
+    description: string;
+    /** @example "https://lite.morpho.org/tac/earn/" */
+    link: string;
+    /** @example "https://t.me/MorphoOrgBot" */
+    miniapp_link?: string;
+    icon: string;
+    card: string;
+    full: string;
+    /** @example "morpho" */
+    tag: string;
 }
 export interface AccountStaking {
     pools: AccountStakingInfo[];
@@ -2768,7 +2877,7 @@ export interface PoolInfo {
 export interface PoolImplementation {
     /** @example "TON Whales" */
     name: string;
-    /** @example "Oldest pool with minimal staking amount 50 TON" */
+    /** @example "Oldest pool with minimal staking amount 50 Gram" */
     description: string;
     /** @example "https://tonvalidators.org/" */
     url: string;
@@ -2897,13 +3006,13 @@ export declare enum PoolImplementationType {
     Ffvault = "ffvault"
 }
 export interface TokenRates {
-    /** @example {"TON":1.3710752873163712} */
+    /** @example {"GRAM":1.3710752873163712} */
     prices?: Record<string, number>;
-    /** @example {"TON":"-1.28%"} */
+    /** @example {"GRAM":"-1.28%"} */
     diff_24h?: Record<string, string>;
-    /** @example {"TON":"-2.74%"} */
+    /** @example {"GRAM":"-2.74%"} */
     diff_7d?: Record<string, string>;
-    /** @example {"TON":"-0.56%"} */
+    /** @example {"GRAM":"-0.56%"} */
     diff_30d?: Record<string, string>;
 }
 export interface MarketTonRates {
@@ -3111,19 +3220,19 @@ export interface ValidatorsResponse {
      */
     next_election_id?: number;
     /**
-     * amount in nanotons
+     * amount in nanograms
      * @format int64
      * @example 123456789
      */
     elector_balance: number;
     /**
-     * amount in nanotons
+     * amount in nanograms
      * @format int64
      * @example 123456789
      */
     total_stake: number;
     /**
-     * amount in nanotons
+     * amount in nanograms
      * @format int64
      * @example 123456789
      */
@@ -3211,19 +3320,19 @@ export interface NominatorRewardEntry {
      */
     weight: number;
     /**
-     * amount in nanotons
+     * amount in nanograms
      * @format int64
      * @example 123456789
      */
     reward: number;
     /**
-     * amount in nanotons
+     * amount in nanograms
      * @format int64
      * @example 123456789
      */
     effective_stake: number;
     /**
-     * amount in nanotons
+     * amount in nanograms
      * @format int64
      * @example 123456789
      */
@@ -3241,7 +3350,7 @@ export interface ValidatorRewardEntry {
      */
     public_key: string;
     /**
-     * amount in nanotons
+     * amount in nanograms
      * @format int64
      * @example 123456789
      */
@@ -3253,7 +3362,7 @@ export interface ValidatorRewardEntry {
      */
     weight: number;
     /**
-     * amount in nanotons
+     * amount in nanograms
      * @format int64
      * @example 123456789
      */
@@ -3268,13 +3377,13 @@ export interface ValidatorRewardEntry {
     owner_address?: string;
     validator_address?: string;
     /**
-     * amount in nanotons
+     * amount in nanograms
      * @format int64
      * @example 123456789
      */
     validator_stake?: number;
     /**
-     * amount in nanotons
+     * amount in nanograms
      * @format int64
      * @example 123456789
      */
@@ -3341,13 +3450,13 @@ export interface RoundRewardsResponse {
      */
     end_block: number;
     /**
-     * amount in nanotons
+     * amount in nanograms
      * @format int64
      * @example 123456789
      */
     total_bonuses: number;
     /**
-     * amount in nanotons
+     * amount in nanograms
      * @format int64
      * @example 123456789
      */
@@ -3358,7 +3467,7 @@ export interface RoundRewardsResponse {
 export interface RewardsStats {
     /** Time series of APY values as [timestamp_ms, apy] pairs */
     apy: number[][];
-    /** Time series of total stake in TON as [timestamp_ms, stake] pairs */
+    /** Time series of total stake in Gram as [timestamp_ms, stake] pairs */
     total_stake: number[][];
 }
 export type QueryParamsType = Record<string | number, any>;
@@ -3770,13 +3879,13 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         getAccountJettonsBalances: (accountId: string, query?: {
             /**
-             * accept ton and all possible fiat currencies, separated by commas
-             * @example ["ton","usd","rub"]
+             * accept gram and all possible fiat currencies, separated by commas
+             * @example ["gram","usd","rub"]
              */
             currencies?: string[];
             /**
              * comma separated list supported extensions
-             * @example ["custom_payload"]
+             * @example ["custom_payload","defi"]
              */
             supported_extensions?: string[];
             /**
@@ -3800,13 +3909,13 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         getAccountJettonBalance: (accountId: string, jettonId: string, query?: {
             /**
-             * accept ton and all possible fiat currencies, separated by commas
-             * @example ["ton","usd","rub"]
+             * accept gram and all possible fiat currencies, separated by commas
+             * @example ["gram","usd","rub"]
              */
             currencies?: string[];
             /**
              * comma separated list supported extensions
-             * @example ["custom_payload"]
+             * @example ["custom_payload","defi"]
              */
             supported_extensions?: string[];
         }, params?: RequestParams) => Promise<JettonBalance>;
@@ -3891,7 +4000,7 @@ export declare class Api<SecurityDataType extends unknown> {
              */
             offset?: number;
             /**
-             * Selling nft items in ton implemented usually via transfer items to special selling account. This option enables including items which owned not directly.
+             * Selling nft items in TON implemented usually via transfer items to special selling account. This option enables including items which owned not directly.
              * @default false
              */
             indirect_ownership?: boolean;
@@ -4077,6 +4186,14 @@ export declare class Api<SecurityDataType extends unknown> {
              */
             balance_change: number;
         }>;
+        /**
+         * @description Return DeFi assets locked in custom smart contracts: currently returns TON Whales staking and EVAA lending positions.
+         *
+         * @tags Accounts
+         * @name GetAccountDefiAssets
+         * @request GET:/v2/accounts/{account_id}/defi/assets
+         */
+        getAccountDefiAssets: (accountId: string, params?: RequestParams) => Promise<DefiAssets>;
         /**
          * @description Get the transfer history of extra currencies for an account.
          *
@@ -4526,15 +4643,15 @@ export declare class Api<SecurityDataType extends unknown> {
          */
         getRates: (query: {
             /**
-             * accept ton and jetton master addresses, separated by commas
+             * accept gram and jetton master addresses, separated by commas
              * @maxItems 100
-             * @example ["ton"]
+             * @example ["gram"]
              */
             tokens: string[];
             /**
-             * accept ton and all possible fiat currencies, separated by commas
+             * accept gram and all possible fiat currencies, separated by commas
              * @maxItems 50
-             * @example ["ton","usd","rub"]
+             * @example ["gram","usd","rub"]
              */
             currencies: string[];
         }, params?: RequestParams) => Promise<{
@@ -4583,7 +4700,7 @@ export declare class Api<SecurityDataType extends unknown> {
             points: ChartPoints;
         }>;
         /**
-         * @description Get the TON price from markets
+         * @description Get the Gram price from markets
          *
          * @tags Rates
          * @name GetMarketsRates

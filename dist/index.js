@@ -10,7 +10,7 @@
  * ---------------------------------------------------------------
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Api = exports.HttpClient = exports.ContentType = exports.ExecGetMethodArgType = exports.PoolImplementationType = exports.TrustType = exports.CurrencyType = exports.JettonVerificationType = exports.BouncePhaseType = exports.ComputeSkipReason = exports.AccStatusChange = exports.TransactionType = exports.AccountStatus = void 0;
+exports.Api = exports.HttpClient = exports.ContentType = exports.ExecGetMethodArgType = exports.PoolImplementationType = exports.DefiAssetAssetType = exports.TrustType = exports.CurrencyType = exports.JettonVerificationType = exports.BouncePhaseType = exports.ComputeSkipReason = exports.AccStatusChange = exports.TransactionType = exports.AccountStatus = void 0;
 /** @example "active" */
 var AccountStatus;
 (function (AccountStatus) {
@@ -75,6 +75,15 @@ var TrustType;
     TrustType["Blacklist"] = "blacklist";
     TrustType["None"] = "none";
 })(TrustType || (exports.TrustType = TrustType = {}));
+var DefiAssetAssetType;
+(function (DefiAssetAssetType) {
+    DefiAssetAssetType["Staking"] = "staking";
+    DefiAssetAssetType["LendingSupply"] = "lending_supply";
+    DefiAssetAssetType["LendingBorrow"] = "lending_borrow";
+    DefiAssetAssetType["LiquidStaking"] = "liquid_staking";
+    DefiAssetAssetType["LiquidPool"] = "liquid_pool";
+    DefiAssetAssetType["YieldToken"] = "yield_token";
+})(DefiAssetAssetType || (exports.DefiAssetAssetType = DefiAssetAssetType = {}));
 var PoolImplementationType;
 (function (PoolImplementationType) {
     PoolImplementationType["Whales"] = "whales";
@@ -863,6 +872,19 @@ class Api {
             ...params,
         }),
         /**
+         * @description Return DeFi assets locked in custom smart contracts: currently returns TON Whales staking and EVAA lending positions.
+         *
+         * @tags Accounts
+         * @name GetAccountDefiAssets
+         * @request GET:/v2/accounts/{account_id}/defi/assets
+         */
+        getAccountDefiAssets: (accountId, params = {}) => this.http.request({
+            path: `/v2/accounts/${accountId}/defi/assets`,
+            method: "GET",
+            format: "json",
+            ...params,
+        }),
+        /**
          * @description Get the transfer history of extra currencies for an account.
          *
          * @tags Accounts
@@ -1289,7 +1311,7 @@ class Api {
             ...params,
         }),
         /**
-         * @description Get the TON price from markets
+         * @description Get the Gram price from markets
          *
          * @tags Rates
          * @name GetMarketsRates
