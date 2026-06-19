@@ -2451,6 +2451,7 @@ export interface NftCollection {
     metadata?: Record<string, any>;
     previews?: ImagePreview[];
     approved_by: NftApprovedBy;
+    trust: TrustType;
 }
 export interface NftCollections {
     nft_collections: NftCollection[];
