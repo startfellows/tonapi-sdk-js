@@ -10,7 +10,7 @@
  * ---------------------------------------------------------------
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Api = exports.HttpClient = exports.ContentType = exports.ExecGetMethodArgType = exports.PoolImplementationType = exports.DefiAssetAssetType = exports.TrustType = exports.CurrencyType = exports.JettonVerificationType = exports.BouncePhaseType = exports.ComputeSkipReason = exports.AccStatusChange = exports.TransactionType = exports.AccountStatus = void 0;
+exports.Api = exports.HttpClient = exports.ContentType = exports.ExecGetMethodArgType = exports.PoolImplementationType = exports.DefiAssetType = exports.TrustType = exports.CurrencyType = exports.JettonVerificationType = exports.BouncePhaseType = exports.ComputeSkipReason = exports.AccStatusChange = exports.TransactionType = exports.AccountStatus = void 0;
 /** @example "active" */
 var AccountStatus;
 (function (AccountStatus) {
@@ -75,15 +75,15 @@ var TrustType;
     TrustType["Blacklist"] = "blacklist";
     TrustType["None"] = "none";
 })(TrustType || (exports.TrustType = TrustType = {}));
-var DefiAssetAssetType;
-(function (DefiAssetAssetType) {
-    DefiAssetAssetType["Staking"] = "staking";
-    DefiAssetAssetType["LendingSupply"] = "lending_supply";
-    DefiAssetAssetType["LendingBorrow"] = "lending_borrow";
-    DefiAssetAssetType["LiquidStaking"] = "liquid_staking";
-    DefiAssetAssetType["LiquidPool"] = "liquid_pool";
-    DefiAssetAssetType["YieldToken"] = "yield_token";
-})(DefiAssetAssetType || (exports.DefiAssetAssetType = DefiAssetAssetType = {}));
+var DefiAssetType;
+(function (DefiAssetType) {
+    DefiAssetType["Staking"] = "staking";
+    DefiAssetType["LendingSupply"] = "lending_supply";
+    DefiAssetType["LendingBorrow"] = "lending_borrow";
+    DefiAssetType["LiquidStaking"] = "liquid_staking";
+    DefiAssetType["LiquidPool"] = "liquid_pool";
+    DefiAssetType["YieldToken"] = "yield_token";
+})(DefiAssetType || (exports.DefiAssetType = DefiAssetType = {}));
 var PoolImplementationType;
 (function (PoolImplementationType) {
     PoolImplementationType["Whales"] = "whales";
@@ -619,6 +619,38 @@ class Api {
         getLibraryByHash: (hash, params = {}) => this.http.request({
             path: `/v2/blockchain/libraries/${hash}`,
             method: "GET",
+            format: "json",
+            ...params,
+        }),
+    };
+    migration = {
+        /**
+         * @description Get migratable assets value (TON balance, jettons with prices, NFT count) for several wallets at once.
+         *
+         * @tags Migration
+         * @name GetMigrationWallets
+         * @request POST:/v2/migration/wallets
+         */
+        getMigrationWallets: (data, query, params = {}) => this.http.request({
+            path: `/v2/migration/wallets`,
+            method: "POST",
+            query: query,
+            body: data,
+            format: "json",
+            ...params,
+        }),
+        /**
+         * @description Prepare ordered signable transactions that migrate every asset from `from` to `to`.
+         *
+         * @tags Migration
+         * @name PrepareMigration
+         * @request POST:/v2/migration/prepare
+         */
+        prepareMigration: (data, params = {}) => this.http.request({
+            path: `/v2/migration/prepare`,
+            method: "POST",
+            body: data,
+            type: ContentType.Json,
             format: "json",
             ...params,
         }),

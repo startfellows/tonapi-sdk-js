@@ -1521,11 +1521,16 @@ export interface JettonPreview {
     score: number;
     scaled_ui?: ScaledUI;
     description?: string;
-    asset_info?: JettonAssetInfo;
 }
 export interface JettonAssetInfo {
-    token_type: DefiAssetAssetType;
+    token_type: DefiAssetType;
+    type?: DefiAssetType;
     defi_provider: DefiProvider;
+    pool_assets?: DefiLiquidPoolAssets;
+}
+export interface DefiLiquidPoolAssets {
+    asset0: DefiLockedAsset;
+    asset1: DefiLockedAsset;
 }
 export interface ScaledUI {
     /** @example "597968399" */
@@ -1539,6 +1544,7 @@ export interface JettonBalance {
     price?: TokenRates;
     wallet_address: AccountAddress;
     jetton: JettonPreview;
+    defi_asset?: JettonAssetInfo;
     /** @example ["custom_payload","non_transferable"] */
     extensions?: string[];
     lock?: {
@@ -1553,6 +1559,70 @@ export interface JettonBalance {
 }
 export interface JettonsBalances {
     balances: JettonBalance[];
+}
+export interface MigrationWallets {
+    wallets: MigrationWalletValue[];
+}
+export interface MigrationWalletValue {
+    /**
+     * @format address
+     * @example "0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621"
+     */
+    account: string;
+    /**
+     * TON balance in nanotons
+     * @format int64
+     */
+    balance: number;
+    status: AccountStatus;
+    jettons: JettonBalance[];
+    /**
+     * number of NFTs owned by the account
+     * @format int32
+     */
+    nft_count: number;
+}
+export interface MigrationPrepareRequest {
+    /**
+     * legacy source wallet to drain
+     * @format address
+     */
+    from: string;
+    /**
+     * destination wallet TON address
+     * @format address
+     */
+    to: string;
+    /**
+     * fiat currency for the preview values
+     * @default "USD"
+     * @example "USD"
+     */
+    currency?: string;
+}
+export interface MigrationPrepareResponse {
+    /** @format address */
+    from: string;
+    /** @format address */
+    to: string;
+    /**
+     * source wallet version (informational)
+     * @example "v4R2"
+     */
+    wallet_version: string;
+    /** ordered; sign and broadcast in array order, one entry per external message */
+    transactions: MigrationTransaction[];
+}
+export interface MigrationTransaction {
+    /**
+     * wallet seqno baked into the unsigned body
+     * @format int32
+     */
+    seqno: number;
+    /** base64 BOC of the unsigned wallet body. Sign its hash, prepend the signature, wrap it in an external message and broadcast. */
+    boc: string;
+    /** Result of emulating a wallet message on the current blockchain state: describes the expected on-chain consequences (trace, high-level AccountEvent, risk) for the signing wallet. For UI display only. */
+    emulation: MessageConsequences;
 }
 /** @example "jetton" */
 export declare enum CurrencyType {
@@ -2452,9 +2522,18 @@ export interface NftCollection {
     previews?: ImagePreview[];
     approved_by: NftApprovedBy;
     trust: TrustType;
+    metadata_status?: NftCollectionMetadataStatus;
 }
 export interface NftCollections {
     nft_collections: NftCollection[];
+}
+export interface NftCollectionMetadataStatus {
+    url?: string;
+    is_broken?: boolean;
+    /** @format int64 */
+    last_refresh_try?: number | null;
+    /** @format int64 */
+    last_refresh_success?: number | null;
 }
 export interface Trace {
     transaction: Transaction;
@@ -2737,7 +2816,7 @@ export interface JettonTransferPayload {
 export interface DefiAssets {
     assets: DefiAsset[];
 }
-export declare enum DefiAssetAssetType {
+export declare enum DefiAssetType {
     Staking = "staking",
     LendingSupply = "lending_supply",
     LendingBorrow = "lending_borrow",
@@ -2746,7 +2825,7 @@ export declare enum DefiAssetAssetType {
     YieldToken = "yield_token"
 }
 export interface DefiAsset {
-    asset_type: DefiAssetAssetType;
+    type: DefiAssetType;
     /**
      * amount in minimal units of the locked asset
      * @example "1000000000"
@@ -3840,6 +3919,32 @@ export declare class Api<SecurityDataType extends unknown> {
          * @request GET:/v2/blockchain/libraries/{hash}
          */
         getLibraryByHash: (hash: string, params?: RequestParams) => Promise<BlockchainLibrary>;
+    };
+    migration: {
+        /**
+         * @description Get migratable assets value (TON balance, jettons with prices, NFT count) for several wallets at once.
+         *
+         * @tags Migration
+         * @name GetMigrationWallets
+         * @request POST:/v2/migration/wallets
+         */
+        getMigrationWallets: (data: {
+            account_ids: string[];
+        }, query?: {
+            /**
+             * accept gram and all possible fiat currencies, separated by commas
+             * @example ["gram","usd","rub"]
+             */
+            currencies?: string[];
+        }, params?: RequestParams) => Promise<MigrationWallets>;
+        /**
+         * @description Prepare ordered signable transactions that migrate every asset from `from` to `to`.
+         *
+         * @tags Migration
+         * @name PrepareMigration
+         * @request POST:/v2/migration/prepare
+         */
+        prepareMigration: (data: MigrationPrepareRequest, params?: RequestParams) => Promise<MigrationPrepareResponse>;
     };
     accounts: {
         /**
