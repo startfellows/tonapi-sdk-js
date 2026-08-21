@@ -1599,6 +1599,24 @@ export interface MigrationPrepareRequest {
      * @example "USD"
      */
     currency?: string;
+    /**
+     * hex-encoded ed25519 public key of the source wallet. If `from` wallet is uninitialized, then public_key is used to infer wallet code
+     * @example "29c1a72938b8f4f1d4e64f1e3f73e4b0e60f9b0c0e0d0e0f0a0b0c0d0e0f0a0b0"
+     */
+    public_key?: string;
+    /**
+     * Who pays the gas:
+     *   - `self` — the source wallet pays, as usual
+     *   - `battery` — asset transfers are sponsored by the Tonkeeper Battery
+     *   - `gasless` — source wallet pays with jetton, in this case `gas_jetton_master` is required too (only from this list: `/v2/gasless/config`)
+     * @default "self"
+     */
+    gas_payer?: "self" | "battery" | "gasless";
+    /**
+     * Master address of jetton that should be used to cover transactions fees. Must be supported by /v2/gasless/config and held by the source wallet.
+     * @format address
+     */
+    gas_jetton_master?: string;
 }
 export interface MigrationPrepareResponse {
     /** @format address */
@@ -1613,16 +1631,73 @@ export interface MigrationPrepareResponse {
     /** ordered; sign and broadcast in array order, one entry per external message */
     transactions: MigrationTransaction[];
 }
+/** The prepared migration together with the reason it cannot be executed as-is. Returned with HTTP 409 and error_code 50000 when the source wallet holds migratable assets but not enough TON to cover the transfer gas: the transactions are the ones the migration would consist of once the source holds `details.required`, so a client can show the full preview next to the shortfall instead of re-requesting prepare after the top-up. */
+export type MigrationPrepareConflict = MigrationPrepareResponse & {
+    /** @example "insufficient GRAM for gas" */
+    error: string;
+    /**
+     * same extended code as on a plain error response (50000)
+     * @format int64
+     */
+    error_code?: number;
+    /** Present on an error when a request failed because the source wallet does not hold enough TON to cover the required gas (error_code 50000). */
+    details?: InsufficientFunds;
+};
 export interface MigrationTransaction {
     /**
      * wallet seqno baked into the unsigned body
      * @format int32
      */
     seqno: number;
-    /** base64 BOC of the unsigned wallet body. Sign its hash, prepend the signature, wrap it in an external message and broadcast. */
+    /** base64 BOC of the unsigned wallet body. The body type is determined by (wallet_version, sponsored): for v3/v4 it is always the external body — sign its hash, prepend the signature, wrap in an external message; for w5 with sponsored=false it is the external body with the signature appended as the trailing 512 bits; for w5 with sponsored=true it is the internal_signed body — sign and wrap it for /v2/gasless/send as in the gasless flow. */
     boc: string;
+    /**
+     * true — the Battery relay pays gas for this transaction; submit it via /v2/gasless/send. false — self-paid; sign and broadcast via /v2/blockchain/message as usual. The final TON sweep is always self-paid, whatever gas_payer says: the relay does not sponsor a TON-only batch, and gasless has no jetton balance left to bill a commission against.
+     * @default false
+     */
+    sponsored?: boolean;
+    /** gasless only; the relay commission in indivisible gas-jetton units, embedded in the boc as a jetton transfer to the relay. Exact for the first transaction; an estimate for later ones (re-running prepare refreshes it). */
+    commission?: string;
+    /**
+     * base64 BOC of the wallet StateInit (code + data). Present only on the first transaction when the source wallet is not yet initialized
+     * @format cell-base64
+     */
+    state_init?: string;
+    /** ordered raw internal messages carried by this transaction — the cells the wallet resends. These are what populate the payload/actions. */
+    messages: MigrationOutMessage[];
     /** Result of emulating a wallet message on the current blockchain state: describes the expected on-chain consequences (trace, high-level AccountEvent, risk) for the signing wallet. For UI display only. */
     emulation: MessageConsequences;
+    /**
+     * TON burned as network fees by this transaction, in nanotons — the sum over every transaction in `emulation.trace`. For a transfer batch this is only part of the gas attached to its messages: the transfers name the destination wallet as response_destination, so the unburned remainder arrives there instead of returning to the source. For the final balance sweep it is the fee deducted from the swept amount. When `sponsored` is true these fees are covered by the relay, which charges `commission` instead.
+     * @format int64
+     * @example 4321000
+     */
+    gas_spent: number;
+}
+export interface MigrationOutMessage {
+    /**
+     * base64 BOC of the internal message cell the wallet resends
+     * @format cell-base64
+     */
+    boc: string;
+    /**
+     * send-mode byte (e.g. 3 for a transfer, 128 for the final balance sweep)
+     * @format int32
+     */
+    mode: number;
+}
+/** Present on an error when a request failed because the source wallet does not hold enough TON to cover the required gas (error_code 50000). */
+export interface InsufficientFunds {
+    /**
+     * TON in nanotons required to cover transfer gas
+     * @format int64
+     */
+    required: number;
+    /**
+     * TON in nanotons currently available on the source wallet
+     * @format int64
+     */
+    available: number;
 }
 /** @example "jetton" */
 export declare enum CurrencyType {
@@ -1819,7 +1894,7 @@ export interface ValueFlow {
 }
 export interface Action {
     /** @example "TonTransfer" */
-    type: "TonTransfer" | "ExtraCurrencyTransfer" | "ContractDeploy" | "JettonTransfer" | "FlawedJettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "ElectionsDepositStake" | "ElectionsRecoverStake" | "JettonSwap" | "SmartContractExec" | "DomainRenew" | "Purchase" | "AddExtension" | "RemoveExtension" | "SetSignatureAllowedAction" | "GasRelay" | "DepositTokenStake" | "WithdrawTokenStakeRequest" | "LiquidityDeposit" | "OracleRequest" | "DepositXTR" | "WithdrawXTR" | "Unknown";
+    type: "TonTransfer" | "ExtraCurrencyTransfer" | "ContractDeploy" | "JettonTransfer" | "FlawedJettonTransfer" | "JettonBurn" | "JettonMint" | "NftItemTransfer" | "Subscribe" | "UnSubscribe" | "AuctionBid" | "NftPurchase" | "DepositStake" | "WithdrawStake" | "WithdrawStakeRequest" | "ElectionsDepositStake" | "ElectionsRecoverStake" | "JettonSwap" | "SmartContractExec" | "DomainRenew" | "Purchase" | "AddExtension" | "RemoveExtension" | "SetSignatureAllowedAction" | "GasRelay" | "DepositTokenStake" | "WithdrawTokenStakeRequest" | "LiquidityDeposit" | "OracleRequest" | "BuyXTR" | "DepositXTR" | "WithdrawXTR" | "Unknown";
     /** @example "ok" */
     status: "ok" | "failed";
     TonTransfer?: TonTransferAction;
@@ -1856,6 +1931,7 @@ export interface Action {
     OracleRequest?: OracleRequestAction;
     WithdrawXTR?: WithdrawXTRAction;
     DepositXTR?: DepositXTRAction;
+    BuyXTR?: BuyXTRAction;
     /** shortly describes what this action is about. */
     simple_preview: ActionSimplePreview;
     base_transactions: string[];
@@ -1894,6 +1970,11 @@ export interface OraclePriceFeed {
     rate?: number;
 }
 export interface DepositXTRAction {
+    recipient: AccountAddress;
+    /** @example "123000000000" */
+    amount: string;
+}
+export interface BuyXTRAction {
     recipient: AccountAddress;
     /** @example "123000000000" */
     amount: string;
@@ -2277,6 +2358,11 @@ export interface ActionSimplePreview {
     action_image?: string;
     /** @example "5 Gram" */
     value?: string;
+    /**
+     * the value of this action expressed in the requested fiat currency.
+     * @example "4.99 USD"
+     */
+    fiat_value?: string;
     /** a link to an image that depicts this action's asset. */
     value_image?: string;
     accounts: AccountAddress[];
@@ -4585,12 +4671,19 @@ export declare class Api<SecurityDataType extends unknown> {
              */
             limit?: number;
             /**
+             * Deprecated: pagination is based on a daily snapshot, so some new jettons may not appear yet. Use `last_account_id` for real-time pagination instead.
              * @format int32
              * @min 0
              * @default 0
              * @example 10
              */
             offset?: number;
+            /**
+             * Cursor for pagination, always resolved live. Pass the `metadata.address` of the last jetton master from the previous page to get the next page. Preferred over `offset`.
+             * @format address
+             * @example "0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621"
+             */
+            last_account_id?: string;
         }, params?: RequestParams) => Promise<Jettons>;
         /**
          * @description Get jetton metadata by jetton master address
@@ -4625,11 +4718,22 @@ export declare class Api<SecurityDataType extends unknown> {
              */
             limit?: number;
             /**
+             * used only with sort_by=balance; has limit of 9000 rows
              * @min 0
-             * @max 9000
              * @default 0
              */
             offset?: number;
+            /**
+             * address allows unlimited pagination via last_account_id cursor, balance sorting allow getting top holders
+             * @default "balance"
+             */
+            sort_by?: "balance" | "address";
+            /**
+             * used only with sort_by=address: the account_id of the last holder from the previous page, to fetch the next page after it
+             * @format address
+             * @example "0:97264395BD65A255A429B11326C84128B7D70FFED7949ABAE3036D506BA38621"
+             */
+            last_account_id?: string;
         }, params?: RequestParams) => Promise<JettonHolders>;
         /**
          * @description Get jetton's custom payload and state init required for transfer
@@ -5445,6 +5549,12 @@ export declare class Api<SecurityDataType extends unknown> {
         emulateMessageToWallet: (data: {
             /** @format cell */
             boc: string;
+            /**
+             * Override the destination wallet address extracted from the BoC. Useful when the BoC was signed with a throwaway key and the real wallet address must be emulated against.
+             * @format address
+             * @example "0:97146a46acc2654y27947f14c4a4b14273e954f78bc017790b41208b0043200b"
+             */
+            address_override?: string;
             /** additional per account configuration */
             params?: {
                 /**
